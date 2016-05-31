@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 ## Installation
 ####1. Clone this project or Download that ZIP file
@@ -50,9 +48,4 @@ Please reload a couple of times if You are not rendered with charts.
 The Tracks Page list is just placed there temporarily for convenience. 
 localhost:9000/#/dashboard/chart?trackid=sometrackid will retrieve the graph for you(else you will keep running into an errors page)
 
-=======
-# enviroCar-website-ng
->>>>>>> 61161c5b0c28e05b388ecf02e4694ba977a54eed
-=======
-# enviroCar-website-ng
->>>>>>> 61161c5b0c28e05b388ecf02e4694ba977a54eed
+
