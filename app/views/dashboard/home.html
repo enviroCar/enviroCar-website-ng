@@ -1,0 +1,58 @@
+<div>
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Overview</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+
+        <stats number="13" comments="New comments!" colour="primary" type="comments"></stats>
+
+
+    </div>
+
+    <!-- /.panel -->
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-clock-o fa-fw"></i> Latest Tracks
+                </div>
+                <!-- /.panel-heading -->
+                <timeline></timeline>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-6 -->
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-bell fa-fw"></i> Public Vs You
+                </div>
+                <!-- /.panel-heading -->
+                <nvd3 options="options" data="data"></nvd3>
+
+                <!-- /.panel-body -->
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-bell fa-fw"></i> Performance Insights
+                </div>
+                <!-- /.panel-heading -->
+                <p ng-bind="trial"></p>
+
+                <!-- /.panel-body -->
+            </div>
+
+            <!-- /.panel -->
+
+
+             <!-- /.panel .chat-panel -->
+        </div>
+        <!-- /.col-lg-4 -->
+    </div>
+    <!-- /.row -->
+</div>
