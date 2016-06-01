@@ -1,6 +1,6 @@
 {
-  "name": "sb-admin",
-  "version": "0.0.0",
+  "name": "enviroCarApp",
+  "version": "0.0.1",
   "dependencies": {
     "angular": ">=1.2.16",
     "json3": "~3.3.1",
