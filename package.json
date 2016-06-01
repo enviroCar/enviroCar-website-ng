@@ -1,9 +1,9 @@
 {
-  "name": "sb-admin",
-  "version": "0.0.0",
+  "name": "enviroCar",
+  "version": "0.0.1",
   "repository": {
     "type": "git",
-    "url": "https://github.com/start-angular/sb-admin-angular"
+    "url": "https://github.com/naveenjafer/enviroCar-website-ng"
   },
   "dependencies": {},
   "devDependencies": {

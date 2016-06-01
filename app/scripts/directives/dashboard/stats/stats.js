@@ -6,7 +6,7 @@
  * @description
  * # adminPosHeader
  */
-angular.module('sbAdminApp')
+angular.module('enviroCarApp')
     .directive('stats',function() {
     	return {
   		templateUrl:'scripts/directives/dashboard/stats/stats.html',
@@ -16,7 +16,7 @@ angular.module('sbAdminApp')
 
   	}
   });
-/*  angular.module('sbAdminApp')
+/*  angular.module('enviroCarApp')
   .controller('statsnumberoftracksController',['$scope','$rootScope','requesthomestats',function($scope,$rootScope,requesthomestats)
 {
     $scope.number = 17;
@@ -30,7 +30,7 @@ angular.module('sbAdminApp')
 
 }]);
 
-angular.module('sbAdminApp')
+angular.module('enviroCarApp')
 .factory('requesthomestats',function($http){
   var get = function(url)
   {

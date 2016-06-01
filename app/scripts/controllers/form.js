@@ -1,12 +1,12 @@
 'use strict';
 /**
  * @ngdoc function
- * @name sbAdminApp.controller:MainCtrl
+ * @name enviroCarApp.controller:
  * @description
- * # MainCtrl
- * Controller of the sbAdminApp
+ * # 
+ * Controller of the enviroCarApp
  */
-angular.module('sbAdminApp')
+angular.module('enviroCarApp')
   .controller('FormCtrl', function($scope) {
-    
+
 });

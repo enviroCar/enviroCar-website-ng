@@ -1,12 +1,12 @@
 'use strict';
 /**
  * @ngdoc function
- * @name sbAdminApp.controller:MainCtrl
+ * @name enviroCarApp.controller:ErrorController
  * @description
- * # MainCtrl
- * Controller of the sbAdminApp
+ * # ErrorCtrl
+ * Controller of the enviroCarApp
  */
-angular.module('sbAdminApp')
+angular.module('enviroCarApp')
   .controller('ErrorCtrl',['$scope','$stateParams',function($scope,$stateParams) {
     $scope.params = $stateParams.path;
     console.log($stateParams.status + " IN ERROR CONTROLLER" );

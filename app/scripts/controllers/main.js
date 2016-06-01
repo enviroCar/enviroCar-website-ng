@@ -1,12 +1,12 @@
 'use strict';
 /**
  * @ngdoc function
- * @name sbAdminApp.controller:MainCtrl
+ * @name enviroCarApp.controller:MainCtrl
  * @description
  * # MainCtrl
- * Controller of the sbAdminApp
+ * Controller of the enviroCarApp
  */
-angular.module('sbAdminApp')
+angular.module('enviroCarApp')
  .controller('MainCtrl',['$scope','$http','$rootScope','requesthomestats','requestgraphstats',function($scope,$http,$rootScope,requesthomestats,requestgraphstats)
   {
     $scope.trial = "hello"
@@ -34,7 +34,7 @@ angular.module('sbAdminApp')
                 requesthomestats.get(url1+"/"+data.data.tracks[cntr].id).then(function(data2){
                   console.log(data2.data);
                   data2.data['url']="https://envirocar.org/api/stable/tracks/"+data2.data.properties.id+"/preview";
-                  data2.data['urlredirect'] = "#/dashboard/chart?trackid="+data2.data.properties.id;
+                  data2.data['urlredirect'] = "#/dashboard/chart/"+data2.data.properties.id;
                   //data2.data['urlredirect'] = "chart?trackid="+data2.data.properties.id;
 
                   timeline[data.data.tracks[cntr].id] = data2.data;
@@ -42,15 +42,11 @@ angular.module('sbAdminApp')
                 })
           })(i);
           //console.log(timeline);
-
         }
           //now to get the data required for the repeater
-
       });
       console.log(timeline);
       $scope.timelinevalues = timeline;
-
-
       //*******************************************************
       //*******************************************************
       //******************GRAPHS PART**************************
@@ -80,69 +76,69 @@ angular.module('sbAdminApp')
             var url = "https://envirocar.org/api/stable/users/"+$rootScope.globals.currentUser.username +"/statistics/CO2";
             requestgraphstats.get(url).then(function(data){
             console.log(data.data);
-           var data = {
+            var data = {
                   "label": "CO2("+data.data.phenomenon.unit+")",
                   "value": data.data.avg
                };
-           datausers.push(data);
-         });
-         url = "https://envirocar.org/api/stable/users/"+$rootScope.globals.currentUser.username +"/statistics/Speed";
-         requestgraphstats.get(url).then(function(data){
-         console.log(data.data);
-        var data = {
-               "label": "Speed("+data.data.phenomenon.unit+")",
-               "value": data.data.avg
-        };
-        datausers.push(data);
-      });
-      url = "https://envirocar.org/api/stable/users/"+$rootScope.globals.currentUser.username + "/statistics/Consumption";
-      requestgraphstats.get(url).then(function(data){
-      console.log(data.data);
-     var data = {
-            "label": "Consumption("+data.data.phenomenon.unit+")",
-            "value": data.data.avg
-     };
-     datausers.push(data);
-   });
-   console.log(datausers);
-   var datacumulusers = {
-      "key": "User Statistics",
-       "color": "#d62728",
-       "values": datausers
-   };
-   url = "https://envirocar.org/api/stable/statistics/CO2";
-   requestgraphstats.get(url).then(function(data){
-   console.log(data.data);
-  var data = {
-         "label": "CO2("+data.data.phenomenon.unit+")",
-         "value": data.data.avg
-  };
-  dataotherusers.push(data);
-});
-url = "https://envirocar.org/api/stable/statistics/Speed";
-requestgraphstats.get(url).then(function(data){
-console.log(data.data);
-var data = {
-      "label": "Speed("+data.data.phenomenon.unit+")",
-      "value": data.data.avg
-};
-dataotherusers.push(data);
-});
-url = "https://envirocar.org/api/stable/statistics/Consumption";
-requestgraphstats.get(url).then(function(data){
-console.log(data.data);
-var data = {
-      "label": "Consumption("+data.data.phenomenon.unit+")",
-      "value": data.data.avg
-};
-dataotherusers.push(data);
-});
-var datacumulotherusers = {
-   "key": "Other User's Statistics",
-    "color": "#1f77b4",
-    "values": dataotherusers
-};
-  $scope.data = [datacumulotherusers,datacumulusers];
+               datausers.push(data);
+             });
+            url = "https://envirocar.org/api/stable/users/"+$rootScope.globals.currentUser.username +"/statistics/Speed";
+            requestgraphstats.get(url).then(function(data){
+              console.log(data.data);
+              var data = {
+                "label": "Speed("+data.data.phenomenon.unit+")",
+                "value": data.data.avg
+              };
+              datausers.push(data);
+            });
+            url = "https://envirocar.org/api/stable/users/"+$rootScope.globals.currentUser.username + "/statistics/Consumption";
+            requestgraphstats.get(url).then(function(data){
+              console.log(data.data);
+              var data = {
+                "label": "Consumption("+data.data.phenomenon.unit+")",
+                "value": data.data.avg
+              };
+              datausers.push(data);
+            });
+            console.log(datausers);
+            var datacumulusers = {
+              "key": "User Statistics",
+              "color": "#d62728",
+              "values": datausers
+            };
+            url = "https://envirocar.org/api/stable/statistics/CO2";
+            requestgraphstats.get(url).then(function(data){
+              console.log(data.data);
+              var data = {
+                "label": "CO2("+data.data.phenomenon.unit+")",
+                "value": data.data.avg
+              };
+              dataotherusers.push(data);
+            });
+            url = "https://envirocar.org/api/stable/statistics/Speed";
+            requestgraphstats.get(url).then(function(data){
+              console.log(data.data);
+              var data = {
+                "label": "Speed("+data.data.phenomenon.unit+")",
+                "value": data.data.avg
+              };
+              dataotherusers.push(data);
+            });
+            url = "https://envirocar.org/api/stable/statistics/Consumption";
+            requestgraphstats.get(url).then(function(data){
+              console.log(data.data);
+              var data = {
+                "label": "Consumption("+data.data.phenomenon.unit+")",
+                "value": data.data.avg
+              };
+              dataotherusers.push(data);
+            });
+            var datacumulotherusers = {
+                "key": "Other User's Statistics",
+                "color": "#1f77b4",
+                "values": dataotherusers
+              };
+            $scope.data = [datacumulotherusers,datacumulusers];
 
   //**********************************************************
   //***********************END OF GRAPHS**********************
@@ -195,7 +191,7 @@ if(ratioco2 < ratiospeed)
 */
   }]);
 
-  angular.module('sbAdminApp')
+  angular.module('enviroCarApp')
   .factory('requesthomestats',function($http){
     var get = function(url)
     {
@@ -208,17 +204,16 @@ if(ratioco2 < ratiospeed)
     }
   });
 
-  angular.module('sbAdminApp')
+  angular.module('enviroCarApp')
   .factory('requestgraphstats',function($http){
       var get = function(url) {
           return $http.get(url).success(function(data) {
           console.log(data)
-      //    console.log(data.features)
           return data;
         });
       }
 
-return {
-  get: get
-  }
-});
+      return {
+        get: get
+      }
+    });

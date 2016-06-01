@@ -1,15 +1,15 @@
 'use strict';
 /**
  * @ngdoc overview
- * @name sbAdminApp
+ * @name enviroCarApp
  * @description
- * # sbAdminApp
+ * # enviroCarApp
  *
  * Main module of the application.
  */
 
 angular
-  .module('sbAdminApp', [
+  .module('enviroCarApp', [
     'oc.lazyLoad',
     'ui.router',
     'ui.bootstrap',
@@ -35,7 +35,7 @@ angular
             loadMyDirectives:function($ocLazyLoad){
                 return $ocLazyLoad.load(
                 {
-                    name:'sbAdminApp',
+                    name:'enviroCarApp',
                     files:[
                     'scripts/directives/header/header.js',
                     'scripts/directives/header/header-notification/header-notification.js',
@@ -94,7 +94,7 @@ angular
         resolve: {
           loadMyFiles:function($ocLazyLoad) {
             return $ocLazyLoad.load({
-              name:'sbAdminApp',
+              name:'enviroCarApp',
               files:[
               'scripts/controllers/main.js',
               'scripts/directives/timeline/timeline.js',
@@ -123,7 +123,7 @@ angular
           resolve: {
             loadMyFile:function($ocLazyLoad) {
               return $ocLazyLoad.load({
-                name:'sbAdminApp',
+                name:'enviroCarApp',
                 files:['scripts/controllers/LoginController.js']
               }),
               $ocLazyLoad.load(
@@ -163,8 +163,11 @@ angular
 
     })
       .state('dashboard.chart',{
-        templateUrl:'views/chart.html',
-        url:'/chart?trackid',
+      //  templateUrl:'views/chart.html',
+        templateUrl:(stateParams) => {
+        return 'views/chart.html?path='+stateParams.trackid},
+        authenticate: true,
+        url:'/chart/:trackid',
         controller:'ChartCtrl',
         resolve: {
           loadMyFile:function($ocLazyLoad) {
@@ -176,7 +179,7 @@ angular
               ]
             }),
             $ocLazyLoad.load({
-                name:'sbAdminApp',
+                name:'enviroCarApp',
                 files:['scripts/controllers/chartContoller.js']
             })
           }
@@ -189,16 +192,6 @@ angular
       .state('dashboard.panels-wells',{
           templateUrl:'views/pages/panels-wells.html',
           url:'/panels-wells'
-  /*        controller:'SinglePage',
-          resolve: {
-            loadMyFile:function($oclazyload) {
-              return $oclazyload.load({
-                name:'sbAdminApp',
-                files: ['scripts/controllers/SinglePageController.js']
-              })
-            }
-          }
-          */
       })
       .state('dashboard.buttons',{
         templateUrl:'views/ui-elements/buttons.html',
@@ -224,7 +217,7 @@ angular
        resolve: {
          loadMyFile:function($ocLazyLoad) {
            return $ocLazyLoad.load({
-               name:'sbAdminApp',
+               name:'enviroCarApp',
                files:['scripts/controllers/ErrorController.js']
            })
          }

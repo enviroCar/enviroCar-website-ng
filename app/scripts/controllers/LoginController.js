@@ -1,12 +1,12 @@
 'use strict';
 /**
  * @ngdoc function
- * @name sbAdminApp.controller:MainCtrl
+ * @name enviroCarApp.controller:Login Controller
  * @description
- * # MainCtrl
- * Controller of the sbAdminApp
+ * # LoginCtrl
+ * Controller of the enviroCarApp
  */
- angular.module('sbAdminApp')
+ angular.module('enviroCarApp')
  .factory('Auth',['$http','$cookieStore','$rootScope',function($http,$cookieStore,$rootScope){
    var service = {};
    service.login = function(username, password, callback)
@@ -31,8 +31,6 @@
           authdata: password
         }
       };
-
-
       delete $http.defaults.headers.common["X-User"];
       delete $http.defaults.headers.common["X-Token"];
       $cookieStore.put('globals', $rootScope.globals);
@@ -48,7 +46,7 @@
  }]);
 
 
-angular.module('sbAdminApp')
+angular.module('enviroCarApp')
   .controller('LoginCtrl',['$scope','$rootScope','$location','Auth',function($scope,$rootScope,$location,Auth) {
     // clear credentials or tokens to reset the login status.
     console.log("refresh page is called")

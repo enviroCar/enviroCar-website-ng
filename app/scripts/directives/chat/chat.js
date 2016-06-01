@@ -6,7 +6,7 @@
  * @description
  * # adminPosHeader
  */
-angular.module('sbAdminApp')
+angular.module('enviroCarApp')
 	.directive('chat',function(){
 		return {
         templateUrl:'scripts/directives/chat/chat.html',

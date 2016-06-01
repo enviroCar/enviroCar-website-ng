@@ -1,12 +1,12 @@
 'use strict';
 /**
  * @ngdoc function
- * @name sbAdminApp.controller:MainCtrl
+ * @name enviroCarApp.controller:chartController
  * @description
- * # MainCtrl
- * Controller of the sbAdminApp
+ * # ChartCtrl
+ * chartController of the enviroCarApp
  */
-angular.module('sbAdminApp')
+angular.module('enviroCarApp')
   .controller('ChartCtrl', ['$state','$scope','$http','$rootScope','$timeout','$stateParams','factorysingletrack', function ($state, $scope,$http,$rootScope, $timeout,$stateParams,factorysingletrack) {
     console.log("came to controller of charts");
     //console.log("IMPORTANT VALUE"+$stateParams.trackid)
@@ -56,54 +56,51 @@ angular.module('sbAdminApp')
     var latinitial;
     var longinitial;
     angular.extend($scope, {
-      center: {
-    },
-    paths: {
-    },
-    markers: {
-    }
+        center: {},
+        paths: {},
+        markers: {}
       });
     var url = "https://envirocar.org/api/stable/users/";
     url = url + $rootScope.globals.currentUser.username + "/tracks/";
     $http.defaults.headers.common = {'X-User': $rootScope.globals.currentUser.username, 'X-Token': $rootScope.globals.currentUser.authdata};
     url = url + $stateParams.trackid;
         //var url = "https://envirocar.org/api/stable/tracks/57356a0ee4b09078f9629290";
-        factorysingletrack.get(url).then(function(data){
-        console.log(data.data);
-       if(data.status > 300)
-       {
-          console.log(data.status)
-          $scope.error = data.data;
-          $state.go("dashboard.error",{path: data.data,status: data.status});
-        }
+    factorysingletrack.get(url).then(function(data){
+          console.log(data.data);
+          if(data.status > 300)
+          {
+            console.log(data.status)
+            $scope.error = data.data;
+            $state.go("dashboard.error",{path: data.data,status: data.status});
+          }
           else
           {
             var dist = data.data.properties.length;
-        var datafinal = [];
-        var len_data = data.data.features.length;
-        var phenoms = ["Speed","Calculated MAF","Engine Load","Consumption","Intake Temperature"];
-        var colors = ["#ff9933", "#ffff00", "#00cc00", "#440044", "#ff3300"]
-        for( var j= 0 ; j< phenoms.length; j++)
-        {
-            var dat=[];
-          for(var i=0;i<len_data;i++)
-          {
+            var datafinal = [];
+            var len_data = data.data.features.length;
+            var phenoms = ["Speed","Calculated MAF","Engine Load","Consumption","Intake Temperature"];
+            var colors = ["#ff9933", "#ffff00", "#00cc00", "#440044", "#ff3300"]
+            for( var j= 0 ; j< phenoms.length; j++)
+            {
+              var dat=[];
+              for(var i=0;i<len_data;i++)
+              {
 
-              var date = new Date(data.data.features[i].properties.time);
-              var date_as_ms = date.getTime();
-              if(data.data.features[i].properties.phenomenons[phenoms[j]])
-              {
-                var speed = data.data.features[i].properties.phenomenons[phenoms[j]].value;
+                  var date = new Date(data.data.features[i].properties.time);
+                  var date_as_ms = date.getTime();
+                  if(data.data.features[i].properties.phenomenons[phenoms[j]])
+                  {
+                      var speed = data.data.features[i].properties.phenomenons[phenoms[j]].value;
+                  }
+                  else
+                  {
+                      var speed =0;
+                  }
+                  dat.push([date_as_ms,speed]);
+                  var data_to_push = {"key": phenoms[j],"values":dat,"color": colors[j]};
               }
-              else
-              {
-                var speed =0;
-              }
-              dat.push([date_as_ms,speed]);
-              var data_to_push = {"key": phenoms[j],"values":dat,"color": colors[j]};
-          }
-          datafinal.push(data_to_push);
-        }
+              datafinal.push(data_to_push);
+            }
             $scope.data = datafinal;
             for( var k = 0 ; k < len_data; k++)
             {
@@ -146,13 +143,11 @@ angular.module('sbAdminApp')
                   m2['message'] = "End Point!";
                   $scope.markers['m2'] = m2;
                 }
-
                 //console.log(pathobj);
-
-          //    var latlongobject = {'lat':data.data.features[k].geometry.coordinates[1] , 'lng':data.data.features[k].geometry.coordinates[0]}
-            //  latlongarray.push(latlongobject);
-              //console.log(latlongarray);
-            //  console.log(latlongobject);
+                //    var latlongobject = {'lat':data.data.features[k].geometry.coordinates[1] , 'lng':data.data.features[k].geometry.coordinates[0]}
+                //  latlongarray.push(latlongobject);
+                //console.log(latlongarray);
+                //  console.log(latlongobject);
 
             }
           }
@@ -164,7 +159,7 @@ angular.module('sbAdminApp')
           console.log(Math.round(80/Math.pow(dist,(2))));
           $scope.center['zoom'] = Math.round((20/Math.pow(dist,1.5))+9)
           console.log($scope.center['lat'] + " SEARCH HERE");
-        //  $scope.paths.p1.latlngs = latlongarray;
+          //$scope.paths.p1.latlngs = latlongarray;
           //console.log($scope.paths.p1.latlngs);
           console.log(latinitial);
           console.log(longinitial);
@@ -173,22 +168,21 @@ angular.module('sbAdminApp')
 
 }]);
 
-angular.module('sbAdminApp')
+angular.module('enviroCarApp')
 .factory('factorysingletrack',function($http){
-      var get = function(url) {
+      var get = function(url)
+      {
           return $http.get(url).then(function(data) {
           console.log(data)
           //console.log(data.features)
           return data;
         },
-      function(err)
-    {
-      console.log(err.data);
-      return err;
-    })
+        function(err)
+        {
+          console.log(err.data);
+          return err;
+        })
       }
 
-return {
-  get: get
-  }
+      return {get: get}
 });
