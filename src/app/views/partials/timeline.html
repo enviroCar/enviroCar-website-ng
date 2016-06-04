@@ -1,0 +1,22 @@
+<md-content layout="row" ng-controller="DashboardController" layout-align="center center">
+  <!--   <nvd3 options="vm.chartOptions" data="vm.visitorsChartData"></nvd3> -->
+  <ul class="timeline">
+
+    <li  ng-repeat="(trackid,data) in timelinevalues">
+        <div class={{data.placement}}>
+        <div class="flag-wrapper">
+            <span class="flag">
+                <a href={{data.urlredirect}}>{{data.properties.name}}</a>
+            </span>
+          <!--  <span class="time-wrapper"><span class="time">{{data.properties.created}}</span></span> -->
+           <p>Distance-{{data.properties.length}}</p>
+            <p>Model-{{data.properties.sensor.properties.model}}</p>
+            <img class="previewimage" src={{data.url}} height="82" width="82"></img>
+
+            </div>
+        </div>
+      </li>
+
+  </ul>
+
+</md-content>

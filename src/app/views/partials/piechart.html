@@ -1,0 +1,5 @@
+<div ng-controller="ChartController">
+  <select id="phens" ng-model="piechartselected" ng-change = "selecteditemchanged()">
+    <option ng-repeat="option in piechartoptions" value={{option}}>{{option}}</options></select>
+  <nvd3 options="options_pie" data="data_pie"></nvd3>
+  </div>

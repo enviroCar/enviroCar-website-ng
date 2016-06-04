@@ -1,0 +1,56 @@
+<div ng-controller="ChartController">
+  <md-list-item class="md-2-line">
+        <img ng-src="assets/images/ic_directions_car_black_48dp.png" class="md-avatar"/>
+        <div class="md-list-item-text">
+          <h3>Distance</h3>
+          <p>{{tracksummary['distance']}} {{tracksummary['unitsofdistance']}}</p>
+        </div>
+        <img ng-src="assets/images/ic_directions_car_black_48dp.png" class="md-avatar"/>
+        <div class="md-list-item-text">
+          <h3>Vehicle Type</h3>
+          <p>{{tracksummary['vehicletype']}} - {{tracksummary['vehiclemodel']}}</p>
+        </div>
+      </md-list-item>
+      <md-divider ></md-divider>
+      <md-list-item class="md-2-line">
+            <img ng-src="assets/images/ic_timer_black_48dp.png" class="md-avatar"/>
+            <div class="md-list-item-text">
+              <h3>Total Time</h3>
+              <p>{{tracksummary['timeoftravel']}} {{tracksummary['unitsoftime']}}</p>
+            </div>
+            <img ng-src="assets/images/ic_access_time_black_48dp.png" class="md-avatar"/>
+            <div class="md-list-item-text">
+              <h3>Start-Finish Time</h3>
+              <p>{{tracksummary['starttime']}} - {{tracksummary['endtime']}}</p>
+            </div>
+      </md-list-item>
+      <md-divider ></md-divider>
+      <md-list-item class="md-2-line">
+            <img ng-src="assets/images/Gas-Pump-96.png" class="md-avatar"/>
+            <div class="md-list-item-text">
+              <h3>Consumption</h3>
+              <p>{{tracksummary['fuel']}} {{tracksummary['unitsoffuel']}}</p>
+            </div>
+            <img ng-src="assets/images/ic_local_gas_station_black_48dp.png" class="md-avatar"/>
+            <div class="md-list-item-text">
+              <h3>Consumption/Hour</h3>
+              <p>{{tracksummary['fuelperhour']}} l/h</p>
+            </div>
+      </md-list-item>
+      <md-divider ></md-divider>
+      <md-list-item class="md-2-line">
+            <img ng-src="assets/images/Gas-96.png" class="md-avatar"/>
+            <div class="md-list-item-text">
+              <h3>CO2 Emission</h3>
+              <p>{{tracksummary['co2emission']}} {{tracksummary['unitsofco2emission']}}</p>
+            </div>
+            <img ng-src="assets/images/Gas-96.png" class="md-avatar"/>
+            <div class="md-list-item-text">
+              <h3>CO2 Emission/Hour</h3>
+              <p>{{tracksummary['co2emissionperhour']}} kg/h</p>
+            </div>
+      </md-list-item>
+
+
+
+</div>
