@@ -1,5 +1,12 @@
 <div ng-controller="ChartController">
-  <select id="phens" ng-model="piechartselected" ng-change = "selecteditemchanged()">
-    <option ng-repeat="option in piechartoptions" value={{option}}>{{option}}</options></select>
-  <nvd3 options="options_pie" data="data_pie"></nvd3>
+        <md-content ng-show="$showOptions" class="options">
+        <md-radio-group ng-model="piechartselected" ng-change="selecteditemchanged()">
+          <md-radio-button ng-repeat="d in piechartoptions" ng-value="d" >
+              {{d}}
+       </md-radio-button>
+        </md-radio-group>
+      </md-content>
+      <md-content class="md-padding">
+        <nvd3 options="options_pie" data="data_pie"></nvd3>
+  </md-content>
   </div>
