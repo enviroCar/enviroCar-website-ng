@@ -146,10 +146,22 @@ angular.module('app')
     var keys;
     var starttimeg;
     var endtimeg;
+    var len_data;
     //*****************************************************
+    var colorsl = ["#0099ff","#ffff00","#009900","#ff9900","#cc3300","#4B0082"]
+    console.log(colorsl[5]);
     $scope.piechartselected = chart.piechartselected;
+    $scope.phenomenonleaflet = "Speed"
     var piechartsdata = chart.piechartsdata;
     var rangeobjects = chart.rangeobjects;
+    var data_global = {}
+    $scope.changePhenomenon = function()
+    {
+      console.log("changed");
+      console.log($scope.paths);
+      optionchanger(data_global,$scope.phenomenonleaflet, 0)
+    }
+    $scope.performancePeriod = 'week';
     $scope.selecteditemchanged = function()
     {
       var temp_obj = {};
@@ -183,9 +195,10 @@ angular.module('app')
           }
           else
           {
+            data_global = data;
             var dist = data.data.properties.length;
             var datafinal = [];
-            var len_data = data.data.features.length;
+            len_data = data.data.features.length;
             var phenoms = chart.phenoms;
             $scope.piechartoptions = phenoms;
             var colors = chart.colors;
@@ -265,43 +278,8 @@ angular.module('app')
               datafinal.push(data_to_push);
             }
             $scope.data = datafinal;
-            for( var k = 0 ; k < len_data; k++)
-            {
-              if( k == 0)
-                {
+            optionchanger(data,'Speed',1);
 
-                  var m1 = {};
-                  m1['lat'] = data.data.features[0].geometry.coordinates[1];
-                  m1['lng'] = data.data.features[0].geometry.coordinates[0];
-                  m1['focus'] = true;
-                  m1['draggable'] = false;
-                  m1['message'] = chart.m1message;
-                  $scope.markers['m1'] = m1;
-                  latinitial = data.data.features[0].geometry.coordinates[1];
-                  longinitial = data.data.features[0].geometry.coordinates[0];
-                }
-                if(k>=1)
-                {
-                  var p='p';
-                  var path_number = String(p + (k+1));
-                  var pathobj = {}
-                  pathobj['color'] = '#008000'
-                  pathobj['weight'] = 8;
-                  pathobj['latlngs'] = [{'lat':data.data.features[k-1].geometry.coordinates[1] , 'lng':data.data.features[k-1].geometry.coordinates[0]},
-                  {'lat':data.data.features[k].geometry.coordinates[1] , 'lng':data.data.features[k].geometry.coordinates[0]}]
-                  $scope.paths['p'+(k)] = pathobj;
-                }
-                if(k == (len_data-1))
-                {
-                  var m2 = {};
-                  m2['lat'] = data.data.features[k].geometry.coordinates[1];
-                  m2['lng'] = data.data.features[k].geometry.coordinates[0];
-                  m2['focus'] = false;
-                  m2['draggable'] = false;
-                  m2['message'] = chart.m2message;
-                  $scope.markers['m2'] = m2;
-                }
-            }
           }
           $scope.center['lat'] = latinitial;
           $scope.center['lng'] = longinitial;
@@ -396,6 +374,61 @@ angular.module('app')
           }
           console.log($scope.tracksummary)
      });
+     function optionchanger(data,phenomoption,flag)
+     {
+       for( var k = 0 ; k < len_data; k++)
+       {
+         if( k == 0 && flag == 1)
+           {
+
+             var m1 = {};
+             m1['lat'] = data.data.features[0].geometry.coordinates[1];
+             m1['lng'] = data.data.features[0].geometry.coordinates[0];
+             m1['focus'] = true;
+             m1['draggable'] = false;
+             m1['message'] = chart.m1message;
+             $scope.markers['m1'] = m1;
+             latinitial = data.data.features[0].geometry.coordinates[1];
+             longinitial = data.data.features[0].geometry.coordinates[0];
+           }
+           if(k>=1)
+           {
+             var p='p';
+             var path_number = String(p + (k+1));
+             var pathobj = {}
+             if(data.data.features[k-1].properties.phenomenons[phenomoption] )
+             for(var i = chart.numberofranges ; i >= 0 ; i--)
+              {
+
+                if(data.data.features[k-1].properties.phenomenons[phenomoption].value >= rangeobjects[phenomoption][0][i])
+                {
+                  console.log(k+"k values")
+                   pathobj['color'] = colorsl[5-i];
+                   console.log("value of i"+i);
+                   //console.log(colors[5]);
+                  // console.log(colors[5-i]);
+                   break;
+                }
+
+              }
+             //pathobj['color'] = '#008000';
+             pathobj['weight'] = 8;
+             pathobj['latlngs'] = [{'lat':data.data.features[k-1].geometry.coordinates[1] , 'lng':data.data.features[k-1].geometry.coordinates[0]},
+             {'lat':data.data.features[k].geometry.coordinates[1] , 'lng':data.data.features[k].geometry.coordinates[0]}]
+             $scope.paths['p'+(k)] = pathobj;
+           }
+           if(k == (len_data-1) && flag == 1 )
+           {
+             var m2 = {};
+             m2['lat'] = data.data.features[k].geometry.coordinates[1];
+             m2['lng'] = data.data.features[k].geometry.coordinates[0];
+             m2['focus'] = false;
+             m2['draggable'] = false;
+             m2['message'] = chart.m2message;
+             $scope.markers['m2'] = m2;
+           }
+       }
+     }
 }]);
 
 angular.module('app')
