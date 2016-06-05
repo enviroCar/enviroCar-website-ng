@@ -15,7 +15,7 @@
         sref: '.dashboard'
       },
       {
-        name: 'Profile',
+        name: 'Tracks',
         icon: 'person',
         sref: '.profile'
       },

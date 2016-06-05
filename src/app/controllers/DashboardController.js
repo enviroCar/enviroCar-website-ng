@@ -35,6 +35,8 @@ angular.module('app')
 angular.module('app')
  .controller('DashboardController',['$scope','$http','$rootScope','requesthomestats','requestgraphstats','dashboard',function($scope,$http,$rootScope,requesthomestats,requestgraphstats,dashboard)
   {
+      $scope.events = [];
+      var helperevents = [];
       console.log("came in dashboard controller");
       $scope.trial = "Further comparision insights on the way :)";
       $scope.type = dashboard.type;
@@ -56,30 +58,42 @@ angular.module('app')
             console.log(limit+"is limit")
           for(var i=0; i<limit; i++)
           {
-            (function(cntr){
-                    requesthomestats.get(url1 + "/" + data.data.tracks[cntr].id).then(function(data2){
-                    console.log("came in track details");
-                    data2.data['url'] = dashboard.urltracks + data2.data.properties.id+"/preview";
-                    console.log(data2.data.properties['length'] = Number(data2.data.properties['length'].toFixed(2)));
-                    data2.data['urlredirect'] = dashboard.urlredirect + data2.data.properties.id;
-                    if((cntr+1)%2 == 0)
-                    {
-                      data2.data['placement'] = 'direction-r';
-                    }
-                    else
-                    {
-                      data2.data['placement'] = 'direction-l';
-                    }
-                    timeline[data.data.tracks[cntr].id] = data2.data;
-                    console.log(timeline);
-                  })
+            (function(cntr)
+            {
+                      var helper_events = {};
+                      helper_events['title'] = data.data.tracks[cntr].name;
+                      requesthomestats.get(url1 + "/" + data.data.tracks[cntr].id).then(function(data2)
+                      {
+                        helper_events['url'] = dashboard.urltracks + data2.data.properties.id+"/preview";
+                        helper_events['urlredirect'] = dashboard.urlredirect + data2.data.properties.id;
+                        helper_events['carmodel'] = data2.data.properties.sensor.properties.model;
+                        helper_events['length'] = data2.data.properties['length'].toFixed(2);
+                        helper_events['starttime'] = new Date(data2.data.features[0].properties.time).toLocaleString();
+                        helper_events['badgeIconClass'] = 'glyphicon-check';
+                        helper_events['badgeClass'] = 'info';
+                        console.log("came in track details");
+                        data2.data['url'] = dashboard.urltracks + data2.data.properties.id+"/preview";
+                        console.log(data2.data.properties['length'] = Number(data2.data.properties['length'].toFixed(2)));
+                        data2.data['urlredirect'] = dashboard.urlredirect + data2.data.properties.id;
+                        if((cntr+1)%2 == 0)
+                        {
+                          data2.data['placement'] = 'direction-r';
+                        }
+                        else
+                        {
+                          data2.data['placement'] = 'direction-l';
+                        }
+                        timeline[data.data.tracks[cntr].id] = data2.data;
+                        console.log(timeline);
+                      })
+                      helperevents.push(helper_events);
             })(i);
           }
           $scope.timelinevalues = timeline;
           console.log(timeline);
           console.log($scope.timelinevalues);
       });
-
+      $scope.events = helperevents;
       //*******************************************************
       //*******************************************************
       //******************GRAPHS PART**************************

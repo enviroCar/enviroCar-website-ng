@@ -42,8 +42,6 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
       })
       .state('home.table', {
         url: '/table',
-        controller: 'TableController',
-        controllerAs: 'vm',
         templateUrl: 'app/views/table.html',
         data: {
           title: 'Table'
