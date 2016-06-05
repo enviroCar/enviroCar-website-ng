@@ -18,7 +18,8 @@
     "angular-timeline": "1.6.2",
     "angular-loading-bar": "0.9.0",
     "leaflet": "0.7.7",
-    "angular-leaflet-directive": "0.10.0"
+    "angular-leaflet-directive": "0.10.0",
+    "angularUtils-pagination": "0.11.1"
   },
   "devDependencies": {}
 }

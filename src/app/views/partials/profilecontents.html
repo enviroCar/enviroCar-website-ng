@@ -1,0 +1,60 @@
+<div role="main" class="container theme-showcase">
+     <div>
+       <div class="table-responsive-vertical ">
+           <div class="bs-component" ng-controller="ProfileController">
+               <table ng-show="show == true" class="table table-striped table-hover">
+                   <thead>
+                       <tr>
+                           <th>Track Id</th>
+                           <th>Last Modified</th>
+                           <th>Track Name</th>
+                       </tr>
+                   </thead>
+                   <tbody ng-show="show == true">
+                       <tr ng-show="trackslist.length <= 0"><td colspan="5" style="text-align:center;">Loading new data!!</td></tr>
+                       <tr ng-hide="trackslist.length <= 0" dir-paginate="user in trackslist|itemsPerPage:itemsPerPage" total-items="total_count">
+                           <td><a href={{user.urlredirect}}>{{user.id}}</a></td>
+                           <td>{{user.modified}}</td>
+                           <td>{{user.name}}</td>
+                       </tr>
+                   </tbody>
+               </table>
+               <dir-pagination-controls
+                  max-size="8"
+                  direction-links="true"
+                  boundary-links="true"
+                  on-page-change="getData(newPageNumber)" >
+               </dir-pagination-controls>
+           </div>
+       </div>
+     </div>
+   </div>
+
+
+   <!-- TODO: Replace table to table component when https://github.com/angular/material/issues/796 will closed -->
+<!--   <div class="table-responsive-vertical md-whiteframe-z1">
+       <table id="table" class="table table-hover table-bordered">
+           <thead>
+           <tr>
+               <th>#</th>
+               <th>Issue</th>
+               <th>Status</th>
+               <th>Progress</th>
+           </tr>
+           </thead>
+           <tbody>
+           <tr ng-repeat="data in vm.tableData track by $index">
+               <td data-title="ID">{{$index + 1}}</td>
+               <td data-title="Issue">{{data.issue}}</td>
+               <td data-title="Status">{{data.status}}</td>
+               <td data-title="Progress">
+                   <md-progress-linear class="table-progress {{data.class}}"
+                                       md-mode="determinate"
+                                       value={{data.progress}}>
+                   </md-progress-linear>
+               </td>
+           </tr>
+           </tbody>
+       </table>
+   </div>
+ -->

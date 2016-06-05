@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
-  'ngSanitize', 'ui.router', 'ngMaterial', 'nvd3','angular-timeline','angular-loading-bar','leaflet-directive', 'app'])
+  'ngSanitize', 'ui.router', 'ngMaterial', 'nvd3','angular-timeline','angularUtils.directives.dirPagination','angular-loading-bar','leaflet-directive', 'app'])
 
   .config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider,
                     $mdIconProvider) {
@@ -35,8 +35,6 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
       .state('home.profile', {
         url: '/profile',
         templateUrl: 'app/views/profile.html',
-        controller: 'ProfileController',
-        controllerAs: 'vm',
         data: {
           title: 'Profile'
         },
