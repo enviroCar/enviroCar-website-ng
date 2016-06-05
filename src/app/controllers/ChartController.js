@@ -11,7 +11,7 @@
 angular.module('app')
   .constant('chart',{
     chart1type: 'pieChart',
-    chart1height: 420,
+    chart1height: 370,
     chart1duration: 300,
     chart1legend:
     {
