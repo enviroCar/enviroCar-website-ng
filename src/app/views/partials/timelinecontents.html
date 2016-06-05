@@ -1,0 +1,18 @@
+<div ng-controller = "DashboardController">
+  <timeline>
+  <timeline-event ng-repeat="event in events" side="left">
+    <timeline-badge class="{{event.badgeClass}}">
+      <i class="glyphicon {{event.badgeIconClass}}"></i>
+    </timeline-badge>
+    <timeline-panel class="{{event.badgeClass}}">
+      <timeline-heading>
+        <h4><a href={{event.urlredirect}}>{{event.title}}</a></h4>
+      </timeline-heading>
+      <p>Vehicle Model - {{event.carmodel}}</p>
+      <p>Distance - {{event.length}} Km</p>
+      <p>Start Time - {{event.starttime}}</p>
+      <img class="previewimage" src={{event.url}} height="52" width="52"></img>
+    </timeline-panel>
+  </timeline-event>
+</timeline>
+</div>

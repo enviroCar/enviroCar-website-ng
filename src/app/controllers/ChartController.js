@@ -351,6 +351,7 @@ angular.module('app')
               return;
             }
 
+
           }
           console.log(Co2sum + " " + fuelSum)
           var fuelsplit = units['Consumption'].split("/");
@@ -369,8 +370,8 @@ angular.module('app')
             unitsofco2emission: co2split[0],
             co2emissionperhour: ((Co2sum*60)/timeoftravel).toFixed(2),
             fuelperhour: ((fuelSum*60)/timeoftravel).toFixed(2),
-            starttime: starttimeg,
-            endtime: endtimeg
+            starttime: new Date(starttimeg).toLocaleString(),
+            endtime: new Date(endtimeg).toLocaleString()
           }
           console.log($scope.tracksummary)
      });
