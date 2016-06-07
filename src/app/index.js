@@ -26,7 +26,7 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
       .state('home.dashboard', {
         url: '/home',
         templateUrl: 'app/views/dashboard.html',
-        //controller: 'DashboardController',
+      //  controller: 'DashboardController',
         data: {
           title: 'Dashboard'
         },

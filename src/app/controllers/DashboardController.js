@@ -61,11 +61,13 @@ angular.module('app')
             (function(cntr)
             {
                       var helper_events = {};
+                      helper_events['id'] = data.data.tracks[cntr].id;
                       helper_events['title'] = data.data.tracks[cntr].name;
-                      requesthomestats.get(url1 + "/" + data.data.tracks[cntr].id).then(function(data2)
+                      helper_events['urlredirect'] = dashboard.urlredirect + data.data.tracks[cntr].id;
+                      helper_events['url'] = dashboard.urltracks + data.data.tracks[cntr].id+"/preview";
+                      helper_events['modified'] = new Date(data.data.tracks[cntr].modified).toLocaleString();
+                    /*  requesthomestats.get(url1 + "/" + data.data.tracks[cntr].id).then(function(data2)
                       {
-                        helper_events['url'] = dashboard.urltracks + data2.data.properties.id+"/preview";
-                        helper_events['urlredirect'] = dashboard.urlredirect + data2.data.properties.id;
                         helper_events['carmodel'] = data2.data.properties.sensor.properties.model;
                         helper_events['length'] = data2.data.properties['length'].toFixed(2);
                         helper_events['starttime'] = new Date(data2.data.features[0].properties.time).toLocaleString();
@@ -74,7 +76,6 @@ angular.module('app')
                         console.log("came in track details");
                         data2.data['url'] = dashboard.urltracks + data2.data.properties.id+"/preview";
                         console.log(data2.data.properties['length'] = Number(data2.data.properties['length'].toFixed(2)));
-                        data2.data['urlredirect'] = dashboard.urlredirect + data2.data.properties.id;
                         if((cntr+1)%2 == 0)
                         {
                           data2.data['placement'] = 'direction-r';
@@ -86,6 +87,7 @@ angular.module('app')
                         timeline[data.data.tracks[cntr].id] = data2.data;
                         console.log(timeline);
                       })
+                      */
                       helperevents.push(helper_events);
             })(i);
           }
