@@ -1,7 +1,45 @@
-<div layout-gt-md="row" >
+<div layout-gt-md="row" ng-controller="DashboardController">
+  <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4" md-theme-watch>
+    <md-card-title-text>
+      <br>
+            <span class="md-subhead">Timeline Of Tracks</span>
+          </md-card-title-text>
+    <md-card-title-media>
 
-  <panel-widget flex title="Timeline" template="app/views/partials/timelinecontents.html" ></panel-widget>
+  <div>
+    <timeline>
+    <timeline-event ng-repeat="event in events" side={{event.side}}>
+      <timeline-badge class="{{event.badgeClass}}">
+        <i class="glyphicon {{event.badgeIconClass}}"></i>
+      </timeline-badge>
+      <timeline-panel class="{{event.badgeClass}}">
+        <timeline-heading>
+          <h4><a href={{event.urlredirect}}>{{event.title}}</a></h4>
+        </timeline-heading>
+        <p>Track ID - {{event.id}}</p>
+        <p>Modified - {{event.modified}}</p>
+        <img class="previewimage" src={{event.url}} height="72" width="72"></img>
+      </timeline-panel>
+    </timeline-event>
+  </timeline>
+  </div>
+</md-card-title-media>
+
+</md-card>
+<md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-flex" md-theme-watch>
+  <md-card-title-text>
+    <br>
+          <span class="md-subhead">You Vs Public</span>
+        </md-card-title-text>
+  <md-card-title-media>
+      <nvd3 options="options" data="data"></nvd3>
+
+</md-card-title-media>
+
+</md-card>
+  <!--<panel-widget flex title="Timeline" template="app/views/partials/timelinecontents.html" ></panel-widget>
   <panel-widget flex title="You vs Public" template="app/views/partials/comparison.html" class="fixed-height-widget"></panel-widget>
+-->
 </div>
 <div >
 </div>

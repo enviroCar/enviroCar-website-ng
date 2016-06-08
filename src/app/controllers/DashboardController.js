@@ -24,6 +24,7 @@ angular.module('app')
     textcons: 'Consumption(',
     key1: 'User Statistics',
     color1: '#d62728',
+    // one strring
     urlcommonco2: 'https://envirocar.org/api/stable/statistics/CO2',
     urlcommonspeed: 'https://envirocar.org/api/stable/statistics/Speed',
     urlcommoncons: 'https://envirocar.org/api/stable/statistics/Consumption',
@@ -66,7 +67,15 @@ angular.module('app')
                       helper_events['urlredirect'] = dashboard.urlredirect + data.data.tracks[cntr].id;
                       helper_events['url'] = dashboard.urltracks + data.data.tracks[cntr].id+"/preview";
                       helper_events['modified'] = new Date(data.data.tracks[cntr].modified).toLocaleString();
-                    /*  requesthomestats.get(url1 + "/" + data.data.tracks[cntr].id).then(function(data2)
+                      if(cntr%2 == 0)
+                      {
+                        helper_events['side']='left'
+                      }
+                      else
+                      {
+                        helper_events['side']='right';
+                      }
+                      /*  requesthomestats.get(url1 + "/" + data.data.tracks[cntr].id).then(function(data2)
                       {
                         helper_events['carmodel'] = data2.data.properties.sensor.properties.model;
                         helper_events['length'] = data2.data.properties['length'].toFixed(2);

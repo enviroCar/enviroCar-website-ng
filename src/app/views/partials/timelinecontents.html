@@ -1,6 +1,6 @@
 <div ng-controller = "DashboardController">
   <timeline>
-  <timeline-event ng-repeat="event in events" side="left">
+  <timeline-event ng-repeat="event in events" side={{event.side}}>
     <timeline-badge class="{{event.badgeClass}}">
       <i class="glyphicon {{event.badgeIconClass}}"></i>
     </timeline-badge>

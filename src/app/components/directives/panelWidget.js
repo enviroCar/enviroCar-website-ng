@@ -3,7 +3,7 @@
 angular.module('app')
   .directive('panelWidget', function() {
     return {
-      restrict: 'AE',
+      restrict: 'E',
       replace: true,
       transclude: true,
       scope: { title: '@', template: '@', options: '@' },

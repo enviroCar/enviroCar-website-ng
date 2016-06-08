@@ -403,9 +403,9 @@ angular.module('app')
 
                 if(data.data.features[k-1].properties.phenomenons[phenomoption].value >= rangeobjects[phenomoption][0][i])
                 {
-                  console.log(k+"k values")
+              //    console.log(k+"k values")
                    pathobj['color'] = colorsl[5-i];
-                   console.log("value of i"+i);
+              //     console.log("value of i"+i);
                    //console.log(colors[5]);
                   // console.log(colors[5-i]);
                    break;
