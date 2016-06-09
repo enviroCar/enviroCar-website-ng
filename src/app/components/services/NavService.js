@@ -17,7 +17,7 @@
       {
         name: 'Tracks',
         icon: 'person',
-        sref: '.profile'
+        sref: '.tracks'
       },
       {
         name: 'Table',

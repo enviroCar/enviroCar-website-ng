@@ -1,5 +1,5 @@
 angular.module('app')
-.controller('ProfileController',['$scope','$http','$rootScope','factorytrackslist', function($scope,$http,$rootScope,factorytrackslist){
+.controller('TracksController',['$scope','$http','$rootScope','factorytrackslist', function($scope,$http,$rootScope,factorytrackslist){
     $http.defaults.headers.common = {'X-User': $rootScope.globals.currentUser.username, 'X-Token': $rootScope.globals.currentUser.authdata};
     // setting the headers for the request.
     $scope.urlredirect= '#/dashboard/chart/',
