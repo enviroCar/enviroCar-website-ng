@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
-  'ngSanitize', 'ui.router', 'ngMaterial', 'nvd3','angular-timeline','angularUtils.directives.dirPagination','angular-loading-bar','leaflet-directive', 'app'])
+  'ngSanitize', 'ui.router', 'ngMaterial', 'nvd3','angular-timeline','infinite-scroll','angularUtils.directives.dirPagination','angular-loading-bar','leaflet-directive', 'app'])
 
   .config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider,
                     $mdIconProvider) {
@@ -32,11 +32,11 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
         },
         authenticate: true
       })
-      .state('home.profile', {
-        url: '/profile',
-        templateUrl: 'app/views/profile.html',
+      .state('home.tracks', {
+        url: '/tracks',
+        templateUrl: 'app/views/tracks.html',
         data: {
-          title: 'Profile'
+          title: 'Tracks'
         },
         authenticate: true
       })

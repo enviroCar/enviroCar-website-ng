@@ -1,12 +1,15 @@
-<div layout-gt-md="row" ng-controller="DashboardController">
-  <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4" md-theme-watch>
-    <md-card-title-text>
+<div layout-gt-md="row" ng-controller="DashboardController" layout="column">
+
+  <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
+    <md-card-content>
       <br>
             <span class="md-subhead">Timeline Of Tracks</span>
           </md-card-title-text>
-    <md-card-title-media>
+        </md-card-content>
+        <md-card-title-media>
 
-  <div>
+<div flex layout="row">
+      <md-content flex layout-padding style="height:500px">
     <timeline>
     <timeline-event ng-repeat="event in events" side={{event.side}}>
       <timeline-badge class="{{event.badgeClass}}">
@@ -22,24 +25,50 @@
       </timeline-panel>
     </timeline-event>
   </timeline>
-  </div>
+</md-content>
+</div>
+
 </md-card-title-media>
 
 </md-card>
-<md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-flex" md-theme-watch>
+<md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
   <md-card-title-text>
     <br>
           <span class="md-subhead">You Vs Public</span>
         </md-card-title-text>
-  <md-card-title-media>
+        <md-card-content>
       <nvd3 options="options" data="data"></nvd3>
 
-</md-card-title-media>
+    </md-card-content>
 
 </md-card>
   <!--<panel-widget flex title="Timeline" template="app/views/partials/timelinecontents.html" ></panel-widget>
   <panel-widget flex title="You vs Public" template="app/views/partials/comparison.html" class="fixed-height-widget"></panel-widget>
 -->
+
 </div>
-<div >
+<div layout-gt-md="row" ng-controller="FriendActivityController" layout="column" >
+  <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-5" md-theme-watch>
+    <md-card-title-text>
+      <br>
+            <span class="md-subhead">Friend's Activity</span>
+          </md-card-title-text>
+    <md-card-content>
+      <md-content flex layout-padding style="height:470px">
+        <md-list-item class="md-3-line" ng-repeat='item in events' ng-click="goToActivity(item.type,item.trackidlink)">
+          <img class="md-avatar" src={{item.profileurl}}></img>
+          <div class="md-list-item-text" layout="column">
+          <h3>{{item.topic}}</h3>
+          <h4>{{item.name}}</h4>
+          <p>{{item.date}}</p>
+        </div>
+        </md-list-item>
+        <div ng-show = 'busy'>Loading Data...</div>
+  </md-content>
+  </md-card-content>
+  <md-card-actions layout-align="end center">
+    <md-button ng-click="nextpage()">Load More</md-button>
+  </md-card-actions>
+  </md-card>
+
 </div>
