@@ -1,16 +1,16 @@
-
 <div ng-controller="ChartController">
     <div layout-gt-md="row">
     <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
       <md-card-title-text>
         <br>
-        <span class="md-subhead">Track Map</span>
+        <span class="md-subhead">{{'TRACK_MAP' | translate}}</span>
             </md-card-title-text>
             <md-card-actions layout="row" layout-align="end right">
 
             <md-button ng-show="options" ng-click="$showOptions = !$showOptions" class="md-icon-button" aria-label="Show options">
                 <i class="material-icons">more_vert</i>
               </md-card-actions>
+              <md-card-content>
               <md-content ng-show="$showOptions" class="options">
                 <md-radio-group ng-model="phenomenonleaflet" ng-change="changePhenomenon()">
 
@@ -25,18 +25,18 @@
             </md-content>
 
 
-    </md-card-title-media>
+    </md-card-content>
 
     </md-card>
   <!--  <panel-widget flex title="Track Map" template="app/views/partials/leaflettrack.html" options="true"></panel-widget> -->
   <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50-100" md-theme-watch>
     <md-card-title-text>
       <br>
-            <span class="md-subhead">Graph</span>
+            <span class="md-subhead">{{'GRAPH' | translate}}</span>
           </md-card-title-text>
-    <md-card-title-media>
+    <md-card-content>
       <nvd3 options="options" data="data"></nvd3>
-  </md-card-title-media>
+  </md-card-content>
 
   </md-card>
     <!-- <panel-widget flex title="Graph" template="app/views/partials/chartmain.html"></panel-widget> -->
@@ -46,13 +46,14 @@
   <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
     <md-card-title-text>
       <br>
-      <span class="md-subhead">Pie Chart</span>
+      <span class="md-subhead">{{'PIE_CHART' | translate}}</span>
           </md-card-title-text>
           <md-card-actions layout="row" layout-align="end right">
 
           <md-button ng-show="options" ng-click="$showOptions = !$showOptions" class="md-icon-button" aria-label="Show options">
               <i class="material-icons">more_vert</i>
             </md-card-actions>
+            <md-card-content>
             <md-content ng-show="$showOptions" class="options">
             <md-radio-group ng-model="piechartselected" ng-change="selecteditemchanged()">
               <md-radio-button ng-repeat="d in piechartoptions" ng-value="d" >
@@ -65,26 +66,26 @@
       </md-content>
 
 
-  </md-card-title-media>
+  </md-card-content>
 
   </md-card>
   <!--  <panel-widget flex title="Pie Chart" template="app/views/partials/piechart.html" options="true"></panel-widget> -->
   <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50-100" md-theme-watch>
     <md-card-title-text>
       <br>
-            <span class="md-subhead">Track Summary</span>
+            <span class="md-subhead">{{'TRACK_SUMMARY' | translate}}</span>
           </md-card-title-text>
     <md-card-title-media>
       <div>
         <md-list-item class="md-2-line">
               <img ng-src="assets/images/ic_directions_car_black_48dp.png" class="md-avatar"/>
               <div class="md-list-item-text">
-                <h3>Distance</h3>
+                <h3>{{'DISTANCE' | translate}}</h3>
                 <p>{{tracksummary['distance']}} {{tracksummary['unitsofdistance']}}</p>
               </div>
               <img ng-src="assets/images/ic_directions_car_black_48dp.png" class="md-avatar"/>
               <div class="md-list-item-text">
-                <h3>Vehicle Type</h3>
+                <h3>{{'VEHICLE_TYPE'}}</h3>
                 <p>{{tracksummary['vehicletype']}} - {{tracksummary['vehiclemodel']}}</p>
               </div>
             </md-list-item>
@@ -92,12 +93,12 @@
             <md-list-item class="md-2-line">
                   <img ng-src="assets/images/ic_timer_black_48dp.png" class="md-avatar"/>
                   <div class="md-list-item-text">
-                    <h3>Total Time</h3>
+                    <h3>{{'TOTAL_TIME' | translate}}</h3>
                     <p>{{tracksummary['timeoftravel']}} {{tracksummary['unitsoftime']}}</p>
                   </div>
                   <img ng-src="assets/images/ic_access_time_black_48dp.png" class="md-avatar"/>
                   <div class="md-list-item-text">
-                    <h3>Start-Finish Time</h3>
+                    <h3>{{'START_FINISH' | translate}}</h3>
                     <p>{{tracksummary['starttime']}} - {{tracksummary['endtime']}}</p>
                   </div>
             </md-list-item>
@@ -105,12 +106,12 @@
             <md-list-item class="md-2-line">
                   <img ng-src="assets/images/Gas-Pump-96.png" class="md-avatar"/>
                   <div class="md-list-item-text">
-                    <h3>Consumption</h3>
+                    <h3>{{'CONSUMPTION' | translate}}</h3>
                     <p>{{tracksummary['fuel']}} {{tracksummary['unitsoffuel']}}</p>
                   </div>
                   <img ng-src="assets/images/ic_local_gas_station_black_48dp.png" class="md-avatar"/>
                   <div class="md-list-item-text">
-                    <h3>Consumption/Hour</h3>
+                    <h3>{{'CONSUMPTION_HOUR' | translate}}</h3>
                     <p>{{tracksummary['fuelperhour']}} l/h</p>
                   </div>
             </md-list-item>
@@ -118,12 +119,12 @@
             <md-list-item class="md-2-line">
                   <img ng-src="assets/images/Gas-96.png" class="md-avatar"/>
                   <div class="md-list-item-text">
-                    <h3>CO2 Emission</h3>
+                    <h3>{{'CO2_EMISSION' | translate}}</h3>
                     <p>{{tracksummary['co2emission']}} {{tracksummary['unitsofco2emission']}}</p>
                   </div>
                   <img ng-src="assets/images/Gas-96.png" class="md-avatar"/>
                   <div class="md-list-item-text">
-                    <h3>CO2 Emission/Hour</h3>
+                    <h3>{{'CO2_EMISSION_HOUR' | translate}}</h3>
                     <p>{{tracksummary['co2emissionperhour']}} kg/h</p>
                   </div>
             </md-list-item>
@@ -131,11 +132,7 @@
 
 
       </div>
-
-
   </md-card-title-media>
-
   </md-card>
-  <!--   <panel-widget flex title="Track Summary" template="app/views/partials/tracksummary.html"></panel-widget> -->
 </div>
 </div>

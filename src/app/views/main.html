@@ -51,14 +51,14 @@
             class="md-whiteframe-z2 md-sidenav-right">
     <md-toolbar>
         <md-toolbar class="md-warn" layout="row" layout-align="center center">
-            <img class="img-circle" ng-src="assets/images/feynman.jpg">
+            <img class="img-circle">
             <md-menu md-offset="0 20">
                 <md-button class="capitalize" ng-click="$mdOpenMenu()" aria-label="Open menu">
-                    <span>Richard Feynman</span>
+                    <span ng-bind=vm.profilename></span>
                     <i class="material-icons">keyboard_arrow_down</i>
                 </md-button>
                 <md-menu-content width="3">
-                    <md-menu-item><md-button ng-click="$mdCloseMenu()" ui-sref="home.profile">Profile</md-button></md-menu-item>
+                    <md-menu-item><md-button ng-click="$mdCloseMenu()" ui-sref="home.tracks">Tracks</md-button></md-menu-item>
                     <md-menu-item><md-button ng-click="$mdCloseMenu()" ui-sref="login">Log out</md-button></md-menu-item>
                 </md-menu-content>
             </md-menu>
@@ -66,11 +66,29 @@
     </md-toolbar>
 
     <section>
-        <md-toolbar md-theme="grey" class="md-hue-1">
+        <md-toolbar md-theme="blue" class="md-hue-1">
             <div class="md-toolbar-tools">
-                <h3>Messages</h3>
+                <h3>Your Activity</h3>
             </div>
         </md-toolbar>
+        <md-card ng-controller="MyActivityController" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50-white" md-theme-watch>
+          <md-card-content>
+            <md-content flex layout-padding style="height:470px">
+              <md-list-item class="md-3-line" ng-repeat='item in events' ng-click="goToActivity(item.type,item.trackidlink)">
+            <!--    <img class="md-avatar" src={{item.profileurl}}></img> -->
+                <div class="md-list-item-text" layout="column">
+                <h3>{{item.topic}}</h3>
+                <h4>{{item.name}}</h4>
+                <p>{{item.date}}</p>
+              </div>
+              </md-list-item>
+              <div ng-show = 'busy'>Loading Data...</div>
+        </md-content>
+        </md-card-content>
+        <md-card-actions layout-align="center center">
+          <md-button ng-click="nextpage()">Load More</md-button>
+        </md-card-actions>
+        </md-card>
       <!--  <div ng-include src="'app/views/partials/messages.html'"/>  SOme content if needed can be added here-->
 
     </section>

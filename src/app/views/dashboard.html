@@ -1,9 +1,58 @@
+<div layout-gt-md="row" ng-controller="ProfileViewController" layout="row">
+    <md-card md-theme='dark-purple' class="card card-4-50" md-theme-watch>
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">{{'TRACKS' | translate}}</span>
+        </md-card-title-text>
+        <md-card-title-media>
+        </md-card-title-media>
+        <md-card-content layout="row">
+            <h2 ng-bind=track_number></h2>
+        </md-card-content>
+    </md-card>
+    <md-card md-theme='dark-purple' class="card card-4-50" md-theme-watch>
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">{{'FRIENDS' | translate}}</span>
+        </md-card-title-text>
+        <md-card-title-media>
+          <div class="md-media-sm card-media"></div>
+        </md-card-title-media>
+        <md-card-content>
+          <h2 ng-bind=friends_number></h2>
+        </md-card-content>
+    </md-card>
+    <md-card md-theme='dark-purple' class="card card-4-50" md-theme-watch>
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">{{'DISTANCE' | translate}}</span>
+        </md-card-title-text>
+        <md-card-title-media>
+          <div class="md-media-sm card-media"></div>
+        </md-card-title-media>
+        <md-card-content>
+          <h2 ng-bind=distance_driven></h2>
+        </md-card-content>
+    </md-card>
+    <md-card md-theme='dark-purple' class="card card-4-50" md-theme-watch>
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">{{'GROUPS' | translate}}</span>
+        </md-card-title-text>
+        <md-card-title-media>
+          <div class="md-media-sm card-media"></div>
+        </md-card-title-media>
+        <md-card-content>
+          <h2 ng-bind=groups_number></h2>
+        </md-card-content>
+    </md-card>
+</div>
 <div layout-gt-md="row" ng-controller="DashboardController" layout="column">
 
   <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
     <md-card-content>
       <br>
-            <span class="md-subhead">Timeline Of Tracks</span>
+            <span class="md-subhead">{{ 'TITLE_TRACKS' | translate}}</span>
           </md-card-title-text>
         </md-card-content>
         <md-card-title-media>
@@ -19,8 +68,8 @@
         <timeline-heading>
           <h4><a href={{event.urlredirect}}>{{event.title}}</a></h4>
         </timeline-heading>
-        <p>Track ID - {{event.id}}</p>
-        <p>Modified - {{event.modified}}</p>
+        <p>{{'TRACK_ID' | translate}} - {{event.id}}</p>
+        <p>{{'MODIFIED' | translate}} - {{event.modified}}</p>
         <img class="previewimage" src={{event.url}} height="72" width="72"></img>
       </timeline-panel>
     </timeline-event>
@@ -34,7 +83,7 @@
 <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
   <md-card-title-text>
     <br>
-          <span class="md-subhead">You Vs Public</span>
+          <span class="md-subhead">{{ 'YOU_VS_PUBLIC' | translate}}</span>
         </md-card-title-text>
         <md-card-content>
       <nvd3 options="options" data="data"></nvd3>
@@ -52,7 +101,7 @@
   <md-card ng-controller="FriendActivityController" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
     <md-card-title-text>
       <br>
-            <span class="md-subhead">Friend's Activity</span>
+            <span class="md-subhead">{{ 'FRIENDS_ACTIVITY' | translate}}</span>
           </md-card-title-text>
     <md-card-content>
       <md-content flex layout-padding style="height:470px">
@@ -64,11 +113,11 @@
           <p>{{item.date}}</p>
         </div>
         </md-list-item>
-        <div ng-show = 'busy'>Loading Data...</div>
+        <div ng-show = 'busy'>{{'LOADING_DATA' | translate}}</div>
   </md-content>
   </md-card-content>
   <md-card-actions layout-align="center center">
-    <md-button ng-click="nextpage()">Load More</md-button>
+    <md-button ng-click="nextpage()">{{'LOAD_MORE' | translate}}</md-button>
   </md-card-actions>
   </md-card>
 
@@ -76,7 +125,7 @@
   <md-card ng-controller="MyActivityController" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
     <md-card-title-text>
       <br>
-            <span class="md-subhead">My Activity</span>
+            <span class="md-subhead">{{'MY_ACTIVITY' | translate}}</span>
           </md-card-title-text>
     <md-card-content>
       <md-content flex layout-padding style="height:470px">
@@ -88,11 +137,11 @@
           <p>{{item.date}}</p>
         </div>
         </md-list-item>
-        <div ng-show = 'busy'>Loading Data...</div>
+        <div ng-show = 'busy'>{{'LOADING_DATA' | translate}}</div>
   </md-content>
   </md-card-content>
   <md-card-actions layout-align="center center">
-    <md-button ng-click="nextpage()">Load More</md-button>
+    <md-button ng-click="nextpage()">{{'LOAD_MORE' | translate}}</md-button>
   </md-card-actions>
   </md-card>
 </div>

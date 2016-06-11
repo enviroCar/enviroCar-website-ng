@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
-  'ngSanitize', 'ui.router', 'ngMaterial', 'nvd3','angular-timeline','infinite-scroll','angularUtils.directives.dirPagination','angular-loading-bar','leaflet-directive', 'app'])
+  'ngSanitize', 'ui.router', 'ngMaterial', 'nvd3','pascalprecht.translate','angular-timeline','infinite-scroll','angularUtils.directives.dirPagination','angular-loading-bar','leaflet-directive','angular.img','app'])
 
   .config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider,
                     $mdIconProvider) {
