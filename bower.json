@@ -20,7 +20,8 @@
     "leaflet": "0.7.7",
     "angular-leaflet-directive": "0.10.0",
     "angular-utils-pagination": "0.11.1",
-    "ngInfiniteScroll": "1.2.1"
+    "ngInfiniteScroll": "1.2.1",
+    "angular-img-http-src": "^0.1.0"
   },
   "devDependencies": {}
 }

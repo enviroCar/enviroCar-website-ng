@@ -1,3 +1,56 @@
+<div layout-gt-md="row" ng-controller="ProfileViewController" layout="row">
+    <md-card md-theme='dark-purple' class="card card-4-50" md-theme-watch>
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">Tracks</span>
+        </md-card-title-text>
+
+        <md-card-title-media>
+        </md-card-title-media>
+
+        <md-card-content layout="row">
+
+          <h3 ng-bind=track_number></h3>
+
+        </md-card-content>
+    </md-card>
+    <md-card md-theme='dark-purple' class="card card-4-50" md-theme-watch>
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">Friends</span>
+        </md-card-title-text>
+        <md-card-title-media>
+          <div class="md-media-sm card-media"></div>
+        </md-card-title-media>
+        <md-card-content>
+          <h3 ng-bind=friends_number></h3>
+        </md-card-content>
+    </md-card>
+    <md-card md-theme='dark-purple' class="card card-4-50" md-theme-watch>
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">Distance</span>
+        </md-card-title-text>
+        <md-card-title-media>
+          <div class="md-media-sm card-media"></div>
+        </md-card-title-media>
+        <md-card-content>
+          <h3 ng-bind=distance_driven></h3>
+        </md-card-content>
+    </md-card>
+    <md-card md-theme='dark-purple' class="card card-4-50" md-theme-watch>
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">Groups</span>
+        </md-card-title-text>
+        <md-card-title-media>
+          <div class="md-media-sm card-media"></div>
+        </md-card-title-media>
+        <md-card-content>
+          <h3 ng-bind=groups_number></h3>
+        </md-card-content>
+    </md-card>
+</div>
 <div layout-gt-md="row" ng-controller="DashboardController" layout="column">
 
   <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>

@@ -3,13 +3,13 @@
   angular
        .module('app')
        .controller('MainController', [
-          'navService', '$mdSidenav', '$mdBottomSheet', '$log', '$q', '$state', '$mdToast',
+          'navService', '$mdSidenav', '$mdBottomSheet', '$log', '$q', '$state', '$mdToast','$http','$rootScope',
           MainController
        ]);
 
-  function MainController(navService, $mdSidenav, $mdBottomSheet, $log, $q, $state, $mdToast) {
+  function MainController(navService, $mdSidenav, $mdBottomSheet, $log, $q, $state, $mdToast,$http, $rootScope) {
     var vm = this;
-
+    $http.defaults.headers.common = {'X-User': $rootScope.globals.currentUser.username, 'X-Token': $rootScope.globals.currentUser.authdata};
     vm.menuItems = [ ];
     vm.selectItem = selectItem;
     vm.toggleItemsList = toggleItemsList;
@@ -17,6 +17,25 @@
     vm.title = $state.current.data.title;
     vm.showSimpleToast = showSimpleToast;
     vm.toggleRightSidebar = toggleRightSidebar;
+    vm.profilename = $rootScope.globals.currentUser.username;
+    vm.url = "https://envirocar.org/api/stable/users/"+$rootScope.globals.currentUser.username +"/avatar"
+    console.log("came here");
+  /*  $http.get(vm.url).success(function (response, location){
+      console.log("got the second link");
+      console.log(location);
+      console.log(response);
+    })
+*/
+    $http.get(vm.url, { responseType: 'arraybuffer' })
+							.then(function (response) {
+                console.log("came here too");
+								var blob = new Blob(
+									[ response.data ],
+									{ type: response.headers('Content-Type') }
+								);
+								vm.profilepic = URL.createObjectURL(blob);
+                console.log(vm.profilepic);
+							});
 
     navService
       .loadAllItems()
