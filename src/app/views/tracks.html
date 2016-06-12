@@ -1,4 +1,44 @@
-<!--<div ng-controller="TracksController">
+<div layout="row" ng-app="app" layout-fill>
+<div layout-gt-md="column">
+  <md-card  class="card card-4-50" md-theme-watch>
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-headline">Tracks</span>
+      </md-title-text>
+    </md-card-title>
+    <md-card-content>
+    <md-content flex>
+      <md-list ng-controller="TrackListCtrl">
+        <md-list-item class="md-3-line md-long-text md-whiteframe-3dp" aria-label="single charts view" ng-repeat="track in results.tracks" ng-href="#/dashboard/chart/{{track.id}}">
+          <div class="md-list-item-text">
+            <h3>{{track.id}}</h3>
+            <div class="md-caption">{{track.name}}</div>
+            <div ng-if="!item.highlight.datasetTitle[0]">{{track.modified}}</div>
+          </div>
+        </md-list-item>
+      </md-list>
+
+      <div ng-controller="PagingCtrl" layout="row" layout-align="center end" class="paging" ng-show="showPaging();">
+        <md-button aria-label="previous" ng-click="previousPage();" ng-disabled="hasNoPreviousPage();">
+          <i class="material-icons">keyboard_arrow_left</i>
+        </md-button>
+        <md-button ng-repeat="page in pages" ng-click="jumpToPage(page);" ng-class="{'md-raised md-primary': page === selectedPage}">
+          {{page}}
+        </md-button>
+        <md-button aria-label="next" ng-click="nextPage();" ng-disabled="hasNoNextPage();">
+          <i class="material-icons">keyboard_arrow_right</i>
+        </md-button>
+      </div>
+    </md-content>
+  </md-card-content>
+</div>
+</div>
+
+
+
+<!-- RESIDUAL CODE FROM THE EARLIER TRACKS.HTML
+
+<div ng-controller="TracksController">
 <div layout-gt-md="row">
   <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-flex" md-theme-watch>
     <md-card-title-text>
@@ -45,38 +85,3 @@
 </div>
 </div>
 -->
-<div layout="row" ng-app="app" layout-fill>
-<div layout-gt-md="column">
-  <md-card  class="card card-4-50" md-theme-watch>
-    <md-card-title>
-      <md-card-title-text>
-        <span class="md-headline">Tracks</span>
-      </md-title-text>
-    </md-card-title>
-    <md-card-content>
-    <md-content flex>
-      <md-list ng-controller="TrackListCtrl">
-        <md-list-item class="md-3-line md-long-text md-whiteframe-3dp" aria-label="single charts view" ng-repeat="track in results.tracks" ng-href="#/dashboard/chart/{{track.id}}">
-          <div class="md-list-item-text">
-            <h3>{{track.id}}</h3>
-            <div class="md-caption">{{track.name}}</div>
-            <div ng-if="!item.highlight.datasetTitle[0]">{{track.modified}}</div>
-          </div>
-        </md-list-item>
-      </md-list>
-
-      <div ng-controller="PagingCtrl" layout="row" layout-align="center end" class="paging" ng-show="showPaging();">
-        <md-button aria-label="previous" ng-click="previousPage();" ng-disabled="hasNoPreviousPage();">
-          <i class="material-icons">keyboard_arrow_left</i>
-        </md-button>
-        <md-button ng-repeat="page in pages" ng-click="jumpToPage(page);" ng-class="{'md-raised md-primary': page === selectedPage}">
-          {{page}}
-        </md-button>
-        <md-button aria-label="next" ng-click="nextPage();" ng-disabled="hasNoNextPage();">
-          <i class="material-icons">keyboard_arrow_right</i>
-        </md-button>
-      </div>
-    </md-content>
-  </md-card-content>
-</div>
-</div>
