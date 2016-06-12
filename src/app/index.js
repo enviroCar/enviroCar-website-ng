@@ -53,7 +53,7 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
         //controller: 'ChartController',
         templateUrl: function (stateParams){
           return 'app/views/chart.html?path='+stateParams.trackid},
-        authenticate: true,
+        authenticate: false,
         data: {
           title: 'Chart'
         }
