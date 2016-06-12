@@ -12,9 +12,11 @@
     $state, $mdToast, $http, $rootScope) {
     var vm = this;
     if (typeof $rootScope.globals.currentUser == 'undefined') {
+      $rootScope.showlogout = false;
       console.log("the wrong place firing off on if");
       //do nothing
     } else {
+      $rootScope.showlogout = true;
       $http.defaults.headers.common = {
         'X-User': $rootScope.globals.currentUser.username,
         'X-Token': $rootScope.globals.currentUser.authdata

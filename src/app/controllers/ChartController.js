@@ -98,6 +98,14 @@ angular.module('app')
     '$timeout', '$stateParams', 'factorysingletrack', 'chart',
     function($state, $scope, $http, $rootScope, $timeout, $stateParams,
       factorysingletrack, chart) {
+      if (typeof $rootScope.globals.currentUser == "undefined") {
+        console.log("in if")
+        $rootScope.showlogout = false;
+      } else {
+        console.log("in else");
+        $rootScope.showlogout = true;
+      }
+
       console.log("came to chart controller");
       $scope.options_pie = {
         chart: {
@@ -218,8 +226,10 @@ angular.module('app')
       };
       var url = chart.urlusers;
       if (typeof $rootScope.globals.currentUser == 'undefined') {
+        console.log("came to if");
         url = chart.urlbase + $stateParams.trackid;
       } else {
+        console.log("came to else")
         url = url + $rootScope.globals.currentUser.username + "/tracks/";
         $http.defaults.headers.common = {
           'X-User': $rootScope.globals.currentUser.username,
@@ -229,6 +239,7 @@ angular.module('app')
       }
       factorysingletrack.get(url).then(function(data) {
         if (data.status > 300) {
+          console.log("getting a bad request")
           $scope.error = data.data;
           // In the event a wrong track ID is fed into the comments.
           $state.go("home.error", {
@@ -236,6 +247,8 @@ angular.module('app')
             status: data.status
           });
         } else {
+          console.log("coming here too but");
+          console.log(data);
           data_global = data;
           var dist = data.data.properties.length;
           var datafinal = [];
@@ -397,6 +410,7 @@ angular.module('app')
 
         }
         console.log(Co2sum + " " + fuelSum)
+        console.log(units)
         var fuelsplit = units['Consumption'].split("/");
         var co2split = units['CO2'].split("/");
         $scope.tracksummary = {
