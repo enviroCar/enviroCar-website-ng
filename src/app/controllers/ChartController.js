@@ -239,7 +239,6 @@ angular.module('app')
                       var time1=data.data.features[0].properties.time;
                       var time2=data.data.features[len_data-1].properties.time;
                       var seconds_passed=new Date(time2).getTime() - new Date (time1).getTime();
-                      //seconds is in milliseconds so convert to seconds
                       var seconds=seconds_passed/1000;
                       timeoftravel = seconds/60;
                       starttimeg = time1;
@@ -314,11 +313,8 @@ angular.module('app')
               {
                   var time1=data.features[i].properties.time;
                   var time2=data.features[i+1].properties.time;
-                    //console.log(time2)
                   var seconds_passed=new Date(time2).getTime() - new Date (time1).getTime();
-                  //seconds is in milliseconds so convert to seconds
                   var seconds=seconds_passed/1000;
-                  //console.log(seconds)
                   if(seconds<=10)
                   {
                     var maf;
@@ -326,13 +322,10 @@ angular.module('app')
                        maf=data.features[i].properties.phenomenons["Calculated MAF"].value;
                     else
                     {
-                      // console.log(data.features[i].properties);
-                       //console.log(i);
                        maf = data.features[i].properties.phenomenons["MAF"].value
-                     }
+                    }
                     var co2=(((maf / 14.7) / 730 )) * 2.35;
                     Co2sum = Co2sum + (seconds * co2);
-
                   }
               }
               CO2Calc();
@@ -362,7 +355,6 @@ angular.module('app')
               for(var j=0;j<keys.length;j++)
               {
                 units[keys[j]]=data.features[i].properties.phenomenons[keys[j]].unit;
-              //  console.log(units[j]+"is the units")
               }
               distance = data.properties['length'];
               vehiclemodel = data.properties.sensor.properties.model;
@@ -424,16 +416,11 @@ angular.module('app')
 
                 if(data.data.features[k-1].properties.phenomenons[phenomoption].value >= rangeobjects[phenomoption][0][i])
                 {
-              //    console.log(k+"k values")
                    pathobj['color'] = colorsl[5-i];
-              //     console.log("value of i"+i);
-                   //console.log(colors[5]);
-                  // console.log(colors[5-i]);
                    break;
                 }
 
               }
-             //pathobj['color'] = '#008000';
              pathobj['weight'] = 8;
              pathobj['latlngs'] = [{'lat':data.data.features[k-1].geometry.coordinates[1] , 'lng':data.data.features[k-1].geometry.coordinates[0]},
              {'lat':data.data.features[k].geometry.coordinates[1] , 'lng':data.data.features[k].geometry.coordinates[0]}]
