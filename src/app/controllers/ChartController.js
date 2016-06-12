@@ -1,12 +1,6 @@
-'use strict';
-/**
- * @ngdoc function
- * @name app.controller:chartController
- * @description
- * # ChartCtrl
- * chartController of the app
- */
-
+/* Chart controller
+  The controller that handles all the components in the chart.html page.
+*/
 
 angular.module('app')
   .constant('chart',{
@@ -42,6 +36,13 @@ angular.module('app')
       'Consumption': [0,0,0,0,0,0],
       'Intake Temperature': [0,0,0,0,0,0]
     },
+    piechartsdatareplace:{
+      'Speed': [0,0,0,0,0,0],
+      'MAF': [0,0,0,0,0,0],
+      'Engine Load': [0,0,0,0,0,0],
+      'Consumption': [0,0,0,0,0,0],
+      'Intake Temperature': [0,0,0,0,0,0]
+    },
     rangeobjects: {
     'Speed': [[0,20,40,60,80,100],],
     'Calculated MAF': [[0,5,10,15,20,25],],
@@ -49,12 +50,23 @@ angular.module('app')
     'Consumption':[[0,4,8,12,16,20],],
     'Intake Temperature': [[0,10,20,30,40,50],]
     },
+    rangeobjectsreplace: {
+    'Speed': [[0,20,40,60,80,100],],
+    'MAF': [[0,5,10,15,20,25],],
+    'Engine Load': [[0,20,40,50,70,90],],
+    'Consumption':[[0,4,8,12,16,20],],
+    'Intake Temperature': [[0,10,20,30,40,50],]
+    },
     numberofranges: 5,
     phenoms : ["Speed","Calculated MAF","Engine Load","Consumption","Intake Temperature"],
+    phenomsreplace : ["Speed","MAF","Engine Load","Consumption","Intake Temperature"],
     urlusers: "https://envirocar.org/api/stable/users/",
+    urlbase: "https://envirocar.org/api/stable/tracks/",
     colors: ["#ff9933", "#ffff00", "#00cc00", "#440044", "#ff3300"],
     m1message: "Start Point",
-    m2message: "End Point"
+    m2message: "End Point",
+    colorsl: ["#0099ff","#ffff00","#009900","#ff9900","#cc3300","#4B0082"],
+    phenomenonleaflet: "Speed",
   })
 angular.module('app')
   .controller('ChartController', ['$state','$scope','$http','$rootScope','$timeout','$stateParams','factorysingletrack','chart', function ($state, $scope,$http,$rootScope, $timeout,$stateParams,factorysingletrack,chart) {
@@ -124,18 +136,8 @@ angular.module('app')
         }
       });
 
-      var MyControl = L.control();
-    MyControl.setPosition('bottomleft');
-    MyControl.onAdd = function () {
-      var div = L.DomUtil.create('div', 'phenomenons');
-      div.innerHTML = "<select id =\"phenomselector\" ng-change=\"selecteditemchanged()\"><option>Speed</option><option>Calculated MAF</option><option>Engine Load</option><option>Consumption</option><option>Intake Temperature</option></select>"
-
-      div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagation;
-      return div;
-    }
-    $scope.controls.custom.push(MyControl);
     //*****************************************************
-    //*********VARIABLE REQUIRED FOR THE TABLE*************
+    //*********VARIABLES REQUIRED FOR THE TABLE*************
     var Co2sum = 0;
     var fuelSum = 0;
     var distance = 0;
@@ -148,10 +150,9 @@ angular.module('app')
     var endtimeg;
     var len_data;
     //*****************************************************
-    var colorsl = ["#0099ff","#ffff00","#009900","#ff9900","#cc3300","#4B0082"]
-    console.log(colorsl[5]);
+    var colorsl = chart.colorsl;
     $scope.piechartselected = chart.piechartselected;
-    $scope.phenomenonleaflet = "Speed"
+    $scope.phenomenonleaflet = chart.phenomenonleaflet;
     var piechartsdata = chart.piechartsdata;
     var rangeobjects = chart.rangeobjects;
     var data_global = {}
@@ -183,14 +184,21 @@ angular.module('app')
       }
     };
     var url = chart.urlusers;
-    url = url + $rootScope.globals.currentUser.username + "/tracks/";
-    $http.defaults.headers.common = {'X-User': $rootScope.globals.currentUser.username, 'X-Token': $rootScope.globals.currentUser.authdata};
-    url = url + $stateParams.trackid;
+    if( typeof $rootScope.globals.currentUser == 'undefined' )
+    {
+      url = chart.urlbase + $stateParams.trackid;
+    }
+    else
+    {
+      url = url + $rootScope.globals.currentUser.username + "/tracks/";
+      $http.defaults.headers.common = {'X-User': $rootScope.globals.currentUser.username, 'X-Token': $rootScope.globals.currentUser.authdata};
+      url = url + $stateParams.trackid;
+    }
     factorysingletrack.get(url).then(function(data){
           if(data.status > 300)
           {
-            console.log("came inside");
             $scope.error = data.data;
+            // In the event a wrong track ID is fed into the comments.
             $state.go("home.error",{path: data.data,status: data.status});
           }
           else
@@ -207,11 +215,21 @@ angular.module('app')
               if(j == 0)
               {
                 keys=Object.keys(data.data.features[0].properties.phenomenons);
+                if(keys.includes("Calculated MAF"))
+                  console.log("Swapped with replace");
+                else
+                {
+                  phenoms = chart.phenomsreplace;
+                  rangeobjects = {};
+                  rangeobjects = chart.rangeobjectsreplace;
+                  piechartsdata = {};
+                  piechartsdata = chart.piechartsdatareplace;
+                  console.log(phenoms);
+                }
               }
               var dat=[];
               for(var i=0;i<len_data;i++)
               {
-
                 var data_to_push;
                 (function(iter){
                   if(j==0)
@@ -229,13 +247,16 @@ angular.module('app')
                     }
                     worker(iter,data.data);
                   }
-                  if(iter == 0)
+                  if(iter == 0){
+                      console.log(data.data.features[iter].properties.phenomenons);
+                      console.log(phenoms[j])
                       rangeobjects[phenoms[j]][1] = data.data.features[iter].properties.phenomenons[phenoms[j]].unit;
+                    }
                   var date = new Date(data.data.features[iter].properties.time);
                   var date_as_ms = date.getTime();
                   if(data.data.features[iter].properties.phenomenons[phenoms[j]])
                   {
-                      var speed = data.data.features[iter].properties.phenomenons[phenoms[j]].value;
+                     var speed = data.data.features[iter].properties.phenomenons[phenoms[j]].value;
                      for(var k = chart.numberofranges ; k >= 0 ; k--)
                       {
 
@@ -305,9 +326,9 @@ angular.module('app')
                        maf=data.features[i].properties.phenomenons["Calculated MAF"].value;
                     else
                     {
-                       console.log(data.features[i].properties);
-                       console.log(i);
-                       maf = data.features[i].properties.phenomenons["Calculated MAF"].value
+                      // console.log(data.features[i].properties);
+                       //console.log(i);
+                       maf = data.features[i].properties.phenomenons["MAF"].value
                      }
                     var co2=(((maf / 14.7) / 730 )) * 2.35;
                     Co2sum = Co2sum + (seconds * co2);
