@@ -95,10 +95,11 @@ angular.module('app')
   })
 angular.module('app')
   .controller('ChartController', ['$state', '$scope', '$http', '$rootScope',
-    '$timeout', '$stateParams', 'factorysingletrack', 'chart',
+    '$timeout', '$stateParams', 'factorysingletrack', 'chart', '$location',
     function($state, $scope, $http, $rootScope, $timeout, $stateParams,
-      factorysingletrack, chart) {
+      factorysingletrack, chart, $location) {
       if (typeof $rootScope.globals.currentUser == "undefined") {
+        //$rootScope.url_redirect_on_login = $location.path();
         console.log("in if")
         $rootScope.showlogout = false;
       } else {

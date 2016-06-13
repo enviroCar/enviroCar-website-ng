@@ -10,6 +10,7 @@
 
   function MainController(navService, $mdSidenav, $mdBottomSheet, $log, $q,
     $state, $mdToast, $http, $rootScope) {
+    console.log("In main Controller");
     var vm = this;
     if (typeof $rootScope.globals.currentUser == 'undefined') {
       $rootScope.showlogout = false;
@@ -49,7 +50,7 @@
     vm.menuItems = [];
     vm.selectItem = selectItem;
     vm.toggleItemsList = toggleItemsList;
-    vm.showActions = showActions;
+    //vm.showActions = showActions;
     vm.title = $state.current.data.title;
     vm.showSimpleToast = showSimpleToast;
     vm.toggleRightSidebar = toggleRightSidebar;
@@ -110,6 +111,7 @@
     }
 
     function showSimpleToast(title) {
+      console.log(title + "got shown");
       $mdToast.show(
         $mdToast.simple()
         .content(title)
