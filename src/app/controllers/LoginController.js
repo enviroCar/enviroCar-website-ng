@@ -41,8 +41,8 @@
        $rootScope.globals = {};
        $cookieStore.remove('globals');
        $http.defaults.headers.common = {
-         'X-User': " ",
-         'X-Token': " "
+         'X-User': undefined,
+         'X-Token': undefined
        };
        console.log("current user" + $rootScope.globals.currentUser)
      };
@@ -64,7 +64,12 @@
            if (response.success == true) {
              console.log("response is true")
              Auth.SetCredentials($scope.username, $scope.password);
+             // if (typeof $rootScope.url_redirect_on_login != "undefined") {
+             //   console.log($rootScope.url_redirect_on_login);
+             //   $location.path($rootScope.url_redirect_on_login);
+             // } else {
              $location.path('/dashboard/home');
+             // }
            } else {
              $scope.error = "Invalid Login Credentials";
              $scope.dataLoading = false;
