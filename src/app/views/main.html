@@ -1,5 +1,5 @@
 <md-sidenav md-is-locked-open="$mdMedia('gt-sm')" md-component-id="left"
-            class="md-whiteframe-z2 md-sidenav-left">
+            class="md-whiteframe-z1 md-sidenav-left">
   <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2">
     <md-button layout="row" layout-align="center center" class="md-toolbar-tools md-warn"
                href="https://github.com/enviroCar/enviroCar-website-ng">
@@ -48,7 +48,7 @@
 
     </md-toolbar>
 
-    <md-content flex class="md-padding page-content">
+    <md-content flex class="page-content">
         <div ui-view></div>
     </md-content>
 </div>
@@ -56,7 +56,7 @@
 
 
 <md-sidenav md-component-id="right"
-            class="md-whiteframe-z2 md-sidenav-right">
+            class="md-whiteframe-z1 md-sidenav-right" style="width:30%">
     <md-toolbar>
         <md-toolbar layout="row" layout-align="center center">
             <img class="img-circle">
@@ -81,7 +81,7 @@
         </md-toolbar>
         <md-card ng-controller="MyActivityController" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50-white" md-theme-watch>
           <md-card-content>
-            <md-content flex layout-padding style="height:470px">
+            <md-content flex layout-padding style="height:100%">
               <md-list-item class="md-3-line" ng-repeat='item in events' ng-click="goToActivity(item.type,item.trackidlink)">
             <!--    <img class="md-avatar" src={{item.profileurl}}></img> -->
                 <div class="md-list-item-text" layout="column">

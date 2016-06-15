@@ -1,4 +1,4 @@
-<div class="profiletab" ng-controller="ProfileViewController" ng-style="{'background-color':'#084B8A'}" style="width:100%;height:250px">
+<div class="profiletab" ng-controller="ProfileViewController" ng-style="{'background-color':'#0065A0'}" style="width:100%;height:250px">
   <div class="profile-pic absolute" style="height:40%;display:inline-block">
   <img class="img-circle" src="https://secure.gravatar.com/avatar/cf17f9ff1e0a237ab76046d5aca84e0e?size=240" style="height:100px;width:100px">
   <span class="username" ng-bind=name_of_user></span>
@@ -38,7 +38,7 @@
 <md-content>
   <md-tabs md-dynamic-height md-border-bottom>
     <md-tab label="TimeLine">
-      <md-content class="md-padding">
+      <md-content >
         <div layout-gt-md="row" ng-controller="DashboardController" layout="column">
 
           <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
@@ -58,10 +58,10 @@
               <timeline-panel class="{{event.badgeClass}}">
                 <timeline-heading>
                   <h4><a href={{event.urlredirect}}>{{event.title}}</a></h4>
+                  <img class="previewimage" src={{event.url}} height="42" width="42"></img>
                 </timeline-heading>
                 <p>{{'TRACK_ID' | translate}} - {{event.id}}</p>
                 <p>{{'MODIFIED' | translate}} - {{event.modified}}</p>
-                <img class="previewimage" src={{event.url}} height="72" width="72"></img>
               </timeline-panel>
             </timeline-event>
           </timeline>
@@ -96,7 +96,7 @@
                 </md-card-title-text>
           <md-card-content>
             <md-content flex layout-padding style="height:470px">
-              <md-list-item class="md-3-line md-long-text md-whiteframe-3dp" ng-repeat='item in events' ng-click="goToActivity(item.type,item.trackidlink)">
+              <md-list-item class="md-3-line md-long-text md-whiteframe-1dp" ng-repeat='item in events' ng-click="goToActivity(item.type,item.trackidlink)">
                 <img class="md-avatar" src={{item.profileurl}}></img>
                 <div class="md-list-item-text" layout="column">
                 <h3>{{item.topic}}</h3>
@@ -118,7 +118,7 @@
                 </md-card-title-text>
           <md-card-content>
             <md-content flex layout-padding style="height:470px">
-              <md-list-item class="md-3-line md-long-text md-whiteframe-3dp" ng-repeat='item in events' ng-click="goToActivity(item.type,item.trackidlink)">
+              <md-list-item class="md-3-line md-long-text md-whiteframe-1dp" ng-repeat='item in events' ng-click="goToActivity(item.type,item.trackidlink)">
             <!--    <img class="md-avatar" src={{item.profileurl}}></img> -->
                 <div class="md-list-item-text" layout="column">
                 <h3>{{item.topic}}</h3>
