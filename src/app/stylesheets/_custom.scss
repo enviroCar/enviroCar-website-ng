@@ -1,5 +1,5 @@
 // COLORS
-$main-bg-color: #ECECEC;
+$main-bg-color: #f2f2f2;
 $text-color: #7A7A7A;
 $accent-color: rgb(0, 150, 136);
 $warning-color: #E75753;
@@ -36,8 +36,9 @@ body {
 display: table-cell;
 padding-left: 15px;
 padding-right: 10px;
-font-weight: 300;
+font-weight: 400;
 letter-spacing: 1px;
+color: rgba(255,255,255,0.78);
 }
 .profiletab .statistics{
   top: 140px;
@@ -104,7 +105,11 @@ letter-spacing: 1px;
    width: 870px;
 }
 .card-4-50 {
-  box-shadow: 0px 0px 15px -2px rgba(0,0,0,1);
+  box-shadow: 0px 0px 15px -2px rgba(0,0,0,0.2);
+  width:100%
+}
+.card-4-50-noborder {
+  box-shadow: 0px 0px 0px 0px rgba(0,0,0,0);
   width:100%
 }
 .card-4-50-white {
@@ -314,6 +319,9 @@ md-backdrop.md-sidenav-backdrop {
 
 .timeline li {
   padding: 1em 0;
+}
+.timeline li timeline-panel{
+  box-shadow: 0px 0px 15px -2px rgba(0,0,0,0.2);
 }
 
 .timeline li:after {
