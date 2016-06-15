@@ -65,6 +65,7 @@ angular.module('app')
     'requesthomestats', 'requestgraphstats', 'dashboard',
     function($scope, $http, $rootScope, requesthomestats, requestgraphstats,
       dashboard) {
+      $scope.visible = false;
       $scope.events = [];
       var helperevents = [];
       console.log("came in dashboard controller");
@@ -234,7 +235,7 @@ angular.module('app')
         "values": dataotherusers
       };
       $scope.data = [datacumulotherusers, datacumulusers];
-
+      $scope.visible = true;
       //**********************************************************
       //***********************END OF GRAPHS**********************
 

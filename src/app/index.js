@@ -76,8 +76,8 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
 
   $mdThemingProvider
     .theme('default')
-    .primaryPalette('blue', {
-      'default': '600'
+    .primaryPalette('blue-grey', {
+      'default': '800'
     })
     .accentPalette('teal', {
       'default': '500'
@@ -105,7 +105,7 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
     '500': '#E75753',
     '600': '#E75753',
     '700': '#E75753',
-    '800': '#E75753',
+    '800': '#084B8A',
     '900': '#E75753',
     'A100': '#E75753',
     'A200': '#E75753',
