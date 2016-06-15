@@ -1,3 +1,144 @@
+<div class="profiletab" ng-controller="ProfileViewController" ng-style="{'background-color':'#084B8A'}" style="width:100%;height:250px">
+  <div class="profile-pic absolute" style="height:40%;display:inline-block">
+  <img class="img-circle" src="https://secure.gravatar.com/avatar/cf17f9ff1e0a237ab76046d5aca84e0e?size=240" style="height:100px;width:100px">
+  <span class="username" ng-bind=name_of_user></span>
+</div>
+<div class="statistics" >
+   <div class="detail2" >
+  <p ng-bind="track_number">
+    <br>
+    <div class="descp">
+      Tracks
+    </div>
+  </div>
+  <div class="detail2" >
+    <p ng-bind="friends_number">
+    <br>
+    <div class="descp">
+      Friends
+    </div>
+  </div>
+  <div class="detail2" >
+    <p ng-bind="distance_driven">
+     <br>
+     <div class="descp">
+       Distance
+     </div>
+  </div>
+  <div class="detail2" >
+    <p ng-bind="groups_number">
+    <br>
+    <div class="descp">
+      Groups
+    </div>
+  </div>
+</div>
+</div>
+
+<md-content>
+  <md-tabs md-dynamic-height md-border-bottom>
+    <md-tab label="TimeLine">
+      <md-content class="md-padding">
+        <div layout-gt-md="row" ng-controller="DashboardController" layout="column">
+
+          <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
+            <md-card-content>
+                    <span class="md-subhead">{{ 'TITLE_TRACKS' | translate}}</span>
+                  </md-card-title-text>
+                </md-card-content>
+                <md-card-title-media>
+
+        <div flex layout="row">
+              <md-content >
+            <timeline>
+            <timeline-event ng-repeat="event in events" side={{event.side}}>
+              <timeline-badge class="{{event.badgeClass}}">
+                <i class="glyphicon {{event.badgeIconClass}}"></i>
+              </timeline-badge>
+              <timeline-panel class="{{event.badgeClass}}">
+                <timeline-heading>
+                  <h4><a href={{event.urlredirect}}>{{event.title}}</a></h4>
+                </timeline-heading>
+                <p>{{'TRACK_ID' | translate}} - {{event.id}}</p>
+                <p>{{'MODIFIED' | translate}} - {{event.modified}}</p>
+                <img class="previewimage" src={{event.url}} height="72" width="72"></img>
+              </timeline-panel>
+            </timeline-event>
+          </timeline>
+        </md-content>
+        </div>
+
+        </md-card-title-media>
+
+        </md-card>
+        <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" style="height:550px" md-theme-watch>
+          <md-card-title-text>
+            <br>
+                  <span class="md-subhead">{{ 'YOU_VS_PUBLIC' | translate}}</span>
+                </md-card-title-text>
+                <md-card-content>
+              <nvd3 options="options" data="data"></nvd3>
+
+            </md-card-content>
+
+        </md-card>
+
+        </div>
+      </md-content>
+    </md-tab>
+    <md-tab label="Activity">
+      <md-content class="md-padding">
+        <div layout-gt-md="row" layout="column" >
+        <md-card ng-controller="FriendActivityController" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
+          <md-card-title-text>
+            <br>
+                  <span class="md-subhead">{{ 'FRIENDS_ACTIVITY' | translate}}</span>
+                </md-card-title-text>
+          <md-card-content>
+            <md-content flex layout-padding style="height:470px">
+              <md-list-item class="md-3-line md-long-text md-whiteframe-3dp" ng-repeat='item in events' ng-click="goToActivity(item.type,item.trackidlink)">
+                <img class="md-avatar" src={{item.profileurl}}></img>
+                <div class="md-list-item-text" layout="column">
+                <h3>{{item.topic}}</h3>
+                <h4>{{item.name}}</h4>
+                <p>{{item.date}}</p>
+              </div>
+              </md-list-item>
+              <div ng-show = 'busy'>{{'LOADING_DATA' | translate}}</div>
+        </md-content>
+        </md-card-content>
+        <md-card-actions layout-align="center center">
+          <md-button ng-click="nextpage()">{{'LOAD_MORE' | translate}}</md-button>
+        </md-card-actions>
+        </md-card>
+        <md-card ng-controller="MyActivityController" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
+          <md-card-title-text>
+            <br>
+                  <span class="md-subhead">{{'MY_ACTIVITY' | translate}}</span>
+                </md-card-title-text>
+          <md-card-content>
+            <md-content flex layout-padding style="height:470px">
+              <md-list-item class="md-3-line md-long-text md-whiteframe-3dp" ng-repeat='item in events' ng-click="goToActivity(item.type,item.trackidlink)">
+            <!--    <img class="md-avatar" src={{item.profileurl}}></img> -->
+                <div class="md-list-item-text" layout="column">
+                <h3>{{item.topic}}</h3>
+                <h4>{{item.name}}</h4>
+                <p>{{item.date}}</p>
+              </div>
+              </md-list-item>
+              <div ng-show = 'busy'>{{'LOADING_DATA' | translate}}</div>
+        </md-content>
+        </md-card-content>
+        <md-card-actions layout-align="center center">
+          <md-button ng-click="nextpage()">{{'LOAD_MORE' | translate}}</md-button>
+        </md-card-actions>
+        </md-card>
+      </div>
+</md-content>
+</md-tab>
+</md-tabs>
+</md-content>
+<!--
 <div layout-gt-md="row" ng-controller="ProfileViewController" layout="row">
     <md-card md-theme='dark-purple' class="card card-4-50" md-theme-watch>
       <md-card-title>
@@ -91,9 +232,7 @@
     </md-card-content>
 
 </md-card>
-  <!--<panel-widget flex title="Timeline" template="app/views/partials/timelinecontents.html" ></panel-widget>
-  <panel-widget flex title="You vs Public" template="app/views/partials/comparison.html" class="fixed-height-widget"></panel-widget>
--->
+
 
 </div>
 <div layout-gt-md="row" layout="column" >
@@ -130,7 +269,7 @@
     <md-card-content>
       <md-content flex layout-padding style="height:470px">
         <md-list-item class="md-3-line md-long-text md-whiteframe-3dp" ng-repeat='item in events' ng-click="goToActivity(item.type,item.trackidlink)">
-      <!--    <img class="md-avatar" src={{item.profileurl}}></img> -->
+         <img class="md-avatar" src={{item.profileurl}}></img>
           <div class="md-list-item-text" layout="column">
           <h3>{{item.topic}}</h3>
           <h4>{{item.name}}</h4>
@@ -145,3 +284,4 @@
   </md-card-actions>
   </md-card>
 </div>
+-->

@@ -20,6 +20,7 @@ angular.module('app')
         'X-User': $rootScope.globals.currentUser.username,
         'X-Token': $rootScope.globals.currentUser.authdata
       };
+      $scope.name_of_user = $rootScope.globals.currentUser.username;
       $scope.track_number = 0;
       $scope.friends_number = 0;
       $scope.distance_driven = 0;

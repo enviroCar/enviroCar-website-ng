@@ -64,12 +64,12 @@
            if (response.success == true) {
              console.log("response is true")
              Auth.SetCredentials($scope.username, $scope.password);
-             // if (typeof $rootScope.url_redirect_on_login != "undefined") {
-             //   console.log($rootScope.url_redirect_on_login);
-             //   $location.path($rootScope.url_redirect_on_login);
-             // } else {
-             $location.path('/dashboard/home');
-             // }
+             if (typeof $rootScope.url_redirect_on_login != "undefined") {
+               //   console.log($rootScope.url_redirect_on_login);
+               $location.path($rootScope.url_redirect_on_login);
+             } else {
+               $location.path('/dashboard/home');
+             }
            } else {
              $scope.error = "Invalid Login Credentials";
              $scope.dataLoading = false;
