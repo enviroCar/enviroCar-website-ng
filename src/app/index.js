@@ -76,7 +76,7 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
 
   $mdThemingProvider
     .theme('default')
-    .primaryPalette('blue-grey', {
+    .primaryPalette('blue', {
       'default': '800'
     })
     .accentPalette('green', {
@@ -96,6 +96,22 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
       'hue-1': '50'
     });
 
+  $mdThemingProvider.definePalette('blue', {
+    '50': '#FFFFFF',
+    '100': 'rgb(255, 198, 197)',
+    '200': '#E75753',
+    '300': '#E75753',
+    '400': '#E75753',
+    '500': '#E75753',
+    '600': '#E75753',
+    '700': '#E75753',
+    '800': '#0065A0',
+    '900': '#8CBf3F',
+    'A100': '#E75753',
+    'A200': '#E75753',
+    'A400': '#E75753',
+    'A700': '#E75753'
+  });
 
   $mdThemingProvider.definePalette('defaultPrimary', {
     '50': '#FFFFFF',
@@ -106,8 +122,8 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
     '500': '#E75753',
     '600': '#E75753',
     '700': '#E75753',
-    '800': '#084B8A',
-    '900': '#E75753',
+    '800': '#0065A0',
+    '900': '#8CBf3F',
     'A100': '#E75753',
     'A200': '#E75753',
     'A400': '#E75753',
