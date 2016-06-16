@@ -185,6 +185,12 @@ angular.module('app')
 
         }
       };
+
+      $scope.trackid;
+      $scope.name;
+      $scope.created;
+      // the variables for the top bar.
+
       var latlongarray = [];
       var latinitial;
       var longinitial;
@@ -223,6 +229,7 @@ angular.module('app')
       var starttimeg;
       var endtimeg;
       var len_data;
+      var keys_second;
       //*****************************************************
       var colorsl = chart.colorsl;
       $scope.piechartselected = chart.piechartselected;
@@ -261,6 +268,9 @@ angular.module('app')
       if (typeof $rootScope.globals.currentUser == 'undefined') {
         console.log("came to if");
         url = chart.urlbase + $stateParams.trackid;
+        $scope.trackid = $stateParams.trackid;
+        console.log("here");
+
       } else {
         console.log("came to else")
         url = url + $rootScope.globals.currentUser.username + "/tracks/";
@@ -280,27 +290,65 @@ angular.module('app')
             status: data.status
           });
         } else {
+          keys_second = Object.keys(data.data.features[0].properties.phenomenons);
+          console.log(keys_second);
+          var phenoms = chart.phenoms;
+          var colors = chart.colors;
+
+          // keys is a array.
+          var keys_phenoms = Object.keys(rangeobjects);
+          console.log(keys_phenoms);
+          console.log(keys_second);
+          if (keys_second.indexOf("MAF") >= 0) {
+            // MAF is present!!
+            rangeobjects = chart.rangeobjectsreplace;
+            phenoms = chart.phenomsreplace;
+            piechartsdata = chart.piechartsdatareplace
+
+          }
+          for (var i = 0; i < 5; i++) {
+            if (keys_second.indexOf(keys_phenoms[i]) < 0) {
+              //delete phenoms[keys_phenoms[i]];
+              delete colors[keys_phenoms[i]];
+              delete rangeobjects[keys_phenoms[i]];
+              delete piechartsdata[keys_phenoms[i]];
+              console.log("SHOUDL NOT HAVE COME HERE")
+              console.log(keys_phenoms[i]);
+              // it is not there
+
+            }
+          }
+          phenoms = Object.keys(rangeobjects);
+          console.log(phenoms);
+          console.log(rangeobjects);
+          console.log(colors);
+
+          $scope.trackid = data.data.properties.id;
+          $scope.name = data.data.properties.name;
+          $scope.created = data.data.properties.created;
           console.log("coming here too but");
           console.log(data);
           data_global = data;
           var dist = data.data.properties.length;
           var datafinal = [];
           len_data = data.data.features.length;
-          var phenoms = chart.phenoms;
+          // need to handle this particular event before the phenoms gets the chart.phenoms and the corresponding color.phenoms.
+
           $scope.piechartoptions = phenoms;
-          var colors = chart.colors;
           for (var j = 0; j < phenoms.length; j++) {
             if (j == 0) {
               keys = Object.keys(data.data.features[0].properties.phenomenons);
               if (keys.includes("Calculated MAF"))
                 console.log("Swapped with replace");
               else {
+                /*
                 phenoms = chart.phenomsreplace;
                 rangeobjects = {};
                 rangeobjects = chart.rangeobjectsreplace;
                 piechartsdata = {};
                 piechartsdata = chart.piechartsdatareplace;
                 console.log(phenoms);
+                */
               }
             }
             var dat = [];
@@ -324,6 +372,7 @@ angular.module('app')
                 if (iter == 0) {
                   console.log(data.data.features[iter].properties.phenomenons);
                   console.log(phenoms[j])
+
                   rangeobjects[phenoms[j]][1] = data.data.features[iter]
                     .properties.phenomenons[phenoms[j]].unit;
                 }
@@ -337,6 +386,7 @@ angular.module('app')
                   for (var k = chart.numberofranges; k >= 0; k--) {
 
                     if (speed >= rangeobjects[phenoms[j]][0][k]) {
+                      console.log(phenoms[j]);
                       piechartsdata[phenoms[j]][k]++;
                       break;
                     }
@@ -444,6 +494,7 @@ angular.module('app')
         }
         console.log(Co2sum + " " + fuelSum)
         console.log(units)
+          //  if(typeof units['Consumption'])
         var fuelsplit = units['Consumption'].split("/");
         var co2split = units['CO2'].split("/");
         $scope.tracksummary = {
