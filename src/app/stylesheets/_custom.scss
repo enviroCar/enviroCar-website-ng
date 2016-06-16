@@ -18,6 +18,9 @@ body {
 }
 .profiletab{
   position:relative;
+  border-bottom-style: solid;
+  border-bottom-width: 4px;
+  border-bottom-color: #8CBF3F;
 }
 .profiletab .profile-pic{
   width: 350px;
@@ -26,7 +29,7 @@ body {
   left: 25px;
   border-bottom-style: solid;
   border-bottom-width: 3px;
-  border-bottom-color: rgba(255,255,255,0.28);
+  border-bottom-color: rgba(140,191,63,1);
   padding-bottom: 15px;
   font-weight: 400;
   position:relative;;
@@ -38,7 +41,7 @@ padding-left: 15px;
 padding-right: 10px;
 font-weight: 400;
 letter-spacing: 1px;
-color: rgba(255,255,255,0.78);
+color: rgba(255,255,255,0.88);
 }
 .profiletab .statistics{
   top: 140px;
@@ -253,6 +256,10 @@ md-radio-button.md-accent.md-checked .md-label span {
   font-size: $font-size-large;
 }
 
+md-toolbar {
+  box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.7);
+
+}
 
 md-backdrop.md-sidenav-backdrop {
   position: fixed;
