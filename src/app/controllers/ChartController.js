@@ -203,7 +203,7 @@ angular.module('app')
         var div = L.DomUtil.create('div', 'phenomenons');
         div.innerHTML =
           //  "<select id =\"phenomselector\" ng-change=\"selecteditemchanged()\"><option>Speed</option><option>Calculated MAF</option><option>Engine Load</option><option>Consumption</option><option>Intake Temperature</option></select>"
-          "<table ng-controller=\"ChartController\"><tbody><tr ng-repeat=\"x in legendtable\"><td>{{x}}</td></tr></tbody></table>";
+          "<table><tbody><td></td></tbody></table>";
         div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent
           .stopPropagation;
         return div;
