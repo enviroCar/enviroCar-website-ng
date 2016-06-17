@@ -94,6 +94,9 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
   $mdThemingProvider.theme('custom', 'default')
     .primaryPalette('defaultPrimary', {
       'hue-1': '50'
+    })
+    .backgroundPalette('blue', {
+      'default': '900'
     });
 
   $mdThemingProvider.definePalette('blue', {
@@ -102,12 +105,12 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
     '200': '#E75753',
     '300': '#E75753',
     '400': '#E75753',
-    '500': '#E75753',
+    '500': '#8CBf3F',
     '600': '#E75753',
     '700': '#E75753',
     '800': '#0065A0',
-    '900': '#8CBf3F',
-    'A100': '#E75753',
+    '900': '#B9D989',
+    'A100': '#B9D989',
     'A200': '#E75753',
     'A400': '#E75753',
     'A700': '#E75753'
@@ -124,7 +127,7 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
     '700': '#E75753',
     '800': '#0065A0',
     '900': '#8CBf3F',
-    'A100': '#E75753',
+    'A100': '#B9D989',
     'A200': '#E75753',
     'A400': '#E75753',
     'A700': '#E75753'

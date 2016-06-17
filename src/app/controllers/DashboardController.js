@@ -62,9 +62,18 @@ angular.module('app')
   }])
 angular.module('app')
   .controller('DashboardController', ['$scope', '$http', '$rootScope',
-    'requesthomestats', 'requestgraphstats', 'dashboard',
+    'requesthomestats', 'requestgraphstats', 'dashboard', '$state',
     function($scope, $http, $rootScope, requesthomestats, requestgraphstats,
-      dashboard) {
+      dashboard, $state) {
+      $scope.goToActivity = function(trackid) {
+        console.log("came here");
+        //redirect to the track analytics page.
+        $state.go('home.chart', {
+          'trackid': trackid
+        });
+
+        console.log("fired");
+      }
       $scope.visible = false;
       $scope.events = [];
       var helperevents = [];
@@ -103,8 +112,9 @@ angular.module('app')
             if (cntr % 2 == 0) {
               helper_events['side'] = 'left'
             } else {
-              helper_events['side'] = 'right';
+              helper_events['side'] = 'left';
             }
+
             /*  requesthomestats.get(url1 + "/" + data.data.tracks[cntr].id).then(function(data2)
             {
               helper_events['carmodel'] = data2.data.properties.sensor.properties.model;

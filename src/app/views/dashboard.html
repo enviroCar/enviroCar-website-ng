@@ -40,18 +40,37 @@
 <md-content>
   <md-tabs md-dynamic-height md-border-bottom>
     <md-tab label="TimeLine">
-      <md-content >
+      <md-content md-theme="default">
         <div layout-gt-md="row" ng-controller="DashboardController" layout="column">
+          <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50"  md-theme-watch>
+            <md-card-title-text>
+              <br>
+                    <span class="md-subhead">{{ 'YOU_VS_PUBLIC' | translate}}</span>
+                  </md-card-title-text>
+                  <md-card-content>
+                <nvd3 options="options" data="data"></nvd3>
 
-          <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
-            <md-card-content>
+              </md-card-content>
+
+          </md-card>
+          <md-card md-theme="custom" class="card card-4-50" style="width:600px" md-theme-watch>
+            <md-card-content >
                     <span class="md-subhead">{{ 'TITLE_TRACKS' | translate}}</span>
                   </md-card-title-text>
+                  <md-list-item md-theme="default" md-ink-ripple="#0065A0" class="md-3-line md-long-text " ng-repeat='event in events' ng-click="goToActivity(event.id)">
+
+                      <img class="md-avatar" src={{event.url}} style="width:40px;height:40px"></img>
+                      <div class="md-list-item-text" layout="column">
+                      <h3>{{event.title}}</h3>
+                      <h4>{{event.id}}</h4>
+                      <p>{{event.modified}}</p>
+                    </div>
+                    </md-list-item>
                 </md-card-content>
                 <md-card-title-media>
 
-        <div flex layout="row">
               <md-content >
+                <!--
             <timeline>
             <timeline-event ng-repeat="event in events" side={{event.side}}>
               <timeline-badge class="{{event.badgeClass}}">
@@ -60,30 +79,20 @@
               <timeline-panel class="{{event.badgeClass}}">
                 <timeline-heading>
                   <h4><a href={{event.urlredirect}}>{{event.title}}</a></h4>
-                  <img class="previewimage" src={{event.url}} height="42" width="42"></img>
+                 <img class="previewimage" src={{event.url}} height="42" width="42"></img>
                 </timeline-heading>
                 <p>{{'TRACK_ID' | translate}} - {{event.id}}</p>
                 <p>{{'MODIFIED' | translate}} - {{event.modified}}</p>
               </timeline-panel>
             </timeline-event>
           </timeline>
+        -->
         </md-content>
-        </div>
 
         </md-card-title-media>
 
         </md-card>
-        <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" style="height:550px" md-theme-watch>
-          <md-card-title-text>
-            <br>
-                  <span class="md-subhead">{{ 'YOU_VS_PUBLIC' | translate}}</span>
-                </md-card-title-text>
-                <md-card-content>
-              <nvd3 options="options" data="data"></nvd3>
 
-            </md-card-content>
-
-        </md-card>
 
         </div>
       </md-content>
