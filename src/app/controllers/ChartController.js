@@ -207,9 +207,9 @@ angular.module('app')
       MyControl.setPosition('bottomleft');
       MyControl.onAdd = function() {
         var div = L.DomUtil.create('div', 'phenomenons');
-        div.innerHTML =
-          //  "<select id =\"phenomselector\" ng-change=\"selecteditemchanged()\"><option>Speed</option><option>Calculated MAF</option><option>Engine Load</option><option>Consumption</option><option>Intake Temperature</option></select>"
-          "<table><tbody><td></td></tbody></table>";
+        div.innerHTML = " ";
+        //  "<select id =\"phenomselector\" ng-change=\"selecteditemchanged()\"><option>Speed</option><option>Calculated MAF</option><option>Engine Load</option><option>Consumption</option><option>Intake Temperature</option></select>"
+        //"<table><tbody><tr><td>"+"</td></tr></tbody></table>";
         div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent
           .stopPropagation;
         return div;
@@ -442,11 +442,15 @@ angular.module('app')
               var seconds = seconds_passed / 1000;
               if (seconds <= 10) {
                 var maf;
-                if (typeof data.features[i].properties.phenomenons[
-                    "Calculated MAF"] != 'undefined')
+                if (data.features[i].properties.phenomenons[
+                    "Calculated MAF"] != undefined) {
+                  console.log(data.features[i].properties.phenomenons);
                   maf = data.features[i].properties.phenomenons[
                     "Calculated MAF"].value;
-                else {
+                  console.log(maf);
+                } else {
+                  console.log("how did it come here");
+                  console.log(data.features[i].properties.phenomenons);
                   maf = data.features[i].properties.phenomenons["MAF"].value
                 }
                 var co2 = (((maf / 14.7) / 730)) * 2.35;
@@ -464,8 +468,8 @@ angular.module('app')
               var seconds = seconds_passed / 1000;
               if (seconds <= 10) {
                 var maf;
-                if (typeof data.features[i].properties.phenomenons[
-                    "Calculated MAF"] != 'undefined')
+                if (data.features[i].properties.phenomenons[
+                    "Calculated MAF"] != undefined)
                   maf = data.features[i].properties.phenomenons[
                     "Calculated MAF"].value;
                 else
@@ -494,9 +498,21 @@ angular.module('app')
         }
         console.log(Co2sum + " " + fuelSum)
         console.log(units)
-          //  if(typeof units['Consumption'])
-        var fuelsplit = units['Consumption'].split("/");
-        var co2split = units['CO2'].split("/");
+        var fuelsplit;
+        console.log(units['Consumption']);
+        //  if(typeof units['Consumption'])
+        if ((units['Consumption']) == undefined) {
+          console.log("the consumption parameter is not available");
+          fuelsplit = ["NA", ""];
+        } else {
+          fuelsplit = units['Consumption'].split("/");
+        }
+        var co2split;
+        if (units['CO2'] == undefined) {
+          co2split = ["NA", ""];
+        } else {
+          co2split = units['CO2'].split("/");
+        }
         $scope.tracksummary = {
           distance: distance.toFixed(2),
           vehiclemodel: vehiclemodel,
