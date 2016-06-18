@@ -156,6 +156,8 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
 .run(['$rootScope', '$location', '$state', '$cookieStore', '$http', function(
   $rootScope, $location, $state, $cookieStore, $http) {
   console.log("came in")
+  $rootScope.popoverIsVisible = false;
+  $rootScope.previewurl = "";
   $rootScope.globals = $cookieStore.get('globals') || {};
   if ($rootScope.globals.currentUser) {
     $http.defaults.headers.common = {
