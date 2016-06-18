@@ -16,6 +16,10 @@ $font-size-large: 22px;
 body {
   color: $text-color;
 }
+.popover {
+  position: absolute;
+  z-index: 100;
+}
 .profiletab{
   background-image: url('/assets/images/envCar_Foto06.jpg');
   background-size: cover;

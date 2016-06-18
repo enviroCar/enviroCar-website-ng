@@ -1,11 +1,53 @@
 angular.module('app')
-  .controller('TrackListCtrl', ['$scope', 'trackService', '$http', function(
-    $scope, trackService, $http) {
-    //bind to service
-    $scope.results = trackService.results;
-  }])
+  .controller('TrackListCtrl', ['$scope', 'trackService', '$http', '$rootScope',
+    'visibilityService',
+    function(
+      $scope, trackService, $http, $rootScope, visibilityService) {
+      //bind to service
+      $scope.results = trackService.results;
+      $rootScope.showPopOver = function(trackid) {
+        $rootScope.popoverIsVisible = true;
+        $rootScope.previewurl = trackid;
+        console.log(trackid);
+        console.log("show pop");
+      }
+      $scope.hidePopOver = function() {
+        $rootScope.previewurl = "";
+        $rootScope.popoverIsVisible = false;
+        console.log("hide pop");
+      }
+    }
+  ])
 
-.factory('trackService', ['$http', '$rootScope', function($http, $rootScope) {
+.controller('ImagePreviewController', ['$scope', '$http', '$rootScope',
+    'visibilityService',
+    function($scope, $http, $rootScope, visibilityService) {
+      $scope.popoverIsVisible2 = false;
+      $scope.value2 = $scope.popoverIsVisible2;
+      $scope.url = "";
+      $scope.$watch('$root.popoverIsVisible', function() {
+        console.log("fired");
+        $scope.popoverIsVisible2 = $rootScope.popoverIsVisible;
+        if ($scope.popoverIsVisible2 == true) {
+          $scope.url = 'https://envirocar.org/api/stable/tracks/' +
+            $rootScope.previewurl + "/preview";
+        } else {
+          $scope.url = "/assets/images/715.gif";
+        }
+        $scope.value2 = $scope.popoverIsVisible2;
+        console.log($scope.popoverIsVisible2);
+      });
+      console.log(visibilityService.result + "is service result");
+      //$scope.popoverIsVisible = visibilityService.result;
+      console.log($scope.popoverIsVisible + "is the value");
+    }
+  ])
+  .factory('visibilityService', ['$rootScope', function($rootScope) {
+    return {
+      result: $rootScope.popoverIsVisible
+    };
+  }])
+  .factory('trackService', ['$http', '$rootScope', function($http, $rootScope) {
     var queryParams = {};
     var results = {};
 

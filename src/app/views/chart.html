@@ -45,7 +45,7 @@
       <br>
             <span class="md-subhead">{{'GRAPH' | translate}}</span>
           </md-card-title-text>
-    <md-card-content class="md-padding">
+    <md-card-content >
       <nvd3 options="options" data="data"></nvd3>
   </md-card-content>
 
@@ -64,7 +64,7 @@
           <md-button ng-show="options" ng-click="$showOptions = !$showOptions" class="md-icon-button" aria-label="Show options">
               <i class="material-icons">more_vert</i>
             </md-card-actions>
-            <md-card-title-media>
+            <md-card-content>
             <md-content ng-show="$showOptions" class="options">
             <md-radio-group ng-model="piechartselected" ng-change="selecteditemchanged()">
               <md-radio-button ng-repeat="d in piechartoptions" ng-value="d" >
@@ -77,7 +77,7 @@
       </md-content>
 
 
-  </md-card-title-media>
+  </md-card-content>
 
   </md-card>
   <!--  <panel-widget flex title="Pie Chart" template="app/views/partials/piechart.html" options="true"></panel-widget> -->

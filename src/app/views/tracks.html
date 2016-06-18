@@ -1,16 +1,15 @@
 <div layout="row" ng-app="app" layout-fill>
-<div layout-gt-md="column">
+<div layout-gt-md="row">
   <md-card  class="card card-4-50" md-theme-watch>
-    <md-card-title>
-      <md-card-title-text>
-        <span class="md-headline">Tracks</span>
-      </md-title-text>
-    </md-card-title>
+    <md-card-title-text>
+      <br>
+            <span class="md-subhead">Track List</span>
+          </md-card-title-text>
     <md-card-content>
     <md-content flex>
       <md-list ng-controller="TrackListCtrl">
-        <md-list-item class="md-3-line md-long-text md-whiteframe-3dp" aria-label="single charts view" ng-repeat="track in results.tracks" ng-href="#/dashboard/chart/{{track.id}}">
-          <div class="md-list-item-text">
+        <md-list-item ng-mouseenter="showPopOver(track.id)" ng-mouseleave="hidePopOver()" class="md-3-line md-long-text md-whiteframe-3dp" aria-label="single charts view" ng-repeat="track in results.tracks" ng-href="#/dashboard/chart/{{track.id}}">
+          <div class="md-list-item-text" >
             <h3>{{track.id}}</h3>
             <div class="md-caption">{{track.name}}</div>
             <div ng-if="!item.highlight.datasetTitle[0]">{{track.modified}}</div>
@@ -31,6 +30,24 @@
       </div>
     </md-content>
   </md-card-content>
+</md-card>
+<md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
+  <md-card-title-text>
+    <br>
+          <span class="md-subhead">Track Preview</span>
+        </md-card-title-text>
+  <md-card-content style="width:510px" layout-align="center center">
+    <div class="popover" ng-controller="ImagePreviewController" ng-show="popoverIsVisible2" >
+      <img src={{url}} style="width:500px;height:450px"></img>
+    </div>
+    <div layout="row" ng-show="!popoverIsVisible2" layout-align="center center" style="height:400px">
+      <p>Hover over a Track to preview</p>
+    </div>
+</md-card-content>
+
+</md-card>
+
+
 </div>
 </div>
 

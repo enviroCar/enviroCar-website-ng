@@ -93,7 +93,7 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
 
   $mdThemingProvider.theme('custom', 'default')
     .primaryPalette('defaultPrimary', {
-      'hue-1': '50'
+      'hue-1': '800'
     })
     .backgroundPalette('blue', {
       'default': '900'
@@ -105,7 +105,7 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
     '200': '#E75753',
     '300': '#E75753',
     '400': '#E75753',
-    '500': '#8CBf3F',
+    '500': '#B9D989',
     '600': '#E75753',
     '700': '#E75753',
     '800': '#0065A0',
@@ -133,12 +133,31 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
     'A700': '#E75753'
   });
 
+  $mdThemingProvider.definePalette('custom', {
+    '50': '#FFFFFF',
+    '100': 'rgb(255, 198, 197)',
+    '200': '#E75753',
+    '300': '#E75753',
+    '400': '#E75753',
+    '500': '#E75753',
+    '600': '#E75753',
+    '700': '#E75753',
+    '800': '#0065A0',
+    '900': '#8CBf3F',
+    'A100': '#B9D989',
+    'A200': '#E75753',
+    'A400': '#E75753',
+    'A700': '#E75753'
+  });
+
   $mdIconProvider.icon('user', 'assets/images/user.svg', 64);
 })
 
 .run(['$rootScope', '$location', '$state', '$cookieStore', '$http', function(
   $rootScope, $location, $state, $cookieStore, $http) {
   console.log("came in")
+  $rootScope.popoverIsVisible = false;
+  $rootScope.previewurl = "";
   $rootScope.globals = $cookieStore.get('globals') || {};
   if ($rootScope.globals.currentUser) {
     $http.defaults.headers.common = {

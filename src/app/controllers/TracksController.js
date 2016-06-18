@@ -33,6 +33,8 @@ angular.module('app')
         $scope.show = true;
       }
       $scope.getData($scope.pageno);
+
+
     }
   ])
 
