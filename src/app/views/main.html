@@ -80,7 +80,7 @@
                 <h3>Your Activity</h3>
             </div>
         </md-toolbar>
-        <md-card ng-controller="MyActivityController" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50-white" md-theme-watch>
+        <md-card ng-controller="MyActivityController" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" style="max-width:375px" class="card card-4-50" md-theme-watch>
           <md-card-content>
             <md-content flex layout-padding style="height:100%">
               <md-list-item class="md-3-line" ng-repeat='item in events' ng-click="goToActivity(item.type,item.trackidlink)">

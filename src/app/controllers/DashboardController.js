@@ -65,6 +65,7 @@ angular.module('app')
     'requesthomestats', 'requestgraphstats', 'dashboard', '$state',
     function($scope, $http, $rootScope, requesthomestats, requestgraphstats,
       dashboard, $state) {
+      $scope.loading = true;
       $scope.goToActivity = function(trackid) {
         console.log("came here");
         //redirect to the track analytics page.
@@ -238,6 +239,7 @@ angular.module('app')
           "value": data.data.avg
         };
         dataotherusers.push(data);
+        $scope.loading = false;
       });
       var datacumulotherusers = {
         "key": dashboard.key2,

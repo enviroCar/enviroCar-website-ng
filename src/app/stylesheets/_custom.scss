@@ -18,6 +18,11 @@ body {
 }
 .popover {
   position: absolute;
+  z-index: 10;
+}
+
+.mySpinner {
+  position: absolute;
   z-index: 100;
 }
 .profiletab{
@@ -75,6 +80,42 @@ body {
   font-weight: 400;
   position:relative;;
 }
+
+//legend inside leaflet graph
+.legend {
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: rgba(255,255,255, 0.7);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    padding: 6px 8px;
+    width: 180px;
+    line-height: 18px;
+    color: #555;
+}
+.legend i {
+    width: 16px;
+    height: 16px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.6;
+}
+
+/*
+#legend > img {
+  display: table;
+}
+
+.legend {
+  width: 10px;
+  height: 10px;
+}
+
+#legend > p {
+  margin-bottom: 5px;
+}
+*/
+
+
 .profiletab .statistics .detail2{
   text-align: center;
 display: table-cell;
@@ -84,6 +125,7 @@ font-weight: 400;
 letter-spacing: 1px;
 color: rgba(255,255,255,0.88);
 }
+
 .profiletab .statistics{
   top: 140px;
   left: 20px;

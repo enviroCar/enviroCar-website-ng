@@ -11,7 +11,7 @@
 </div>
   </div>
     <div layout-gt-md="row">
-    <md-card  md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
+    <md-card  md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" style="min-height:500px" md-theme-watch>
       <md-card-title-text>
         <br>
         <span class="md-subhead">{{'TRACK_MAP' | translate}}</span>
@@ -22,24 +22,21 @@
                 <i class="material-icons">more_vert</i>
               </md-card-actions>
               <md-card-content>
-              <md-content ng-show="$showOptions" class="options">
-                <md-radio-group ng-model="phenomenonleaflet" ng-change="changePhenomenon()">
+                <!-- <img id="mySpinner" class="mySpinner" src="/assets/images/715.gif" ng-show="loading"> -->
+                <md-content ng-show="$showOptions" class="options">
+                  <md-radio-group ng-model="phenomenonleaflet" ng-change="changePhenomenon()">
+                    <md-radio-button ng-repeat="d in piechartoptions" ng-value="d" >
+                        {{d}}
+                    </md-radio-button>
+                  </md-radio-group>
+                </md-content>
 
-
-                  <md-radio-button ng-repeat="d in piechartoptions" ng-value="d" >
-                      {{d}}
-               </md-radio-button>
-                </md-radio-group>
-              </md-content>
                 <md-content class="md-padding">
-                  <leaflet lf-center="center" controls="controls" paths="paths" markers="markers" defaults="defaults" height="470"></leaflet>
-            </md-content>
-
-
-    </md-card-content>
-
+                  <leaflet lf-center="center" controls="controls" paths="paths" markers="markers" legend="legend" defaults="defaults" height="470"  ng-if="!loading"></leaflet>
+                </md-content>
+            </md-card-content>
     </md-card>
-  <!--  <panel-widget flex title="Track Map" template="app/views/partials/leaflettrack.html" options="true"></panel-widget> -->
+
   <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
     <md-card-title-text>
       <br>

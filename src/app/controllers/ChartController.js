@@ -5,7 +5,7 @@
 angular.module('app')
   .constant('chart', {
     chart1type: 'pieChart',
-    chart1height: 370,
+    chart1height: 400,
     chart1duration: 300,
     chart1legend: {
       margin: {
@@ -49,14 +49,14 @@ angular.module('app')
       'Calculated MAF': ["0-5 g/sec", "5-10 g/sec", "10-15 g/sec",
         "15-20 g/sec", "20-25 g/sec", ">25 g/sec"
       ],
-      'Engine Load': ["0-20 ", "20-40 ", "40-60 ", "60-80 ", "80-100 ",
-        ">100 "
+      'Engine Load': ["0-20 %", "20-40 %", "40-60 %", "60-80 %", "80-100 %",
+        ">100 %"
       ],
       'Consumption': ["0-4 l/h", "4-8 l/h", "8-12 l/h", "12-16 l/h",
         "16-20 l/h", ">20 l/h"
       ],
-      'Intake Temperature': ["0-10 C", "10-20 C", "20-30 C", "30-40 C",
-        "40-50 C", "> 50 C"
+      'Intake Temperature': ["0-10 °C", "10-20 °C", "20-30 °C", "30-40 °C",
+        "40-50 °C", "> 50 °C"
       ]
     },
     rangeobjects: {
@@ -115,6 +115,9 @@ angular.module('app')
     '$timeout', '$stateParams', 'factorysingletrack', 'chart', '$location',
     function($state, $scope, $http, $rootScope, $timeout, $stateParams,
       factorysingletrack, chart, $location) {
+
+      $scope.loading = true;
+
       if (typeof $rootScope.globals.currentUser == "undefined") {
         $rootScope.url_redirect_on_login = $location.path();
         console.log("in if")
@@ -200,22 +203,38 @@ angular.module('app')
         markers: {},
         controls: {
           custom: []
-        }
+        },
+        legend: {}
+
       });
+      $scope.legend = {
+        position: 'bottomleft',
+        colors: chart.colorsl,
+        labels: chart.legendtable_all['Speed']
+      }
       $scope.legendtable = chart.legendtable_all['Speed'];
+      /*
       var MyControl = L.control();
       MyControl.setPosition('bottomleft');
       MyControl.onAdd = function() {
-        var div = L.DomUtil.create('div', 'phenomenons');
-        div.innerHTML = " ";
-        //  "<select id =\"phenomselector\" ng-change=\"selecteditemchanged()\"><option>Speed</option><option>Calculated MAF</option><option>Engine Load</option><option>Consumption</option><option>Intake Temperature</option></select>"
-        //"<table><tbody><tr><td>"+"</td></tr></tbody></table>";
-        div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent
-          .stopPropagation;
-        return div;
-      }
-      $scope.controls.custom.push(MyControl);
+          var div = L.DomUtil.create('div', 'phenomenons');
+          div.innerHTML =
+            "<div class=\"well\" id=\"legend\"  style=\"display:inline\">" +
+            "<p> Legend </p >" +
+            "<p id = \"legend-title\">Showing Speed</p><table><tbody>";
 
+          for (var i = 0; i < 6; i++) {
+            div.innerHTML += "<tr><td><p>" + chart.legendtable_all['Speed'][i] +
+              "</p></td></tr>";
+          }
+
+          div.innerHTML += "</tbody></table></div>";
+          div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent
+            .stopPropagation;
+          return div;
+        }
+        //$scope.controls.custom.push(MyControl);
+        */
       //*****************************************************
       //*********VARIABLES REQUIRED FOR THE TABLE*************
       var Co2sum = 0;
@@ -244,6 +263,17 @@ angular.module('app')
         $scope.legendtable = [];
         $scope.legendtable = chart.legendtable_all[$scope.phenomenonleaflet];
         //  The section where the map has to be upated.
+        console.log($scope.legend);
+        $scope.legend.labels = chart.legendtable_all[$scope.phenomenonleaflet];
+        console.log($scope.legend);
+        $scope.legend = {};
+        console.log($scope.legend);
+        console.log("end of changePhenomenon");
+        $scope.legend = {
+          position: 'bottomleft',
+          colors: chart.colorsl,
+          labels: chart.legendtable_all[$scope.phenomenonleaflet]
+        }
       }
       $scope.performancePeriod = 'week';
       $scope.selecteditemchanged = function() {
@@ -531,6 +561,8 @@ angular.module('app')
           endtime: new Date(endtimeg).toLocaleString()
         }
         console.log($scope.tracksummary)
+        $scope.loading = false
+        console.log($scope.loading);
       });
 
       function optionchanger(data, phenomoption, flag) {
