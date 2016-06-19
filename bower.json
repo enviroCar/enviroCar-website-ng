@@ -23,7 +23,6 @@
     "ngInfiniteScroll": "1.2.1",
     "angular-img-http-src": "^0.1.0",
     "angular-translate": "^2.11.0"
-
   },
   "devDependencies": {
     "angular-translate": "^2.11.0"

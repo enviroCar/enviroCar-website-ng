@@ -9,6 +9,7 @@ angular.module('app')
   .controller('FriendActivityController', ['$scope', '$http', '$rootScope',
     '$state', 'friendactivity',
     function($scope, $http, $rootScope, $state, friendactivity) {
+      $scope.show_no_my_activity = false;
 
       $scope.events = [];
       var eventshelper = []
@@ -25,6 +26,10 @@ angular.module('app')
           friendactivity.friend;
         $http.get(url + "limit=" + $scope.page_size + "&page=" + $scope.page)
           .success(function(data, status, headers, config) {
+            if (data.activities.length == 0) {
+              $scope.show_no_my_activity = true;
+              console.log("fired hide");
+            }
             for (var i = 0; i < data.activities.length; i++) {
               var helper = {};
               helper['time'] = data.activities[i].time;

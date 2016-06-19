@@ -102,7 +102,7 @@ angular.module('app')
     ],
     urlusers: "https://envirocar.org/api/stable/users/",
     urlbase: "https://envirocar.org/api/stable/tracks/",
-    colors: ["#ff9933", "#ffff00", "#00cc00", "#440044", "#ff3300"],
+    colors: ["#0065A0", "#ffbf00", "#00cc00", "#440044", "#ff3300"],
     m1message: "Start Point",
     m2message: "End Point",
     colorsl: ["#0099ff", "#ffff00", "#009900", "#ff9900", "#cc3300",
@@ -158,6 +158,22 @@ angular.module('app')
           },
           y: function(d) {
             return d[1];
+          },
+          useInteractiveGuideline: true,
+          interactive: true,
+          tooltip: {
+            contentGenerator: function(d) {
+              var time = new Date(d.value);
+              var html = "<h2>" + time.toLocaleString() + "</h2> <ul>";
+              //var html = "<ul>";
+              d.series.forEach(function(elem) {
+                html += "<li><h3 style='color:" + elem.color + "'>" +
+                  elem.key + "</h3> : <b>" + elem.value.toFixed(1) +
+                  "</b></li>";
+              })
+              html += "</ul>"
+              return html;
+            }
           },
           xAxis: {
             axisLabel: chart.chart2xlabel,
@@ -403,7 +419,8 @@ angular.module('app')
                   console.log(data.data.features[iter].properties.phenomenons);
                   console.log(phenoms[j])
 
-                  rangeobjects[phenoms[j]][1] = data.data.features[iter]
+                  rangeobjects[phenoms[j]][1] = data.data.features[
+                      iter]
                     .properties.phenomenons[phenoms[j]].unit;
                 }
                 var date = new Date(data.data.features[iter].properties
@@ -436,16 +453,23 @@ angular.module('app')
             if (phenoms[j] == chart.piechartselected) {
               var temp_obj = {};
               for (var i = 0; i <= chart.numberofranges; i++) {
-                temp_obj['y'] = piechartsdata[$scope.piechartselected][i];
+                temp_obj['y'] = piechartsdata[$scope.piechartselected][
+                  i
+                ];
                 var content;
                 if (i != chart.numberofranges) {
                   content = rangeobjects[$scope.piechartselected][0][i] +
-                    "-" + rangeobjects[$scope.piechartselected][0][i + 1] +
+                    "-" + rangeobjects[$scope.piechartselected][0][i +
+                      1
+                    ] +
                     " " + rangeobjects[$scope.piechartselected][1];
                 } else {
-                  content = "> " + rangeobjects[$scope.piechartselected][
-                    0
-                  ][i] + " " + rangeobjects[$scope.piechartselected][1];
+                  content = "> " + rangeobjects[$scope.piechartselected]
+                    [
+                      0
+                    ][i] + " " + rangeobjects[$scope.piechartselected][
+                      1
+                    ];
                 }
                 temp_obj['key'] = content;
                 $scope.data_pie[i] = temp_obj;
@@ -460,7 +484,8 @@ angular.module('app')
         }
         $scope.center['lat'] = latinitial;
         $scope.center['lng'] = longinitial;
-        $scope.center['zoom'] = Math.round((20 / Math.pow(dist, 1.5)) + 9)
+        $scope.center['zoom'] = Math.round((20 / Math.pow(dist, 1.5)) +
+          9)
 
         function worker(i, data) {
           if (i <= (len_data - 2)) {
@@ -519,7 +544,8 @@ angular.module('app')
             distance = data.properties['length'];
             vehiclemodel = data.properties.sensor.properties.model;
             vehicletype = data.properties.sensor['type'];
-            console.log(distance + " " + vehiclemodel + " " + vehicletype);
+            console.log(distance + " " + vehiclemodel + " " +
+              vehicletype);
             console.log(units);
             return;
           }
@@ -555,7 +581,8 @@ angular.module('app')
           fuel: fuelSum.toFixed(2),
           unitsoffuel: fuelsplit[0],
           unitsofco2emission: co2split[0],
-          co2emissionperhour: ((Co2sum * 60) / timeoftravel).toFixed(2),
+          co2emissionperhour: ((Co2sum * 60) / timeoftravel).toFixed(
+            2),
           fuelperhour: ((fuelSum * 60) / timeoftravel).toFixed(2),
           starttime: new Date(starttimeg).toLocaleString(),
           endtime: new Date(endtimeg).toLocaleString()
@@ -583,11 +610,14 @@ angular.module('app')
             var p = 'p';
             var path_number = String(p + (k + 1));
             var pathobj = {}
-            if (data.data.features[k - 1].properties.phenomenons[phenomoption])
+            if (data.data.features[k - 1].properties.phenomenons[
+                phenomoption])
               for (var i = chart.numberofranges; i >= 0; i--) {
 
                 if (data.data.features[k - 1].properties.phenomenons[
-                    phenomoption].value >= rangeobjects[phenomoption][0][i]) {
+                    phenomoption].value >= rangeobjects[phenomoption][0][
+                    i
+                  ]) {
                   pathobj['color'] = colorsl[5 - i];
                   break;
                 }
