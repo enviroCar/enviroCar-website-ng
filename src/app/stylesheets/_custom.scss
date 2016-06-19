@@ -1,5 +1,64 @@
 // COLORS
-$main-bg-color: #f2f2f2;
+
+
+@import url(http://weloveiconfonts.com/api/?family=entypo);
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,500,700);
+
+[class*="entypo-"]:before {
+  font-family: 'entypo', sans-serif;
+}
+
+$blue: #533687 ;
+
+
+  .search {
+    flex: 1 1 auto;
+    order: 2;
+    outline: none;
+    border: none;
+    border-radius: 0;
+    background: #fff;
+    padding: 10px;
+    font-family: 'Roboto', sans-serif;
+    height: 50px;
+    transition: all 0.05s ease-in-out;
+    -webkit-appearance: none;
+    &:focus {
+      height: 80px;
+      margin-left: -15px;
+      padding: 10px 15px;
+      + .go {
+        height: 80px;
+        margin-right: -15px;
+        max-width: 80px; // Prevent icon from moving
+        color: $blue;
+        + a.logo {
+          visibility: hidden;
+          opacity: 0;
+          max-width: 0px;
+          margin-right: 0;
+        }
+      }
+    }
+  }
+
+  .go {
+    flex: 1 1 auto;
+    order: 3;
+    max-width: 50px;
+    display: inline-block;
+    border: none;
+    background: #fff;
+    color: #ccc;
+    height: 50px;
+    transition: all 0.05s ease-in-out;
+    font-size: 21px;
+    outline: none;
+  }
+
+
+// end
+$main-bg-color: white;
 $text-color: #7A7A7A;
 $accent-color: rgb(0, 150, 136);
 $warning-color: #E75753;
