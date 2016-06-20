@@ -618,7 +618,7 @@ angular.module('app')
                     phenomoption].value >= rangeobjects[phenomoption][0][
                     i
                   ]) {
-                  pathobj['color'] = colorsl[5 - i];
+                  pathobj['color'] = colorsl[i];
                   break;
                 }
 
