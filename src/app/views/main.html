@@ -62,25 +62,26 @@
         <md-toolbar layout="row" layout-align="center center">
             <img class="img-circle">
             <md-menu md-offset="0 20">
-                <md-button class="capitalize" ng-click="$mdOpenMenu()" aria-label="Open menu">
-                    <span ng-bind=vm.profilename></span>
-                    <i class="material-icons">keyboard_arrow_down</i>
+                <md-button class="capitalize md-primary" ng-click="$mdOpenMenu()" aria-label="Open menu">
+                    <span ng-bind=vm.profilename style="color:white;width:40%"></span>
+                    <i style="color:white" class="material-icons">keyboard_arrow_down</i>
                 </md-button>
                 <md-menu-content width="3">
-                    <md-menu-item><md-button ng-click="$mdCloseMenu()" ui-sref="home.tracks">Tracks</md-button></md-menu-item>
+                    <md-menu-item><md-button ng-click="$mdCloseMenu()" href="#/dashboard/home/">My Dashboard</md-button></md-menu-item>
+                    <md-menu-item><md-button ng-click="$mdCloseMenu()" href="#/dashboard/tracks/">My Tracks</md-button></md-menu-item>
                     <md-menu-item><md-button ng-click="$mdCloseMenu()" ui-sref="login">Log out</md-button></md-menu-item>
                 </md-menu-content>
             </md-menu>
         </md-toolbar>
     </md-toolbar>
 
-    <section>
+    <section ng-controller="MyActivityControllerFixed">
         <md-toolbar md-theme="blue">
             <div class="md-toolbar-tools">
-                <h3>Your Activity</h3>
+                <h3>My Activity</h3>
             </div>
         </md-toolbar>
-        <md-card ng-controller="MyActivityController" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" style="max-width:375px" class="card card-4-50" md-theme-watch>
+        <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" style="max-width:375px" class="card card-4-50" md-theme-watch>
           <md-card-content>
             <md-content flex layout-padding style="height:100%">
               <md-list-item class="md-3-line" ng-repeat='item in events' ng-click="goToActivity(item.type,item.trackidlink)">

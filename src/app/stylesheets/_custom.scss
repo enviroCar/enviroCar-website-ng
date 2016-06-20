@@ -192,6 +192,13 @@ color: rgba(255,255,255,0.88);
   position: absolute;
 }
 
+.profiletab .trackusername{
+  top: 140px;
+  left: 20px;
+  color:white;
+  position: absolute;
+}
+
 //Animations
 @keyframes rotateFall {
     0%      { transform: rotateZ(0deg); }
@@ -241,6 +248,11 @@ color: rgba(255,255,255,0.88);
   color: white;
   font-family: Helvetica, Arial, sans-serif;
   font-size: 30px;
+  position: relative;
+}
+.profiletab .profile-pic .tracksusername{
+  top: -50%;
+  left: 33%;
   position: relative;
 }
 .carddemoBasicUsage .card-media {

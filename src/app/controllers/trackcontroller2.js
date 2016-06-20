@@ -47,7 +47,8 @@ angular.module('app')
       result: $rootScope.popoverIsVisible
     };
   }])
-  .factory('trackService', ['$http', '$rootScope', function($http, $rootScope) {
+  .factory('trackService', ['$http', '$rootScope', '$stateParams', function(
+    $http, $rootScope, $stateParams) {
     var queryParams = {};
     var results = {};
 
@@ -58,9 +59,16 @@ angular.module('app')
     }
 
     function _startRequest() {
+      var username;
+      if ($stateParams.user == "") {
+        username = $rootScope.globals.currentUser.username;
+      } else {
+        username = $stateParams.user;
+      }
       var req = {
         method: 'GET',
-        url: 'https://envirocar.org/api/stable/users/naveen-gsoc/tracks',
+        url: 'https://envirocar.org/api/stable/users/' + username +
+          '/tracks',
         headers: {
           'X-User': $rootScope.globals.currentUser.username,
           'X-Token': $rootScope.globals.currentUser.authdata,
