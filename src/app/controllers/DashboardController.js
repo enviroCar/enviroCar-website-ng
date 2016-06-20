@@ -62,8 +62,10 @@ angular.module('app')
   }])
 angular.module('app')
   .controller('DashboardController', ['$scope', '$http', '$rootScope',
+    '$stateParams',
     'requesthomestats', 'requestgraphstats', 'dashboard', '$state',
-    function($scope, $http, $rootScope, requesthomestats, requestgraphstats,
+    function($scope, $http, $rootScope, $stateParams, requesthomestats,
+      requestgraphstats,
       dashboard, $state) {
       $scope.loading = true;
       $scope.goToActivity = function(trackid) {
@@ -84,7 +86,14 @@ angular.module('app')
       $scope.comments = dashboard.comments;
       $scope.colour = dashboard.color;
       var url1 = dashboard.url1;
-      url1 = url1 + $rootScope.globals.currentUser.username + "/tracks";
+      var username;
+      if ($stateParams.user == "") {
+        username = $rootScope.globals.currentUser.username;
+      } else {
+        username = $stateParams.user
+      }
+      $scope.username = username;
+      url1 = url1 + username + "/tracks";
       $http.defaults.headers.common = {
         'X-User': $rootScope.globals.currentUser.username,
         'X-Token': $rootScope.globals.currentUser.authdata
@@ -176,7 +185,7 @@ angular.module('app')
       };
       var datausers = [];
       var dataotherusers = [];
-      var url = dashboard.urlusers + $rootScope.globals.currentUser.username +
+      var url = dashboard.urlusers + username +
         dashboard.urlco2stats;
       requestgraphstats.get(url).then(function(data) {
         console.log(data.data);
@@ -186,7 +195,7 @@ angular.module('app')
         };
         datausers.push(data);
       });
-      url = dashboard.urlusers + $rootScope.globals.currentUser.username +
+      url = dashboard.urlusers + username +
         dashboard.urlspeedstats;
       requestgraphstats.get(url).then(function(data) {
         console.log(data.data);
@@ -197,7 +206,7 @@ angular.module('app')
         };
         datausers.push(data);
       });
-      url = dashboard.urlusers + $rootScope.globals.currentUser.username +
+      url = dashboard.urlusers + username +
         dashboard.urlconsstats;
       requestgraphstats.get(url).then(function(data) {
         console.log(data.data);

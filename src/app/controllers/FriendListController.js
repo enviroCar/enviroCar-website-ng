@@ -1,16 +1,23 @@
 angular.module('app')
   .controller("FriendListController", ['$scope', '$http', '$rootScope',
+    '$stateParams', '$state',
     'requesthomestats',
-    function($scope, $http, $rootScope, requesthomestats) {
+    function($scope, $http, $rootScope, $stateParams, $state,
+      requesthomestats) {
       $http.defaults.headers.common = {
         'X-User': $rootScope.globals.currentUser.username,
         'X-Token': $rootScope.globals.currentUser.authdata
       };
+      var username;
+      if ($stateParams.user == "") {
+        username = $rootScope.globals.currentUser.username;
+      } else {
+        username = $stateParams.user
+      }
       $scope.show_no_friends = false;
       $scope.data_friends = [];
       var data2 = [];
-      url = 'https://envirocar.org/api/stable/users/' + $rootScope.globals.currentUser
-        .username + "/friends";
+      url = 'https://envirocar.org/api/stable/users/' + username + "/friends";
       requesthomestats.get(url).then(function(data) {
         if (data.data.users.length == 0) {
           $scope.show_no_friends = true;
@@ -26,7 +33,12 @@ angular.module('app')
         }
         $scope.data_friends = data2;
       });
-
-      //$scope.friends = {};
+      $scope.goToFriend = function(username) {
+          console.log(username + "came to find friend");
+          $state.go('home.dashboard', {
+            'user': username
+          });
+        }
+        //$scope.friends = {};
     }
   ])

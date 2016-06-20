@@ -7,10 +7,11 @@ angular.module('app')
 
   })
   .controller('FriendActivityController', ['$scope', '$http', '$rootScope',
+    '$stateParams',
     '$state', 'friendactivity',
-    function($scope, $http, $rootScope, $state, friendactivity) {
+    function($scope, $http, $rootScope, $stateParams, $state, friendactivity) {
       $scope.show_no_my_activity = false;
-
+      $scope.originaluser = false;
       $scope.events = [];
       var eventshelper = []
       $scope.busy = false;
@@ -20,9 +21,18 @@ angular.module('app')
         'X-User': $rootScope.globals.currentUser.username,
         'X-Token': $rootScope.globals.currentUser.authdata
       };
+      var username;
+      if ($stateParams.user == "") {
+        $scope.originaluser = true;
+        username = $rootScope.globals.currentUser.username;
+      } else {
+        $scope.originaluser = false;
+        username = $stateParams.user;
+        return;
+      }
       $scope.nextpage = function() {
         $scope.page++;
-        var url = friendactivity.url_base + $rootScope.globals.currentUser.username +
+        var url = friendactivity.url_base + username +
           friendactivity.friend;
         $http.get(url + "limit=" + $scope.page_size + "&page=" + $scope.page)
           .success(function(data, status, headers, config) {

@@ -28,16 +28,15 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
       authenticate: true,
     })
     .state('home.dashboard', {
-      url: '/home',
+      url: '/home/:user',
       templateUrl: 'app/views/dashboard.html',
-      //  controller: 'DashboardController',
       data: {
         title: 'Dashboard'
       },
       authenticate: true
     })
     .state('home.tracks', {
-      url: '/tracks',
+      url: '/tracks/:user',
       templateUrl: 'app/views/tracks.html',
       data: {
         title: 'Tracks'
@@ -72,7 +71,7 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
       authenticate: true,
     })
 
-  $urlRouterProvider.otherwise('/dashboard/home');
+  $urlRouterProvider.otherwise('/dashboard/home/');
 
   $mdThemingProvider
     .theme('default')

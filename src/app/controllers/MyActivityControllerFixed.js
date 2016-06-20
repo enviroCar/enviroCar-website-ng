@@ -1,12 +1,5 @@
 angular.module('app')
-  .constant('myactivity', {
-    page_size: 5,
-    url_base: "https://envirocar.org/api/stable/users/",
-    yourself: "/activities?",
-    avatar: "/avatar",
-  })
-
-.controller('MyActivityController', ['$scope', '$http', '$rootScope', '$state',
+.controller('MyActivityControllerFixed', ['$scope', '$http', '$rootScope', '$state',
   '$stateParams',
   'myactivity',
   function($scope, $http, $rootScope, $state, $stateParams, myactivity) {
@@ -25,20 +18,10 @@ angular.module('app')
         'X-User': $rootScope.globals.currentUser.username,
         'X-Token': $rootScope.globals.currentUser.authdata
       };
-      $scope.username;
-      var username;
-      if ($stateParams.user == "") {
-        username = $rootScope.globals.currentUser.username;
-        $scope.username = "Your";
 
-      } else {
-        username = $stateParams.user;
-        $scope.username = username;
-      }
-      //$scope.username = username;
       $scope.nextpage = function() {
         $scope.page++;
-        var url = myactivity.url_base + username +
+        var url = myactivity.url_base + $rootScope.globals.currentUser +
           myactivity.yourself;
         $http.get(url + "limit=" + $scope.page_size + "&page=" + $scope.page)
           .success(function(data, status, headers, config) {

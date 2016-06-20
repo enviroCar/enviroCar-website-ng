@@ -3,6 +3,9 @@
   <div class="profile-pic absolute" style="height:40%;display:inline-block">
   <img class="img-circle" src="https://secure.gravatar.com/avatar/cf17f9ff1e0a237ab76046d5aca84e0e?size=240" style="height:100px;width:100px">
   <span class="username" ng-bind=name_of_user></span>
+  <span class="tracksusername">
+  <md-button class="md-raised md-primary" ng-show="originalUser" href="{{trackurl}}">Open {{name_of_user}}'s Tracks</button>
+  </span>
 </div>
 <div class="statistics" >
    <div class="detail2" >
@@ -45,7 +48,7 @@
           <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" style="min-height:600px"  md-theme-watch>
             <md-card-title-text>
               <br>
-                    <span class="md-subhead">{{ 'YOU_VS_PUBLIC' | translate}}</span>
+                    <span class="md-subhead">{{username}} vs Public</span>
                   </md-card-title-text>
                   <md-card-content>
                 <nvd3 options="options" data="data" ng-if="!loading"></nvd3>
@@ -100,7 +103,7 @@
     <md-tab label="Activity">
       <md-content class="md-padding">
         <div layout-gt-md="row" layout="column" >
-        <md-card ng-controller="FriendActivityController" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
+        <md-card ng-show="originaluser" ng-controller="FriendActivityController" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
           <md-card-title-text>
             <br>
                   <span class="md-subhead">{{ 'FRIENDS_ACTIVITY' | translate}}</span>
@@ -156,22 +159,16 @@
 </md-tab>
 
 <md-tab label="Friends and Groups">
-  <!--
-  <div controller="FriendGroupController">
-  <input type="search" class="search" ng-bind="searchFriendValue" ng-change="searchFriends" placeholder="Search..."/>
-      <button class="go"><span class="entypo-search"></span></button>
-    </div>
-  -->
-    <md-card ng-controller="FriendListController" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" style="width:300px" md-theme-watch>
+    <md-card ng-controller="FriendListController" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" style="width:400px" md-theme-watch>
       <md-card-title-text>
         <br>
               <span class="md-subhead">Friends</span>
             </md-card-title-text>
       <md-card-content>
         <md-content ng-show="!show_no_friends" flex layout-padding style="height:270px">
-          <md-list-item class="md-long-text" ng-repeat='item in data_friends'>
+          <md-list-item class="md-long-text" ng-repeat='item in data_friends' ng-click="goToFriend(item.username)">
          <img class="md-avatar" src={{item.profile_url}}></img>
-            <div class="md-list-item-text" layout="column">
+            <div class="md-list-item-text md-2-line" layout="column">
             <h3>{{item.username}}</h3>
             <!--<h4>{{item.name}}</h4>
             <p>{{item.date}}</p>
