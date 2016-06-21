@@ -3,6 +3,8 @@
   <div class="profile-pic absolute" style="height:40%;display:inline-block">
   <img class="img-circle" src="https://secure.gravatar.com/avatar/cf17f9ff1e0a237ab76046d5aca84e0e?size=240" style="height:100px;width:100px">
   <span class="username" ng-bind=name_of_user></span>
+  <span class="emailIdUser" ng-bind=emailId></span>
+
   <span class="tracksusername">
   <md-button class="md-raised md-primary" ng-show="originalUser" href="{{trackurl}}">Open {{name_of_user}}'s Tracks</button>
   </span>
@@ -45,24 +47,29 @@
     <md-tab label="TimeLine">
       <md-content md-theme="default">
         <div layout-gt-md="row" ng-controller="DashboardController" layout="column">
-          <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" style="min-height:600px"  md-theme-watch>
-            <md-card-title-text>
-              <br>
-                    <span class="md-subhead">{{username}} vs Public</span>
-                  </md-card-title-text>
-                  <md-card-content>
+          <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" style="min-height:600px;max-height:601px"  md-theme-watch>
+            <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
+              <div class="md-toolbar-tools">
+                <h3>
+                  <span>{{username}} vs Public</span>
+                </h3>
+              </div>
+            </md-toolbar>
+            <md-card-content>
                 <nvd3 options="options" data="data" ng-if="!loading"></nvd3>
-
-              </md-card-content>
-
+            </md-card-content>
           </md-card>
-          <md-card md-theme="custom" class="card card-4-50" style="width:600px"  md-theme-watch>
+          <md-card md-theme="default" class="card card-4-50" style="width:600px"  md-theme-watch>
+            <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
+              <div class="md-toolbar-tools">
+                <h3>
+                  <span>{{ 'TITLE_TRACKS' | translate}}</span>
+                </h3>
+              </div>
+            </md-toolbar>
             <md-card-content >
-                    <span class="md-subhead">{{ 'TITLE_TRACKS' | translate}}</span>
-                  </md-card-title-text>
-                  <md-list-item ng-if="!loading" md-theme="default" md-ink-ripple="#0065A0" class="md-3-line md-long-text " ng-repeat='event in events' ng-click="goToActivity(event.id)">
-
-                      <img class="md-avatar" src={{event.url}} style="width:40px;height:40px"></img>
+                      <md-list-item ng-if="!loading" md-theme="default" md-ink-ripple="#0065A0" class="md-3-line md-long-text " ng-repeat='event in events' ng-click="goToActivity(event.id)">
+                      <img class="md-avatar" src={{event.url}} style="width:80px;height:80px"></img>
                       <div class="md-list-item-text" layout="column">
                       <h3>{{event.title}}</h3>
                       <h4>{{event.id}}</h4>
@@ -104,10 +111,13 @@
       <md-content class="md-padding">
         <div layout-gt-md="row" layout="column" >
         <md-card ng-show="originaluser" ng-controller="FriendActivityController" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
-          <md-card-title-text>
-            <br>
-                  <span class="md-subhead">{{ 'FRIENDS_ACTIVITY' | translate}}</span>
-                </md-card-title-text>
+          <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
+            <div class="md-toolbar-tools">
+              <h3>
+                <span>{{ 'FRIENDS_ACTIVITY' | translate}}</span>
+              </h3>
+            </div>
+          </md-toolbar>
           <md-card-content>
             <md-content ng-show="!show_no_my_activity" flex layout-padding style="max-height:470px">
               <md-list-item class="md-3-line md-long-text md-whiteframe-1dp" ng-repeat='item in events' ng-click="goToActivity(item.type,item.trackidlink)">
@@ -129,10 +139,13 @@
         </md-card-actions>
         </md-card>
         <md-card ng-controller="MyActivityController" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
-          <md-card-title-text>
-            <br>
-                  <span class="md-subhead">{{'MY_ACTIVITY' | translate}}</span>
-                </md-card-title-text>
+          <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
+            <div class="md-toolbar-tools">
+              <h3>
+                <span>{{'MY_ACTIVITY' | translate}}</span>
+              </h3>
+            </div>
+          </md-toolbar>
           <md-card-content>
             <md-content flex layout-padding style="max-height:470px">
               <md-list-item ng-show="!show_no_my_activity" class="md-3-line md-long-text md-whiteframe-1dp" ng-repeat='item in events' ng-click="goToActivity(item.type,item.trackidlink)">
@@ -160,10 +173,13 @@
 
 <md-tab label="Friends and Groups">
     <md-card ng-controller="FriendListController" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" style="width:400px" md-theme-watch>
-      <md-card-title-text>
-        <br>
-              <span class="md-subhead">Friends</span>
-            </md-card-title-text>
+      <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
+        <div class="md-toolbar-tools">
+          <h3>
+            <span>Friends</span>
+          </h3>
+        </div>
+      </md-toolbar>
       <md-card-content>
         <md-content ng-show="!show_no_friends" flex layout-padding style="height:270px">
           <md-list-item class="md-long-text" ng-repeat='item in data_friends' ng-click="goToFriend(item.username)">

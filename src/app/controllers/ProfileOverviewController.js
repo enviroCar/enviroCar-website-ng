@@ -20,10 +20,12 @@ angular.module('app')
       profileview) {
       $scope.originalUser = false;
       $scope.trackurl;
+
       $http.defaults.headers.common = {
         'X-User': $rootScope.globals.currentUser.username,
         'X-Token': $rootScope.globals.currentUser.authdata
       };
+
       var username;
       if ($stateParams.user == "") {
         username = $rootScope.globals.currentUser.username;
@@ -37,12 +39,15 @@ angular.module('app')
       $scope.friends_number = 0;
       $scope.distance_driven = 0;
       $scope.groups_number = 0;
+      $scope.emailId;
+
       var url_track = profileview.url_base + username +
-        profileview.tracks;
-      ProfileViewFactory.get(url_track).then(function(data) {
-        console.log(data.data.tracks.length);
-        $scope.track_number = data.data.tracks.length;
+        profileview.tracks + "?limit=1";
+      $http.get(url_track).success(function(data, status, headers, config) {
+        var length = headers('Content-Range').split("/");
+        $scope.track_number = Number(length[1]);
       })
+
       var url_friends_number = profileview.url_base + username + profileview.friends;
       ProfileViewFactory.get(url_friends_number).then(function(data) {
           console.log(data.data.users.length);
@@ -61,7 +66,11 @@ angular.module('app')
         $scope.groups_number = data.data.groups.length;
       })
 
-
+      var url_user_details = profileview.url_base + username;
+      ProfileViewFactory.get(url_user_details).then(function(data) {
+        console.log(data.data);
+        $scope.emailId = data.data.mail;
+      })
     }
   ])
 

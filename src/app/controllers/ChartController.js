@@ -293,6 +293,7 @@ angular.module('app')
       }
       $scope.performancePeriod = 'week';
       $scope.selecteditemchanged = function() {
+        console.log("fired");
         var temp_obj = {};
         for (var i = 0; i <= chart.numberofranges; i++) {
           temp_obj['y'] = piechartsdata[$scope.piechartselected][i];

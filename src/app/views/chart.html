@@ -12,18 +12,30 @@
   </div>
     <div layout-gt-md="row">
     <md-card  md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" style="min-height:500px" md-theme-watch>
-      <md-card-title-text>
+      <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" >
+        <div class="md-toolbar-tools">
+          <h3>
+            <span>{{'TRACK_MAP' | translate}}</span>
+          </h3>
+          <span flex></span>
+
+                <md-button ng-show="options" ng-click="$showOptions = !$showOptions" class="md-icon-button" aria-label="Show options">
+                    <i class="material-icons">more_vert</i>
+        </div>
+      </md-toolbar>
+    <!--  <md-card-title-text>
         <br>
         <span class="md-subhead">{{'TRACK_MAP' | translate}}</span>
-            </md-card-title-text>
-            <md-card-actions layout="row" layout-align="end right">
+      </md-card-title-text> -->
+            <!--   <md-card-actions layout="row" layout-align="end right">
 
-            <md-button ng-show="options" ng-click="$showOptions = !$showOptions" class="md-icon-button" aria-label="Show options">
+              <md-button ng-show="options" ng-click="$showOptions = !$showOptions" class="md-icon-button" aria-label="Show options">
                 <i class="material-icons">more_vert</i>
               </md-card-actions>
-              <md-card-content>
+            -->
+              <md-card-content >
                 <!-- <img id="mySpinner" class="mySpinner" src="/assets/images/715.gif" ng-show="loading"> -->
-                <md-content ng-show="$showOptions" class="options">
+            <md-content ng-show="$showOptions" class="optionspie">
                   <md-radio-group ng-model="phenomenonleaflet" ng-change="changePhenomenon()">
                     <md-radio-button ng-repeat="d in piechartoptions" ng-value="d" >
                         {{d}}
@@ -31,45 +43,66 @@
                   </md-radio-group>
                 </md-content>
 
-                <md-content class="md-padding">
+                <md-content>
                   <leaflet lf-center="center" controls="controls" paths="paths" markers="markers" legend="legend" defaults="defaults" height="470"  ng-if="!loading"></leaflet>
                 </md-content>
             </md-card-content>
     </md-card>
+    <!--   <div layout="column" style="width:50%;height:600px" ng-cloak>
 
-  <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
-    <md-card-title-text>
-      <br>
-            <span class="md-subhead">{{'GRAPH' | translate}}</span>
-          </md-card-title-text>
+ <md-toolbar md-scroll-shrink ng-if="true" ng-controller="TitleController">
+      <div class="md-toolbar-tools">
+        <h3>
+          <span>Trial</span>
+        </h3>
+      </div>
+    </md-toolbar>
+    <md-content>
+      <nvd3 options="options" data="data"></nvd3>
+    </md-content>
+</div>
+-->
+<md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
+<md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
+  <div class="md-toolbar-tools">
+    <h3>
+      <span>Graph</span>
+    </h3>
+  </div>
+</md-toolbar>
     <md-card-content >
       <nvd3 options="options" data="data"></nvd3>
   </md-card-content>
 
-  </md-card>
+</md-card>
     <!-- <panel-widget flex title="Graph" template="app/views/partials/chartmain.html"></panel-widget> -->
 </div>
 
 <div layout-gt-md="row">
   <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
-    <md-card-title-text>
-      <br>
-      <span class="md-subhead">{{'PIE_CHART' | translate}}</span>
-          </md-card-title-text>
-          <md-card-actions layout="row" layout-align="end right">
+    <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" >
+      <div class="md-toolbar-tools">
+        <h3>
+          <span>{{'PIE_CHART' | translate}}</span>
+        </h3>
+        <span flex></span>
 
-          <md-button ng-show="options" ng-click="$showOptions = !$showOptions" class="md-icon-button" aria-label="Show options">
-              <i class="material-icons">more_vert</i>
-            </md-card-actions>
-            <md-card-content>
-            <md-content ng-show="$showOptions" class="options">
+              <md-button ng-show="options" ng-click="$showOptions = !$showOptions" class="md-icon-button" aria-label="Show options">
+                  <i class="material-icons">more_vert</i>
+
+      </div>
+
+    </md-toolbar>
+    <md-card-content>
+          <md-content ng-show="$showOptions" class="optionspie">
             <md-radio-group ng-model="piechartselected" ng-change="selecteditemchanged()">
               <md-radio-button ng-repeat="d in piechartoptions" ng-value="d" >
                   {{d}}
            </md-radio-button>
             </md-radio-group>
           </md-content>
-          <md-content class="md-padding">
+          <md-content >
+
             <nvd3 options="options_pie" data="data_pie"></nvd3>
       </md-content>
 
@@ -79,10 +112,14 @@
   </md-card>
   <!--  <panel-widget flex title="Pie Chart" template="app/views/partials/piechart.html" options="true"></panel-widget> -->
   <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
-    <md-card-title-text>
-      <br>
-            <span class="md-subhead">{{'TRACK_SUMMARY' | translate}}</span>
-          </md-card-title-text>
+    <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
+      <div class="md-toolbar-tools">
+        <h3>
+          <span>{{'TRACK_SUMMARY' | translate}}</span>
+        </h3>
+      </div>
+    </md-toolbar>
+
     <md-card-title-media>
       <div>
         <md-list-item class="md-2-line">
