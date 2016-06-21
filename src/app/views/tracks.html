@@ -1,10 +1,13 @@
 <div layout="row" ng-app="app" layout-fill>
 <div layout-gt-md="row">
   <md-card  class="card card-4-50-new" md-theme-watch style="min-width:600px;min-height:700px;max-width:611px">
-    <md-card-title-text>
-      <br>
-            <span class="md-subhead">Track List</span>
-          </md-card-title-text>
+    <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
+      <div class="md-toolbar-tools">
+        <h3>
+          <span>Tracks List</span>
+        </h3>
+      </div>
+    </md-toolbar>
     <md-card-content>
     <md-content flex>
       <md-list ng-controller="TrackListCtrl">
@@ -31,11 +34,14 @@
     </md-content>
   </md-card-content>
 </md-card>
-<md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" style="height:550px;max-width:520px" md-theme-watch>
-  <md-card-title-text>
-    <br>
-          <span class="md-subhead">Track Preview</span>
-        </md-card-title-text>
+<md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" style="height:550px;max-width:540px" md-theme-watch>
+  <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
+    <div class="md-toolbar-tools">
+      <h3>
+        <span>Track Preview</span>
+      </h3>
+    </div>
+  </md-toolbar>
   <md-card-content style="min-width:510px;max-width:520px" layout-align="center center">
     <div class="popover" ng-controller="ImagePreviewController" ng-show="popoverIsVisible2" >
       <img src={{url}} style="width:500px;height:450px"></img>
