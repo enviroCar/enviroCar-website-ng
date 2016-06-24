@@ -47,7 +47,7 @@
     <md-tab label="TimeLine">
       <md-content md-theme="default">
         <div layout-gt-md="row" ng-controller="DashboardController" layout="column">
-          <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" style="min-height:600px;max-height:601px"  md-theme-watch>
+         <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" style="width:30%"  md-theme-watch>
             <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
               <div class="md-toolbar-tools">
                 <h3>
@@ -55,11 +55,50 @@
                 </h3>
               </div>
             </md-toolbar>
-            <md-card-content>
-                <nvd3 options="options" data="data" ng-if="!loading"></nvd3>
+            <md-card-content flex>
+            <div layout-gt-md="row" layout="row">
+            <md-card style="max-height:330px" flex>
+              <md-card-title>
+                <span class="md-subhead">Speed</span>
+              </md-card-title>
+              <md-card-content flex class="md-padding">
+              <nvd3 options="optionsSpeed" data="dataSpeed" ng-if="!loading"></nvd3>
+            </md-card-content>
+            </md-card>
+            <md-card style="max-height:330px" flex>
+              <md-card-title>
+                <span class="md-subhead">Consumption</span>
+              </md-card-title>
+              <md-card-content flex class="md-padding">
+              <nvd3 options="optionsConsumption" data="dataConsumption" ng-if="!loading"></nvd3>
+            </md-card-content>
+            </md-card>
+          </div>
+          <div layout-gt-md="row" layout="row">
+          <md-card style="max-height:330px" flex>
+            <md-card-title>
+              <span class="md-subhead">CO2</span>
+            </md-card-title>
+            <md-card-content flex class="md-padding">
+            <nvd3 options="optionsCO2" data="dataCO2" ng-if="!loading"></nvd3>
+          </md-card-content>
+          </md-card>
+          <md-card style="max-height:330px" flex>
+            <md-card-title>
+              <span class="md-subhead">Engine Load</span>
+            </md-card-title>
+            <md-card-content flex class="md-padding">
+            <nvd3 options="optionsEngineload" data="dataEngineload" ng-if="!loading"></nvd3>
+          </md-card-content>
+          </md-card>
+        </div>
             </md-card-content>
           </md-card>
-          <md-card md-theme="default" class="card card-4-50" style="width:600px"  md-theme-watch>
+
+
+
+
+          <md-card md-theme="default" flex>
             <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
               <div class="md-toolbar-tools">
                 <h3>
@@ -71,37 +110,30 @@
                       <md-list-item ng-if="!loading" md-theme="default" md-ink-ripple="#0065A0" class="md-3-line md-long-text " ng-repeat='event in events' ng-click="goToActivity(event.id)">
                       <img class="md-avatar" src={{event.url}} style="width:80px;height:80px"></img>
                       <div class="md-list-item-text" layout="column">
-                      <h3>{{event.title}}</h3>
-                      <h4>{{event.id}}</h4>
-                      <p>{{event.modified}}</p>
+                      <h3><b>{{event.begin}}</b></h3>
+                      <h4>{{event.title}}</h4>
+                      <p>Distance - {{event.distance}} Km</p>
                     </div>
                     </md-list-item>
                 </md-card-content>
-                <md-card-title-media>
 
-              <md-content >
-                <!--
-            <timeline>
-            <timeline-event ng-repeat="event in events" side={{event.side}}>
-              <timeline-badge class="{{event.badgeClass}}">
-                <i class="glyphicon {{event.badgeIconClass}}"></i>
-              </timeline-badge>
-              <timeline-panel class="{{event.badgeClass}}">
-                <timeline-heading>
-                  <h4><a href={{event.urlredirect}}>{{event.title}}</a></h4>
-                 <img class="previewimage" src={{event.url}} height="42" width="42"></img>
-                </timeline-heading>
-                <p>{{'TRACK_ID' | translate}} - {{event.id}}</p>
-                <p>{{'MODIFIED' | translate}} - {{event.modified}}</p>
-              </timeline-panel>
-            </timeline-event>
-          </timeline>
-        -->
-        </md-content>
-
-        </md-card-title-media>
 
         </md-card>
+
+                  <md-card md-theme="default" flex>
+                    <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
+                      <div class="md-toolbar-tools">
+                        <h3>
+                          <span>Statistics</span>
+                        </h3>
+                      </div>
+                    </md-toolbar>
+                    <md-card-content >
+                          Speed ranges statistics coming here.
+                        </md-card-content>
+
+
+                </md-card>
 
 
         </div>
@@ -181,7 +213,8 @@
         </div>
       </md-toolbar>
       <md-card-content>
-        <md-content ng-show="!show_no_friends" flex layout-padding style="height:270px">
+        <div flex>
+        <md-content ng-show="!show_no_friends" flex layout-padding >
           <md-list-item class="md-long-text" ng-repeat='item in data_friends' ng-click="goToFriend(item.username)">
          <img class="md-avatar" src={{item.profile_url}}></img>
             <div class="md-list-item-text md-2-line" layout="column">
@@ -195,6 +228,7 @@
     <div layout="row" ng-show="show_no_friends" layout-align="center center">
       <p>You do not have any friends</p>
     </div>
+  </div>
     </md-card-content>
     </md-card>
 </md-tab>

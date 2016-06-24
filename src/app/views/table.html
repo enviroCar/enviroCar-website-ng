@@ -1,0 +1,50 @@
+<div ng-controller="CalendarController" layout-gt-md="row">
+  <md-card flex md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
+
+      <md-card-content flex style="height:400px">
+
+        <div >
+          <calendar-md style="height:400px;color:green" layout layout-fill
+          calendar-direction="direction"
+          on-prev-month="prevMonth"
+          on-next-month="nextMonth"
+          on-day-click="dayClick"
+          title-format="'MMMM y'"
+          ng-model='selectedDate'
+          day-format="'d'"
+          day-label-format="'EEE'"
+          day-label-tooltip-format="'EEEE'"
+          day-tooltip-format="'fullDate'"
+          week-starts-on="firstDayOfWeek"
+          disable-future-selection="true"
+          day-content="setDayContent"
+          ></calendar-md>
+        </div>
+      </md-card-content>
+
+  </md-card>
+  <md-card md-theme="default" class="card card-4-50" flex md-theme-watch>
+    <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
+      <div class="md-toolbar-tools">
+        <h3>
+          <span>{{ 'TITLE_TRACKS' | translate}}</span>
+        </h3>
+      </div>
+    </md-toolbar>
+    <md-card-content >
+      <md-content flex style="max-height:400px;width:60%">
+              <md-list-item  ng-show="no_data" md-theme="default" md-ink-ripple="#0065A0" class="md-3-line md-long-text " ng-repeat='event in tracks' ng-click="goToActivity(event.id)">
+                <img class="md-avatar" src={{event.url}} style="width:80px;height:80px"></img>
+              <div class="md-list-item-text" layout="column">
+              <h3><b>{{event.begin}}</b></h3>
+              <h4>{{event.name}}</h4>
+              <p>Distance - {{event.length}} Km</p>
+            </div>
+            </md-list-item>
+            <div layout="row" ng-show="!no_data" layout-align="center center">
+              <p>Select days that have the track icon to explore</p>
+            </div>
+          </md-content>
+        </md-card-content>
+</md-card>
+</div>

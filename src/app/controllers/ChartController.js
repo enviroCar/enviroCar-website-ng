@@ -17,12 +17,12 @@ angular.module('app')
     },
 
     chart2type: 'lineWithFocusChart',
-    chart2height: 470,
+    chart2height: 380,
     chart2margin: {
-      top: 20,
-      right: 50,
-      bottom: 40,
-      left: 125
+      top: 150,
+      right: 20,
+      bottom: 50,
+      left: 80
     },
     chart2xlabel: 'Time',
     chart2ylabel: 'Values',
