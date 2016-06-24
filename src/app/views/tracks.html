@@ -1,5 +1,63 @@
+<md-tabs md-dynamic-height md-dynamic-width md-border-bottom>
+    <md-tab label="Calendar of Tracks">
+      <div ng-controller="CalendarController" layout-gt-md="row">
+        <md-card flex md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
 
-<div layout-gt-md="row">
+            <md-card-content flex>
+
+              <div >
+                <calendar-md md-theme="blue" flex layout layout-fill
+                calendar-direction="direction"
+                on-prev-month="prevMonth"
+                on-next-month="nextMonth"
+                on-day-click="dayClick"
+                title-format="'MMMM y'"
+                ng-model='selectedDate'
+                day-format="'d'"
+                day-label-format="'EEE'"
+                day-label-tooltip-format="'EEEE'"
+                day-tooltip-format="'fullDate'"
+                week-starts-on="firstDayOfWeek"
+                disable-future-selection="true"
+                day-content="setDayContent"
+                ></calendar-md>
+              </div>
+            </md-card-content>
+
+        </md-card>
+        <md-card md-theme="default" class="card card-4-50" flex md-theme-watch>
+          <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
+            <div class="md-toolbar-tools">
+              <h3>
+                <span>{{ 'TITLE_TRACKS' | translate}}</span>
+              </h3>
+            </div>
+          </md-toolbar>
+          <div style="height:100%" layout="row">
+          <md-card-content flex>
+
+            <md-content style="width:60%">
+                    <md-list-item  ng-show="no_data" md-theme="default" md-ink-ripple="#0065A0" class="md-3-line md-long-text " ng-repeat='event in tracks' ng-click="goToActivity(event.id)">
+                      <img class="md-avatar" src={{event.url}} style="width:80px;height:80px"></img>
+                    <div class="md-list-item-text" layout="column">
+                    <h3><b>{{event.begin}}</b></h3>
+                    <h4>{{event.name}}</h4>
+                    <p>Distance - {{event.length}} Km</p>
+                  </div>
+                  </md-list-item>
+                  <div layout="row" ng-show="!no_data" layout-align="center center">
+                    <p>Select days that have the track icon to explore</p>
+                  </div>
+                </md-content>
+
+              </md-card-content>
+            </div>
+      </md-card>
+      </div>
+    </md-tab>
+    <md-tab label="All Tracks">
+      <div layout-gt-md="row">
+
   <md-card md-theme-watch flex>
     <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
       <div class="md-toolbar-tools">
@@ -52,58 +110,7 @@
 </md-card-content>
 
 </md-card>
-
-
 </div>
 
-
-
-<!-- RESIDUAL CODE FROM THE EARLIER TRACKS.HTML
-
-<div ng-controller="TracksController">
-<div layout-gt-md="row">
-  <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-flex" md-theme-watch>
-    <md-card-title-text>
-      <br>
-            <span class="md-subhead">You Vs Public</span>
-          </md-card-title-text>
-    <md-card-title-media>
-
-
-      <div role="main" class="container theme-showcase">
-           <div>
-             <div class="table-responsive-vertical ">
-                 <div class="bs-component">
-                     <table ng-show="show == true" class="table table-striped table-hover">
-                         <thead>
-                             <tr>
-                                 <th>Track Id</th>
-                                 <th>Last Modified</th>
-                                 <th>Track Name</th>
-                             </tr>
-                         </thead>
-                         <tbody ng-show="show == true">
-                             <tr ng-show="trackslist.length <= 0"><td colspan="5" style="text-align:center;">Loading new data!!</td></tr>
-                             <tr ng-hide="trackslist.length <= 0" dir-paginate="user in trackslist|itemsPerPage:itemsPerPage" total-items="total_count">
-                                 <td><a href={{user.urlredirect}}>{{user.id}}</a></td>
-                                 <td>{{user.modified}}</td>
-                                 <td>{{user.name}}</td>
-                             </tr>
-                         </tbody>
-                     </table>
-                     <dir-pagination-controls
-                        max-size="8"
-                        direction-links="true"
-                        boundary-links="true"
-                        on-page-change="getData(newPageNumber)" >
-                     </dir-pagination-controls>
-                 </div>
-             </div>
-           </div>
-         </div>
-  </md-card-title-media>
-
-  </md-card>
-</div>
-</div>
--->
+</md-tab>
+  </md-tabs>

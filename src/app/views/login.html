@@ -5,17 +5,17 @@
 						<md-content md-theme="default">
               <div ng-show="error">{{error}}</div>
 							<md-input-container md-theme="default">
-								<label>Email</label>
-								<input ng-model="username">
+								<label>Username</label>
+								<input ng-keyup="$event.keyCode == 13 && login()" ng-model="username">
 							</md-input-container>
 							<md-input-container md-theme="default">
 								<label>Password</label>
-								<input ng-model="password" type="password">
+								<input ng-keyup="$event.keyCode == 13 && login()" ng-model="password" type="password">
 							</md-input-container>
 							<md-input-container layout-align="center center">
 								<div layout="row" layout-sm="column" layout-margin>
-									<md-button class="md-raised" flex="50" flex-sm="100" ng-click="login()">Login</md-button>
-									<md-button class="md-raised md-primary" flex="50" flex-sm="100">Register</md-button>
+									<md-button md-theme="defaultPrimary" class="md-raised" flex="50" flex-sm="100" ng-click="login()">Login</md-button>
+									<md-button class="md-raised md-success" flex="50" flex-sm="100">Register</md-button>
 								</div>
 							</md-input-container>
 						</md-content>
