@@ -46,8 +46,9 @@
   <md-tabs md-dynamic-height md-border-bottom>
     <md-tab label="TimeLine">
       <md-content md-theme="default">
-        <div layout-gt-md="row" ng-controller="DashboardController" layout="column">
-         <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" style="width:30%"  md-theme-watch>
+        <div layout-gt-md="row" ng-controller="DashboardController" layout="column" style="height:100%">
+          <img class="loader_dashboard" ng-if="!onload" src="assets/spiffygif_152X152.gif">
+         <md-card ng-if="onload"  md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" style="min-width:30%"  md-theme-watch>
             <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
               <div class="md-toolbar-tools">
                 <h3>
@@ -57,7 +58,7 @@
             </md-toolbar>
             <md-card-content flex>
             <div layout-gt-md="row" layout="row">
-            <md-card style="max-height:330px" flex>
+            <md-card ng-if="onload" style="max-height:330px" flex>
               <md-card-title>
                 <span class="md-subhead">Speed</span>
               </md-card-title>
@@ -65,7 +66,7 @@
               <nvd3 options="optionsSpeed" data="dataSpeed" ng-if="!loading"></nvd3>
             </md-card-content>
             </md-card>
-            <md-card style="max-height:330px" flex>
+            <md-card ng-if="onload" style="max-height:330px" flex>
               <md-card-title>
                 <span class="md-subhead">Consumption</span>
               </md-card-title>
@@ -75,7 +76,7 @@
             </md-card>
           </div>
           <div layout-gt-md="row" layout="row">
-          <md-card style="max-height:330px" flex>
+          <md-card ng-if="onload" style="max-height:330px" flex>
             <md-card-title>
               <span class="md-subhead">CO2</span>
             </md-card-title>
@@ -83,7 +84,7 @@
             <nvd3 options="optionsCO2" data="dataCO2" ng-if="!loading"></nvd3>
           </md-card-content>
           </md-card>
-          <md-card style="max-height:330px" flex>
+          <md-card ng-if="onload" style="max-height:330px" flex>
             <md-card-title>
               <span class="md-subhead">Engine Load</span>
             </md-card-title>
@@ -98,7 +99,7 @@
 
 
 
-          <md-card md-theme="default" flex>
+          <md-card ng-if="onload" md-theme="default" style="min-width:30%" flex>
             <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
               <div class="md-toolbar-tools">
                 <h3>
@@ -120,7 +121,7 @@
 
         </md-card>
 
-                  <md-card md-theme="default" flex>
+                  <md-card ng-if="onload" md-theme="default" style="min-width:30%" flex>
                     <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
                       <div class="md-toolbar-tools">
                         <h3>

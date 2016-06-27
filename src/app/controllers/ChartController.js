@@ -17,12 +17,12 @@ angular.module('app')
     },
 
     chart2type: 'lineWithFocusChart',
-    chart2height: 380,
+    chart2height: 420,
     chart2margin: {
-      top: 150,
+      top: 20,
       right: 20,
-      bottom: 50,
-      left: 80
+      bottom: 10,
+      left: 60
     },
     chart2xlabel: 'Time',
     chart2ylabel: 'Values',
@@ -159,6 +159,7 @@ angular.module('app')
           y: function(d) {
             return d[1];
           },
+          showLegend: false,
           useInteractiveGuideline: true,
           interactive: true,
           tooltip: {
@@ -272,39 +273,70 @@ angular.module('app')
       var piechartsdata = chart.piechartsdata;
       var rangeobjects = chart.rangeobjects;
       var data_global = {}
-      $scope.changePhenomenon = function() {
+      $scope.changePhenomenon = function(phenomenon) {
+        console.log(phenomenon);
         console.log("changed");
         console.log($scope.paths);
-        optionchanger(data_global, $scope.phenomenonleaflet, 0);
+        optionchanger(data_global, phenomenon, 0);
         $scope.legendtable = [];
-        $scope.legendtable = chart.legendtable_all[$scope.phenomenonleaflet];
-        //  The section where the map has to be upated.
+        $scope.legendtable = chart.legendtable_all[phenomenon];
         console.log($scope.legend);
-        $scope.legend.labels = chart.legendtable_all[$scope.phenomenonleaflet];
+        $scope.legend.labels = chart.legendtable_all[phenomenon];
         console.log($scope.legend);
         $scope.legend = {};
         console.log($scope.legend);
+        console.log($scope.phenomenonleaflet);
         console.log("end of changePhenomenon");
         $scope.legend = {
           position: 'bottomleft',
           colors: chart.colorsl,
-          labels: chart.legendtable_all[$scope.phenomenonleaflet]
+          labels: chart.legendtable_all[phenomenon]
         }
       }
+      var datafinal = [];
+      $scope.phenomenonnvd3 = "Speed";
+      $scope.selected = ['Speed']
+      $scope.exists = function(item, list) {
+        return list.indexOf(item) > -1;
+      };
+      $scope.toggle = function(item, list) {
+        console.log("came here");
+        console.log($scope.selected)
+        var idx = list.indexOf(item);
+        if (idx > -1) {
+          list.splice(idx, 1);
+        } else {
+          list.push(item);
+        }
+        console.log($scope.selected)
+        $scope.data = [];
+        var datanew = [];
+        for (var i = 0; i < $scope.selected.length; i++) {
+          for (var j = 0; j < datafinal.length; j++) {
+            if (datafinal[j]['key'] == $scope.selected[i]) {
+              datanew.push(datafinal[j]);
+            }
+          }
+        }
+        $scope.data = datanew;
+      };
+      $scope.changePhenomenonnvd3 = function() {
+        console.log($scope.phenomenonnvd3);
+      }
       $scope.performancePeriod = 'week';
-      $scope.selecteditemchanged = function() {
+      $scope.selecteditemchanged = function(phenomenon) {
         console.log("fired");
         var temp_obj = {};
         for (var i = 0; i <= chart.numberofranges; i++) {
-          temp_obj['y'] = piechartsdata[$scope.piechartselected][i];
+          temp_obj['y'] = piechartsdata[phenomenon][i];
           var content;
           if (i != chart.numberofranges) {
-            content = rangeobjects[$scope.piechartselected][0][i] + "-" +
-              rangeobjects[$scope.piechartselected][0][i + 1] + " " +
-              rangeobjects[$scope.piechartselected][1];
+            content = rangeobjects[phenomenon][0][i] + "-" +
+              rangeobjects[phenomenon][0][i + 1] + " " +
+              rangeobjects[phenomenon][1];
           } else {
-            content = "> " + rangeobjects[$scope.piechartselected][0][i] +
-              " " + rangeobjects[$scope.piechartselected][1];
+            content = "> " + rangeobjects[phenomenon][0][i] +
+              " " + rangeobjects[phenomenon][1];
           }
           temp_obj['key'] = content;
           $scope.data_pie[i] = temp_obj;
@@ -377,7 +409,7 @@ angular.module('app')
           console.log(data);
           data_global = data;
           var dist = data.data.properties.length;
-          var datafinal = [];
+
           len_data = data.data.features.length;
           // need to handle this particular event before the phenoms gets the chart.phenoms and the corresponding color.phenoms.
 
@@ -479,7 +511,16 @@ angular.module('app')
             }
             datafinal.push(data_to_push);
           }
-          $scope.data = datafinal;
+          //$scope.data = datafinal;
+          var data_temp = []
+          for (var iterator = 0; iterator < datafinal.length; iterator++) {
+            if (datafinal[iterator]['key'] == "Speed") {
+              data_temp.push(datafinal[iterator]);
+              $scope.data = data_temp;
+              console.log("phenomset");
+            }
+          }
+          console.log(datafinal);
           optionchanger(data, 'Speed', 1);
 
         }

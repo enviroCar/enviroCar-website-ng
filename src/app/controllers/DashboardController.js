@@ -29,6 +29,7 @@ angular.module('app')
     urlcommonengineload: 'https://envirocar.org/api/stable/statistics/Consumption',
     key2: "Other User's Statistics",
     color2: '#1f77b4',
+    loading_count: 5
   });
 angular.module('app')
   .config(['$translateProvider', function($translateProvider) {
@@ -69,6 +70,8 @@ angular.module('app')
     function($scope, $http, $rootScope, $stateParams, requesthomestats,
       requestgraphstats,
       dashboard, $state) {
+      var loading_count = 0;
+      $scope.onload = false;
       $scope.loading = true;
       $scope.goToActivity = function(trackid) {
         console.log("came here");
@@ -129,33 +132,15 @@ angular.module('app')
             } else {
               helper_events['side'] = 'left';
             }
-
-            /*  requesthomestats.get(url1 + "/" + data.data.tracks[cntr].id).then(function(data2)
-            {
-              helper_events['carmodel'] = data2.data.properties.sensor.properties.model;
-              helper_events['length'] = data2.data.properties['length'].toFixed(2);
-              helper_events['starttime'] = new Date(data2.data.features[0].properties.time).toLocaleString();
-              helper_events['badgeIconClass'] = 'glyphicon-check';
-              helper_events['badgeClass'] = 'info';
-              console.log("came in track details");
-              data2.data['url'] = dashboard.urltracks + data2.data.properties.id+"/preview";
-              console.log(data2.data.properties['length'] = Number(data2.data.properties['length'].toFixed(2)));
-              if((cntr+1)%2 == 0)
-              {
-                data2.data['placement'] = 'direction-r';
-              }
-              else
-              {
-                data2.data['placement'] = 'direction-l';
-              }
-              timeline[data.data.tracks[cntr].id] = data2.data;
-              console.log(timeline);
-            })
-            */
             helperevents.push(helper_events);
           })(i);
         }
         $scope.timelinevalues = timeline;
+        loading_count++;
+        if (loading_count == dashboard.loading_count) {
+          $scope.onload = true;
+          window.dispatchEvent(new Event('resize'));
+        }
         console.log(timeline);
         console.log($scope.timelinevalues);
       });
@@ -196,9 +181,9 @@ angular.module('app')
           height: 260,
           margin: {
             top: 10,
-            right: 30,
+            right: 0,
             bottom: 80,
-            left: 45
+            left: 50
           },
           x: function(d) {
             return d.label;
@@ -228,9 +213,9 @@ angular.module('app')
           height: 260,
           margin: {
             top: 10,
-            right: 30,
+            right: 0,
             bottom: 80,
-            left: 45
+            left: 50
           },
           x: function(d) {
             return d.label;
@@ -260,9 +245,9 @@ angular.module('app')
           height: 260,
           margin: {
             top: 10,
-            right: 30,
+            right: 0,
             bottom: 80,
-            left: 45
+            left: 50
           },
           x: function(d) {
             return d.label;
@@ -292,9 +277,9 @@ angular.module('app')
           height: 260,
           margin: {
             top: 10,
-            right: 30,
+            right: 0,
             bottom: 80,
-            left: 45
+            left: 50
           },
           x: function(d) {
             return d.label;
@@ -330,6 +315,25 @@ angular.module('app')
       requestgraphstats.get(url).then(function(data) {
         console.log(data.data);
         CO2_users = data.data.avg;
+        url = dashboard.urlcommonco2;
+        requestgraphstats.get(url).then(function(data) {
+          console.log(data.data);
+          $scope.dataCO2 = [{
+            key: "Cumulative Return",
+            values: [{
+              "label": "User",
+              "value": CO2_users
+            }, {
+              "label": "Public",
+              "value": data.data.avg
+            }]
+          }]
+          loading_count++;
+          if (loading_count == dashboard.loading_count) {
+            $scope.onload = true;
+            window.dispatchEvent(new Event('resize'));
+          }
+        });
       });
 
       url = dashboard.urlusers + username +
@@ -338,7 +342,28 @@ angular.module('app')
         console.log(data.data);
         var store = data.data;
         speed_users = store.avg;
-        datausers.push(data);
+        url = dashboard.urlcommonspeed;
+        requestgraphstats.get(url).then(function(data) {
+          console.log(data.data);
+          var store = data.data;
+          speed_public = store.avg
+          $scope.dataSpeed = [{
+            key: "Cumulative Return",
+            values: [{
+              "label": "User",
+              "value": speed_users
+            }, {
+              "label": "Public",
+              "value": speed_public
+            }]
+          }]
+          dataotherusers.push(data);
+          loading_count++;
+          if (loading_count == dashboard.loading_count) {
+            $scope.onload = true;
+            window.dispatchEvent(new Event('resize'));
+          }
+        });
       });
 
       url = dashboard.urlusers + username +
@@ -346,6 +371,26 @@ angular.module('app')
       requestgraphstats.get(url).then(function(data) {
         console.log(data.data);
         consumption_users = data.data.avg;
+        url = dashboard.urlcommoncons;
+        requestgraphstats.get(url).then(function(data) {
+          console.log(data.data);
+          $scope.loading = false;
+          $scope.dataConsumption = [{
+            key: "Cumulative Return",
+            values: [{
+              "label": "User",
+              "value": consumption_users
+            }, {
+              "label": "Public",
+              "value": data.data.avg
+            }]
+          }]
+          loading_count++;
+          if (loading_count == dashboard.loading_count) {
+            $scope.onload = true;
+            window.dispatchEvent(new Event('resize'));
+          }
+        });
       });
 
       url = dashboard.urlusers + username +
@@ -353,85 +398,43 @@ angular.module('app')
       requestgraphstats.get(url).then(function(data) {
         console.log(data.data);
         engineload_users = data.data.avg;
-      });
-
-      var datacumulusers = {
-        "key": dashboard.key1,
-        "color": dashboard.color1,
-        "values": datausers
-      };
-
-      url = dashboard.urlcommonco2;
-      requestgraphstats.get(url).then(function(data) {
-        console.log(data.data);
-        $scope.dataCO2 = [{
-          key: "Cumulative Return",
-          values: [{
-            "label": "User",
-            "value": CO2_users
-          }, {
-            "label": "Public",
-            "value": data.data.avg
+        url = dashboard.urlcommonengineload;
+        requestgraphstats.get(url).then(function(data) {
+          console.log(data.data);
+          $scope.loading = false;
+          $scope.dataEngineload = [{
+            key: "Cumulative Return",
+            values: [{
+              "label": "User",
+              "value": engineload_users
+            }, {
+              "label": "Public",
+              "value": data.data.avg
+            }]
           }]
-        }]
+          loading_count++;
+          if (loading_count == dashboard.loading_count) {
+            $scope.onload = true;
+            window.dispatchEvent(new Event('resize'));
+          }
+        });
       });
 
-      url = dashboard.urlcommonspeed;
-      requestgraphstats.get(url).then(function(data) {
-        console.log(data.data);
-        var store = data.data;
-        speed_public = store.avg
-        $scope.dataSpeed = [{
-          key: "Cumulative Return",
-          values: [{
-            "label": "User",
-            "value": speed_users
-          }, {
-            "label": "Public",
-            "value": speed_public
-          }]
-        }]
-        dataotherusers.push(data);
-      });
+      /*  var datacumulusers = {
+          "key": dashboard.key1,
+          "color": dashboard.color1,
+          "values": datausers
+        };
 
-      url = dashboard.urlcommoncons;
-      requestgraphstats.get(url).then(function(data) {
-        console.log(data.data);
-        $scope.loading = false;
-        $scope.dataConsumption = [{
-          key: "Cumulative Return",
-          values: [{
-            "label": "User",
-            "value": consumption_users
-          }, {
-            "label": "Public",
-            "value": data.data.avg
-          }]
-        }]
-      });
 
-      url = dashboard.urlcommonengineload;
-      requestgraphstats.get(url).then(function(data) {
-        console.log(data.data);
-        $scope.loading = false;
-        $scope.dataEngineload = [{
-          key: "Cumulative Return",
-          values: [{
-            "label": "User",
-            "value": engineload_users
-          }, {
-            "label": "Public",
-            "value": data.data.avg
-          }]
-        }]
-      });
-      var datacumulotherusers = {
-        "key": dashboard.key2,
-        "color": dashboard.color2,
-        "values": dataotherusers
-      };
-      $scope.data = [datacumulotherusers, datacumulusers];
 
+        var datacumulotherusers = {
+          "key": dashboard.key2,
+          "color": dashboard.color2,
+          "values": dataotherusers
+        };
+        */
+      //  $scope.data = [datacumulotherusers, datacumulusers];
       $scope.visible = true;
       //**********************************************************
       //***********************END OF GRAPHS**********************
