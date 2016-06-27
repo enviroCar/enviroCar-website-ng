@@ -10,6 +10,7 @@
 
 $blue: #533687 ;
 
+
   .search {
     flex: 1 1 auto;
     order: 2;
@@ -74,11 +75,23 @@ $font-size-large: 22px;
 body {
   color: $text-color;
 }
+
+.loader_dashboard {
+    display: block;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
 .popover {
   position: absolute;
   z-index: 10;
 }
 
+.nvd3 {
+  width:100%;
+  height:100%;
+}
 .mySpinner {
   position: absolute;
   z-index: 100;
@@ -448,7 +461,6 @@ md-toolbar {
 }
  .optionspie {
    background-color: transparent;
-
   position: absolute;
   z-index: 1000;
   padding-left: 10px;
@@ -456,6 +468,21 @@ md-toolbar {
   padding-right: 10px;
   padding-bottom: 10px;
   box-shadow: 0px 0px 15px 2px rgba(0,0,0,0.2);
+}
+
+.demo-select-all-checkboxes {
+  padding-left: 10px; }
+
+.optionsnvd3 {
+  background-color: transparent;
+
+ position: absolute;
+ z-index: 1000;
+ padding-left: 10px;
+ padding-top: 10px;
+ padding-right: 10px;
+ padding-bottom: 10px;
+ box-shadow: 0px 0px 15px 2px rgba(0,0,0,0.2);
 
 }
 .customtoolbar {

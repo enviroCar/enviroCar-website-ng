@@ -19,8 +19,15 @@
           </h3>
           <span flex></span>
 
-                <md-button ng-show="options" ng-click="$showOptions = !$showOptions" class="md-icon-button" aria-label="Show options">
-                    <i class="material-icons">more_vert</i>
+          <md-menu md-offset="-120 15">
+              <md-button class="capitalize md-primary" ng-click="$mdOpenMenu()" aria-label="Open menu">
+                <i class="material-icons">more_vert</i>
+              </md-button>
+              <md-menu-content width="3">
+                <md-menu-item ng-repeat = "d in piechartoptions">
+                <md-button ng-click="changePhenomenon(d)">{{d}}</md-button>
+              </md-menu-content>
+          </md-menu>
         </div>
       </md-toolbar>
     <!--  <md-card-title-text>
@@ -35,13 +42,6 @@
             -->
               <md-card-content >
                 <!-- <img id="mySpinner" class="mySpinner" src="/assets/images/715.gif" ng-show="loading"> -->
-            <md-content ng-show="$showOptions" class="optionspie">
-                  <md-radio-group ng-model="phenomenonleaflet" ng-change="changePhenomenon()">
-                    <md-radio-button ng-repeat="d in piechartoptions" ng-value="d" >
-                        {{d}}
-                    </md-radio-button>
-                  </md-radio-group>
-                </md-content>
 
                 <md-content>
                   <leaflet lf-center="center" controls="controls" paths="paths" markers="markers" legend="legend" defaults="defaults" height="470"  ng-if="!loading"></leaflet>
@@ -63,15 +63,57 @@
 </div>
 -->
 <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
-<md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
+<md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2">
   <div class="md-toolbar-tools">
     <h3>
       <span>Graph</span>
     </h3>
+    <span flex></span>
+      <md-menu md-offset="-120 20">
+          <md-button class="capitalize md-primary" ng-click="$mdOpenMenu()" aria-label="Open menu">
+            <i class="material-icons">more_vert</i>
+          </md-button>
+          <md-menu-content width="3">
+            <md-menu-item flex ng-repeat="d in piechartoptions">
+                  <md-checkbox ng-checked="exists(d, selected)" ng-click="toggle(d, selected)">
+                   {{ d }}
+                  </md-checkbox>
+            </md-menu-item>
+          </md-menu-content>
+      </md-menu>
+
+
   </div>
+
+  <!--
+  <md-menu md-offset="0 0">
+
+       <md-button ng-click="ctrl.openMenu($mdOpenMenu, $event)" class="md-icon-button" aria-label="Show options">
+            <i class="material-icons">more_vert</i>
+            <md-menu-content class="z-index:100px" width="4">
+              <md-menu-item>
+                <div class="demo-select-all-checkboxes" flex ng-repeat="d in piechartoptions">
+                    <md-checkbox ng-checked="exists(d, selected)" ng-click="toggle(d, selected)">
+                     {{ d }}
+                    </md-checkbox>
+                  </div>
+              </md-menu-item>
+            </md-menu-content>
+          </md-menu>
+      -->
+
 </md-toolbar>
     <md-card-content >
+      <div class="containernvd3" style="width:100%;height:100%">
+      <md-content ng-show="$showOptionsnvd3" class="optionsnvd3">
+        <div class="demo-select-all-checkboxes" flex ng-repeat="d in piechartoptions">
+            <md-checkbox ng-checked="exists(d, selected)" ng-click="toggle(d, selected)">
+             {{ d }}
+            </md-checkbox>
+          </div>
+          </md-content>
       <nvd3 options="options" data="data"></nvd3>
+    </div>
   </md-card-content>
 
 </md-card>
@@ -87,14 +129,20 @@
         </h3>
         <span flex></span>
 
-              <md-button ng-show="options" ng-click="$showOptions = !$showOptions" class="md-icon-button" aria-label="Show options">
-                  <i class="material-icons">more_vert</i>
-
+        <md-menu md-offset="-120 15">
+            <md-button class="capitalize md-primary" ng-click="$mdOpenMenu()" aria-label="Open menu">
+              <i class="material-icons">more_vert</i>
+            </md-button>
+            <md-menu-content width="3">
+              <md-menu-item ng-repeat = "d in piechartoptions">
+              <md-button ng-click="selecteditemchanged(d)">{{d}}</md-button>
+            </md-menu-content>
+        </md-menu>
       </div>
 
     </md-toolbar>
     <md-card-content>
-          <md-content ng-show="$showOptions" class="optionspie">
+          <md-content ng-show="$showOptionspie" class="optionspie">
             <md-radio-group ng-model="piechartselected" ng-change="selecteditemchanged()">
               <md-radio-button ng-repeat="d in piechartoptions" ng-value="d" >
                   {{d}}
