@@ -1,13 +1,94 @@
 angular.module('app')
-  .controller("CalendarController", ['$scope', '$filter', '$http', '$state',
+  .controller("CalendarController", ['$scope', '$mdDialog', '$mdMedia',
+    '$filter', '$http', '$state',
     '$rootScope',
     'tracks_calendar', 'MaterialCalendarData',
-    function($scope, $filter, $http, $state, $rootScope, tracks_calendar,
+    function($scope, $mdDialog, $mdMedia, $filter, $http, $state, $rootScope,
+      tracks_calendar,
       MaterialCalendarData) {
       $scope.no_data = false;
       $scope.tracks = [];
       var tracks_builder = [];
       // the list of tracks for displaying.
+      //tab approach
+      $scope.track;
+      $scope.currenttrack = {};
+      $scope.showAdvanced = function(ev, eventid) {
+        $scope.currenttrack = {};
+        $scope.currenttrack['id'] = eventid;
+        $scope.track = eventid;
+        console.log(eventid);
+
+        var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
+        $mdDialog.show({
+            controller: DialogController,
+            templateUrl: 'app/views/dialog1.tmpl.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose: true,
+            locals: {
+              currenttrack: $scope.currenttrack
+            },
+            fullscreen: useFullScreen
+          })
+          .then(function(answer) {
+            $scope.status = 'You said the information was "' + answer +
+              '".';
+          }, function() {
+            $scope.status = 'You cancelled the dialog.';
+          });
+        $scope.$watch(function() {
+          return $mdMedia('xs') || $mdMedia('sm');
+        }, function(wantsFullScreen) {
+          $scope.customFullscreen = (wantsFullScreen === true);
+        });
+      };
+
+
+      function DialogController($scope, $mdDialog, $state, currenttrack) {
+        console.log(currenttrack);
+        $scope.currenttrack = currenttrack;
+        var url_requested = "https://envirocar.org/api/stable/users/" +
+          $rootScope.globals.currentUser.username + "/tracks/" + currenttrack
+          .id +
+          "/statistics/";
+        tracks_calendar.get(url_requested + "Speed").then(function(data) {
+          console.log(data.data);
+          $scope.currenttrack['speed_avg'] = (data.data.avg.toFixed(2));
+          //  currenttrack['']
+        })
+        tracks_calendar.get(url_requested + "Consumption").then(function(
+          data) {
+          console.log(data.data.avg);
+          if (data.data.avg != undefined)
+            $scope.currenttrack['consumption_avg'] = (data.data.avg.toFixed(
+              2));
+          else
+            $scope.currenttrack['consumption_avg'] = "NA";
+          //  currenttrack['']
+        })
+        $scope.currenttrack['url'] =
+          "https://envirocar.org/api/stable/tracks/" + currenttrack.id +
+          "/preview";
+        $scope.hide = function() {
+          $mdDialog.hide();
+        };
+        $scope.cancel = function() {
+          $mdDialog.cancel();
+        };
+        $scope.answer = function(answer) {
+          $mdDialog.hide(answer);
+        };
+        $scope.redirect = function(trackid) {
+          $mdDialog.hide();
+
+          $state.go('home.chart', {
+            'trackid': trackid
+          });
+        }
+      }
+      // end of tab approach
+
       $http.defaults.headers.common = {
         'X-User': $rootScope.globals.currentUser.username,
         'X-Token': $rootScope.globals.currentUser.authdata
