@@ -36,8 +36,8 @@
           <div style="height:100%" layout="row">
           <md-card-content flex>
 
-            <md-content style="width:60%">
-                    <md-list-item ng-mouseenter="showPopOver(track.id)" ng-mouseleave="hidePopOver()" ng-show="no_data" md-theme="default" md-ink-ripple="#0065A0" class="md-3-line md-long-text " ng-repeat='event in tracks' ng-click="goToActivity(event.id)">
+            <md-content>
+                    <md-list-item ng-show="no_data" md-theme="default" md-ink-ripple="#0065A0" class="md-3-line md-long-text " ng-repeat='event in tracks'  ng-click="showAdvanced($event,event.id)">
                       <img class="md-avatar" src={{event.url}} style="width:80px;height:80px"></img>
                     <div class="md-list-item-text" layout="column">
                     <h3><b>{{event.begin}}</b></h3>
