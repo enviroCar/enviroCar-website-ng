@@ -2,21 +2,22 @@
   <form>
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>Track - {{currenttrack.id}}</h2>
+        <h2>Track Summary - {{currenttrack.id}}</h2>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="cancel()">
-          <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+          <i class="material-icons">close</i>
         </md-button>
       </div>
     </md-toolbar>
     <md-dialog-content>
-      <div class="md-dialog-content">
+      <img class="loader_dashboard" ng-if="!onload" src="assets/spiffygif_152X152.gif">
+      <div class="md-dialog-content" ng-if="onload">
         <p>Average Speed - {{currenttrack.speed_avg}} Km/h</p>
         <p>Average Consumption - {{currenttrack.consumption_avg}} L/h</p>
-        <img class="md-avatar" src={{currenttrack.url}} style="width:250px;height:250px"></img>
+        <img class="md-avatar" src={{currenttrack.url}} style="width:300px;height:250px"></img>
       </div>
     </md-dialog-content>
-    <md-dialog-actions>
+    <md-dialog-actions ng-if="onload">
       <md-button ng-click="redirect(currenttrack.id)" class="md-primary">
       Explore Track
         </md-button>

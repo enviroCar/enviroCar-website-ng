@@ -43,6 +43,7 @@
                     <h3><b>{{event.begin}}</b></h3>
                     <h4>{{event.name}}</h4>
                     <p>Distance - {{event.length}} Km</p>
+                       <md-icon class="md-secondary material-icons" ng-click="goToActivity(event.id)" >multiline_chart</md-icon>
                   </div>
                   </md-list-item>
                   <div layout="row" ng-show="!no_data" layout-align="center center">
@@ -69,11 +70,13 @@
     <md-card-content>
     <md-content flex>
       <md-list ng-controller="TrackListCtrl">
-        <md-list-item ng-mouseenter="showPopOver(track.id)" ng-mouseleave="hidePopOver()" class="md-3-line md-long-text md-whiteframe-3dp" aria-label="single charts view" ng-repeat="track in results.tracks" ng-href="#/dashboard/chart/{{track.id}}">
+        <md-list-item class="md-3-line md-long-text md-whiteframe-3dp" aria-label="single charts view" ng-repeat="track in results.tracks" ng-click="showAdvanced($event,track.id)">
           <div class="md-list-item-text" >
-            <h3>{{track.id}}</h3>
-            <div class="md-caption">{{track.name}}</div>
-            <div ng-if="!item.highlight.datasetTitle[0]">{{track.modified}}</div>
+            <h3><b>{{track.begin}}</b></h3>
+            <h4>{{track.name}}</h4>
+            <p>Distance - {{track.length}} Km</p>
+            <md-icon class="md-secondary material-icons" ng-click="goToActivity(event.id)" >multiline_chart</md-icon>
+
           </div>
         </md-list-item>
       </md-list>

@@ -47,6 +47,7 @@ angular.module('app')
 
       function DialogController($scope, $mdDialog, $state, currenttrack) {
         console.log(currenttrack);
+        $scope.onload = false;
         $scope.currenttrack = currenttrack;
         var url_requested = "https://envirocar.org/api/stable/users/" +
           $rootScope.globals.currentUser.username + "/tracks/" + currenttrack
@@ -66,6 +67,7 @@ angular.module('app')
           else
             $scope.currenttrack['consumption_avg'] = "NA";
           //  currenttrack['']
+          $scope.onload = true;
         })
         $scope.currenttrack['url'] =
           "https://envirocar.org/api/stable/tracks/" + currenttrack.id +
@@ -222,6 +224,7 @@ angular.module('app')
 
         console.log("fired");
       }
+
     }
   ])
 
