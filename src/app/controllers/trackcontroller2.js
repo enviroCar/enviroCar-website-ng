@@ -1,8 +1,10 @@
 angular.module('app')
-  .controller('TrackListCtrl', ['$scope', 'trackService', '$http', '$rootScope',
-    'visibilityService',
+  .controller('TrackListCtrl', ['$scope', '$mdDialog', '$mdMedia',
+    'trackService', '$http', '$rootScope',
+    'visibilityService', 'tracks_calendar',
     function(
-      $scope, trackService, $http, $rootScope, visibilityService) {
+      $scope, $mdDialog, $mdMedia, trackService, $http, $rootScope,
+      visibilityService, tracks_calendar) {
       //bind to service
       $scope.results = trackService.results;
       $rootScope.showPopOver = function(trackid) {
@@ -15,6 +17,81 @@ angular.module('app')
         $rootScope.previewurl = "";
         $rootScope.popoverIsVisible = false;
         console.log("hide pop");
+      }
+      $scope.showAdvanced = function(ev, eventid) {
+        $scope.currenttrack = {};
+        $scope.currenttrack['id'] = eventid;
+        $scope.track = eventid;
+        console.log(eventid);
+
+        var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
+        $mdDialog.show({
+            controller: DialogController,
+            templateUrl: 'app/views/dialog1.tmpl.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose: true,
+            locals: {
+              currenttrack: $scope.currenttrack
+            },
+            fullscreen: useFullScreen
+          })
+          .then(function(answer) {
+            $scope.status = 'You said the information was "' + answer +
+              '".';
+          }, function() {
+            $scope.status = 'You cancelled the dialog.';
+          });
+        $scope.$watch(function() {
+          return $mdMedia('xs') || $mdMedia('sm');
+        }, function(wantsFullScreen) {
+          $scope.customFullscreen = (wantsFullScreen === true);
+        });
+      };
+
+      function DialogController($scope, $mdDialog, $state, currenttrack) {
+        console.log(currenttrack);
+        $scope.onload = false;
+        $scope.currenttrack = currenttrack;
+        var url_requested = "https://envirocar.org/api/stable/users/" +
+          $rootScope.globals.currentUser.username + "/tracks/" + currenttrack
+          .id +
+          "/statistics/";
+        tracks_calendar.get(url_requested + "Speed").then(function(data) {
+          console.log(data.data);
+          $scope.currenttrack['speed_avg'] = (data.data.avg.toFixed(2));
+          //  currenttrack['']
+        })
+        tracks_calendar.get(url_requested + "Consumption").then(function(
+          data) {
+          console.log(data.data.avg);
+          if (data.data.avg != undefined)
+            $scope.currenttrack['consumption_avg'] = (data.data.avg.toFixed(
+              2));
+          else
+            $scope.currenttrack['consumption_avg'] = "NA";
+          //  currenttrack['']
+          $scope.onload = true;
+        })
+        $scope.currenttrack['url'] =
+          "https://envirocar.org/api/stable/tracks/" + currenttrack.id +
+          "/preview";
+        $scope.hide = function() {
+          $mdDialog.hide();
+        };
+        $scope.cancel = function() {
+          $mdDialog.cancel();
+        };
+        $scope.answer = function(answer) {
+          $mdDialog.hide(answer);
+        };
+        $scope.redirect = function(trackid) {
+          $mdDialog.hide();
+
+          $state.go('home.chart', {
+            'trackid': trackid
+          });
+        }
       }
     }
   ])
@@ -92,6 +169,12 @@ angular.module('app')
         }
 
         results.tracks = response.data.tracks;
+        console.log(results.tracks);
+        for (var i = 0; i < results.tracks.length; i++) {
+          results.tracks[i]['length'] = results.tracks[i]['length'].toFixed(
+            2);
+
+        }
         results.range = {
           start: rangeSettings.from,
           end: rangeSettings.from + rangeSettings.size
