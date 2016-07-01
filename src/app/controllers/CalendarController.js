@@ -175,6 +175,7 @@ angular.module('app')
       var global_tracks;
       var global_tracks_array_begin = [];
       var global_tracks_array_begin_stripped_date = [];
+      var date_count = {};
 
       function rewrite(trackslist) {
         //delay(1000)
@@ -189,8 +190,15 @@ angular.module('app')
             global_tracks_array_begin_stripped_date.push(stripped_date);
             global_tracks_array_begin.push(dateobject.toString());
             */
-          MaterialCalendarData.setDayContent(dateobject,
-            '<i class="material-icons">directions_car</i>')
+          var string_date = dateobject.toString();
+          var array_string_date = string_date.split(" ");
+          var stripped_date = (array_string_date[0] + array_string_date[1] +
+            array_string_date[2]);
+          console.log(date_count[stripped_date] + "no of occurences");
+          console.log(dateobject);
+          MaterialCalendarData.setDayContent(dateobject, (
+            '<i class="material-icons">directions_car</i><span>' +
+            date_count[stripped_date] + '</span>'))
         }
       }
 
@@ -204,12 +212,20 @@ angular.module('app')
           var array_string_date = string_date.split(" ");
           var stripped_date = (array_string_date[0] + array_string_date[1] +
             array_string_date[2]);
+          if (date_count[stripped_date] != undefined) {
+            date_count[stripped_date]++;
+          } else {
+            date_count[stripped_date] = 1;
+          }
           global_tracks_array_begin_stripped_date.push(stripped_date);
           global_tracks_array_begin.push(dateobject.toString());
         }
+        console.log(date_count);
         console.log(global_tracks_array_begin_stripped_date);
         rewrite(global_tracks);
       });
+      $scope.tooltips = true;
+
       // no flag.
       $scope.setDayContent = function(date) {
         return ("<p></p>")

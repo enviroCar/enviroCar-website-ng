@@ -58,7 +58,7 @@ $blue: #533687 ;
 
 
 // end
-$main-bg-color: white;
+$main-bg-color: #EEEEEE;
 $text-color: #7A7A7A;
 $accent-color: rgb(0, 150, 136);
 $warning-color: #E75753;
@@ -129,11 +129,7 @@ body {
     width: 100%;
     height: 100%;
 }
-md-card md-card-content
-{
-  display: block;
-padding: 0px;
-}
+
 .white-bg
 {
   padding: 0 6px 0 6px;
@@ -297,6 +293,19 @@ color: rgba(255,255,255,0.88);
   font-size: 15px;
   color: rgba(255,255,255,0.6);
 
+}
+md-dialog .md-dialog-content {
+    padding: 0px;
+}
+md-card md-card-content
+{
+  display: block;
+padding: 10px;
+}
+.nopadding
+{
+  display: block;
+padding: 0px;
 }
 
 .carddemoBasicUsage .card-media {

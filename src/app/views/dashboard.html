@@ -43,71 +43,151 @@
 </div>
 
 <md-content>
-  <md-tabs md-dynamic-height md-border-bottom>
+  <md-tabs  md-dynamic-height md-border-bottom>
     <md-tab label="TimeLine">
-      <md-content md-theme="default">
-        <div layout-gt-md="row" ng-controller="DashboardController" layout="column" style="height:100%">
+      <md-content style="background-color:#EEEEEE" md-theme="default">
+        <div layout-gt-md="row" ng-controller="DashboardController" layout="column" >
           <img class="loader_dashboard" ng-if="!onload" src="assets/spiffygif_152X152.gif">
-         <md-card ng-if="onload"  md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" style="min-width:30%"  md-theme-watch>
-            <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
+          <div layout-gt-md="column" style="width:100%" layout="column">
+            <div layout-gt-md="row" style="width:100%" layout="row">
+         <md-card  ng-if="onload" style="height:330px;width:100%" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}"  md-theme-watch>
+           <md-toolbar style="color:black;background-color:white" >
+             <div class="md-toolbar-tools">
+               <h3 style="color:rgba(0,0,0,0.5)">
+                 <span>{{'TRACK_MAP' | translate}}</span>
+               </h3>
+               <span flex></span>
+
+               <md-menu md-offset="-120 15">
+                   <md-button class="capitalize md-primary" ng-click="$mdOpenMenu()" aria-label="Open menu">
+                     <i class="material-icons">more_vert</i>
+                   </md-button>
+                   <md-menu-content width="3">
+                     <md-menu-item ng-repeat = "d in barchartoptions">
+                     <md-button ng-click="changePhenomenonbar(d)">{{d}}</md-button>
+                   </md-menu-content>
+               </md-menu>
+             </div>
+           </md-toolbar>
+            <md-card-content >
+
+              <nvd3 options="optionsSpeed" data="dataoverall" ng-if="!loading"></nvd3>
+
+            </md-card-content>
+          </md-card>
+          <md-card  ng-if="onload" style="height:330px;width:100%" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}"  md-theme-watch>
+
+            <md-toolbar style="color:black;background-color:white" >
               <div class="md-toolbar-tools">
-                <h3>
-                  <span>{{username}} vs Public</span>
+                <h3 style="color:rgba(0,0,0,0.5)">
+                  <span>{{'TRACK_MAP' | translate}}</span>
                 </h3>
+                <span flex></span>
+
+              <!--  <md-menu md-offset="-120 15">
+                    <md-button class="capitalize md-primary" ng-click="$mdOpenMenu()" aria-label="Open menu">
+                      <i class="material-icons">more_vert</i>
+                    </md-button>
+                    <md-menu-content width="3">
+                      <md-menu-item ng-repeat = "d in piechartoptions">
+                      <md-button ng-click="changePhenomenon(d)">{{d}}</md-button>
+                    </md-menu-content>
+                </md-menu>
+              -->
               </div>
             </md-toolbar>
-            <md-card-content flex>
-            <div layout-gt-md="row" layout="row">
-            <md-card ng-if="onload" style="max-height:330px" flex>
-              <md-card-title>
-                <span class="md-subhead">Speed</span>
-              </md-card-title>
-              <md-card-content flex class="md-padding">
-              <nvd3 options="optionsSpeed" data="dataSpeed" ng-if="!loading"></nvd3>
-            </md-card-content>
-            </md-card>
-            <md-card ng-if="onload" style="max-height:330px" flex>
-              <md-card-title>
-                <span class="md-subhead">Consumption</span>
-              </md-card-title>
-              <md-card-content flex class="md-padding">
-              <nvd3 options="optionsConsumption" data="dataConsumption" ng-if="!loading"></nvd3>
-            </md-card-content>
-            </md-card>
-          </div>
-          <div layout-gt-md="row" layout="row">
-          <md-card ng-if="onload" style="max-height:330px" flex>
-            <md-card-title>
-              <span class="md-subhead">CO2</span>
-            </md-card-title>
-            <md-card-content flex class="md-padding">
-            <nvd3 options="optionsCO2" data="dataCO2" ng-if="!loading"></nvd3>
-          </md-card-content>
-          </md-card>
-          <md-card ng-if="onload" style="max-height:330px" flex>
-            <md-card-title>
-              <span class="md-subhead">Engine Load</span>
-            </md-card-title>
-            <md-card-content flex class="md-padding">
-            <nvd3 options="optionsEngineload" data="dataEngineload" ng-if="!loading"></nvd3>
-          </md-card-content>
+             <md-card-content >
+
+               <span>speed statistics coming here</span>
+             </md-card-content>
+           </md-card>
+         </div>
+         <div layout-gt-md="row" style="width:100%" layout="column">
+         <md-card ng-controller="LeafletHeatMap" ng-if="onload" style="height:550px;width:100%" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}"  md-theme-watch>
+           <md-toolbar style="color:black;background-color:white" >
+             <div class="md-toolbar-tools">
+               <h3 style="color:rgba(0,0,0,0.5)">
+                 <span>Heat Map</span>
+               </h3>
+               <span flex></span>
+<!--
+               <md-menu md-offset="-120 15">
+                   <md-button class="capitalize md-primary" ng-click="$mdOpenMenu()" aria-label="Open menu">
+                     <i class="material-icons">more_vert</i>
+                   </md-button>
+                   <md-menu-content width="3">
+                      <md-menu-item><md-button ng-click="changePointSet(0)">All Points</md-button></md-menu-item>
+                      <md-menu-item><md-button ng-click="changePointSet(1)">Starting Points</md-button></md-menu-item>
+                      <md-menu-item><md-button ng-click="changePointSet(2)">Ending Points</md-button></md-menu-item>
+                   </md-menu-content>
+               </md-menu>
+             -->
+             </div>
+           </md-toolbar>
+           <md-card-content style="height:auto">
+             <leaflet lf-center="center" layers="layers" width="100%" height="464px"></leaflet>
+           </md-card-content>
           </md-card>
         </div>
-            </md-card-content>
-          </md-card>
+       </div>
+        <!--   <md-card  ng-if="onload" style="height:200px;width:100%" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}"  md-theme-watch>
+
+            <md-card-title>
+
+            <md-card-title-text>
+              <span class="md-headline">Timeline</span>
+              </md-card-title-text>
+            </md-card-title>
+              <md-card-content>
+
+                  <p>jedej</p>
+              </md-card-content>
+            </md-card>
+
+-->
 
 
 
-
-          <md-card ng-if="onload" md-theme="default" style="min-width:30%" flex>
-            <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
+          <md-card style="min-width:30%;height:730px" ng-if="onload" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
+            <md-toolbar style="color:black;background-color:white" >
               <div class="md-toolbar-tools">
-                <h3>
-                  <span>{{ 'TITLE_TRACKS' | translate}}</span>
+                <h3 style="color:rgba(0,0,0,0.5)">
+                  <span>{{'TRACK_MAP' | translate}}</span>
                 </h3>
+                <span flex></span>
+
+              <!--  <md-menu md-offset="-120 15">
+                    <md-button class="capitalize md-primary" ng-click="$mdOpenMenu()" aria-label="Open menu">
+                      <i class="material-icons">more_vert</i>
+                    </md-button>
+                    <md-menu-content width="3">
+                      <md-menu-item ng-repeat = "d in piechartoptions">
+                      <md-button ng-click="changePhenomenon(d)">{{d}}</md-button>
+                    </md-menu-content>
+                </md-menu>
+              -->
               </div>
             </md-toolbar>
+
             <md-card-content >
+
+            <!--  <md-card ng-repeat="event in events">
+                <md-toolbar>
+                  <div class="md-toolbar-tools">
+                    <h3>
+                      <span style="color:white">{{event.title}}</span>
+                    </h3>
+                  </div>
+                </md-toolbar>
+                <img src={{event.url}} class="md-card-image" alt="Washed Out"></img>
+                <md-card-content>
+                  <div>
+                  <h3><b>{{event.begin}}</b></h3>
+                </div>
+                </md-card-content>
+              </md-card>
+            -->
+
                       <md-list-item ng-if="!loading" md-theme="default" md-ink-ripple="#0065A0" class="md-3-line md-long-text " ng-repeat='event in events' ng-click="goToActivity(event.id)">
                       <img class="md-avatar" src={{event.url}} style="width:80px;height:80px"></img>
                       <div class="md-list-item-text" layout="column">
@@ -121,27 +201,15 @@
 
         </md-card>
 
-                  <md-card ng-if="onload" md-theme="default" style="min-width:30%" flex>
-                    <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
-                      <div class="md-toolbar-tools">
-                        <h3>
-                          <span>Statistics</span>
-                        </h3>
-                      </div>
-                    </md-toolbar>
-                    <md-card-content >
-                          Speed ranges statistics coming here.
-                        </md-card-content>
+  </div>
 
 
-                </md-card>
 
 
-        </div>
       </md-content>
     </md-tab>
     <md-tab label="Activity">
-      <md-content class="md-padding">
+      <md-content style="background-color:#EEEEEE" class="md-padding">
         <div layout-gt-md="row" layout="column" >
         <md-card ng-show="originaluser" ng-controller="FriendActivityController" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
           <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
@@ -182,7 +250,7 @@
           <md-card-content>
             <md-content flex layout-padding style="max-height:470px">
               <md-list-item ng-show="!show_no_my_activity" class="md-3-line md-long-text md-whiteframe-1dp" ng-repeat='item in events' ng-click="goToActivity(item.type,item.trackidlink)">
-            <!--    <img class="md-avatar" src={{item.profileurl}}></img> -->
+               <img class="md-avatar" src={{item.profileurl}}></img>
                 <div class="md-list-item-text" layout="column">
                 <h3>{{item.topic}}</h3>
                 <h4>{{item.name}}</h4>
@@ -205,6 +273,7 @@
 </md-tab>
 
 <md-tab label="Friends and Groups">
+  <md-content style="background-color:#EEEEEE">
     <md-card ng-controller="FriendListController" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" style="width:400px" md-theme-watch>
       <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
         <div class="md-toolbar-tools">
@@ -220,9 +289,9 @@
          <img class="md-avatar" src={{item.profile_url}}></img>
             <div class="md-list-item-text md-2-line" layout="column">
             <h3>{{item.username}}</h3>
-            <!--<h4>{{item.name}}</h4>
+          <h4>{{item.name}}</h4>
             <p>{{item.date}}</p>
-          -->
+
           </div>
           </md-list-item>
     </md-content>
@@ -232,6 +301,7 @@
   </div>
     </md-card-content>
     </md-card>
+  </md-content>
 </md-tab>
 </md-tabs>
 </md-content>

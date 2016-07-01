@@ -259,6 +259,7 @@ angular.module('app')
       var distance = 0;
       var vehiclemodel;
       var vehicletype;
+      var vehiclemanufacturer;
       var timeoftravel = 0;
       var units = {};
       var keys;
@@ -586,6 +587,9 @@ angular.module('app')
             distance = data.properties['length'];
             vehiclemodel = data.properties.sensor.properties.model;
             vehicletype = data.properties.sensor['type'];
+            vehiclemanufacturer = data.properties.sensor.properties[
+              'manufacturer'];
+
             console.log(distance + " " + vehiclemodel + " " +
               vehicletype);
             console.log(units);
@@ -615,6 +619,7 @@ angular.module('app')
           distance: distance.toFixed(2),
           vehiclemodel: vehiclemodel,
           vehicletype: vehicletype,
+          vehiclemanufacturer: vehiclemanufacturer,
           unitsspeed: units['Speed'],
           timeoftravel: timeoftravel.toFixed(2),
           unitsofdistance: "Km",

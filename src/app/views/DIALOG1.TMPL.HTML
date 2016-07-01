@@ -1,20 +1,78 @@
-<md-dialog aria-label="Mango (Fruit)"  ng-cloak>
+<md-dialog style="width:420px" aria-label="Mango (Fruit)"  ng-cloak>
   <form>
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>Track Summary - {{currenttrack.id}}</h2>
+        <h2 style="color:rgba(255,255,255,0.8)">Track Summary - {{currenttrack.id}}</h2>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="cancel()">
           <i class="material-icons">close</i>
         </md-button>
       </div>
     </md-toolbar>
-    <md-dialog-content>
+    <md-dialog-content class="nodialogpadding">
       <img class="loader_dashboard" ng-if="!onload" src="assets/spiffygif_152X152.gif">
       <div class="md-dialog-content" ng-if="onload">
-        <p>Average Speed - {{currenttrack.speed_avg}} Km/h</p>
+        <img class="md-avatar" src={{currenttrack.url}} style="width:400px;height:300px"></img>
+        <md-divider ></md-divider>
+
+        <md-list-item layout="row">
+          <img ng-src="assets/images/ic_directions_car_black_48dp.png" class="md-avatar"/>
+          <div class="md-list-item-text">
+          <p>Car:</p>
+          </div>
+          <span flex></span>
+          <div style="right:0px" class="md-list-item-text">
+          <p>{{currenttrack.manufacturer}}, {{currenttrack.model}}</p>
+          </div>
+        </md-list-item>
+
+        <md-list-item layout="row">
+          <img ng-src="assets/images/ic_timer_black_48dp.png" class="md-avatar"/>
+          <div class="md-list-item-text">
+          <p>Start:</p>
+          </div>
+          <span flex></span>
+          <div style="right:0px" class="md-list-item-text">
+          <p>{{currenttrack.start}}</p>
+          </div>
+        </md-list-item>
+
+        <md-list-item layout="row">
+          <img ng-src="assets/images/ic_timer_off_black_48dp.png" class="md-avatar"/>
+          <div class="md-list-item-text">
+          <p>End:</p>
+          </div>
+          <span flex></span>
+          <div style="right:0px" class="md-list-item-text">
+          <p>{{currenttrack.end}}</p>
+          </div>
+        </md-list-item>
+
+        <md-list-item layout="row">
+          <img ng-src="assets/images/ic_local_gas_station_black_48dp.png" class="md-avatar"/>
+          <div class="md-list-item-text">
+          <p>Consumption:</p>
+          </div>
+          <span flex></span>
+          <div style="right:0px" class="md-list-item-text">
+          <p>empty</p>
+          </div>
+        </md-list-item>
+
+        <md-list-item layout="row">
+          <img ng-src="assets/images/Gas-96.png" class="md-avatar"/>
+          <div class="md-list-item-text">
+          <p>CO2 Emission:</p>
+          </div>
+          <span flex></span>
+          <div style="right:0px" class="md-list-item-text">
+          <p>empty</p>
+          </div>
+        </md-list-item>
+
+    <!--    <p>Average Speed - {{currenttrack.speed_avg}} Km/h</p>
         <p>Average Consumption - {{currenttrack.consumption_avg}} L/h</p>
-        <img class="md-avatar" src={{currenttrack.url}} style="width:300px;height:250px"></img>
+      -->
       </div>
     </md-dialog-content>
     <md-dialog-actions ng-if="onload">
