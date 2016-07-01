@@ -182,7 +182,7 @@ angular.module('app')
           margin: {
             top: 10,
             right: 0,
-            bottom: 80,
+            bottom: 70,
             left: 50
           },
           x: function(d) {
@@ -201,7 +201,7 @@ angular.module('app')
           },
           yAxis: {
             axisLabel: 'Speed(Km/Hr)',
-            axisLabelDistance: -30
+            axisLabelDistance: -20
           }
         }
       };
@@ -215,7 +215,7 @@ angular.module('app')
             top: 10,
             right: 0,
             bottom: 80,
-            left: 50
+            left: 30
           },
           x: function(d) {
             return d.label;
@@ -247,7 +247,7 @@ angular.module('app')
             top: 10,
             right: 0,
             bottom: 80,
-            left: 50
+            left: 30
           },
           x: function(d) {
             return d.label;
@@ -279,7 +279,7 @@ angular.module('app')
             top: 10,
             right: 0,
             bottom: 80,
-            left: 50
+            left: 30
           },
           x: function(d) {
             return d.label;
@@ -302,7 +302,27 @@ angular.module('app')
         }
       };
 
+      $scope.barchartoptions = ["Speed", "Consumption", "CO2"];
+      $scope.barchartshowing = ["Speed"]
+      $scope.changePhenomenonbar = function(phenombar) {
+        console.log("came here")
+        $scope.dataoverall = [];
+        if (phenombar == "Speed") {
+          console.log($scope.optionsSpeed['chart']['yAxis']['axisLabel'])
+          $scope.optionsSpeed['chart']['yAxis']['axisLabel'] =
+            "Speed (Km/h)"
+          $scope.dataoverall = $scope.dataSpeed;
+        } else if (phenombar == "Consumption") {
+          $scope.optionsSpeed['chart']['yAxis']['axisLabel'] =
+            "Consumption (l/h)"
+          $scope.dataoverall = $scope.dataConsumption;
+        } else if (phenombar == "CO2") {
+          $scope.optionsSpeed['chart']['yAxis']['axisLabel'] = "CO2 (Kg/h)"
+          $scope.dataoverall = $scope.dataCO2;
+        }
 
+      }
+      $scope.dataoverall;
       $scope.dataConsumption;
       $scope.dataCO2;
       $scope.dataSpeed;
@@ -357,6 +377,8 @@ angular.module('app')
               "value": speed_public
             }]
           }]
+          $scope.dataoverall = $scope.dataSpeed;
+
           dataotherusers.push(data);
           loading_count++;
           if (loading_count == dashboard.loading_count) {

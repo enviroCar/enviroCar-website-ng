@@ -18,17 +18,20 @@
     "angular-timeline": "1.6.2",
     "angular-loading-bar": "0.9.0",
     "leaflet": "0.7.7",
+    "Leaflet.heat": "*",
     "angular-leaflet-directive": "0.10.0",
     "angular-utils-pagination": "0.11.1",
     "ngInfiniteScroll": "1.2.1",
     "angular-img-http-src": "^0.1.0",
     "angular-translate": "^2.11.0",
-    "material-calendar": "^0.2.14"
+    "material-calendar": "^0.2.14",
+    "heatmap.js-amd": "*"
   },
   "devDependencies": {
     "angular-translate": "^2.11.0"
   },
   "resolutions": {
-    "angular-material": "^1.0.6"
+    "angular-material": "^1.0.6",
+    "angular": "^1.x"
   }
 }

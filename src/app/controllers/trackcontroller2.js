@@ -55,24 +55,37 @@ angular.module('app')
         $scope.currenttrack = currenttrack;
         var url_requested = "https://envirocar.org/api/stable/users/" +
           $rootScope.globals.currentUser.username + "/tracks/" + currenttrack
-          .id +
-          "/statistics/";
-        tracks_calendar.get(url_requested + "Speed").then(function(data) {
+          .id;
+        tracks_calendar.get(url_requested).then(function(data) {
           console.log(data.data);
-          $scope.currenttrack['speed_avg'] = (data.data.avg.toFixed(2));
-          //  currenttrack['']
+          $scope.currenttrack['manufacturer'] = data.data.properties.sensor
+            .properties['manufacturer'];
+          $scope.currenttrack['model'] = data.data.properties.sensor.properties[
+            'model'];
+          $scope.currenttrack['start'] = new Date(data.data.features[0].properties
+            .time).toLocaleString();
+          $scope.currenttrack['end'] = new Date(data.data.features[data.data
+            .features.length - 1].properties.time).toLocaleString();
         })
-        tracks_calendar.get(url_requested + "Consumption").then(function(
-          data) {
-          console.log(data.data.avg);
-          if (data.data.avg != undefined)
-            $scope.currenttrack['consumption_avg'] = (data.data.avg.toFixed(
-              2));
-          else
-            $scope.currenttrack['consumption_avg'] = "NA";
-          //  currenttrack['']
-          $scope.onload = true;
-        })
+        tracks_calendar.get(url_requested + "/statistics/Speed").then(
+          function(data) {
+            console.log(data.data);
+            $scope.currenttrack['speed_avg'] = (data.data.avg.toFixed(2));
+            //  currenttrack['']
+          })
+        tracks_calendar.get(url_requested + "/statistics/Consumption").then(
+          function(
+            data) {
+            console.log(data.data.avg);
+            if (data.data.avg != undefined)
+              $scope.currenttrack['consumption_avg'] = (data.data.avg.toFixed(
+                2));
+            else
+              $scope.currenttrack['consumption_avg'] = "NA";
+
+            //  currenttrack['']
+            $scope.onload = true;
+          })
         $scope.currenttrack['url'] =
           "https://envirocar.org/api/stable/tracks/" + currenttrack.id +
           "/preview";

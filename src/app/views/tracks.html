@@ -3,7 +3,7 @@
       <div ng-controller="CalendarController" layout-gt-md="row">
         <md-card flex md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
 
-            <md-card-content flex>
+            <md-card-content class="nopadding" flex>
 
               <div >
                 <calendar-md md-theme="blue" flex layout layout-fill
@@ -14,6 +14,7 @@
                 title-format="'MMMM y'"
                 ng-model='selectedDate'
                 day-format="'d'"
+                tooltips="tooltips"
                 day-label-format="'EEE'"
                 day-label-tooltip-format="'EEEE'"
                 day-tooltip-format="'fullDate'"
