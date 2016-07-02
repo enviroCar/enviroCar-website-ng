@@ -46,6 +46,7 @@
   <md-tabs  md-dynamic-height md-border-bottom>
     <md-tab label="TimeLine">
       <md-content style="background-color:#EEEEEE" md-theme="default">
+        <div class="middle">
         <div layout-gt-md="row" ng-controller="DashboardController" layout="column" >
           <img class="loader_dashboard" ng-if="!onload" src="assets/spiffygif_152X152.gif">
           <div layout-gt-md="column" style="width:100%" layout="column">
@@ -202,14 +203,14 @@
         </md-card>
 
   </div>
-
-
+</div>
 
 
       </md-content>
     </md-tab>
     <md-tab label="Activity">
       <md-content style="background-color:#EEEEEE" class="md-padding">
+        <div class="middle">
         <div layout-gt-md="row" layout="column" >
         <md-card ng-show="originaluser" ng-controller="FriendActivityController" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
           <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
@@ -269,11 +270,13 @@
         </md-card-actions>
         </md-card>
       </div>
+    </div>
 </md-content>
 </md-tab>
 
 <md-tab label="Friends and Groups">
   <md-content style="background-color:#EEEEEE">
+    <div class="middle">
     <md-card ng-controller="FriendListController" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" style="width:400px" md-theme-watch>
       <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
         <div class="md-toolbar-tools">
@@ -301,6 +304,7 @@
   </div>
     </md-card-content>
     </md-card>
+  </div>
   </md-content>
 </md-tab>
 </md-tabs>

@@ -1,5 +1,6 @@
 <md-tabs md-dynamic-height md-dynamic-width md-border-bottom>
     <md-tab label="Calendar of Tracks">
+<div class="middle">
       <div ng-controller="CalendarController" layout-gt-md="row">
         <md-card flex md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
 
@@ -56,8 +57,10 @@
             </div>
       </md-card>
       </div>
+    </div>
     </md-tab>
     <md-tab label="All Tracks">
+      <div class="middle">
       <div layout-gt-md="row">
 
   <md-card md-theme-watch flex>
@@ -71,7 +74,7 @@
     <md-card-content>
     <md-content flex>
       <md-list ng-controller="TrackListCtrl">
-        <md-list-item class="md-3-line md-long-text md-whiteframe-3dp" aria-label="single charts view" ng-repeat="track in results.tracks" ng-click="showAdvanced($event,track.id)">
+        <md-list-item class="md-3-line md-long-text" aria-label="single charts view" ng-repeat="track in results.tracks" ng-click="showAdvanced($event,track.id)">
           <div class="md-list-item-text" >
             <h3><b>{{track.begin}}</b></h3>
             <h4>{{track.name}}</h4>
@@ -96,25 +99,8 @@
     </md-content>
   </md-card-content>
 </md-card>
-<md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
-  <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
-    <div class="md-toolbar-tools">
-      <h3>
-        <span>Track Preview</span>
-      </h3>
-    </div>
-  </md-toolbar>
-  <md-card-content style="min-width:510px;max-width:520px" layout-align="center center">
-    <div class="popover" ng-controller="ImagePreviewController" ng-show="popoverIsVisible2" >
-      <img src={{url}} style="width:500px;height:450px"></img>
-    </div>
-    <div layout="row" ng-show="!popoverIsVisible2" layout-align="center center" style="height:400px">
-      <p>Hover over a Track to preview</p>
-    </div>
-</md-card-content>
 
-</md-card>
 </div>
-
+</div>
 </md-tab>
   </md-tabs>

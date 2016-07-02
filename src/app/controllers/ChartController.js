@@ -5,7 +5,7 @@
 angular.module('app')
   .constant('chart', {
     chart1type: 'pieChart',
-    chart1height: 400,
+    chart1height: 300,
     chart1duration: 300,
     chart1legend: {
       margin: {
@@ -113,10 +113,13 @@ angular.module('app')
 angular.module('app')
   .controller('ChartController', ['$state', '$scope', '$http', '$rootScope',
     '$timeout', '$stateParams', 'factorysingletrack', 'chart', '$location',
+    'requestgraphstats',
+    'dashboard',
     function($state, $scope, $http, $rootScope, $timeout, $stateParams,
-      factorysingletrack, chart, $location) {
+      factorysingletrack, chart, $location, requestgraphstats, dashboard) {
 
       $scope.loading = true;
+      $scope.barchartoptions = ["Speed", "Consumption", "CO2"];
 
       if (typeof $rootScope.globals.currentUser == "undefined") {
         $rootScope.url_redirect_on_login = $location.path();
@@ -145,6 +148,39 @@ angular.module('app')
           legend: chart.chart1legend
         }
       };
+
+
+      $scope.optionsSpeed = {
+        chart: {
+          type: 'discreteBarChart',
+          height: 260,
+          margin: {
+            top: 40,
+            right: 0,
+            bottom: 40,
+            left: 50
+          },
+          x: function(d) {
+            return d.label;
+          },
+          y: function(d) {
+            return d.value;
+          },
+          showValues: true,
+          valueFormat: function(d) {
+            return d3.format(',.4f')(d);
+          },
+          duration: 500,
+          xAxis: {
+            axisLabel: 'User vs Public '
+          },
+          yAxis: {
+            axisLabel: 'Speed(Km/Hr)',
+            axisLabelDistance: -20
+          }
+        }
+      };
+
 
 
       $scope.data_pie = [];
@@ -360,6 +396,120 @@ angular.module('app')
         };
         url = url + $stateParams.trackid;
       }
+
+
+      //From dashboard
+      $scope.dataoverall;
+      $scope.dataConsumption;
+      $scope.dataCO2;
+      $scope.dataSpeed;
+      $scope.dataEngineload;
+      var datausers = [];
+      var dataotherusers = [];
+      var url_comparision = (dashboard.urltracks + $stateParams.trackid +
+        dashboard.urlco2stats);
+      var CO2_users;
+      requestgraphstats.get(url_comparision).then(function(data) {
+        console.log(data.data);
+        CO2_users = data.data.avg;
+        url_comparision = dashboard.urlcommonco2;
+        console.log(url_comparision);
+        requestgraphstats.get(url_comparision).then(function(data) {
+          console.log(data.data);
+          console.log("COME IN")
+          $scope.dataCO2 = [{
+            key: "Cumulative Return",
+            values: [{
+              "label": "User",
+              "value": CO2_users
+            }, {
+              "label": "Public",
+              "value": data.data.avg
+            }]
+          }]
+
+        });
+      });
+      url_comparision = (dashboard.urltracks + $stateParams.trackid +
+        dashboard.urlspeedstats);
+      var speed_users;
+      requestgraphstats.get(url_comparision).then(function(data) {
+        console.log(data.data);
+        var store = data.data;
+        speed_users = store.avg;
+        url_comparision = dashboard.urlcommonspeed;
+        console.log(url_comparision);
+
+        console.log("came here");
+        requestgraphstats.get(url_comparision).then(function(data) {
+          console.log(data.data);
+          var store = data.data;
+          speed_public = store.avg
+          console.log("came here in 442");
+          $scope.dataSpeed = [{
+            key: "Cumulative Return",
+            values: [{
+              "label": "User",
+              "value": speed_users
+            }, {
+              "label": "Public",
+              "value": speed_public
+            }]
+          }]
+          $scope.dataoverall = $scope.dataSpeed;
+
+
+        });
+      });
+
+      url_comparision = (dashboard.urltracks + $stateParams.trackid +
+
+        dashboard.urlconsstats);
+      var consumption_users;
+      requestgraphstats.get(url_comparision).then(function(data) {
+        console.log(data.data);
+        consumption_users = data.data.avg;
+        url_comparision = dashboard.urlcommoncons;
+        console.log(url_comparision);
+
+        requestgraphstats.get(url_comparision).then(function(data) {
+          console.log(data.data);
+          $scope.loading = false;
+          $scope.dataConsumption = [{
+            key: "Cumulative Return",
+            values: [{
+              "label": "User",
+              "value": consumption_users
+            }, {
+              "label": "Public",
+              "value": data.data.avg
+            }]
+          }]
+
+        });
+      });
+
+
+      $scope.changePhenomenonbar = function(phenombar) {
+          console.log("came here")
+          $scope.dataoverall = [];
+          if (phenombar == "Speed") {
+            console.log($scope.optionsSpeed['chart']['yAxis']['axisLabel'])
+            $scope.optionsSpeed['chart']['yAxis']['axisLabel'] =
+              "Speed (Km/h)"
+            $scope.dataoverall = $scope.dataSpeed;
+          } else if (phenombar == "Consumption") {
+            $scope.optionsSpeed['chart']['yAxis']['axisLabel'] =
+              "Consumption (l/h)"
+            $scope.dataoverall = $scope.dataConsumption;
+          } else if (phenombar == "CO2") {
+            $scope.optionsSpeed['chart']['yAxis']['axisLabel'] = "CO2 (Kg/h)"
+            $scope.dataoverall = $scope.dataCO2;
+          }
+
+        }
+        //end of code
+
       factorysingletrack.get(url).then(function(data) {
         if (data.status > 300) {
           console.log("getting a bad request")
@@ -467,7 +617,7 @@ angular.module('app')
                   for (var k = chart.numberofranges; k >= 0; k--) {
 
                     if (speed >= rangeobjects[phenoms[j]][0][k]) {
-                      console.log(phenoms[j]);
+                      //        console.log(phenoms[j]);
                       piechartsdata[phenoms[j]][k]++;
                       break;
                     }
@@ -542,10 +692,10 @@ angular.module('app')
                 var maf;
                 if (data.features[i].properties.phenomenons[
                     "Calculated MAF"] != undefined) {
-                  console.log(data.features[i].properties.phenomenons);
+                  //    console.log(data.features[i].properties.phenomenons);
                   maf = data.features[i].properties.phenomenons[
                     "Calculated MAF"].value;
-                  console.log(maf);
+                  //    console.log(maf);
                 } else {
                   console.log("how did it come here");
                   console.log(data.features[i].properties.phenomenons);

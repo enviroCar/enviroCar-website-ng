@@ -10,6 +10,17 @@
 
 $blue: #533687 ;
 
+.middle
+{
+  width: 100vw;
+  height: 56.25vw; /* 100/56.25 = 1.778 */
+  max-height: 1500px;
+  max-width: 1300px; /* 16/9 = 1.778 */
+  margin: auto;
+  position: relative;
+  bottom:0; /* vertical center */
+  left:0;right:0; /* horizontal center */
+}
 
   .search {
     flex: 1 1 auto;
