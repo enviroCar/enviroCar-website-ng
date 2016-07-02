@@ -10,8 +10,9 @@
   </div>
 </div>
   </div>
+  <div class="middle">
     <div layout-gt-md="row">
-    <md-card  md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" style="min-height:500px" md-theme-watch>
+    <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" style="max-height:530px;min-height:530px" md-theme-watch>
       <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" >
         <div class="md-toolbar-tools">
           <h3>
@@ -40,11 +41,11 @@
                 <i class="material-icons">more_vert</i>
               </md-card-actions>
             -->
-              <md-card-content >
+              <md-card-content style="max-height:465px" class="nopadding">
                 <!-- <img id="mySpinner" class="mySpinner" src="/assets/images/715.gif" ng-show="loading"> -->
 
                 <md-content>
-                  <leaflet lf-center="center" controls="controls" paths="paths" markers="markers" legend="legend" defaults="defaults" height="470"  ng-if="!loading"></leaflet>
+                  <leaflet lf-center="center" controls="controls" paths="paths" markers="markers" legend="legend" defaults="defaults" height="465"  ng-if="!loading"></leaflet>
                 </md-content>
             </md-card-content>
     </md-card>
@@ -62,7 +63,7 @@
     </md-content>
 </div>
 -->
-<md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
+<md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" style="max-height:530px;min-height:530px" md-theme-watch>
 <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2">
   <div class="md-toolbar-tools">
     <h3>
@@ -123,11 +124,11 @@
 <div layout-gt-md="row">
 
   <!--  <panel-widget flex title="Pie Chart" template="app/views/partials/piechart.html" options="true"></panel-widget> -->
-  <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
+  <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" style="height:420px" md-theme-watch>
     <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
       <div class="md-toolbar-tools">
         <h3>
-          <span>{{'TRACK_SUMMARY' | translate}}</span>
+          <span>Track Summary</span>
         </h3>
       </div>
     </md-toolbar>
@@ -193,11 +194,11 @@
       </div>
   </md-card-title-media>
   </md-card>
-  <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
+  <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" style="height:420px" md-theme-watch>
     <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" >
       <div class="md-toolbar-tools">
         <h3>
-          <span>{{'PIE_CHART' | translate}}</span>
+          <span>Statistics</span>
         </h3>
         <span flex></span>
 
@@ -213,28 +214,20 @@
       </div>
 
     </md-toolbar>
-    <md-card-content>
-          <md-content ng-show="$showOptionspie" class="optionspie">
-            <md-radio-group ng-model="piechartselected" ng-change="selecteditemchanged()">
-              <md-radio-button ng-repeat="d in piechartoptions" ng-value="d" >
-                  {{d}}
-           </md-radio-button>
-            </md-radio-group>
-          </md-content>
-          <md-content >
-
-            <nvd3 options="options_pie" data="data_pie"></nvd3>
-      </md-content>
-
-
-  </md-card-content>
+  <md-card-content >
+    <div class="containernvd3" style="width:100%;height:100%">
+    <md-content ng-show="$showOptionsnvd3" class="optionsnvd3">
+        </md-content>
+    <nvd3 options="options_pie" data="data_pie"></nvd3>
+  </div>
+</md-card-content>
 
   </md-card>
-  <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
+  <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" style="height:420px" md-theme-watch>
     <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" >
       <div class="md-toolbar-tools">
         <h3>
-          <span>{{'PIE_CHART' | translate}}</span>
+          <span>Track Vs Public</span>
         </h3>
         <span flex></span>
 
@@ -243,30 +236,25 @@
               <i class="material-icons">more_vert</i>
             </md-button>
             <md-menu-content width="3">
-              <md-menu-item ng-repeat = "d in piechartoptions">
-              <md-button ng-click="selecteditemchanged(d)">{{d}}</md-button>
+              <md-menu-item ng-repeat = "d in barchartoptions">
+              <md-button ng-click="changePhenomenonbar(d)">{{d}}</md-button>
             </md-menu-content>
         </md-menu>
       </div>
 
     </md-toolbar>
-    <md-card-content>
-          <md-content ng-show="$showOptionspie" class="optionspie">
-            <md-radio-group ng-model="piechartselected" ng-change="selecteditemchanged()">
-              <md-radio-button ng-repeat="d in piechartoptions" ng-value="d" >
-                  {{d}}
-           </md-radio-button>
-            </md-radio-group>
-          </md-content>
-          <md-content >
-            <p>Other statistics</p>
-      </md-content>
 
 
-  </md-card-content>
+  <md-card-content>
+
+    <div class="containernvd3" style="width:100%;height:100%">
+
+          <nvd3 options="optionsSpeed" data="dataoverall"></nvd3>
+</div>
+</md-card-content>
 
   </md-card>
 </div>
-
+</div>
 </div>
 </div>
