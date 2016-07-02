@@ -3,6 +3,8 @@ angular.module('app')
     'factorysingletrack',
     function(
       $scope, $rootScope, $http, factorysingletrack) {
+      $scope.onload_heat_map = false;
+
       console.log(" came here");
       var points = [];
       var heatmap = {
@@ -2132,7 +2134,7 @@ angular.module('app')
               visible: true
             }
           };
-
+          $scope.onload_heat_map = true;
           console.log($scope.layers.overlays);
           console.log($scope.layers)
         });

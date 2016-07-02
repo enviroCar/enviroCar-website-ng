@@ -1,10 +1,10 @@
 angular.module('app')
   .controller('TrackListCtrl', ['$scope', '$mdDialog', '$mdMedia',
     'trackService', '$http', '$rootScope',
-    'visibilityService', 'tracks_calendar',
+    'visibilityService', '$state', 'tracks_calendar',
     function(
       $scope, $mdDialog, $mdMedia, trackService, $http, $rootScope,
-      visibilityService, tracks_calendar) {
+      visibilityService, $state, tracks_calendar) {
       //bind to service
       $scope.results = trackService.results;
       $rootScope.showPopOver = function(trackid) {
@@ -17,6 +17,15 @@ angular.module('app')
         $rootScope.previewurl = "";
         $rootScope.popoverIsVisible = false;
         console.log("hide pop");
+      }
+      $scope.goToActivity = function(trackid) {
+        console.log("came here");
+        //redirect to the track analytics page.
+        $state.go('home.chart', {
+          'trackid': trackid
+        });
+
+        console.log("fired");
       }
       $scope.showAdvanced = function(ev, eventid) {
         $scope.currenttrack = {};
