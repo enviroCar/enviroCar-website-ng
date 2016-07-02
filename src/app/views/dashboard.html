@@ -45,17 +45,16 @@
 <md-content>
   <md-tabs  md-dynamic-height md-border-bottom>
     <md-tab label="TimeLine">
-      <md-content style="background-color:#EEEEEE" md-theme="default">
+      <md-content  ng-controller="DashboardController" style="background-color:#EEEEEE" md-theme="default">
         <div class="middle">
-        <div layout-gt-md="row" ng-controller="DashboardController" layout="column" >
-          <img class="loader_dashboard" ng-if="!onload" src="assets/spiffygif_152X152.gif">
+        <div layout-gt-md="row" layout="column" >
           <div layout-gt-md="column" style="width:100%" layout="column">
             <div layout-gt-md="row" style="width:100%" layout="row">
-         <md-card  ng-if="onload" style="height:330px;width:100%" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}"  md-theme-watch>
+         <md-card   style="height:330px;width:100%" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}"  md-theme-watch>
            <md-toolbar style="color:black;background-color:white" >
              <div class="md-toolbar-tools">
                <h3 style="color:rgba(0,0,0,0.5)">
-                 <span>{{'TRACK_MAP' | translate}}</span>
+                 <span>User vs Public</span>
                </h3>
                <span flex></span>
 
@@ -71,12 +70,13 @@
              </div>
            </md-toolbar>
             <md-card-content >
+              <md-progress-circular class="loader_dashboard" ng-if="!onload_user_vs_public" md-diameter="156"></md-progress-circular>
 
-              <nvd3 options="optionsSpeed" data="dataoverall" ng-if="!loading"></nvd3>
+              <nvd3 options="optionsSpeed" data="dataoverall" ng-if="onload_user_vs_public"></nvd3>
 
             </md-card-content>
           </md-card>
-          <md-card  ng-if="onload" style="height:330px;width:100%" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}"  md-theme-watch>
+          <md-card   style="height:330px;width:100%" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}"  md-theme-watch>
 
             <md-toolbar style="color:black;background-color:white" >
               <div class="md-toolbar-tools">
@@ -98,13 +98,13 @@
               </div>
             </md-toolbar>
              <md-card-content >
+               <md-progress-circular class="loader_dashboard" ng-if="!onload" md-diameter="156"></md-progress-circular>
 
-               <span>speed statistics coming here</span>
              </md-card-content>
            </md-card>
          </div>
          <div layout-gt-md="row" style="width:100%" layout="column">
-         <md-card ng-controller="LeafletHeatMap" ng-if="onload" style="height:550px;width:100%" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}"  md-theme-watch>
+         <md-card ng-controller="LeafletHeatMap" style="height:550px;width:100%" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}"  md-theme-watch>
            <md-toolbar style="color:black;background-color:white" >
              <div class="md-toolbar-tools">
                <h3 style="color:rgba(0,0,0,0.5)">
@@ -126,7 +126,10 @@
              </div>
            </md-toolbar>
            <md-card-content style="height:auto">
+             <md-progress-circular class="loader_dashboard" ng-if="!onload_heat_map" md-diameter="156"></md-progress-circular>
+             <div ng-if="onload_heat_map">
              <leaflet lf-center="center" layers="layers" width="100%" height="464px"></leaflet>
+           </div>
            </md-card-content>
           </md-card>
         </div>
@@ -149,7 +152,7 @@
 
 
 
-          <md-card style="min-width:30%;height:730px" ng-if="onload" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
+          <md-card style="min-width:30%;height:730px" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
             <md-toolbar style="color:black;background-color:white" >
               <div class="md-toolbar-tools">
                 <h3 style="color:rgba(0,0,0,0.5)">
@@ -187,9 +190,10 @@
                 </div>
                 </md-card-content>
               </md-card>
-            -->
+            -->         <md-progress-circular class="loader_dashboard" ng-if="!onload_tracks_timeline" md-diameter="156"></md-progress-circular>
 
-                      <md-list-item ng-if="!loading" md-theme="default" md-ink-ripple="#0065A0" class="md-3-line md-long-text " ng-repeat='event in events' ng-click="goToActivity(event.id)">
+
+                      <md-list-item ng-if="onload_tracks_timeline" md-theme="default" md-ink-ripple="#0065A0" class="md-3-line md-long-text " ng-repeat='event in events' ng-click="goToActivity(event.id)">
                       <img class="md-avatar" src={{event.url}} style="width:80px;height:80px"></img>
                       <div class="md-list-item-text" layout="column">
                       <h3><b>{{event.begin}}</b></h3>

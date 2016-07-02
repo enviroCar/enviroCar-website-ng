@@ -118,6 +118,13 @@ angular.module('app')
     function($state, $scope, $http, $rootScope, $timeout, $stateParams,
       factorysingletrack, chart, $location, requestgraphstats, dashboard) {
 
+      //individual loaders for elements
+      $scope.onload_leaflet = false;
+      $scope.onload_nvd3line = false;
+      $scope.onload_nvd3pie = false;
+      $scope.onload_nvd3_user_vs_public = false;
+      $scope.onload_summary = false;
+
       $scope.loading = true;
       $scope.barchartoptions = ["Speed", "Consumption", "CO2"];
 
@@ -303,6 +310,7 @@ angular.module('app')
       var endtimeg;
       var len_data;
       var keys_second;
+      var date_hh_mm_ss;
       //*****************************************************
       var colorsl = chart.colorsl;
       $scope.piechartselected = chart.piechartselected;
@@ -310,6 +318,8 @@ angular.module('app')
       var piechartsdata = chart.piechartsdata;
       var rangeobjects = chart.rangeobjects;
       var data_global = {}
+      var date_for_seconds;
+
       $scope.changePhenomenon = function(phenomenon) {
         console.log(phenomenon);
         console.log("changed");
@@ -357,9 +367,11 @@ angular.module('app')
         }
         $scope.data = datanew;
       };
+
       $scope.changePhenomenonnvd3 = function() {
         console.log($scope.phenomenonnvd3);
       }
+
       $scope.performancePeriod = 'week';
       $scope.selecteditemchanged = function(phenomenon) {
         console.log("fired");
@@ -380,6 +392,7 @@ angular.module('app')
           temp_obj = {}
         }
       };
+
       var url = chart.urlusers;
       if (typeof $rootScope.globals.currentUser == 'undefined') {
         console.log("came to if");
@@ -458,7 +471,6 @@ angular.module('app')
           }]
           $scope.dataoverall = $scope.dataSpeed;
 
-
         });
       });
 
@@ -485,6 +497,8 @@ angular.module('app')
               "value": data.data.avg
             }]
           }]
+          $scope.onload_nvd3_user_vs_public = true;
+
 
         });
       });
@@ -594,6 +608,13 @@ angular.module('app')
                       new Date(time1).getTime();
                     var seconds = seconds_passed / 1000;
                     timeoftravel = seconds / 60;
+                    // time of travel is in minutes
+                    // convert to the right format. of hh:mm:ss;
+                    date_for_seconds = new Date(null);
+                    date_for_seconds.setSeconds(seconds);
+                    date_hh_mm_ss = date_for_seconds.toISOString().substr(
+                      11, 8)
+
                     starttimeg = time1;
                     endtimeg = time2;
                   }
@@ -634,6 +655,7 @@ angular.module('app')
                 };
               })(i);
             }
+            $scope.onload_summary = true;
             if (phenoms[j] == chart.piechartselected) {
               var temp_obj = {};
               for (var i = 0; i <= chart.numberofranges; i++) {
@@ -662,6 +684,8 @@ angular.module('app')
             }
             datafinal.push(data_to_push);
           }
+          $scope.onload_nvd3line = true;
+          $scope.onload_nvd3pie = true;
           //$scope.data = datafinal;
           var data_temp = []
           for (var iterator = 0; iterator < datafinal.length; iterator++) {
@@ -679,6 +703,7 @@ angular.module('app')
         $scope.center['lng'] = longinitial;
         $scope.center['zoom'] = Math.round((20 / Math.pow(dist, 1.5)) +
           9)
+        $scope.onload_leaflet = true;
 
         function worker(i, data) {
           if (i <= (len_data - 2)) {
@@ -697,7 +722,6 @@ angular.module('app')
                     "Calculated MAF"].value;
                   //    console.log(maf);
                 } else {
-                  console.log("how did it come here");
                   console.log(data.features[i].properties.phenomenons);
                   maf = data.features[i].properties.phenomenons["MAF"].value
                 }
@@ -771,7 +795,7 @@ angular.module('app')
           vehicletype: vehicletype,
           vehiclemanufacturer: vehiclemanufacturer,
           unitsspeed: units['Speed'],
-          timeoftravel: timeoftravel.toFixed(2),
+          timeoftravel: date_hh_mm_ss,
           unitsofdistance: "Km",
           unitsoftime: "Minutes",
           co2emission: Co2sum.toFixed(2),
