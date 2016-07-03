@@ -1,33 +1,38 @@
-(function(){
+(function() {
   'use strict';
 
   angular.module('app')
-          .service('navService', [
-          '$q',
-          navService
-  ]);
+    .service('navService', [
+      '$q', '$translate',
+      navService
+    ]);
 
-  function navService($q){
-    var menuItems = [
-      {
-        name: 'Dashboard',
-        icon: 'dashboard',
-        sref: '.dashboard'
-      },
-      {
-        name: 'Tracks',
-        icon: 'person',
-        sref: '.tracks'
-      },
-      {
-        name: 'Table',
-        icon: 'view_module',
-        sref: '.table'
-      }
-    ];
-
+  function navService($q, $translate) {
+    var dashboard;
+    var tracks;
+    var table;
+    $translate(['DASHBOARD', 'TRACKS', 'TABLE']).then(function(translations) {
+      dashboard = translations.DASHBAORD;
+      tracks = translations.TRACKS;
+      table = translations.TABLE;
+      console.log("came here to nav service");
+    })
+    var menuItems = [{
+      name: 'Dashboard',
+      icon: 'dashboard',
+      sref: '.dashboard'
+    }, {
+      name: 'Tracks',
+      icon: 'person',
+      sref: '.tracks'
+    }, {
+      name: 'Table',
+      icon: 'view_module',
+      sref: '.table'
+    }];
+    console.log(menuItems);
     return {
-      loadAllItems : function() {
+      loadAllItems: function() {
         return $q.when(menuItems);
       }
     };

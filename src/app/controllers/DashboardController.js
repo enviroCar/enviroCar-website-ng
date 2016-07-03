@@ -31,45 +31,15 @@ angular.module('app')
     color2: '#1f77b4',
     loading_count: 5
   });
-angular.module('app')
-  .config(['$translateProvider', function($translateProvider) {
-    $translateProvider.translations('en', {
-      'TITLE_TRACKS': 'Timeline of Tracks',
-      'TRACK_ID': 'Track ID',
-      'MODIFIED': 'Modified',
-      'YOU_VS_PUBLIC': 'You vs Public',
-      'FRIENDS_ACTIVITY': 'Friend\'s Activity',
-      'LOADING_DATA': 'Loading Data...',
-      'LOAD_MORE': 'Load More',
-      'MY_ACTIVITY': 'My Activity',
-      'TRACK_MAP': 'Track Map',
-      'GRAPH': 'Graph',
-      'PIE_CHART': 'Pie Chart',
-      'TRACK_SUMMARY': 'Track Summary',
-      'DISTANCE': 'Distance',
-      'VEHICLE_TYPE': 'VEHICLE_TYPE',
-      'TOTAL_TIME': 'TOTAL_TIME',
-      'START_FINISH': 'Start Finish Time',
-      'CONSUMPTION': ' Consumption',
-      'CONSUMPTION_HOUR': 'Consumption/Hr',
-      'CO2_EMISSION': 'CO2 Emission',
-      'CO2_EMISSION_HOUR': 'CO2 Emission/Hr',
-      'FRIENDS': 'Friends',
-      'TRACKS': 'Tracks',
-      'DISTANCE': 'Distance',
-      'GROUPS': 'Groups'
 
-    });
-    $translateProvider.preferredLanguage('en');
-
-  }])
 angular.module('app')
   .controller('DashboardController', ['$scope', '$http', '$rootScope',
     '$stateParams',
     'requesthomestats', 'requestgraphstats', 'dashboard', '$state',
+    '$translate',
     function($scope, $http, $rootScope, $stateParams, requesthomestats,
       requestgraphstats,
-      dashboard, $state) {
+      dashboard, $state, $translate) {
       var loading_count = 0;
       // Visibility for each of the 4 components on the dashboard
       $scope.onload_user_vs_public = false;
@@ -444,72 +414,8 @@ angular.module('app')
           }
         });
       });
-
-      /*  var datacumulusers = {
-          "key": dashboard.key1,
-          "color": dashboard.color1,
-          "values": datausers
-        };
-
-
-
-        var datacumulotherusers = {
-          "key": dashboard.key2,
-          "color": dashboard.color2,
-          "values": dataotherusers
-        };
-        */
-      //  $scope.data = [datacumulotherusers, datacumulusers];
       $scope.visible = true;
-      //**********************************************************
-      //***********************END OF GRAPHS**********************
 
-      //********************* START OF INSIGHTS*******************
-      //**********************************************************
-      /*
-  var ratingco2;
-  if(datausers[0].value<(dataotherusers[0].value*0.60))
-  {
-    ratingco2 = "+4";
-  }
-  else if(datausers[0].value<(dataotherusers[0].value*0.70))
-  {
-    ratingco2 = "+3";
-  }
-  else if(datausers[0].value<(dataotherusers[0].value*0.80))
-  {
-    ratingco2 = "+2";
-  }
-  else if(datausers[0].value<(dataotherusers[0].value*0.90))
-  {
-    ratingco2 = "+1";
-  }
-  else if(datausers[0].value>(dataotherusers[0].value))
-  {
-    ratingco2 = "-1";
-  }
-  else if(datausers[0].value>(dataotherusers[0].value*1.1))
-  {
-    ratingco2 = "-2";
-  }
-  else if(datausers[0].value>(dataotherusers[0].value*1.2))
-  {
-    ratingco2 = "-3";
-  }
-  else if(datausers[0].value>(dataotherusers[0].value*1.30))
-  {
-    ratingco2 = "-4";
-  }
-  var ratiospeed = datausers[2].value/dataotherusers[2].value;
-  var ratioco2 = datausers[0].value/dataotherusers[0].value;
-  var ratioconsumption = datausers[1].value/dataotherusers[1].value;
-  var co2comments;
-  var consumptionscomments;
-if(ratioco2 < ratiospeed)
-{
-  co2comments = "Your CO2 consumption is optimal in comparision to your average speed";
-}
-*/
     }
   ]);
 

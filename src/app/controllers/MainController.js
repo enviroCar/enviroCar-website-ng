@@ -4,17 +4,25 @@
     .module('app')
     .controller('MainController', [
       'navService', '$mdSidenav', '$mdBottomSheet', '$log', '$q', '$state',
-      '$mdToast', '$http', '$rootScope',
+      '$mdToast', '$http', '$rootScope', '$translate',
       MainController
     ]);
 
   function MainController(navService, $mdSidenav, $mdBottomSheet, $log, $q,
-    $state, $mdToast, $http, $rootScope) {
+    $state, $mdToast, $http, $rootScope, $translate) {
     console.log("In main Controller");
     var vm = this;
+    /*  var login;
+      var logout;
+      var profile;
+      $translate(['LOGIN', 'LOGOUT', 'PROFILE']).then(function(translations) {
+        login = translations.login;
+        logout = translations.logout;
+        profile = translations.profile;
+      })
+      */
     if (typeof $rootScope.globals.currentUser == 'undefined') {
       $rootScope.showlogout = false;
-      console.log("the wrong place firing off on if");
       //do nothing
     } else {
       $rootScope.showlogout = true;
@@ -25,13 +33,7 @@
       vm.profilename = $rootScope.globals.currentUser.username;
       vm.url = "https://envirocar.org/api/stable/users/" + $rootScope.globals
         .currentUser.username + "/avatar"
-      console.log("came here");
-      /*  $http.get(vm.url).success(function (response, location){
-        console.log("got the second link");
-        console.log(location);
-        console.log(response);
-      })
-  */
+
       $http.get(vm.url, {
           responseType: 'arraybuffer'
         })
@@ -58,7 +60,29 @@
     navService
       .loadAllItems()
       .then(function(menuItems) {
+        //
         vm.menuItems = [].concat(menuItems);
+        var dashboard;
+        var tracks;
+        var table;
+        $translate(['DASHBOARD', 'TRACKS', 'TABLE', 'SPEEDARRAY']).then(
+          function(
+            translations) {
+            dashboard = translations.DASHBOARD;
+            tracks = translations.TRACKS;
+            table = translations.TABLE;
+            console.log(translations.SPEEDARRAY);
+            console.log(translations);
+            console.log("came here to nav service");
+            console.log(dashboard);
+            vm.menuItems[0]['name'] = dashboard;
+            vm.menuItems[1]['name'] = tracks;
+            vm.menuItems[2]['name'] = table;
+            console.log(vm.menuItems);
+
+          })
+
+
       });
 
     function toggleRightSidebar() {

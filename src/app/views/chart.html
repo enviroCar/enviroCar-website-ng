@@ -4,9 +4,9 @@
   <div class="profiletab2" ng-style="{'background-color':'#0065A0'}" style="width:100%;height:130px">
     <div class="cover">
   <div class="container_header">
-  <p class="title"><b>Track ID</b>  - {{trackid}}</p>
-  <p class="title"><b>Name</b>      - {{name}}</p>
-  <p class="title"><b>Created</b>   - {{created}}</p>
+  <p class="title"><b>{{'TRACK_ID' | translate}}</b>  - {{trackid}}</p>
+  <p class="title"><b>{{'NAME' | translate}}</b>      - {{name}}</p>
+  <p class="title"><b>{{'CREATED' | translate}}</b>   - {{created}}</p>
   </div>
 </div>
   </div>
@@ -46,7 +46,7 @@
               <md-progress-circular style="top:50%"class="loader_dashboard2" ng-if="!onload_leaflet" md-diameter="156"></md-progress-circular>
 
                 <md-content ng-if="onload_leaflet">
-                  <leaflet lf-center="center" controls="controls" paths="paths" markers="markers" legend="legend" defaults="defaults" height="465"  ng-if="!loading"></leaflet>
+                  <leaflet bounds="bounds" controls="controls" paths="paths" watch-paths="true" markers="markers" legend="legend" defaults="defaults" height="465"  ></leaflet>
                 </md-content>
             </md-card-content>
     </md-card>
@@ -68,7 +68,7 @@
 <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2">
   <div class="md-toolbar-tools">
     <h3>
-      <span>Graph</span>
+      <span>{{'TIME_SERIES' | translate}}</span>
     </h3>
     <span flex></span>
       <md-menu md-offset="-120 20">
@@ -87,22 +87,6 @@
 
   </div>
 
-  <!--
-  <md-menu md-offset="0 0">
-
-       <md-button ng-click="ctrl.openMenu($mdOpenMenu, $event)" class="md-icon-button" aria-label="Show options">
-            <i class="material-icons">more_vert</i>
-            <md-menu-content class="z-index:100px" width="4">
-              <md-menu-item>
-                <div class="demo-select-all-checkboxes" flex ng-repeat="d in piechartoptions">
-                    <md-checkbox ng-checked="exists(d, selected)" ng-click="toggle(d, selected)">
-                     {{ d }}
-                    </md-checkbox>
-                  </div>
-              </md-menu-item>
-            </md-menu-content>
-          </md-menu>
-      -->
 
 </md-toolbar>
     <md-card-content >
@@ -131,7 +115,7 @@
     <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
       <div class="md-toolbar-tools">
         <h3>
-          <span>Track Summary</span>
+          <span>{{'TRACK_SUMMARY' | translate}}</span>
         </h3>
       </div>
     </md-toolbar>
@@ -143,18 +127,18 @@
         <div layout-gt-xs="row">
           <div style="width:50%;text-align:center">
             <h3 style="color:#0065A0">{{tracksummary['timeoftravel']}}</h3>
-            <p style="font-size:13px;">Duration</p>
+            <p style="font-size:13px;">{{'DURATION' | translate}}</p>
           </div>
           <div style="width:50%;text-align:center">
             <h3 style="color:#0065A0">{{tracksummary['distance']}} Km</h3>
-            <p style="font-size:13px;">Distance</p>
+            <p style="font-size:13px;">{{'DISTANCE' | translate}}</p>
           </div>
         </div>
         <md-divider ></md-divider>
         <md-list-item  layout="row">
                 <img ng-src="assets/images/ic_directions_car_black_48dp.png" class="md-avatar"/>
                 <div class="md-list-item-text">
-                <p>Car:</p>
+                <p>{{'CAR:' | translate}}</p>
                 </div>
                 <span flex></span>
                 <div style="right:0px" class="md-list-item-text">
@@ -165,7 +149,7 @@
             <md-list-item layout="row">
               <img ng-src="assets/images/ic_timer_black_48dp.png" class="md-avatar"/>
               <div class="md-list-item-text">
-              <p>Start:</p>
+              <p>{{'START:' | translate}}</p>
               </div>
               <span flex></span>
               <div style="right:0px" class="md-list-item-text">
@@ -176,7 +160,7 @@
             <md-list-item layout="row">
               <img ng-src="assets/images/ic_timer_off_black_48dp.png" class="md-avatar"/>
               <div class="md-list-item-text">
-              <p>End:</p>
+              <p>{{'END:' | translate}}</p>
               </div>
               <span flex></span>
               <div style="right:0px" class="md-list-item-text">
@@ -187,7 +171,7 @@
             <md-list-item layout="row">
               <img ng-src="assets/images/ic_local_gas_station_black_48dp.png" class="md-avatar"/>
               <div class="md-list-item-text">
-              <p>Consumption:</p>
+              <p>{{'CONSUMPTION:' | translate}}</p>
               </div>
               <span flex></span>
               <div style="right:0px" class="md-list-item-text">
@@ -198,7 +182,7 @@
             <md-list-item layout="row">
               <img ng-src="assets/images/Gas-96.png" class="md-avatar"/>
               <div class="md-list-item-text">
-              <p>CO2 Emission:</p>
+              <p>{{'CO2_EMISSION:' | translate}}</p>
               </div>
               <span flex></span>
               <div style="right:0px" class="md-list-item-text">
@@ -243,7 +227,7 @@
     <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" >
       <div class="md-toolbar-tools">
         <h3>
-          <span>Track Vs Public</span>
+          <span>{{'TRACK_VS_PUBLIC' | translate}}</span>
         </h3>
         <span flex></span>
 

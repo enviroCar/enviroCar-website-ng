@@ -1,5 +1,5 @@
 <md-tabs md-dynamic-height md-dynamic-width md-border-bottom>
-    <md-tab label="Calendar of Tracks">
+    <md-tab label="{{'CALENDAR_OF_TRACKS_TAB' | translate}}">
 <div class="middle">
       <div ng-controller="CalendarController" layout-gt-md="row">
         <md-card flex md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
@@ -28,13 +28,7 @@
 
         </md-card>
         <md-card md-theme="default" class="card card-4-50" flex md-theme-watch>
-          <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
-            <div class="md-toolbar-tools">
-              <h3>
-                <span>{{ 'TITLE_TRACKS' | translate}}</span>
-              </h3>
-            </div>
-          </md-toolbar>
+
           <div style="height:100%" layout="row">
           <md-card-content flex>
 
@@ -59,7 +53,7 @@
       </div>
     </div>
     </md-tab>
-    <md-tab label="All Tracks">
+    <md-tab label="{{'ALL_TRACKS_TAB' | translate}}">
       <div class="middle">
       <div layout-gt-md="row">
 
@@ -67,7 +61,7 @@
     <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
       <div class="md-toolbar-tools">
         <h3>
-          <span>Tracks List</span>
+          <span>{{'TRACKS_LIST' | translate}}</span>
         </h3>
       </div>
     </md-toolbar>

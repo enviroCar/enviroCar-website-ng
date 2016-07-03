@@ -176,6 +176,9 @@ body {
   color: $text-color;
 }
 
+.leaflet-popup-content-wrapper, .map-legends, .map-tooltip{
+  background-color: rgb(0, 255, 255);
+}
 .loader_dashboard {
     display: block;
     margin-top: auto;

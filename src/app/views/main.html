@@ -27,16 +27,16 @@
       -->
         <md-button class="white-bg" ng-cloak ng-show="$root.showlogout" aria-label="Notifications" ui-sref="login">
           <i class="material-icons">power_settings_new</i>
-          Log Out
+          {{'LOGOUT' | translate}}
         </md-button>
         <md-button class="white-bg" ng-cloak ng-show="!$root.showlogout" aria-label="Notifications" ui-sref="login">
           <i class="material-icons">power_settings_new</i>
-          Log In
+          {{'LOGIN' | translate}}
         </md-button>
 
     <md-button ng-show="$root.showlogout" class="toolbar-button white-bg" aria-label="Settings" ng-click="vm.toggleRightSidebar()">
             <i class="material-icons">account_circle</i>
-            Profile
+            {{'PROFILE' | translate}}
         </md-button>
         <md-button hide-gt-sm ng-click="vm.toggleItemsList()" aria-label="Menu">
             <i class="material-icons">menu</i>
