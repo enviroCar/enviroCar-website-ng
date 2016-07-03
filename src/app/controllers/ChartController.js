@@ -105,18 +105,20 @@ angular.module('app')
     colors: ["#0065A0", "#ffbf00", "#00cc00", "#440044", "#ff3300"],
     m1message: "Start Point",
     m2message: "End Point",
-    colorsl: ["#0099ff", "#ffff00", "#009900", "#ff9900", "#cc3300",
-      "#4B0082"
+    colorsl: ["#1BE01B", "#B5E01B", "#E0C61B", "#E08B1B", "#E01B1B",
+      "#9c1313"
     ],
     phenomenonleaflet: "Speed",
   })
 angular.module('app')
   .controller('ChartController', ['$state', '$scope', '$http', '$rootScope',
     '$timeout', '$stateParams', 'factorysingletrack', 'chart', '$location',
-    'requestgraphstats',
+    'requestgraphstats', 'leafletBoundsHelpers',
     'dashboard',
     function($state, $scope, $http, $rootScope, $timeout, $stateParams,
-      factorysingletrack, chart, $location, requestgraphstats, dashboard) {
+      factorysingletrack, chart, $location, requestgraphstats,
+      leafletBoundsHelpers,
+      dashboard) {
 
       //individual loaders for elements
       $scope.onload_leaflet = false;
@@ -203,17 +205,20 @@ angular.module('app')
             return d[1];
           },
           showLegend: false,
-          useInteractiveGuideline: true,
+          useInteractiveGuideline: false,
           interactive: true,
           tooltip: {
             contentGenerator: function(d) {
+              //    console.log(d);
               var time = new Date(d.value);
-              var html = "<h2>" + time.toLocaleString() + "</h2> <ul>";
+              var html = "<h4>" + time.toLocaleString() + "</h4> <ul>";
               //var html = "<ul>";
+              $scope.trailchange(d.pointIndex);
+              //  console.log("came here")
               d.series.forEach(function(elem) {
                 html += "<li><h3 style='color:" + elem.color + "'>" +
-                  elem.key + "</h3> : <b>" + elem.value.toFixed(1) +
-                  "</b></li>";
+                  elem.key + ": <b>" + elem.value.toFixed(1) +
+                  "</b></h3> </li>";
               })
               html += "</ul>"
               return html;
@@ -249,16 +254,15 @@ angular.module('app')
         }
       };
 
-      $scope.trackid;
-      $scope.name;
-      $scope.created;
-      // the variables for the top bar.
+      var bounds = leafletBoundsHelpers.createBoundsFromArray([
+        [51.508742458803326, -0.087890625],
+        [51.508742458803326, -0.087890625]
+      ]);
 
-      var latlongarray = [];
-      var latinitial;
-      var longinitial;
+
       angular.extend($scope, {
         center: {},
+        bounds: bounds,
         paths: {},
         markers: {},
         controls: {
@@ -267,11 +271,45 @@ angular.module('app')
         legend: {}
 
       });
+      /*
+      $scope.center = {};
+      $scope.paths = {};
+      $scope.markers ={};
+      $scope.controls = {custom:[]};
+      $scope.legend = {};
+      */
+      $scope.trailchange = function(index) {
+        console.log(data_global);
+        console.log($scope.paths);
+        $scope.paths['nvd3pointer'] = {};
+        $scope.paths['nvd3pointer'] = {
+          type: "circleMarker",
+          radius: 10,
+          latlngs: ([data_global.data.features[index]['geometry'][
+            'coordinates'
+          ][1], data_global.data.features[index]['geometry'][
+            'coordinates'
+          ][0]])
+        }
+        console.log($scope.paths);
+      }
+
+
+      $scope.trackid;
+      $scope.name;
+      $scope.created;
+      // the variables for the top bar.
+
+      var latlongarray = [];
+      var latinitial;
+      var longinitial;
+
       $scope.legend = {
         position: 'bottomleft',
         colors: chart.colorsl,
         labels: chart.legendtable_all['Speed']
       }
+
       $scope.legendtable = chart.legendtable_all['Speed'];
       /*
       var MyControl = L.control();
@@ -699,8 +737,38 @@ angular.module('app')
           optionchanger(data, 'Speed', 1);
 
         }
-        $scope.center['lat'] = latinitial;
-        $scope.center['lng'] = longinitial;
+        //  $scope.center['lat'] = latinitial;
+        //  $scope.center['lng'] = longinitial;
+        //  $scope.center = {};
+        //  $scope.center['autoDiscover'] = true;
+        // setting bounds on the map based on the points.
+        // northeast and soutwest bounds are to be set.
+        if ($scope.markers.m1.lng > $scope.markers.m2.lng) {
+          $scope.bounds.northEast.lng = $scope.markers.m1.lng + 0.01;
+          $scope.bounds.southWest.lng = $scope.markers.m2.lng - 0.01;
+          if ($scope.markers.m1.lat > $scope.markers.m2.lat) {
+            $scope.bounds.northEast.lat = $scope.markers.m1.lat + 0.01;
+            $scope.bounds.southWest.lat = $scope.markers.m2.lat - 0.01;
+          } else {
+            $scope.bounds.northEast.lat = $scope.markers.m2.lat + 0.01;
+            $scope.bounds.southWest.lat = $scope.markers.m1.lat - 0.01;
+
+          }
+        } else {
+          $scope.bounds.northEast.lng = $scope.markers.m2.lng + 0.01;
+          $scope.bounds.southWest.lng = $scope.markers.m1.lng - 0.01;
+          if ($scope.markers.m1.lat > $scope.markers.m2.lat) {
+            $scope.bounds.northEast.lat = $scope.markers.m1.lat + 0.01;
+            $scope.bounds.southWest.lat = $scope.markers.m2.lat - 0.01;
+          } else {
+            $scope.bounds.northEast.lat = $scope.markers.m2.lat + 0.01;
+            $scope.bounds.southWest.lat = $scope.markers.m1.lat - 0.01;
+
+          }
+        }
+        console.log($scope.bounds);
+
+        console.log($scope.markers);
         $scope.center['zoom'] = Math.round((20 / Math.pow(dist, 1.5)) +
           9)
         $scope.onload_leaflet = true;
@@ -852,6 +920,29 @@ angular.module('app')
               'lat': data.data.features[k].geometry.coordinates[1],
               'lng': data.data.features[k].geometry.coordinates[0]
             }]
+            pathobj['message'] =
+              (
+                "<div style=\"color:#0065A0;width:120px\"><p style=\"font-size:10px;\"><b>Speed: </b>" +
+                data.data.features[
+                  k - 1].properties.phenomenons["Speed"].value.toFixed(2) +
+                " " +
+                data.data.features[
+                  k - 1].properties.phenomenons["Speed"].unit +
+                "</p><p style=\"font-size:10px;\"><b>Consumption: </b>" +
+                data.data.features[
+                  k - 1].properties.phenomenons["Consumption"].value.toFixed(
+                  2) +
+                " " +
+                data.data.features[
+                  k - 1].properties.phenomenons["Consumption"].unit +
+                "</p><p style=\"font-size:10px;\"><b>CO2: </b>" +
+                data.data.features[
+                  k - 1].properties.phenomenons["CO2"].value.toFixed(
+                  2) +
+                " " +
+                data.data.features[
+                  k - 1].properties.phenomenons["CO2"].unit +
+                "</div>");
             $scope.paths['p' + (k)] = pathobj;
           }
           if (k == (len_data - 1) && flag == 1) {

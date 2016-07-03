@@ -14,28 +14,28 @@
   <p ng-bind="track_number">
     <br>
     <div class="descp">
-      Tracks
+      {{'TRACKS' | translate}}
     </div>
   </div>
   <div class="detail2" >
     <p ng-bind="friends_number">
     <br>
     <div class="descp">
-      Friends
+      {{'FRIENDS' | translate}}
     </div>
   </div>
   <div class="detail2" >
     <p ng-bind="distance_driven">
      <br>
      <div class="descp">
-       Distance
+       {{'DISTANCE' | translate}}
      </div>
   </div>
   <div class="detail2" >
     <p ng-bind="groups_number">
     <br>
     <div class="descp">
-      Groups
+      {{'GROUPS' | translate}}
     </div>
   </div>
 </div>
@@ -44,7 +44,7 @@
 
 <md-content>
   <md-tabs  md-dynamic-height md-border-bottom>
-    <md-tab label="TimeLine">
+    <md-tab label="{{'TIMELINE_TAB' | translate}}">
       <md-content  ng-controller="DashboardController" style="background-color:#EEEEEE" md-theme="default">
         <div class="middle">
         <div layout-gt-md="row" layout="column" >
@@ -54,7 +54,7 @@
            <md-toolbar style="color:black;background-color:white" >
              <div class="md-toolbar-tools">
                <h3 style="color:rgba(0,0,0,0.5)">
-                 <span>User vs Public</span>
+                 <span>{{'User_VS_PUBLIC' | translate}} </span>
                </h3>
                <span flex></span>
 
@@ -81,7 +81,7 @@
             <md-toolbar style="color:black;background-color:white" >
               <div class="md-toolbar-tools">
                 <h3 style="color:rgba(0,0,0,0.5)">
-                  <span>{{'TRACK_MAP' | translate}}</span>
+                  <span>{{'SPEED_STATS' | translate}}</span>
                 </h3>
                 <span flex></span>
 
@@ -108,7 +108,7 @@
            <md-toolbar style="color:black;background-color:white" >
              <div class="md-toolbar-tools">
                <h3 style="color:rgba(0,0,0,0.5)">
-                 <span>Heat Map</span>
+                 <span>{{'HEAT_MAP' | translate}}</span>
                </h3>
                <span flex></span>
 <!--
@@ -156,7 +156,7 @@
             <md-toolbar style="color:black;background-color:white" >
               <div class="md-toolbar-tools">
                 <h3 style="color:rgba(0,0,0,0.5)">
-                  <span>{{'TRACK_MAP' | translate}}</span>
+                  <span>{{'TITLE_TRACKS' | translate}}</span>
                 </h3>
                 <span flex></span>
 
@@ -198,7 +198,7 @@
                       <div class="md-list-item-text" layout="column">
                       <h3><b>{{event.begin}}</b></h3>
                       <h4>{{event.title}}</h4>
-                      <p>Distance - {{event.distance}} Km</p>
+                      <p>{{'DISTANCE' | translate}} - {{event.distance}} Km</p>
                     </div>
                     </md-list-item>
                 </md-card-content>
@@ -212,7 +212,7 @@
 
       </md-content>
     </md-tab>
-    <md-tab label="Activity">
+    <md-tab label="{{'ACTIVITY_TAB' | translate}}">
       <md-content style="background-color:#EEEEEE" class="md-padding">
         <div class="middle">
         <div layout-gt-md="row" layout="column" >
@@ -237,7 +237,7 @@
               <div ng-show = 'busy'>{{'LOADING_DATA' | translate}}</div>
         </md-content>
         <div layout="row" ng-show="show_no_my_activity" layout-align="center center">
-          <p>You do not have any friend activity to show</p>
+          <p>{{'NO_FRIENDS_ACTIVITY' | translate}}</p>
         </div>
         </md-card-content>
         <md-card-actions layout-align="center center">
@@ -265,7 +265,7 @@
               <div ng-show = 'busy'>{{'LOADING_DATA' | translate}}</div>
         </md-content>
         <div layout="row" ng-show="show_no_my_activity" layout-align="center center">
-          <p>You do not have any friends</p>
+          <p>{{'NO_ACTIVITY' | translate}}</p>
         </div>
         </md-card-content>
 
@@ -278,14 +278,14 @@
 </md-content>
 </md-tab>
 
-<md-tab label="Friends and Groups">
+<md-tab label="{{'FRIENDS_AND_GROUPS_TAB' | translate}}">
   <md-content style="background-color:#EEEEEE">
     <div class="middle">
     <md-card ng-controller="FriendListController" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" style="width:400px" md-theme-watch>
       <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
         <div class="md-toolbar-tools">
           <h3>
-            <span>Friends</span>
+            <span>{{'FRIENDS' | translate}}</span>
           </h3>
         </div>
       </md-toolbar>
@@ -303,7 +303,7 @@
           </md-list-item>
     </md-content>
     <div layout="row" ng-show="show_no_friends" layout-align="center center">
-      <p>You do not have any friends</p>
+      <p>{{'NO_FRIENDS' | translate}}</p>
     </div>
   </div>
     </md-card-content>
