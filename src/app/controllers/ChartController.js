@@ -43,8 +43,8 @@ angular.module('app')
       'Intake Temperature': [0, 0, 0, 0, 0, 0]
     },
     legendtable_all: {
-      'Speed': ["0-20 Km/h", "20-40 Km/h", "40-60 Km/h", "60-80 Km/h",
-        "80-100 Km/h", ">100 Km/h"
+      'Speed': ["0-30 Km/h", "30-60 Km/h", "60-90 Km/h", "90-120 Km/h",
+        "120-150 Km/h", ">150 Km/h"
       ],
       'Calculated MAF': ["0-5 g/sec", "5-10 g/sec", "10-15 g/sec",
         "15-20 g/sec", "20-25 g/sec", ">25 g/sec"
@@ -61,7 +61,7 @@ angular.module('app')
     },
     rangeobjects: {
       'Speed': [
-        [0, 20, 40, 60, 80, 100],
+        [0, 30, 60, 90, 120, 150],
       ],
       'Calculated MAF': [
         [0, 5, 10, 15, 20, 25],
@@ -78,7 +78,7 @@ angular.module('app')
     },
     rangeobjectsreplace: {
       'Speed': [
-        [0, 20, 40, 60, 80, 100],
+        [0, 30, 60, 90, 120, 150],
       ],
       'MAF': [
         [0, 5, 10, 15, 20, 25],
@@ -349,6 +349,9 @@ angular.module('app')
       var len_data;
       var keys_second;
       var date_hh_mm_ss;
+      var consumption_avg = 0;
+      var co2_avg = 0;
+      var break_cons = true;
       //*****************************************************
       var colorsl = chart.colorsl;
       $scope.piechartselected = chart.piechartselected;
@@ -774,49 +777,76 @@ angular.module('app')
         $scope.onload_leaflet = true;
 
         function worker(i, data) {
-          if (i <= (len_data - 2)) {
+          if (i <= (len_data - 1)) {
             function CO2Calc() {
-              var time1 = data.features[i].properties.time;
-              var time2 = data.features[i + 1].properties.time;
-              var seconds_passed = new Date(time2).getTime() - new Date(
-                time1).getTime();
-              var seconds = seconds_passed / 1000;
-              if (seconds <= 10) {
-                var maf;
-                if (data.features[i].properties.phenomenons[
-                    "Calculated MAF"] != undefined) {
-                  //    console.log(data.features[i].properties.phenomenons);
-                  maf = data.features[i].properties.phenomenons[
-                    "Calculated MAF"].value;
-                  //    console.log(maf);
-                } else {
-                  console.log(data.features[i].properties.phenomenons);
-                  maf = data.features[i].properties.phenomenons["MAF"].value
+              if (data.features[i].properties.phenomenons['CO2'] !=
+                undefined) {
+                co2_avg += data.features[i].properties.phenomenons[
+                  'CO2'].value;
+                if (i == (len_data - 1)) {
+                  // the last one.
+                  var seconds_passed = new Date(endtimeg).getTime() -
+                    new Date(starttimeg).getTime();
+                  co2_avg = co2_avg / len_data;
+                  console.log(co2_avg + "import");
+                  console.log(seconds_passed);
+                  console.log(data.properties['length']);
+                  co2_avg = (1000 * co2_avg * (
+                    seconds_passed /
+                    (1000 * 60 * 60))) / (data.properties['length']);
+                  console.log(co2_avg);
+
                 }
-                var co2 = (((maf / 14.7) / 730)) * 2.35;
-                Co2sum = Co2sum + (seconds * co2);
+              } else {
+                co2_avg = undefined;
               }
             }
             CO2Calc();
 
             function ConsumptionCalc() {
-              var time1 = data.features[i].properties.time;
-              var time2 = data.features[i + 1].properties.time;
-              var seconds_passed = new Date(time2).getTime() - new Date(
-                time1).getTime();
-              //seconds is in milliseconds so convert to seconds
-              var seconds = seconds_passed / 1000;
-              if (seconds <= 10) {
-                var maf;
-                if (data.features[i].properties.phenomenons[
-                    "Calculated MAF"] != undefined)
-                  maf = data.features[i].properties.phenomenons[
-                    "Calculated MAF"].value;
-                else
-                  maf = data.features[i].properties.phenomenons["MAF"].value
-                var consumption = maf / 10731;
-                fuelSum += seconds * consumption;
+              if (data.features[i].properties.phenomenons['Consumption'] !=
+                undefined && break_cons) {
+                console.log(consumption_avg);
+                consumption_avg += data.features[i].properties.phenomenons[
+                  'Consumption'].value;
+                if (i == (len_data - 1)) {
+                  // the last one.
+                  var seconds_passed = new Date(endtimeg).getTime() -
+                    new Date(starttimeg).getTime();
+                  consumption_avg = consumption_avg / len_data;
+                  console.log(consumption_avg + "import");
+                  console.log(seconds_passed);
+                  console.log(data.properties['length']);
+                  consumption_avg = (100 * consumption_avg * (
+                    seconds_passed /
+                    (1000 * 60 * 60))) / (data.properties['length']);
+                  console.log(consumption_avg);
+
+                }
+              } else {
+                consumption_avg = undefined;
+                break_cons = false;
               }
+
+              /*
+                            var time1 = data.features[i].properties.time;
+                            var time2 = data.features[i + 1].properties.time;
+                            var seconds_passed = new Date(time2).getTime() - new Date(
+                              time1).getTime();
+                            //seconds is in milliseconds so convert to seconds
+                            var seconds = seconds_passed / 1000;
+                            if (seconds <= 10) {
+                              var maf;
+                              if (data.features[i].properties.phenomenons[
+                                  "Calculated MAF"] != undefined)
+                                maf = data.features[i].properties.phenomenons[
+                                  "Calculated MAF"].value;
+                              else
+                                maf = data.features[i].properties.phenomenons["MAF"].value
+                              var consumption = maf / 10731;
+                              fuelSum += seconds * consumption;
+                            }
+                            */
             }
             ConsumptionCalc();
           }
@@ -857,6 +887,16 @@ angular.module('app')
         } else {
           co2split = units['CO2'].split("/");
         }
+        if (consumption_avg == undefined) {
+          consumption_avg = "NA";
+        } else {
+          consumption_avg = consumption_avg.toFixed(2);
+        }
+        if (co2_avg == undefined) {
+          co2_avg = "NA";
+        } else {
+          co2_avg = co2_avg.toFixed(2);
+        }
         $scope.tracksummary = {
           distance: distance.toFixed(2),
           vehiclemodel: vehiclemodel,
@@ -866,13 +906,12 @@ angular.module('app')
           timeoftravel: date_hh_mm_ss,
           unitsofdistance: "Km",
           unitsoftime: "Minutes",
-          co2emission: Co2sum.toFixed(2),
+          co2emission: co2_avg,
           fuel: fuelSum.toFixed(2),
           unitsoffuel: fuelsplit[0],
           unitsofco2emission: co2split[0],
-          co2emissionperhour: ((Co2sum * 60) / timeoftravel).toFixed(
-            2),
-          fuelperhour: ((fuelSum * 60) / timeoftravel).toFixed(2),
+          co2emissionperhour: consumption_avg,
+          fuelperhour: consumption_avg,
           starttime: new Date(starttimeg).toLocaleString(),
           endtime: new Date(endtimeg).toLocaleString()
         }
@@ -920,6 +959,7 @@ angular.module('app')
               'lat': data.data.features[k].geometry.coordinates[1],
               'lng': data.data.features[k].geometry.coordinates[0]
             }]
+
             pathobj['message'] =
               (
                 "<div style=\"color:#0065A0;width:120px\"><p style=\"font-size:10px;\"><b>Speed: </b>" +
@@ -929,20 +969,29 @@ angular.module('app')
                 data.data.features[
                   k - 1].properties.phenomenons["Speed"].unit +
                 "</p><p style=\"font-size:10px;\"><b>Consumption: </b>" +
-                data.data.features[
-                  k - 1].properties.phenomenons["Consumption"].value.toFixed(
-                  2) +
+                (data.data.features[k - 1].properties.phenomenons[
+                    "Consumption"] != undefined ?
+                  data.data.features[
+                    k - 1].properties.phenomenons["Consumption"].value.toFixed(
+                    2) : "NA") +
                 " " +
-                data.data.features[
-                  k - 1].properties.phenomenons["Consumption"].unit +
+                (data.data.features[k - 1].properties.phenomenons[
+                    "Consumption"] != undefined ?
+                  data.data.features[
+                    k - 1].properties.phenomenons["Consumption"].unit : "NA") +
                 "</p><p style=\"font-size:10px;\"><b>CO2: </b>" +
-                data.data.features[
-                  k - 1].properties.phenomenons["CO2"].value.toFixed(
-                  2) +
+                (data.data.features[k - 1].properties.phenomenons["CO2"] !=
+                  undefined ?
+                  data.data.features[
+                    k - 1].properties.phenomenons["CO2"].value.toFixed(
+                    2) : "NA") +
                 " " +
-                data.data.features[
-                  k - 1].properties.phenomenons["CO2"].unit +
+                (data.data.features[k - 1].properties.phenomenons["CO2"] !=
+                  undefined ?
+                  data.data.features[
+                    k - 1].properties.phenomenons["CO2"].unit : "NA") +
                 "</div>");
+
             $scope.paths['p' + (k)] = pathobj;
           }
           if (k == (len_data - 1) && flag == 1) {

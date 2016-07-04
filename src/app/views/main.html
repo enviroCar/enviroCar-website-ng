@@ -12,11 +12,6 @@
           </div>
       </md-button>
       <md-divider ng-repeat-end></md-divider>
-      <md-button ng-click="vm.showActions($event)" layout-align="center center">
-          <div class="md-tile-content">
-            Actions
-          </div>
-      </md-button>
 </md-sidenav>
 
 <div layout="column" flex>
@@ -26,17 +21,17 @@
         </md-button>
       -->
         <md-button class="white-bg" ng-cloak ng-show="$root.showlogout" aria-label="Notifications" ui-sref="login">
-          <i class="material-icons">power_settings_new</i>
-          {{'LOGOUT' | translate}}
+          <img style="height:20px;width:20px" ng-src="assets/images/ic_power_settings_new_white_48dp.png"/>
+          <span style="color:white">{{'LOGOUT' | translate}}</span>
         </md-button>
         <md-button class="white-bg" ng-cloak ng-show="!$root.showlogout" aria-label="Notifications" ui-sref="login">
-          <i class="material-icons">power_settings_new</i>
-          {{'LOGIN' | translate}}
+          <img style="height:20px;width:20px" ng-src="assets/images/ic_power_settings_new_white_48dp.png"/>
+          <span style="color:white">{{'LOGIN' | translate}}</span>
         </md-button>
 
     <md-button ng-show="$root.showlogout" class="toolbar-button white-bg" aria-label="Settings" ng-click="vm.toggleRightSidebar()">
-            <i class="material-icons">account_circle</i>
-            {{'PROFILE' | translate}}
+      <img style="height:20px;width:20px" ng-src="assets/images/ic_account_circle_white_48dp.png"/>
+            <span style="color:white">{{'PROFILE' | translate}}</span>
         </md-button>
         <md-button hide-gt-sm ng-click="vm.toggleItemsList()" aria-label="Menu">
             <i class="material-icons">menu</i>
