@@ -49,6 +49,9 @@ angular.module('app')
       'Calculated MAF': ["0-5 g/sec", "5-10 g/sec", "10-15 g/sec",
         "15-20 g/sec", "20-25 g/sec", ">25 g/sec"
       ],
+      'MAF': ["0-5 g/sec", "5-10 g/sec", "10-15 g/sec",
+        "15-20 g/sec", "20-25 g/sec", ">25 g/sec"
+      ],
       'Engine Load': ["0-20 %", "20-40 %", "40-60 %", "60-80 %", "80-100 %",
         ">100 %"
       ],
@@ -209,11 +212,11 @@ angular.module('app')
           interactive: true,
           tooltip: {
             contentGenerator: function(d) {
-              //    console.log(d);
+              console.log("event fired with" + d.pointIndex);
               var time = new Date(d.value);
               var html = "<h4>" + time.toLocaleString() + "</h4> <ul>";
               //var html = "<ul>";
-              $scope.trailchange(d.pointIndex);
+              trialchange(d.pointIndex);
               //  console.log("came here")
               d.series.forEach(function(elem) {
                 html += "<li><h3 style='color:" + elem.color + "'>" +
@@ -221,6 +224,7 @@ angular.module('app')
                   "</b></h3> </li>";
               })
               html += "</ul>"
+              console.log("quit" + d.pointIndex);
               return html;
             }
           },
@@ -278,11 +282,11 @@ angular.module('app')
       $scope.controls = {custom:[]};
       $scope.legend = {};
       */
-      $scope.trailchange = function(index) {
+      function trialchange(index) {
         console.log(data_global);
         console.log($scope.paths);
-        $scope.paths['nvd3pointer'] = {};
-        $scope.paths['nvd3pointer'] = {
+        $scope.paths['p0'] = {};
+        $scope.paths['p0'] = {
           type: "circleMarker",
           radius: 10,
           latlngs: ([data_global.data.features[index]['geometry'][
@@ -543,6 +547,25 @@ angular.module('app')
 
         });
       });
+
+      $scope.widget = [{
+        "id": "line",
+        "title": "Line"
+      }, {
+        "id": "spline",
+        "title": "Smooth line"
+      }, {
+        "id": "area",
+        "title": "Area"
+      }, {
+        "id": "areaspline",
+        "title": "Smooth area"
+      }];
+
+      //init
+      $scope.widgetType1 = 'Speed';
+      $scope.widgetType2 = 'Speed';
+      $scope.widgetType3 = 'Speed';
 
 
       $scope.changePhenomenonbar = function(phenombar) {

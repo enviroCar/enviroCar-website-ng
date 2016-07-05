@@ -78,10 +78,12 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
     .primaryPalette('blue', {
       'default': '800'
     })
-    .accentPalette('green', {
-      'default': '500'
+    .accentPalette('blue', {
+      'default': '800'
     })
-    .warnPalette('defaultPrimary');
+    .warnPalette('blue', {
+      'default': '800'
+    });
 
   $mdThemingProvider.theme('dark', 'default')
     .primaryPalette('defaultPrimary')
