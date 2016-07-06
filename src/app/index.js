@@ -4,7 +4,8 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
   'ngSanitize', 'ui.router', 'ngMaterial', 'nvd3', 'pascalprecht.translate',
   'angular-timeline', 'infinite-scroll',
   'angularUtils.directives.dirPagination', 'angular-loading-bar',
-  'leaflet-directive', 'angular.img', 'materialCalendar', 'app'
+  'leaflet-directive', 'angular.img', 'materialCalendar', 'app',
+  'angular-preload-image',
 ])
 
 .config(function($stateProvider, $urlRouterProvider, $mdThemingProvider,

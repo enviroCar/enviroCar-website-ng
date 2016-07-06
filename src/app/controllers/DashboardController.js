@@ -56,6 +56,12 @@ angular.module('app')
 
         console.log("fired");
       }
+      $scope.hoverOverTrack = function(track) {
+        console.log(track);
+      }
+      $scope.hoverOutOfTrack = function(track) {
+        console.log("left");
+      }
       $scope.visible = false;
       $scope.events = [];
       var helperevents = [];
