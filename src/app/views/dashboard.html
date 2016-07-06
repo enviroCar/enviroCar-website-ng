@@ -191,13 +191,19 @@
                 </md-card-content>
               </md-card>
             -->         <md-progress-circular class="loader_dashboard" ng-if="!onload_tracks_timeline" md-diameter="156"></md-progress-circular>
-                      <md-list-item ng-if="onload_tracks_timeline" md-theme="default" md-ink-ripple="#0065A0" class="md-3-line md-long-text " ng-repeat='event in events' ng-click="goToActivity(event.id)">
-                      <img class="md-avatar" src={{event.url}} style="width:80px;height:80px"></img>
+                      <md-list-item  ng-if="onload_tracks_timeline" md-theme="default" md-ink-ripple="#0065A0" class="md-3-line md-long-text " ng-repeat='event in events' ng-click="goToActivity(event.id)">
+                      <img class="md-avatar" preload-image default-image="http://www.kerrdental.eu/res/global/product_515_275_noPhoto.jpg" src={{event.url}} style="width:80px;height:80px"></img>
                       <div class="md-list-item-text" layout="column">
                       <h3><b>{{event.begin}}</b></h3>
                       <h4>{{event.title}}</h4>
                       <p>{{'DISTANCE' | translate}} - {{event.distance}} Km</p>
                     </div>
+                    <md-tooltip md-direction="left">
+                      <md-content>
+                      <img src={{event.url}} style="width:480px;height:380px"></img>
+
+                    </md-content>
+        </md-tooltip>
                     </md-list-item>
                 </md-card-content>
 
