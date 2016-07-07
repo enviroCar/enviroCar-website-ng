@@ -25,8 +25,7 @@
     "angular-img-http-src": "^0.1.0",
     "angular-translate": "^2.11.0",
     "material-calendar": "^0.2.14",
-    "heatmap.js-amd": "*",
-    "angular-preload-image": "*"
+    "heatmap.js-amd": "*"
   },
   "devDependencies": {
     "angular-translate": "^2.11.0"
