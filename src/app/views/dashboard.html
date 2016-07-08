@@ -198,6 +198,12 @@
                       <h4>{{event.title}}</h4>
                       <p>{{'DISTANCE' | translate}} - {{event.distance}} Km</p>
                     </div>
+                    <md-tooltip md-direction="left">
+                    <md-content>
+                    <img src={{event.url}} style="width:480px;height:380px"></img>
+
+                  </md-content>
+      </md-tooltip> 
                     </md-list-item>
                 </md-card-content>
 
