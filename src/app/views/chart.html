@@ -19,16 +19,10 @@
             <span>{{'TRACK_MAP' | translate}}</span>
           </h3>
           <span flex></span>
+          <md-select  md-theme="blue" ng-model="widgetType1" >
+          		<md-option ng-model="d" ng-value="d" ng-click="changePhenomenon(d)" data-ng-repeat="d in piechartoptions">{{d}}</md-option>
+     	</md-select>
 
-          <md-menu md-offset="-120 15">
-              <md-button class="capitalize md-primary" ng-click="$mdOpenMenu()" aria-label="Open menu">
-                <i class="material-icons">more_vert</i>
-              </md-button>
-              <md-menu-content width="3">
-                <md-menu-item ng-repeat = "d in piechartoptions">
-                <md-button ng-click="changePhenomenon(d)">{{d}}</md-button>
-              </md-menu-content>
-          </md-menu>
         </div>
       </md-toolbar>
     <!--  <md-card-title-text>
@@ -200,16 +194,11 @@
           <span>Statistics</span>
         </h3>
         <span flex></span>
+        <md-select  md-theme="blue" ng-model="widgetType2" >
+            <md-option ng-model="d" ng-value="d" ng-click="selecteditemchanged(d)" data-ng-repeat="d in piechartoptions">{{d}}</md-option>
+    </md-select>
 
-        <md-menu md-offset="-120 15">
-            <md-button class="capitalize md-primary" ng-click="$mdOpenMenu()" aria-label="Open menu">
-              <i class="material-icons">more_vert</i>
-            </md-button>
-            <md-menu-content width="3">
-              <md-menu-item ng-repeat = "d in piechartoptions">
-              <md-button ng-click="selecteditemchanged(d)">{{d}}</md-button>
-            </md-menu-content>
-        </md-menu>
+        
       </div>
 
     </md-toolbar>
@@ -230,16 +219,10 @@
           <span>{{'TRACK_VS_PUBLIC' | translate}}</span>
         </h3>
         <span flex></span>
+        <md-select  md-theme="blue" ng-model="widgetType3" >
+            <md-option ng-model="d" ng-value="d" ng-click="changePhenomenonbar(d)" data-ng-repeat="d in barchartoptions">{{d}}</md-option>
+    </md-select>
 
-        <md-menu md-offset="-120 15">
-            <md-button class="capitalize md-primary" ng-click="$mdOpenMenu()" aria-label="Open menu">
-              <i class="material-icons">more_vert</i>
-            </md-button>
-            <md-menu-content width="3">
-              <md-menu-item ng-repeat = "d in barchartoptions">
-              <md-button ng-click="changePhenomenonbar(d)">{{d}}</md-button>
-            </md-menu-content>
-        </md-menu>
       </div>
 
     </md-toolbar>

@@ -2128,8 +2128,10 @@ angular.module('app')
               type: 'heat',
               data: dataset,
               layerOptions: {
-                radius: 50,
-                blur: 1
+                radius: 20,
+                blur: 30,
+                minopacity: 0,
+                maxZoom: 8
               },
               visible: true
             }
