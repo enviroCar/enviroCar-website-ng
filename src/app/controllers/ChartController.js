@@ -52,6 +52,9 @@ angular.module('app')
       'Engine Load': ["0-20 %", "20-40 %", "40-60 %", "60-80 %", "80-100 %",
         ">100 %"
       ],
+      'MAF': ["0-5 g/sec", "5-10 g/sec", "10-15 g/sec", +"15-20 g/sec",
+        "20-25 g/sec", ">25 g/sec"
+      ],
       'Consumption': ["0-4 l/h", "4-8 l/h", "8-12 l/h", "12-16 l/h",
         "16-20 l/h", ">20 l/h"
       ],
@@ -119,6 +122,24 @@ angular.module('app')
       factorysingletrack, chart, $location, requestgraphstats,
       leafletBoundsHelpers,
       dashboard) {
+      $scope.widget = [{
+        "id": "line",
+        "title": "Line"
+      }, {
+        "id": "spline",
+        "title": "Smooth line"
+      }, {
+        "id": "area",
+        "title": "Area"
+      }, {
+        "id": "areaspline",
+        "title": "Smooth area"
+      }];
+
+      //init
+      $scope.widgetType1 = 'Speed';
+      $scope.widgetType2 = 'Speed';
+      $scope.widgetType3 = 'Speed';
 
       //individual loaders for elements
       $scope.onload_leaflet = false;
