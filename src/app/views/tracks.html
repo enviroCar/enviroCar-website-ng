@@ -2,9 +2,9 @@
     <md-tab label="{{'CALENDAR_OF_TRACKS_TAB' | translate}}">
 <div class="middle">
       <div ng-controller="CalendarController" layout-gt-md="row">
-        <md-card flex md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
+        <md-card  style="height:600px" flex md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
 
-            <md-card-content class="nopadding" flex>
+            <md-card-content class="nopadding" >
 
               <div >
                 <calendar-md md-theme="blue" flex layout layout-fill
@@ -23,6 +23,9 @@
                 disable-future-selection="true"
                 day-content="setDayContent"
                 ></calendar-md>
+              </div>
+              <div>
+                <p>Monthly statistics coming soon</p>
               </div>
             </md-card-content>
 

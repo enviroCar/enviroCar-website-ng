@@ -169,7 +169,7 @@
               </div>
               <span flex></span>
               <div style="right:0px" class="md-list-item-text">
-              <p>{{tracksummary['fuelperhour']}} l/100Km</p>
+              <p>{{consumption100Km}}</p>
               </div>
             </md-list-item>
 
@@ -180,7 +180,7 @@
               </div>
               <span flex></span>
               <div style="right:0px" class="md-list-item-text">
-              <p>{{tracksummary['co2emission']}} g/Km</p>
+              <p>{{co2gKm}}</p>
               </div>
             </md-list-item>
 
@@ -198,7 +198,7 @@
             <md-option ng-model="d" ng-value="d" ng-click="selecteditemchanged(d)" data-ng-repeat="d in piechartoptions">{{d}}</md-option>
     </md-select>
 
-        
+
       </div>
 
     </md-toolbar>

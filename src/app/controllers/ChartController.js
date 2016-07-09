@@ -324,7 +324,10 @@ angular.module('app')
       var latlongarray = [];
       var latinitial;
       var longinitial;
-
+      $scope.tracksummary_c_e = {
+        'fuelperhour': 0,
+        'co2emission': 0
+      }
       $scope.legend = {
         position: 'bottomleft',
         colors: chart.colorsl,
@@ -370,8 +373,10 @@ angular.module('app')
       var len_data;
       var keys_second;
       var date_hh_mm_ss;
-      var consumption_avg = 0;
-      var co2_avg = 0;
+      var consumption_avg;
+      var consumption100Km;
+      var co2gKm;
+      var co2_avg;
       var break_cons = true;
       //*****************************************************
       var colorsl = chart.colorsl;
@@ -479,6 +484,8 @@ angular.module('app')
       $scope.dataCO2;
       $scope.dataSpeed;
       $scope.dataEngineload;
+      $scope.consumption100Km;
+      $scope.co2gKm;
       var datausers = [];
       var dataotherusers = [];
       var url_comparision = (dashboard.urltracks + $stateParams.trackid +
@@ -596,6 +603,8 @@ angular.module('app')
             status: data.status
           });
         } else {
+          //speed and consumption calculations.
+
           keys_second = Object.keys(data.data.features[0].properties.phenomenons);
           console.log(keys_second);
           var phenoms = chart.phenoms;
@@ -663,6 +672,7 @@ angular.module('app')
               (function(iter) {
                 if (j == 0) {
                   if (iter == 0) {
+                    var length = data.data.properties['length'];
                     var time1 = data.data.features[0].properties.time;
                     var time2 = data.data.features[len_data - 1].properties
                       .time;
@@ -679,6 +689,65 @@ angular.module('app')
 
                     starttimeg = time1;
                     endtimeg = time2;
+                    factorysingletrack.get(url +
+                      "/statistics/Consumption").then(
+                      function(data) {
+                        console.log(data);
+                        if (data.data.avg != undefined) {
+                          var consumption_avg = (data.data.avg
+                            .toFixed(
+                              2));
+                          var seconds_passed = new Date(endtimeg).getTime() -
+                            new Date(
+                              starttimeg).getTime();
+                          console.log(seconds_passed);
+                          var consumption100Km = ((100 *
+                              consumption_avg * (seconds_passed / (
+                                1000 *
+                                60 *
+                                60))) /
+                            length).toFixed(2);
+                          consumption100Km = consumption100Km.toString() +
+                            " L/100 Km";
+                          $scope.consumption100Km = consumption100Km;
+
+                          console.log($scope.tracksummary_c_e);
+                        } else
+
+                          $scope.consumption100Km = "NA";
+
+                      })
+
+                    factorysingletrack.get(url +
+                      "/statistics/CO2").then(
+                      function(data) {
+                        console.log(data);
+                        if (data.data.avg != undefined) {
+                          var co2_avg = (data.data.avg
+                            .toFixed(
+                              2));
+                          var seconds_passed = new Date(endtimeg).getTime() -
+                            new Date(
+                              starttimeg).getTime();
+                          console.log(seconds_passed);
+                          var co2gKm = ((1000 *
+                              co2_avg * (seconds_passed / (
+                                1000 *
+                                60 *
+                                60))) /
+                            length).toFixed(2);
+                          co2gKm = co2gKm.toString() +
+                            " g/Km";
+                          $scope.co2gKm = co2gKm;
+
+                          console.log($scope.tracksummary_c_e);
+                          console.log(co2gKm);
+                        } else
+                          $scope.co2gKm = "NA"
+                      })
+
+
+
                   }
                   worker(iter, data.data);
                 }
@@ -798,79 +867,7 @@ angular.module('app')
         $scope.onload_leaflet = true;
 
         function worker(i, data) {
-          if (i <= (len_data - 1)) {
-            function CO2Calc() {
-              if (data.features[i].properties.phenomenons['CO2'] !=
-                undefined) {
-                co2_avg += data.features[i].properties.phenomenons[
-                  'CO2'].value;
-                if (i == (len_data - 1)) {
-                  // the last one.
-                  var seconds_passed = new Date(endtimeg).getTime() -
-                    new Date(starttimeg).getTime();
-                  co2_avg = co2_avg / len_data;
-                  console.log(co2_avg + "import");
-                  console.log(seconds_passed);
-                  console.log(data.properties['length']);
-                  co2_avg = (1000 * co2_avg * (
-                    seconds_passed /
-                    (1000 * 60 * 60))) / (data.properties['length']);
-                  console.log(co2_avg);
 
-                }
-              } else {
-                co2_avg = undefined;
-              }
-            }
-            CO2Calc();
-
-            function ConsumptionCalc() {
-              if (data.features[i].properties.phenomenons['Consumption'] !=
-                undefined && break_cons) {
-                console.log(consumption_avg);
-                consumption_avg += data.features[i].properties.phenomenons[
-                  'Consumption'].value;
-                if (i == (len_data - 1)) {
-                  // the last one.
-                  var seconds_passed = new Date(endtimeg).getTime() -
-                    new Date(starttimeg).getTime();
-                  consumption_avg = consumption_avg / len_data;
-                  console.log(consumption_avg + "import");
-                  console.log(seconds_passed);
-                  console.log(data.properties['length']);
-                  consumption_avg = (100 * consumption_avg * (
-                    seconds_passed /
-                    (1000 * 60 * 60))) / (data.properties['length']);
-                  console.log(consumption_avg);
-
-                }
-              } else {
-                consumption_avg = undefined;
-                break_cons = false;
-              }
-
-              /*
-                            var time1 = data.features[i].properties.time;
-                            var time2 = data.features[i + 1].properties.time;
-                            var seconds_passed = new Date(time2).getTime() - new Date(
-                              time1).getTime();
-                            //seconds is in milliseconds so convert to seconds
-                            var seconds = seconds_passed / 1000;
-                            if (seconds <= 10) {
-                              var maf;
-                              if (data.features[i].properties.phenomenons[
-                                  "Calculated MAF"] != undefined)
-                                maf = data.features[i].properties.phenomenons[
-                                  "Calculated MAF"].value;
-                              else
-                                maf = data.features[i].properties.phenomenons["MAF"].value
-                              var consumption = maf / 10731;
-                              fuelSum += seconds * consumption;
-                            }
-                            */
-            }
-            ConsumptionCalc();
-          }
           if (i == 0) {
             console.log(keys.length + "length of keys");
             for (var j = 0; j < keys.length; j++) {
@@ -927,12 +924,10 @@ angular.module('app')
           timeoftravel: date_hh_mm_ss,
           unitsofdistance: "Km",
           unitsoftime: "Minutes",
-          co2emission: co2_avg,
           fuel: fuelSum.toFixed(2),
           unitsoffuel: fuelsplit[0],
           unitsofco2emission: co2split[0],
           co2emissionperhour: consumption_avg,
-          fuelperhour: consumption_avg,
           starttime: new Date(starttimeg).toLocaleString(),
           endtime: new Date(endtimeg).toLocaleString()
         }
