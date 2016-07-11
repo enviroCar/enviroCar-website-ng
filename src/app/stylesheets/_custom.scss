@@ -259,10 +259,24 @@ border: none;
 outline: none;
 background-color: rgba(4, 138, 191, 1);
 color: white;
+}
+.green-bg
+{
+  padding: 0 6px 0 6px;
+margin: 6px 8px 6px 8px;
+border-radius: 3px;
+font-size: 14px;
+text-align: center;
+text-transform: uppercase;
+text-decoration:none;
+border: none;
+outline: none;
+background-color: #B9D989;
+color: black;
 
 }
 .white-bg:hover {
-    background-color: white;
+    background-color: blue;
 }
 .profiletab .profile-pic{
   width: 350px;

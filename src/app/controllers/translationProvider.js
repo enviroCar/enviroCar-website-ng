@@ -53,7 +53,7 @@ angular.module('app')
       'PROFILE': 'Profile',
       'DASHBOARD': 'Dashboard',
       'TRACKS': 'Tracks',
-      'TABLE': 'Table',
+      'TABLE': 'Profile',
       'SPEED_PIE': 'Speed',
       'CONSUMPTION_PIE': 'Consumption',
       'CO2_PIE': 'CO2'
