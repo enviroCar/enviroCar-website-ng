@@ -24,7 +24,8 @@
     "ngInfiniteScroll": "1.2.1",
     "angular-translate": "^2.11.0",
     "material-calendar": "^0.2.14",
-    "heatmap.js-amd": "*"
+    "heatmap.js-amd": "*",
+    "ng-country-select": "^0.1.4"
   },
   "devDependencies": {
     "angular-translate": "^2.11.0"

@@ -23,11 +23,11 @@
       sref: '.dashboard'
     }, {
       name: 'Tracks',
-      icon: 'person',
+      icon: 'directions_car',
       sref: '.tracks'
     }, {
-      name: 'Table',
-      icon: 'view_module',
+      name: 'Profile',
+      icon: 'person',
       sref: '.table'
     }];
     console.log(menuItems);

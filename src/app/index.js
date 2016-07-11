@@ -45,7 +45,7 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
     })
     .state('home.table', {
       url: '/table',
-      templateUrl: 'app/views/table.html',
+      templateUrl: 'app/views/profile.html',
       data: {
         title: 'Table'
       },
@@ -70,6 +70,7 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
       url: '/errorpage/:path/:status',
       authenticate: true,
     })
+
 
   $urlRouterProvider.otherwise('/dashboard/home/');
 

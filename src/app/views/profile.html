@@ -1,0 +1,145 @@
+<div ng-controller="ProfileController" class="middle">
+<div layout-gt-md="row">
+  <md-card class="card card-4-50" style="min-height:900px">
+    <img src="assets/images/profiledup.png" class="md-card-image">
+  </img>
+    <md-card-content class="text-color">
+      <h2>Bio</h2>
+      <md-list-item  layout="row">
+        <div class="md-list-item-text">
+        <p><b>Name</b></p>
+        </div>
+        <span flex></span>
+        <div style="right:0px" class="md-list-item-text">
+        <p>{{name}}</p>
+        </div>
+      </md-list-item>
+      <md-list-item  layout="row">
+        <div class="md-list-item-text">
+        <p><b>Email ID</b></p>
+        </div>
+        <span flex></span>
+        <div style="right:0px" class="md-list-item-text">
+        <p>{{emailId}}</p>
+        </div>
+      </md-list-item>
+      <md-list-item  layout="row">
+        <div class="md-list-item-text">
+        <p><b>Country</b></p>
+        </div>
+        <span flex></span>
+        <div style="right:0px" class="md-list-item-text">
+        <p>{{countrytext}}</p>
+        </div>
+      </md-list-item>
+      <md-list-item  layout="row">
+        <div class="md-list-item-text">
+        <p><b>Language</b></p>
+        </div>
+        <span flex></span>
+        <div style="right:0px" class="md-list-item-text">
+        <p>{{langtext}}</p>
+        </div>
+      </md-list-item>
+      <md-list-item  layout="row">
+        <div class="md-list-item-text">
+        <p><b>Gender</b></p>
+        </div>
+        <span flex></span>
+        <div style="right:0px" class="md-list-item-text">
+        <p>{{gendertext}}</p>
+        </div>
+      </md-list-item>
+      <md-divider ></md-divider>
+      <md-list-item  layout="row">
+        <div class="md-list-item-text">
+        <p><b>Created</b></p>
+        </div>
+        <span flex></span>
+        <div style="right:0px" class="md-list-item-text">
+        <p>{{created}}</p>
+        </div>
+      </md-list-item>
+      <md-list-item  layout="row">
+        <div class="md-list-item-text">
+        <p><b>Modified</b></p>
+        </div>
+        <span flex></span>
+        <div style="right:0px" class="md-list-item-text">
+        <p>{{modified}}</p>
+        </div>
+      </md-list-item>
+      <md-list-item  layout="row">
+        <div class="md-list-item-text">
+        <p><b>Terms of Use Version</b></p>
+        </div>
+        <span flex></span>
+        <div style="right:0px" class="md-list-item-text">
+        <p>{{termsOfUseVersion}}</p>
+        </div>
+      </md-list-item>
+      <md-divider ></md-divider>
+      <h2>Badges</h2>
+      <md-list-item ng-if="badgesTrue" ng-repeat='item in badges'>
+        <img class="md-avatar" src={{item.url}}></img>
+        <div class="md-list-item-text" layout="column">
+        <p>{{item.title}}</p>
+      </div>
+      </md-list-item>
+      <p ng-if="!badgesTrue">You do not have any Badges</p>
+
+  </md-card-content>
+  </md-card>
+  <md-card class="card card-4-50" style="min-width:70%">
+    <md-toolbar  style="color:black;background-color:white">
+      <div class="md-toolbar-tools">
+        <h3 style="color:rgba(0,0,0,0.5)">
+          <span>Edit Personal Information</span>
+        </h3>
+      </div>
+    </md-toolbar>
+    <md-card-content >
+      <div layout="column" layout-padding ng-cloak>
+        <md-input-container class="md-icon-float md-block">
+          <input ng-model="emailId" type="text" ng-required="true" placeholder="Email">
+        </md-input-container>
+        <md-input-container class="md-icon-float md-block">
+          <input ng-model="firstName" type="text" placeholder="First Name">
+        </md-input-container>
+        <md-input-container class="md-icon-float md-block">
+          <input ng-model="lastName" type="text" placeholder="Last Name">
+        </md-input-container>
+        <md-input-container class="md-icon-float md-block">
+          <input ng-model="country" type="text" placeholder="Country">
+        </md-input-container>
+        <md-input-container class="md-icon-float md-block">
+          <input ng-model="birthday" type="text" placeholder="Birthday (2000-12-31)" >
+        </md-input-container>
+        <md-select md-theme="blue" ng-model="gender "placeholder="Gender" >
+              <md-option value="m">Male</md-option>
+              <md-option value="f">Female</md-option>
+          </md-select>
+          <md-select md-theme="blue" ng-model="lang "placeholder="Language" >
+                <md-option value="en">English</md-option>
+                <md-option value="de">German</md-option>
+            </md-select>
+        <h3 style="color:rgba(0,0,0,0.5)">
+          <span>If you do not want to change your password leave these fields blank
+          </span>
+        </h3>
+        <md-input-container class="md-icon-float md-block">
+          <input ng-model="oldpassword" type="text" placeholder="Old Password" >
+        </md-input-container>
+        <md-input-container class="md-icon-float md-block">
+          <input ng-model="newpassword" type="text" placeholder="New Password" >
+        </md-input-container>
+        <md-input-container class="md-icon-float md-block">
+          <input ng-model="newpasswordrepeat" type="text" placeholder="New Password(Repeat)" >
+        </md-input-container>
+        <md-button class="green-bg" style="width:150px">Update Profile</md-button>
+    </div>
+
+  </md-card-content>
+  </md-card>
+</div>
+</div>
