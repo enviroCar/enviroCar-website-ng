@@ -9,9 +9,26 @@ angular.module('app')
       $scope.no_data = false;
       $scope.tracks = [];
       var tracks_builder = [];
-      // the list of tracks for displaying.
-      //tab approach
+      $scope.nostatistics = true;
+      $scope.onload = true;
+      $scope.total_tracks;
+      $scope.total_time;
+      $scope.total_distance;
       $scope.track;
+      var month_number_mapping = {
+        1: 'Jan',
+        2: 'Feb',
+        3: 'Mar',
+        4: 'Apr',
+        5: 'May',
+        6: 'Jun',
+        7: 'Jul',
+        8: 'Aug',
+        9: 'Sep',
+        10: 'Oct',
+        11: 'Nov',
+        12: 'Dec'
+      }
       $scope.currenttrack = {};
       $scope.showAdvanced = function(ev, eventid) {
         $scope.currenttrack = {};
@@ -187,7 +204,8 @@ angular.module('app')
         var array_string_date = string_date.split(" ");
         var stripped_date = (array_string_date[0] + array_string_date[1] +
           array_string_date[2]);
-        console.log(global_tracks_array_begin_stripped_date);
+        console.log(stripped_date[3] + "is year");
+        //  console.log(global_tracks_array_begin_stripped_date);
         if (global_tracks_array_begin_stripped_date.indexOf(stripped_date) >=
           0) {
           console.log(stripped_date);
@@ -233,22 +251,101 @@ angular.module('app')
 
         }
       };
+      var global_tracks;
+
       $scope.prevMonth = function(data) {
         $scope.msg = "You clicked (prev) month " + data.month + ", " + data
           .year;
+
+        var monthyear = month_number_mapping[data.month] + data.year.toString();
+        console.log(monthyear);
+        console.log(data);
         console.log("start of custom write");
         rewrite(global_tracks);
         console.log("this was easted");
+        console.log(global_tracks);
+        var total_tracks = 0;
+        var total_distance = 0;
+        var total_time = 0;
+        console.log(global_tracks);
+        for (var i = 0; i < global_tracks.tracks.length; i++) {
+          var datestart = global_tracks.tracks[i].begin;
+          var dateobject = new Date(datestart);
+          var string_date = dateobject.toString();
+          console.log(string_date);
+          var array_string_date = string_date.split(" ");
+          console.log(array_string_date);
+          var stripped_date = (array_string_date[1] + array_string_date[3]);
+          console.log(stripped_date + "is month year date");
+          if (stripped_date == monthyear) {
+            total_tracks++;
+            total_distance += global_tracks.tracks[i]['length'];
+            total_time += (new Date(global_tracks.tracks[i].begin).getTime() -
+              new Date(global_tracks.tracks[i].end).getTime());
+          }
+        }
+        var date_for_seconds = new Date(null);
+        date_for_seconds.setSeconds(total_time / 1000);
+        var date_hh_mm_ss = date_for_seconds.toISOString().substr(
+          11, 8)
+        $scope.total_tracks = total_tracks;
+        $scope.total_time = date_hh_mm_ss;
+        $scope.total_distance = total_distance.toFixed(2);
+        if (total_tracks == 0) {
+          $scope.nostatistics = true;
+        } else {
+          $scope.nostatistics = false;
+        }
+        console.log(total_tracks + "is total tracks");
+        console.log(total_distance + "is dist");
+        console.log(date_hh_mm_ss + "is time");
       };
       $scope.nextMonth = function(data) {
         $scope.msg = "You clicked (next) month " + data.month + ", " + data
           .year;
         rewrite(global_tracks);
+        var monthyear = month_number_mapping[data.month] + data.year.toString();
+        var total_tracks = 0;
+        var total_distance = 0;
+        var total_time = 0;
+        console.log(global_tracks);
+        for (var i = 0; i < global_tracks.tracks.length; i++) {
+          var datestart = global_tracks.tracks[i].begin;
+          var dateobject = new Date(datestart);
+          var string_date = dateobject.toString();
+          console.log(string_date);
+          var array_string_date = string_date.split(" ");
+          console.log(array_string_date);
+          var stripped_date = (array_string_date[1] + array_string_date[3]);
+          console.log(stripped_date + "is month year date");
+          if (stripped_date == monthyear) {
+            total_tracks++;
+            total_distance += global_tracks.tracks[i]['length'];
+            total_time += (new Date(global_tracks.tracks[i].begin).getTime() -
+              new Date(global_tracks.tracks[i].end).getTime());
+          }
+        }
+        var date_for_seconds = new Date(null);
+        date_for_seconds.setSeconds(total_time / 1000);
+        var date_hh_mm_ss = date_for_seconds.toISOString().substr(
+          11, 8)
+        $scope.total_tracks = total_tracks;
+        $scope.total_time = date_hh_mm_ss;
+        $scope.total_distance = total_distance.toFixed(2);
+        if (total_tracks == 0) {
+          $scope.nostatistics = true;
+        } else {
+          $scope.nostatistics = false;
+        }
+
+        console.log(total_tracks + "is total tracks");
+        console.log(total_distance + "is dist");
+        console.log(date_hh_mm_ss + "is time");
+
       };
       var datetrial;
       url = "https://envirocar.org/api/stable/users/" + $rootScope.globals.currentUser
         .username + "/tracks";
-      var global_tracks;
       var global_tracks_array_begin = [];
       var global_tracks_array_begin_stripped_date = [];
       var date_count = {};
@@ -279,6 +376,11 @@ angular.module('app')
       }
 
       tracks_calendar.get(url).then(function(data) {
+        var currentmonth = new Date();
+        console.log(currentmonth);
+        var monthyear = currentmonth.toString().split(" ")[1] +
+          currentmonth.toString().split(" ")[3];
+
         console.log(data.data);
         global_tracks = data.data;
         for (var i = 0; i < global_tracks['tracks'].length; i++) {
@@ -299,6 +401,42 @@ angular.module('app')
         console.log(date_count);
         console.log(global_tracks_array_begin_stripped_date);
         rewrite(global_tracks);
+        var total_time = 0;
+        var total_tracks = 0;
+        var total_distance = 0;
+        for (var i = 0; i < global_tracks.tracks.length; i++) {
+          var datestart = global_tracks.tracks[i].begin;
+          var dateobject = new Date(datestart);
+          var string_date = dateobject.toString();
+          console.log(string_date);
+          var array_string_date = string_date.split(" ");
+          console.log(array_string_date);
+          var stripped_date = (array_string_date[1] + array_string_date[3]);
+          console.log(stripped_date + "is month year date");
+          if (stripped_date == monthyear) {
+            total_tracks++;
+            total_distance += global_tracks.tracks[i]['length'];
+            total_time += (new Date(global_tracks.tracks[i].begin).getTime() -
+              new Date(global_tracks.tracks[i].end).getTime());
+          }
+        }
+        var date_for_seconds = new Date(null);
+        console.log(total_time);
+        date_for_seconds.setSeconds(total_time / 1000);
+        var date_hh_mm_ss = date_for_seconds.toISOString().substr(
+          11, 8)
+        $scope.total_tracks = total_tracks;
+        $scope.total_time = date_hh_mm_ss;
+        $scope.total_distance = total_distance.toFixed(2);
+        if (total_tracks == 0) {
+          $scope.nostatistics = true;
+        } else {
+          $scope.nostatistics = false;
+        }
+        $scope.onload = false;
+        console.log(total_tracks + "is total tracks");
+        console.log(total_distance + "is dist");
+        console.log(date_hh_mm_ss + "is time");
       });
       $scope.tooltips = true;
 

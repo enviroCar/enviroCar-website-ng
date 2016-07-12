@@ -3,9 +3,10 @@
 <div class="middle">
       <div ng-controller="CalendarController" layout-gt-md="row">
         <md-card  style="height:600px" flex md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
-
             <md-card-content class="nopadding" >
+              <md-progress-circular style="top:100px"class="loader_dashboard2" ng-if="onload" md-diameter="156"></md-progress-circular>
 
+              <md-content ng-if="!onload">
               <div >
                 <calendar-md md-theme="blue" flex layout layout-fill
                 calendar-direction="direction"
@@ -24,9 +25,32 @@
                 day-content="setDayContent"
                 ></calendar-md>
               </div>
-              <div>
-                <p>Monthly statistics coming soon</p>
+              <div style="width:100%">
+                <div style="width:100%;text-align:center">
+                  <h3 style="color:rgba(0,0,0,0.7)">Monthly Overview</h3>
+                </div>
               </div>
+              <div layout-gt-xs="row" ng-if="!nostatistics">
+                <div style="width:33.33%;text-align:center">
+                  <h3 style="color:#0065A0">{{total_time}}</h3>
+                  <p style="font-size:13px;">{{'DURATION' | translate}}</p>
+                </div>
+                <div style="width:33.33%;text-align:center">
+                  <h3 style="color:#0065A0">{{total_distance}} Km</h3>
+                  <p style="font-size:13px;">{{'DISTANCE' | translate}}</p>
+                </div>
+                <div style="width:33.33%;text-align:center">
+                  <h3 style="color:#0065A0">{{total_tracks}}</h3>
+                  <p style="font-size:13px;">Tracks</p>
+                </div>
+
+              </div>
+              <div layout-gt-xs="row" ng-if="nostatistics">
+                <div style="width:100%;text-align:center">
+                  <p>No Statistics to show for this month</p>
+                </div>
+              </div>
+            </md-content>
             </md-card-content>
 
         </md-card>

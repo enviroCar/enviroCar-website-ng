@@ -89,6 +89,8 @@ angular.module('app')
         console.log(limit + "is limit")
         for (var i = 0; i < limit; i++) {
           (function(cntr) {
+            console.log(cntr + "value of cntr that failed");
+            console.log(data.data);
             var helper_events = {};
             helper_events['id'] = data.data.tracks[cntr].id;
             helper_events['title'] = data.data.tracks[cntr].name;
@@ -98,8 +100,10 @@ angular.module('app')
               cntr].id + "/preview";
             helper_events['begin'] = new Date(data.data.tracks[cntr]
               .modified).toLocaleString();
-            helper_events['distance'] = data.data.tracks[cntr]['length']
-              .toFixed(2);
+            helper_events['distance'] = (data.data.tracks[cntr][
+                'length'
+              ] != undefined) ? data.data.tracks[cntr]['length']
+              .toFixed(2) : "NA";
 
             if (cntr % 2 == 0) {
               helper_events['side'] = 'left'
