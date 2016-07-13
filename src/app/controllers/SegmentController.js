@@ -358,7 +358,7 @@ angular.module('app')
       var colorsl = chart.colorsl;
       $scope.piechartselected = chart.piechartselected;
       $scope.phenomenonleaflet = chart.phenomenonleaflet;
-      var piechartsdata = chart.piechartsdata;
+      var piechartsdata = JSON.parse(JSON.stringify(chart.piechartsdata));
       var rangeobjects = chart.rangeobjects;
       var date_for_seconds;
 
@@ -577,7 +577,7 @@ angular.module('app')
 
       function trackiterator(data, override, index1, index2) {
         //resetting required values.
-        piechartsdata = chart.piechartsdata;
+        piechartsdata = JSON.parse(JSON.stringify(chart.piechartsdata));
         console.log("******************")
         console.log(piechartsdata);
         console.log(chart.piechartsdata);
@@ -601,7 +601,7 @@ angular.module('app')
           // MAF is present!!
           rangeobjects = chart.rangeobjectsreplace;
           phenoms = chart.phenomsreplace;
-          piechartsdata = chart.piechartsdatareplace
+          piechartsdata = JSON.parse(JSON.stringify(chart.piechartsdatareplace));
 
         }
         for (var i = 0; i < 5; i++) {
@@ -775,9 +775,9 @@ angular.module('app')
                 //  endindex + " " + iter)
                 if (override == 1 && !(startindex == 0 && endindex ==
                     len_data) && (iter >= startindex && iter < endindex)) {
-                  console.log(iter + 'is iter and' + endindex +
-                      "is endindex")
-                    //distance calculation.
+                  //  console.log(iter + 'is iter and' + endindex +
+                  //  "is endindex")
+                  //distance calculation.
                   if (iter < endindex - 1) {
                     distance_override += distancecalculator(data.data.features[
                         iter + 1]['geometry']['coordinates'][1], data.data

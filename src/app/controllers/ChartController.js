@@ -382,7 +382,8 @@ angular.module('app')
       var colorsl = chart.colorsl;
       $scope.piechartselected = chart.piechartselected;
       $scope.phenomenonleaflet = chart.phenomenonleaflet;
-      var piechartsdata = chart.piechartsdata;
+
+      var piechartsdata = JSON.parse(JSON.stringify(chart.piechartsdata));
       var rangeobjects = chart.rangeobjects;
       var data_global = {}
       var date_for_seconds;
@@ -620,7 +621,8 @@ angular.module('app')
             // MAF is present!!
             rangeobjects = chart.rangeobjectsreplace;
             phenoms = chart.phenomsreplace;
-            piechartsdata = chart.piechartsdatareplace
+            piechartsdata = JSON.parse(JSON.stringify(chart.piechartsdatareplace));
+
 
           }
           for (var i = 0; i < 5; i++) {
