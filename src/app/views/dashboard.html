@@ -57,7 +57,10 @@
                  <span>{{'User_VS_PUBLIC' | translate}} </span>
                </h3>
                <span flex></span>
-
+               <md-select  md-theme="blue" ng-model="barchartshowing" >
+                  <md-option ng-model="d" ng-value="d" ng-click="changePhenomenonbar(d)" data-ng-repeat="d in barchartoptions">{{d}}</md-option>
+            </md-select>
+            <!--
                <md-menu md-offset="-120 15">
                    <md-button class="capitalize md-primary" ng-click="$mdOpenMenu()" aria-label="Open menu">
                      <i class="material-icons">more_vert</i>
@@ -67,6 +70,7 @@
                      <md-button ng-click="changePhenomenonbar(d)">{{d}}</md-button>
                    </md-menu-content>
                </md-menu>
+             -->
              </div>
            </md-toolbar>
             <md-card-content >
@@ -84,7 +88,9 @@
                   <span>{{'SPEED_STATS' | translate}}</span>
                 </h3>
                 <span flex></span>
-
+                <md-select  md-theme="blue" ng-model="pieSpeedRanges" >
+                		<md-option ng-model="d" ng-value="d" ng-click="changePhenomenonPieSpeed(d)" data-ng-repeat="d in speedPieOptions">{{d}}</md-option>
+           	</md-select>
               <!--  <md-menu md-offset="-120 15">
                     <md-button class="capitalize md-primary" ng-click="$mdOpenMenu()" aria-label="Open menu">
                       <i class="material-icons">more_vert</i>
@@ -98,7 +104,8 @@
               </div>
             </md-toolbar>
              <md-card-content >
-               <md-progress-circular class="loader_dashboard" ng-if="!onload" md-diameter="156"></md-progress-circular>
+               <md-progress-circular class="loader_dashboard" ng-if="!onloadSpeedPie" md-diameter="156"></md-progress-circular>
+               <nvd3 ng-if="onloadSpeedPie" options="options_pie" data="dataSpeedPie"></nvd3>
 
              </md-card-content>
            </md-card>
