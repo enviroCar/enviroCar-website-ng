@@ -53,7 +53,6 @@ angular.module('app')
         $state.go('home.chart', {
           'trackid': trackid
         });
-
         console.log("fired");
       }
       $scope.visible = false;

@@ -25,7 +25,8 @@
     "angular-translate": "^2.11.0",
     "material-calendar": "^0.2.14",
     "heatmap.js-amd": "*",
-    "ng-country-select": "^0.1.4"
+    "ng-country-select": "^0.1.4",
+    "angularjs-slider": "^5.3.0"
   },
   "devDependencies": {
     "angular-translate": "^2.11.0"
