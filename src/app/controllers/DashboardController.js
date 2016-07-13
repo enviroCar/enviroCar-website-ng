@@ -40,6 +40,83 @@ angular.module('app')
     function($scope, $http, $rootScope, $stateParams, requesthomestats,
       requestgraphstats,
       dashboard, $state, $translate) {
+      $scope.onloadSpeedPie = false;
+      var speedgraph_data = {
+        "user": "naveen-gsoc",
+        "distance": 3344.22,
+        "duration": 50.2,
+        "statistics": {
+          "0": {
+            "distance": 1610.2,
+            "duration": 32.1
+          },
+          "60": {
+            "distance": 502.34,
+            "duration": 7.1
+          },
+          "130": {
+            "distance": 400.56,
+            "duration": 4
+          }
+        }
+      };
+      $scope.options_pie = {
+        chart: {
+          type: 'pieChart',
+          height: 250,
+          x: function(d) {
+            return d.key;
+          },
+          y: function(d) {
+            return d.y;
+          },
+          showLabels: true,
+          duration: 300,
+          labelThreshold: 0.01,
+          labelSunbeamLayout: true,
+          legend: {
+            margin: {
+              top: 5,
+              right: 35,
+              bottom: 5,
+              left: 0
+            }
+          },
+        }
+      };
+      $scope.speedPieOptions = ['Distance', 'Time'];
+      $scope.pieSpeedRanges = 'Distance';
+      var dataSpeedContainer = {
+        'Distance': [{
+          key: '0-60 Km/h',
+          y: speedgraph_data.statistics['0'].distance
+        }, {
+          key: '61-130 Km/h',
+          y: speedgraph_data.statistics['60'].distance
+        }, {
+          key: '>130Km/Hr',
+          y: speedgraph_data.statistics['130'].distance
+        }],
+        'Time': [{
+          key: '0-60 Km/h',
+          y: speedgraph_data.statistics['0'].duration
+        }, {
+          key: '61-130 Km/h',
+          y: speedgraph_data.statistics['60'].duration
+        }, {
+          key: '>130Km/Hr',
+          y: speedgraph_data.statistics['130'].duration
+        }]
+      };
+      $scope.dataSpeedPie = dataSpeedContainer[$scope.pieSpeedRanges];
+      $scope.onloadSpeedPie = true;
+
+      $scope.changePhenomenonPieSpeed = function(option) {
+        console.log(option);
+        $scope.pieSpeedRange = option;
+        $scope.dataSpeedPie = dataSpeedContainer[option];
+        console.log($scope.dataSpeedPie);
+      }
       var loading_count = 0;
       // Visibility for each of the 4 components on the dashboard
       $scope.onload_user_vs_public = false;
@@ -280,8 +357,9 @@ angular.module('app')
       };
 
       $scope.barchartoptions = ["Speed", "Consumption", "CO2"];
-      $scope.barchartshowing = ["Speed"]
+      $scope.barchartshowing = "Speed"
       $scope.changePhenomenonbar = function(phenombar) {
+        $scope.barchartshowing = phenombar;
         console.log("came here")
         $scope.dataoverall = [];
         if (phenombar == "Speed") {
@@ -297,6 +375,7 @@ angular.module('app')
           $scope.optionsSpeed['chart']['yAxis']['axisLabel'] = "CO2 (Kg/h)"
           $scope.dataoverall = $scope.dataCO2;
         }
+        console.log($scope.dataoverall);
 
       }
       $scope.dataoverall;
