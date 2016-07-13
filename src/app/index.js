@@ -4,7 +4,7 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
   'ngSanitize', 'ui.router', 'ngMaterial', 'nvd3', 'pascalprecht.translate',
   'angular-timeline', 'infinite-scroll',
   'angularUtils.directives.dirPagination', 'angular-loading-bar',
-  'leaflet-directive', 'materialCalendar', 'app'
+  'leaflet-directive', 'materialCalendar', 'app', 'rzModule'
 ])
 
 .config(function($stateProvider, $urlRouterProvider, $mdThemingProvider,
