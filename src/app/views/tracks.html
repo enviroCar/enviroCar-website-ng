@@ -2,11 +2,11 @@
     <md-tab label="{{'CALENDAR_OF_TRACKS_TAB' | translate}}">
 <div class="middle">
       <div ng-controller="CalendarController" layout-gt-xs="row">
-        <md-card  style="min-height:600px" flex md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
+        <md-card  style="height:700px" flex md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
             <md-card-content class="nopadding" >
               <md-progress-circular style="top:100px"class="loader_dashboard2" ng-if="onload" md-diameter="156"></md-progress-circular>
 
-              <md-content ng-if="!onload">
+              <md-content ng-show="!onload">
               <div >
                 <calendar-md md-theme="blue" flex layout layout-fill
                 calendar-direction="direction"

@@ -302,17 +302,18 @@ angular.module('app')
       $scope.trailchange = function(index) {
         console.log(data_global);
         console.log($scope.paths);
-        $scope.paths['nvd3pointer'] = {};
-        $scope.paths['nvd3pointer'] = {
-          type: "circleMarker",
-          radius: 10,
-          latlngs: ([data_global.data.features[index]['geometry'][
+        $scope.markers['nvd3pointer'] = {};
+        $scope.markers['nvd3pointe'] = {
+          lat: data_global.data.features[index]['geometry'][
             'coordinates'
-          ][1], data_global.data.features[index]['geometry'][
+          ][1],
+          lng: data_global.data.features[index]['geometry'][
             'coordinates'
-          ][0]])
+          ][0],
+          focus: false,
+          message: "Current Location"
         }
-        console.log($scope.paths);
+        console.log($scope.markers);
       }
 
 
@@ -470,6 +471,7 @@ angular.module('app')
 
       } else {
         console.log("came to else")
+
         url = url + $rootScope.globals.currentUser.username + "/tracks/";
         $http.defaults.headers.common = {
           'X-User': $rootScope.globals.currentUser.username,
