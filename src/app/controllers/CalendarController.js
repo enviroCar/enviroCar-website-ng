@@ -1,11 +1,20 @@
 angular.module('app')
   .controller("CalendarController", ['$scope', '$mdDialog', '$mdMedia',
+    '$stateParams',
     '$filter', '$http', '$state',
     '$rootScope',
     'tracks_calendar', 'MaterialCalendarData',
-    function($scope, $mdDialog, $mdMedia, $filter, $http, $state, $rootScope,
+    function($scope, $mdDialog, $mdMedia, $stateParams, $filter, $http,
+      $state,
+      $rootScope,
       tracks_calendar,
       MaterialCalendarData) {
+      var username;
+      if ($stateParams.user == "") {
+        username = $rootScope.globals.currentUser.username;
+      } else {
+        username = $stateParams.user;
+      }
       $scope.no_data = false;
       $scope.tracks = [];
       var tracks_builder = [];
@@ -70,7 +79,7 @@ angular.module('app')
         var endtime;
         var length;
         var url_requested = "https://envirocar.org/api/stable/users/" +
-          $rootScope.globals.currentUser.username + "/tracks/" + currenttrack
+          username + "/tracks/" + currenttrack
           .id;
         tracks_calendar.get(url_requested).then(function(data) {
           console.log(data.data);
@@ -344,13 +353,13 @@ angular.module('app')
 
       };
       var datetrial;
-      url = "https://envirocar.org/api/stable/users/" + $rootScope.globals.currentUser
-        .username + "/tracks";
+      url = "https://envirocar.org/api/stable/users/" + username + "/tracks";
       var global_tracks_array_begin = [];
       var global_tracks_array_begin_stripped_date = [];
       var date_count = {};
 
       function rewrite(trackslist) {
+        console.log("came here to rewrite");
         //delay(1000)
         for (var i = 0; i < trackslist['tracks'].length; i++) {
           //  console.log(data.data['tracks'][i])
