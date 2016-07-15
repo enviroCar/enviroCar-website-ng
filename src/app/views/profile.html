@@ -128,15 +128,21 @@
           </span>
         </h3>
         <md-input-container class="md-icon-float md-block">
-          <input ng-model="oldpassword" type="text" placeholder="Old Password" >
+          <input ng-model="oldpassword" type="password" ng-change="passwordentered(0)" ng-required="ifpassword" placeholder="Old Password" >
         </md-input-container>
         <md-input-container class="md-icon-float md-block">
-          <input ng-model="newpassword" type="text" placeholder="New Password" >
+          <input ng-model="newpassword" type="password" ng-change="passwordentered(1)" ng-required="ifpassword" placeholder="New Password" >
         </md-input-container>
         <md-input-container class="md-icon-float md-block">
-          <input ng-model="newpasswordrepeat" type="text" placeholder="New Password(Repeat)" >
+          <input ng-model="newpasswordrepeat" type="password" ng-change="passwordentered(2)" ng-required="ifpassword" placeholder="New Password(Repeat)" >
         </md-input-container>
-        <md-button class="green-bg" style="width:150px">Update Profile</md-button>
+        <div ng-if="submissionSuccess" style="background-color:rgba(185,217,137,0.9);">
+          <p>Your details have been updated</p>
+        </div>
+        <div ng-if="submissionFailure" style="background-color:rgba(255, 59, 41, 0.4)">
+        <p>{{submissionErrorMessage}}</p>
+      </div>
+        <md-button class="green-bg" ng-click="updateUserDetails()" style="width:150px">Update Profile</md-button>
     </div>
 
   </md-card-content>
