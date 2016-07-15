@@ -303,7 +303,7 @@ angular.module('app')
         console.log(data_global);
         console.log($scope.paths);
         $scope.markers['nvd3pointer'] = {};
-        $scope.markers['nvd3pointe'] = {
+        $scope.markers['nvd3pointer'] = {
           lat: data_global.data.features[index]['geometry'][
             'coordinates'
           ][1],

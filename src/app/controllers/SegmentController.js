@@ -7,12 +7,13 @@ angular.module('app')
   .controller('SegmentController', ['$state', '$scope', '$http', '$rootScope',
     '$timeout', '$stateParams', 'factorysingletrack', 'chart', '$location',
     'requestgraphstats', 'leafletBoundsHelpers',
-    'dashboard',
+    'dashboard', 'leafletMarkerEvents',
     function($state, $scope, $http, $rootScope, $timeout, $stateParams,
       factorysingletrack, chart, $location, requestgraphstats,
       leafletBoundsHelpers,
-      dashboard) {
+      dashboard, leafletMarkerEvents) {
       var data_global = {}
+      var latlongarray = [];
 
       $scope.slider = {
         minValue: 0,
@@ -26,6 +27,7 @@ angular.module('app')
             console.log('on start ' + $scope.slider.maxValue); // logs 'on start slider-id'
           },
           onChange: function(id) {
+            console.log("On change event fired");
             markerchange($scope.slider.minValue, $scope.slider.maxValue);
             console.log('on change ' + $scope.slider.maxValue); // logs 'on change slider-id'
             // fire events to change the corresponding marker from here.
@@ -244,9 +246,10 @@ angular.module('app')
 
 
       function markerchange(start, end) {
+        console.log("######################");
         console.log(start + "is start" + end + "is end")
-        $scope.markers['m1'] = {};
-        $scope.markers['m2'] = {};
+        $scope.markers = {};
+        console.log($scope.markers);
         var m2 = {};
         m2['lat'] = data_global.data.features[start]['geometry'][
           'coordinates'
@@ -254,27 +257,108 @@ angular.module('app')
         m2['lng'] = data_global.data.features[start]['geometry'][
           'coordinates'
         ][0];
-        m2['focus'] = start;
-        m2['draggable'] = false;
+        m2['focus'] = false;
+        m2['draggable'] = true;
         m2['message'] = "Start";
         $scope.markers['m1'] = m2;
-        m2 = {};
+        var m3 = {};
         console.log(end);
         console.log(data_global.data);
         console.log(data_global.data.features[end]);
-        m2['lat'] = data_global.data.features[end]['geometry']['coordinates']
+        m3['lat'] = data_global.data.features[end]['geometry']['coordinates']
           [1];
-        m2['lng'] = data_global.data.features[end]['geometry']['coordinates']
+        m3['lng'] = data_global.data.features[end]['geometry']['coordinates']
           [0];
-        m2['focus'] = false;
-        m2['draggable'] = false;
-        m2['message'] = "End";
-        $scope.markers['m2'] = m2;
+        m3['focus'] = false;
+        m3['draggable'] = true;
+        m3['message'] = "End";
+        $scope.markers['m2'] = m3;
+        console.log($scope.markers);
         //  console.log($scope.markers['start_moving']);
         //  console.log($scope.markers['end_moving']);
 
       }
+      $scope.events = {
+        markers: {
+          enable: leafletMarkerEvents.getAvailableEvents(),
+        }
+      };
+      var markerEvents = leafletMarkerEvents.getAvailableEvents();
+      for (var k in markerEvents) {
+        var eventName = 'leafletDirectiveMarker.myMap.' + markerEvents[k];
+        $scope.$on(eventName, function(event, args) {
+          $scope.eventDetected = event.name;
+          console.log(event.name);
+          if (event.name == "leafletDirectiveMarker.myMap.dragend") {
+            console.log(event);
+            console.log(args);
+            //$scope.slider.minValue = 50;
+            console.log("Happened" + $scope.slider.minValue);
+            console.log(global_lat_lngs);
+            //var
+            var min_Distance = shortestdistancecalculator(args.model.lat,
+              args.model.lng, global_lat_lngs[0][0], global_lat_lngs[0]
+              [1]);
+            var min_Index = 0;
+            for (var i = 0; i < global_lat_lngs.length; i++) {
+              var current_distance = shortestdistancecalculator(args.model
+                .lat, args.model.lng, global_lat_lngs[i][0],
+                global_lat_lngs[i][1]);
+              if (current_distance < min_Distance) {
+                min_Distance = current_distance;
+                min_Index = i;
+              }
+            }
+            // validations to be added to avoid markers from going overboard on either side for the markers.
+            if (args.modelName == 'm1') {
+              // marker start should not go beyond maxValue of the slider.
+              if (min_Index > $scope.slider.maxValue) {
+                min_Index = $scope.slider.maxValue;
+              }
+            } else if (args.modelName == 'm2') {
+              if (min_Index < $scope.slider.minValue) {
+                min_Index = $scope.slider.minValue;
+              }
+            }
+            $scope.markers[args.modelName] = {
+              'lat': global_lat_lngs[min_Index][0],
+              'lng': global_lat_lngs[min_Index][1],
+              'draggable': true,
+              'message': args.modelName == "m1" ? 'Start' : 'End'
+            }
+            console.log($scope.markers);
+            if (args.modelName == "m1") {
+              $scope.slider.minValue = min_Index;
+            } else if (args.modelName == "m2") {
+              $scope.slider.maxValue = min_Index;
+            }
+            trackiterator(data_global, 1, $scope.slider
+              .minValue, $scope.slider.maxValue);
+            console.log("value of i is" + min_Index);
+            // calculate the one with minimum distance.
+            //globalfor(var i = 0 ; i < )
+          }
+        });
+      }
+
+      function shortestdistancecalculator(lat1, lon1, lat2, lon2) {
+        return (Math.abs((lat1 - lat2) * (lat1 - lat2)) + Math.abs((lon1 -
+          lon2) * (
+          lon1 - lon2)));
+      }
+
+      function distancecalculator(lat1, lon1, lat2, lon2) {
+        var p = 0.017453292519943295; // Math.PI / 180
+        var c = Math.cos;
+        var a = 0.5 - c((lat2 - lat1) * p) / 2 +
+          c(lat1 * p) * c(lat2 * p) *
+          (1 - c((lon2 - lon1) * p)) / 2;
+
+        return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+      }
+
       $scope.trailchange = function(index) {
+        /*
         console.log(data_global);
         console.log($scope.paths);
         $scope.paths['nvd3pointer'] = {};
@@ -288,6 +372,7 @@ angular.module('app')
           ][0]])
         }
         console.log($scope.paths);
+        */
       }
 
 
@@ -296,7 +381,6 @@ angular.module('app')
       $scope.created;
       // the variables for the top bar.
 
-      var latlongarray = [];
       var latinitial;
       var longinitial;
       $scope.tracksummary = {};
@@ -458,6 +542,7 @@ angular.module('app')
       var consumptiondefined;
       var co2defined;
       //From dashboard
+      var global_lat_lngs = [];
       $scope.travel_distance;
       $scope.dataoverall;
       $scope.dataConsumption;
@@ -788,15 +873,7 @@ angular.module('app')
                         iter]['geometry']['coordinates'][0])
                   }
 
-                  function distancecalculator(lat1, lon1, lat2, lon2) {
-                    var p = 0.017453292519943295; // Math.PI / 180
-                    var c = Math.cos;
-                    var a = 0.5 - c((lat2 - lat1) * p) / 2 +
-                      c(lat1 * p) * c(lat2 * p) *
-                      (1 - c((lon2 - lon1) * p)) / 2;
 
-                    return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
-                  }
                   console.log("came in")
                   console.log(consumptiondefined);
                   console.log(co2defined);
@@ -1091,7 +1168,7 @@ angular.module('app')
             m1['lat'] = data.data.features[0].geometry.coordinates[1];
             m1['lng'] = data.data.features[0].geometry.coordinates[0];
             m1['focus'] = true;
-            m1['draggable'] = false;
+            m1['draggable'] = true;
             m1['message'] = chart.m1message;
             $scope.markers['m1'] = m1;
             latinitial = data.data.features[0].geometry.coordinates[1];
@@ -1122,6 +1199,9 @@ angular.module('app')
               'lat': data.data.features[k].geometry.coordinates[1],
               'lng': data.data.features[k].geometry.coordinates[0]
             }]
+            global_lat_lngs.push([data.data.features[k - 1].geometry.coordinates[
+              1], data.data.features[k - 1].geometry.coordinates[0]]);
+
 
             pathobj['message'] =
               (
@@ -1163,9 +1243,11 @@ angular.module('app')
             m2['lat'] = data.data.features[k].geometry.coordinates[1];
             m2['lng'] = data.data.features[k].geometry.coordinates[0];
             m2['focus'] = false;
-            m2['draggable'] = false;
+            m2['draggable'] = true;
             m2['message'] = chart.m2message;
             $scope.markers['m2'] = m2;
+            global_lat_lngs.push([data.data.features[k - 1].geometry.coordinates[
+              1], data.data.features[k - 1].geometry.coordinates[0]]);
           }
         }
       }
