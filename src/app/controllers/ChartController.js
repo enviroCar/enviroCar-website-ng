@@ -164,7 +164,7 @@ angular.module('app')
       $scope.options_pie = {
         chart: {
           type: chart.chart1type,
-          height: chart.chart1height,
+          height: chart.chart1height + 50,
           x: function(d) {
             return d.key;
           },
@@ -173,8 +173,11 @@ angular.module('app')
           },
           showLabels: true,
           duration: chart.chart1duration,
-          labelThreshold: 0.01,
-          labelSunbeamLayout: true,
+          labelThreshold: 0,
+          donut: true,
+          donutLabelsOutside: true,
+          cornerRadius: 0,
+          donutRatio: 0.45,
           legend: chart.chart1legend
         }
       };

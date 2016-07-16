@@ -106,7 +106,7 @@ angular.module('app')
                 $scope.currenttrack['consumption100Km'] = $scope.currenttrack[
                   'consumption100Km'].toString() + " L/100 Km";
               } else
-                $scope.currenttrack['consumption_avg'] = "NA";
+                $scope.currenttrack['consumption100Km'] = "NA";
 
               //  currenttrack['']
               $scope.onload = true;
@@ -133,7 +133,7 @@ angular.module('app')
                 $scope.currenttrack['co2gKm'] = $scope.currenttrack[
                   'co2gKm'].toString() + "  g/Km";
               } else
-                $scope.currenttrack['consumption_avg'] = "NA";
+                $scope.currenttrack['co2gKm'] = "NA";
 
               //  currenttrack['']
               $scope.onload = true;

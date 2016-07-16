@@ -73,15 +73,13 @@ angular.module('app')
           showLabels: true,
           duration: 300,
           labelThreshold: 0.01,
-          labelSunbeamLayout: true,
-          legend: {
-            margin: {
-              top: 5,
-              right: 35,
-              bottom: 5,
-              left: 0
-            }
-          },
+          donut: true,
+          donutLabelsOutside: true,
+          cornerRadius: 0,
+          donutRatio: 0.45,
+          showLegend: true,
+          legendPosition: 'top'
+
         }
       };
       $scope.speedPieOptions = ['Distance', 'Time'];
@@ -168,6 +166,8 @@ angular.module('app')
             console.log(cntr + "value of cntr that failed");
             console.log(data.data);
             var helper_events = {};
+            helper_events['car'] = data.data.tracks[cntr].sensor.properties
+              .model;
             helper_events['id'] = data.data.tracks[cntr].id;
             helper_events['title'] = data.data.tracks[cntr].name;
             helper_events['urlredirect'] = dashboard.urlredirect + data
