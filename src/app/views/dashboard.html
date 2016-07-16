@@ -212,11 +212,11 @@
           </md-toolbar>
           <md-card-content>
             <md-content ng-show="!show_no_my_activity" flex layout-padding style="max-height:470px">
-              <md-list-item class="md-3-line md-long-text md-whiteframe-1dp" ng-repeat='item in events' ng-click="goToActivity(item.type,item.trackidlink)">
+              <md-list-item class="md-3-line md-long-text" ng-repeat='item in events' ng-click="goToActivity(item.type,item.trackidlink)">
                 <img class="md-avatar" src={{item.profileurl}}></img>
                 <div class="md-list-item-text" layout="column">
-                <h3>{{item.topic}}</h3>
-                <h4>{{item.name}}</h4>
+                <h3 style="color:{{item.color}}"><b>{{item.topic}}</b></h3>
+                <p>{{item.name}}</p>
                 <p>{{item.date}}</p>
               </div>
               </md-list-item>
@@ -240,11 +240,11 @@
           </md-toolbar>
           <md-card-content>
             <md-content flex layout-padding style="max-height:470px">
-              <md-list-item ng-show="!show_no_my_activity" class="md-3-line md-long-text md-whiteframe-1dp" ng-repeat='item in events' ng-click="goToActivity(item.type,item.trackidlink)">
+              <md-list-item ng-show="!show_no_my_activity" class="md-3-line md-long-text" ng-repeat='item in events' ng-click="goToActivity(item.type,item.trackidlink)">
                <img class="md-avatar" src={{item.profileurl}}></img>
                 <div class="md-list-item-text" layout="column">
-                <h3>{{item.topic}}</h3>
-                <h4>{{item.name}}</h4>
+                <h3 style="color:{{item.color}}"><b>{{item.topic}}</b></h3>
+                <p>{{item.name}}</p>
                 <p>{{item.date}}</p>
               </div>
               </md-list-item>

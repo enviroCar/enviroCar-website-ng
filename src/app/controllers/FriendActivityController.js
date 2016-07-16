@@ -50,10 +50,11 @@ angular.module('app')
               helper['date'] = new Date(data.activities[i].time).toLocaleString();
               console.log(i);
               console.log(data.activities[i]);
-
+              helper['color'] = "#8CBF3F"
               if (data.activities[i].type == "FRIENDED_USER") {
                 helper['type'] = 0;
                 helper['topic'] = "New Friend Activity";
+                helper['color'] = "#0065A0"
                 if ($rootScope.globals.currentUser.username != data.activities[
                     i].other.name)
                   helper['name'] = data.activities[i].user.name +
@@ -62,10 +63,39 @@ angular.module('app')
                   helper['name'] = data.activities[i].user.name +
                   " is now friends with you";
                 helper['trackidlink'] = "";
-              } else {
+              } else if (data.activities[i].type == "CREATED_TRACK") {
                 helper['type'] = 1;
+                helper['color'] = "#0065A0"
                 helper['topic'] = "New Track Upload";
-                helper['trackidlink'] = data.activities[i].track.id
+                helper['trackidlink'] = (data.activities[i].track !=
+                    undefined) ? data.activities[i].track.id :
+                  "Invalid ID";
+              } else if (data.activities[i].type == "CHANGED_PROFILE") {
+                helper['type'] = 0;
+                helper['topic'] = data.activities[i].user.name +
+                  "Updated profile";
+              } else if (data.activities[i].type == "UNFRIENDED_USER") {
+                continue;
+              } else if (data.activities[i].type == "CREATED_GROUP") {
+                helper['type'] = 0;
+                helper['topic'] = data.activities[i].user.name +
+                  " created a Group";
+              } else if (data.activities[i].type == "CHANGED_GROUP") {
+                helper['type'] = 0;
+                helper['topic'] = data.activities[i].user.name +
+                  " changed the group";
+              } else if (data.activities[i].type == "JOINED_GROUP") {
+                helper['type'] = 0;
+                helper['topic'] = data.activities[i].user.name +
+                  " joined the Group";
+              } else if (data.activities[i].type == "LEFT_GROUP") {
+                helper['type'] = 0;
+                helper['topic'] = data.activities[i].user.name +
+                  " left the Group";
+              } else if (data.activities[i].type == "DELETED_GROUP") {
+                helper['type'] = 0;
+                helper['topic'] = data.activities[i].user.name +
+                  " deleted the group";
               }
               eventshelper.push(helper);
               console.log(helper);

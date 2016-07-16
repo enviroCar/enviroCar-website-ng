@@ -54,7 +54,7 @@ angular.module('app')
               helper['date'] = new Date(data.activities[i].time).toLocaleString();
               //  console.log(i);
               //console.log(data.activities[i]);
-
+              helper['color'] = "#8CBF3F"
               if (data.activities[i].type == "FRIENDED_USER") {
                 helper['type'] = 0;
                 helper['topic'] = "New Friend Activity";
@@ -62,10 +62,32 @@ angular.module('app')
                   data.activities[
                     i].other.name;
                 helper['trackidlink'] = "";
-              } else {
+                helper['color'] = "#0065A0"
+              } else if (data.activities[i].type == "CREATED_TRACK") {
                 helper['type'] = 1;
+                helper['color'] = "#0065A0"
                 helper['topic'] = "New Track Upload";
                 helper['trackidlink'] = data.activities[i].track.id
+              } else if (data.activities[i].type == "CHANGED_PROFILE") {
+                helper['type'] = 0;
+                helper['topic'] = "Profile Update";
+              } else if (data.activities[i].type == "UNFRIENDED_USER") {
+                continue;
+              } else if (data.activities[i].type == "CREATED_GROUP") {
+                helper['type'] = 0;
+                helper['topic'] = "You created a Group";
+              } else if (data.activities[i].type == "CHANGED_GROUP") {
+                helper['type'] = 0;
+                helper['topic'] = "You changed the group";
+              } else if (data.activities[i].type == "JOINED_GROUP") {
+                helper['type'] = 0;
+                helper['topic'] = "You joined the Group";
+              } else if (data.activities[i].type == "LEFT_GROUP") {
+                helper['type'] = 0;
+                helper['topic'] = "You left the Group";
+              } else if (data.activities[i].type == "DELETED_GROUP") {
+                helper['type'] = 0;
+                helper['topic'] = "You deleted the group";
               }
               eventshelper.push(helper);
               //  console.log(helper);
