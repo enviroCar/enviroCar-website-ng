@@ -119,7 +119,7 @@ angular.module('app')
                 $scope.currenttrack['consumption100Km'] = $scope.currenttrack[
                   'consumption100Km'].toString() + " L/100 Km";
               } else
-                $scope.currenttrack['consumption_avg'] = "NA";
+                $scope.currenttrack['consumption100Km'] = "NA";
 
               //  currenttrack['']
               $scope.onload = true;
@@ -146,7 +146,7 @@ angular.module('app')
                 $scope.currenttrack['co2gKm'] = $scope.currenttrack[
                   'co2gKm'].toString() + "  g/Km";
               } else
-                $scope.currenttrack['consumption_avg'] = "NA";
+                $scope.currenttrack['co2gKm'] = "NA";
 
               //  currenttrack['']
               $scope.onload = true;
@@ -235,6 +235,9 @@ angular.module('app')
           console.log(global_tracks_array_begin_stripped_date);
           for (var i = 0; i < indexes.length; i++) {
             var helper_object = {};
+            helper_object['car'] = global_tracks['tracks'][indexes[i]][
+              'sensor'
+            ]['properties']['model'];
             helper_object['id'] = global_tracks['tracks'][indexes[i]]['id'];
             helper_object['name'] = global_tracks['tracks'][indexes[i]][
               'name'
@@ -353,7 +356,8 @@ angular.module('app')
 
       };
       var datetrial;
-      url = "https://envirocar.org/api/stable/users/" + username + "/tracks";
+      url = "https://envirocar.org/api/stable/users/" + username +
+        "/tracks?limit=10000";
       var global_tracks_array_begin = [];
       var global_tracks_array_begin_stripped_date = [];
       var date_count = {};

@@ -57,7 +57,7 @@
                  <span>{{'User_VS_PUBLIC' | translate}} </span>
                </h3>
                <span flex></span>
-               <md-select  md-theme="blue" ng-model="barchartshowing" >
+               <md-select style="color:rgba(0,0,0,0.5)" md-theme="blue" ng-model="barchartshowing" >
                   <md-option ng-model="d" ng-value="d" ng-click="changePhenomenonbar(d)" data-ng-repeat="d in barchartoptions">{{d}}</md-option>
             </md-select>
             <!--
@@ -88,7 +88,7 @@
                   <span>{{'SPEED_STATS' | translate}}</span>
                 </h3>
                 <span flex></span>
-                <md-select  md-theme="blue" ng-model="pieSpeedRanges" >
+                <md-select style="color:rgba(0,0,0,0.5)" md-theme="blue" ng-model="pieSpeedRanges" >
                 		<md-option ng-model="d" ng-value="d" ng-click="changePhenomenonPieSpeed(d)" data-ng-repeat="d in speedPieOptions">{{d}}</md-option>
            	</md-select>
               <!--  <md-menu md-offset="-120 15">
@@ -180,7 +180,7 @@
               </div>
             </md-toolbar>
 
-            <md-card-content >
+            <md-card-content class="text-color">
 
             <!--  <md-card ng-repeat="event in events">
                 <md-toolbar>
@@ -197,19 +197,27 @@
                 </div>
                 </md-card-content>
               </md-card>
-            -->         <md-progress-circular class="loader_dashboard" ng-if="!onload_tracks_timeline" md-diameter="156"></md-progress-circular>
-                      <md-list-item ng-if="onload_tracks_timeline" md-theme="default" md-ink-ripple="#0065A0" class="md-3-line md-long-text " ng-repeat='event in events' ng-click="goToActivity(event.id)">
-                      <img class="md-avatar" src={{event.url}} style="width:80px;height:80px"></img>
-                      <div class="md-list-item-text" layout="column">
-                      <h3><b>{{event.begin}}</b></h3>
-                      <h4>{{event.title}}</h4>
+
+
+            -->
+            <md-progress-circular class="loader_dashboard" ng-if="!onload_tracks_timeline" md-diameter="156"></md-progress-circular>
+                      <md-list-item ng-show="onload_tracks_timeline" md-theme="default" md-ink-ripple="#0065A0" class="md-3-line md-long-text" ng-repeat='event in events' ng-click="goToActivity(event.id)">
+                          <img class="md-avatar" src="{{event.url}}" style="width:80px;height:80px">
+                          </img>
+                      <div class="md-list-item-text" >
+                      <h3 style=color:rgba(0,101,160,0.9)><b>{{event.begin}}</b></h3>
+
+                      <p>Vehicle - {{event.car}}</p>
                       <p>{{'DISTANCE' | translate}} - {{event.distance}} Km</p>
+
+
                     </div>
                     <md-tooltip class="trackpreview" md-direction="left">
                     <md-content >
                     <img src={{event.url}} style="width:480px;height:380px"></img>
                     </md-content>
                   </md-tooltip>
+
                     </md-list-item>
                 </md-card-content>
 
