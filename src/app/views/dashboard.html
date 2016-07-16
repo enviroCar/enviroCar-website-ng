@@ -43,34 +43,23 @@
 </div>
 
 <md-content>
-  <md-tabs  md-dynamic-height md-border-bottom>
+  <md-tabs md-dynamic-height md-border-bottom>
     <md-tab label="{{'TIMELINE_TAB' | translate}}">
       <md-content  ng-controller="DashboardController" style="background-color:#EEEEEE" md-theme="default">
         <div class="middle">
-        <div layout-gt-md="row" layout="column" >
-          <div layout-gt-md="column" style="width:100%" layout="column">
-            <div layout-gt-md="row" style="width:100%" layout="row">
+        <div layout-gt-xs="row" layout="column" >
+          <div layout-gt-xs="column" style="width:100%" layout="column">
+            <div layout-gt-xs="row" style="width:100%" layout="row">
          <md-card   style="height:330px;width:100%" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}"  md-theme-watch>
            <md-toolbar style="color:black;background-color:white" >
              <div class="md-toolbar-tools">
-               <h3 style="color:rgba(0,0,0,0.5)">
+               <h3 style="color:rgba(0,101,160,0.9)">
                  <span>{{'User_VS_PUBLIC' | translate}} </span>
                </h3>
                <span flex></span>
-               <md-select style="color:rgba(0,0,0,0.5)" md-theme="blue" ng-model="barchartshowing" >
+               <md-select style="color:rgba(0,101,160,0.9)" md-theme="blue" ng-model="barchartshowing" >
                   <md-option ng-model="d" ng-value="d" ng-click="changePhenomenonbar(d)" data-ng-repeat="d in barchartoptions">{{d}}</md-option>
             </md-select>
-            <!--
-               <md-menu md-offset="-120 15">
-                   <md-button class="capitalize md-primary" ng-click="$mdOpenMenu()" aria-label="Open menu">
-                     <i class="material-icons">more_vert</i>
-                   </md-button>
-                   <md-menu-content width="3">
-                     <md-menu-item ng-repeat = "d in barchartoptions">
-                     <md-button ng-click="changePhenomenonbar(d)">{{d}}</md-button>
-                   </md-menu-content>
-               </md-menu>
-             -->
              </div>
            </md-toolbar>
             <md-card-content >
@@ -84,11 +73,11 @@
 
             <md-toolbar style="color:black;background-color:white" >
               <div class="md-toolbar-tools">
-                <h3 style="color:rgba(0,0,0,0.5)">
+                <h3 style="color:rgba(0,101,160,0.9)">
                   <span>{{'SPEED_STATS' | translate}}</span>
                 </h3>
                 <span flex></span>
-                <md-select style="color:rgba(0,0,0,0.5)" md-theme="blue" ng-model="pieSpeedRanges" >
+                <md-select style="color:rgba(0,101,160,0.9)" ng-model="pieSpeedRanges" >
                 		<md-option ng-model="d" ng-value="d" ng-click="changePhenomenonPieSpeed(d)" data-ng-repeat="d in speedPieOptions">{{d}}</md-option>
            	</md-select>
               <!--  <md-menu md-offset="-120 15">
@@ -110,11 +99,11 @@
              </md-card-content>
            </md-card>
          </div>
-         <div layout-gt-md="row" style="width:100%" layout="column">
+         <div layout-gt-xs="row" style="width:100%" layout="column">
          <md-card ng-controller="LeafletHeatMap" style="height:550px;width:100%" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}"  md-theme-watch>
            <md-toolbar style="color:black;background-color:white" >
              <div class="md-toolbar-tools">
-               <h3 style="color:rgba(0,0,0,0.5)">
+               <h3 style="color:rgba(0,101,160,0.9)">
                  <span>{{'HEAT_MAP' | translate}}</span>
                </h3>
                <span flex></span>
@@ -158,48 +147,18 @@
 -->
 
 
-
-          <md-card style="min-width:30%;height:730px" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
+<div layout-gt-xs="column" style="min-width:32%" layout="column">
+          <md-card  style="min-width:30%;height:730px" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
             <md-toolbar style="color:black;background-color:white" >
               <div class="md-toolbar-tools">
-                <h3 style="color:rgba(0,0,0,0.5)">
+                <h3 style="color:rgba(0,101,160,0.9)">
                   <span>{{'TITLE_TRACKS' | translate}}</span>
                 </h3>
                 <span flex></span>
-
-              <!--  <md-menu md-offset="-120 15">
-                    <md-button class="capitalize md-primary" ng-click="$mdOpenMenu()" aria-label="Open menu">
-                      <i class="material-icons">more_vert</i>
-                    </md-button>
-                    <md-menu-content width="3">
-                      <md-menu-item ng-repeat = "d in piechartoptions">
-                      <md-button ng-click="changePhenomenon(d)">{{d}}</md-button>
-                    </md-menu-content>
-                </md-menu>
-              -->
               </div>
             </md-toolbar>
 
             <md-card-content class="text-color">
-
-            <!--  <md-card ng-repeat="event in events">
-                <md-toolbar>
-                  <div class="md-toolbar-tools">
-                    <h3>
-                      <span style="color:white">{{event.title}}</span>
-                    </h3>
-                  </div>
-                </md-toolbar>
-                <img src={{event.url}} class="md-card-image" alt="Washed Out"></img>
-                <md-card-content>
-                  <div>
-                  <h3><b>{{event.begin}}</b></h3>
-                </div>
-                </md-card-content>
-              </md-card>
-
-
-            -->
             <md-progress-circular class="loader_dashboard" ng-if="!onload_tracks_timeline" md-diameter="156"></md-progress-circular>
                       <md-list-item ng-show="onload_tracks_timeline" md-theme="default" md-ink-ripple="#0065A0" class="md-3-line md-long-text" ng-repeat='event in events' ng-click="goToActivity(event.id)">
                           <img class="md-avatar" src="{{event.url}}" style="width:80px;height:80px">
@@ -219,11 +178,20 @@
                   </md-tooltip>
 
                     </md-list-item>
-                </md-card-content>
+              </md-card-content>
 
 
         </md-card>
-
+        <md-card style="height:120px"ng-controller="FriendListController">
+            <md-card-content>
+              <md-grid-list md-cols="4" md-row-height="100px">
+                <md-grid-tile ng-repeat="item in data_friends_4">
+                  <img class="img-circle" style="height:80px;width:80px" src={{item.profile_url}}><img>
+                  <md-tooltip>{{item.username}}</md-tooltip>
+                </md-grid-title>
+              </md-grid-list>            </md-card-content>
+        </md-card>
+</div>
   </div>
 </div>
 
@@ -233,11 +201,11 @@
     <md-tab label="{{'ACTIVITY_TAB' | translate}}">
       <md-content style="background-color:#EEEEEE" class="md-padding">
         <div class="middle">
-        <div layout-gt-md="row" layout="column" >
+        <div layout-gt-xs="row" layout="column" >
         <md-card ng-show="originaluser" ng-controller="FriendActivityController" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
-          <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
+          <md-toolbar style="color:black;background-color:white" >
             <div class="md-toolbar-tools">
-              <h3>
+              <h3 style="color:rgba(0,101,160,0.9)">
                 <span>{{ 'FRIENDS_ACTIVITY' | translate}}</span>
               </h3>
             </div>
@@ -263,9 +231,9 @@
         </md-card-actions>
         </md-card>
         <md-card ng-controller="MyActivityController" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
-          <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
+          <md-toolbar style="color:black;background-color:white" >
             <div class="md-toolbar-tools">
-              <h3>
+              <h3 style="color:rgba(0,101,160,0.9)">
                 <span>{{'MY_ACTIVITY' | translate}}</span>
               </h3>
             </div>
@@ -300,9 +268,9 @@
   <md-content style="background-color:#EEEEEE">
     <div class="middle">
     <md-card ng-controller="FriendListController" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" style="width:400px" md-theme-watch>
-      <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
+      <md-toolbar style="color:black;background-color:white" >
         <div class="md-toolbar-tools">
-          <h3>
+          <h3 style="color:rgba(0,101,160,0.9)">
             <span>{{'FRIENDS' | translate}}</span>
           </h3>
         </div>
@@ -310,13 +278,10 @@
       <md-card-content>
         <div flex>
         <md-content ng-show="!show_no_friends" flex layout-padding >
-          <md-list-item class="md-long-text" ng-repeat='item in data_friends' ng-click="goToFriend(item.username)">
+          <md-list-item class="md-long-text md-2-line" ng-repeat='item in data_friends' ng-click="goToFriend(item.username)">
          <img class="md-avatar" src={{item.profile_url}}></img>
-            <div class="md-list-item-text md-2-line" layout="column">
+            <div class="md-list-item-text" layout="column">
             <h3>{{item.username}}</h3>
-          <h4>{{item.name}}</h4>
-            <p>{{item.date}}</p>
-
           </div>
           </md-list-item>
     </md-content>

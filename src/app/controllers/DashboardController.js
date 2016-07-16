@@ -40,6 +40,7 @@ angular.module('app')
     function($scope, $http, $rootScope, $stateParams, requesthomestats,
       requestgraphstats,
       dashboard, $state, $translate) {
+      $scope.selectedIndex = 2;
       $scope.onloadSpeedPie = false;
       var speedgraph_data = {
         "user": "naveen-gsoc",

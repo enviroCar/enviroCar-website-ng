@@ -108,7 +108,7 @@ angular.module('app')
       $scope.options_pie = {
         chart: {
           type: chart.chart1type,
-          height: chart.chart1height,
+          height: chart.chart1height + 50,
           x: function(d) {
             return d.key;
           },
@@ -117,9 +117,12 @@ angular.module('app')
           },
           showLabels: true,
           duration: chart.chart1duration,
-          labelThreshold: 0.01,
-          labelSunbeamLayout: true,
-          legend: chart.chart1legend
+          labelThreshold: 0,
+          legend: chart.chart1legend,
+          donut: true,
+          donutLabelsOutside: true,
+          cornerRadius: 0,
+          donutRatio: 0.45
         }
       };
 
@@ -438,6 +441,9 @@ angular.module('app')
       var co2gKm;
       var co2_avg;
       var break_cons = true;
+      var speedDataCalculated;
+      var consumptionDataCalculated;
+      var co2DataCalculated;
       //*****************************************************
       var colorsl = chart.colorsl;
       $scope.piechartselected = chart.piechartselected;
@@ -638,29 +644,60 @@ angular.module('app')
       });
 
 
-      $scope.changePhenomenonbar = function(phenombar) {
-          console.log("came here")
-          $scope.dataoverall = [];
-          if (phenombar == "Speed") {
-            console.log($scope.optionsSpeed['chart']['yAxis']['axisLabel'])
-            $scope.optionsSpeed['chart']['yAxis']['axisLabel'] =
-              "Speed (Km/h)"
-            $scope.dataoverall = $scope.dataSpeed;
-          } else if (phenombar == "Consumption") {
-            $scope.optionsSpeed['chart']['yAxis']['axisLabel'] =
-              "Consumption (l/h)"
-            $scope.dataoverall = $scope.dataConsumption;
-          } else if (phenombar == "CO2") {
-            $scope.optionsSpeed['chart']['yAxis']['axisLabel'] =
-              "CO2 (Kg/h)"
-            $scope.dataoverall = $scope.dataCO2;
-          }
+      $scope.changePhenomenonbar = function(phenombar, flag) {
+          if (flag == 2 || $scope.slider.minValue == 0 && $scope.slider.maxValue ==
+            (
+              len_data - 1)) {
+            // if the entire track is requested for, then use the data tht is returned from the server.
+            $scope.widgetType3 = phenombar;
+            console.log("came here")
+            $scope.dataoverall = [];
+            if (phenombar == "Speed") {
+              console.log($scope.optionsSpeed['chart']['yAxis']['axisLabel'])
+              $scope.optionsSpeed['chart']['yAxis']['axisLabel'] =
+                "Speed (Km/h)"
+              $scope.dataoverall = $scope.dataSpeed;
+            } else if (phenombar == "Consumption") {
+              $scope.optionsSpeed['chart']['yAxis']['axisLabel'] =
+                "Consumption (l/h)"
+              $scope.dataoverall = $scope.dataConsumption;
+            } else if (phenombar == "CO2") {
+              $scope.optionsSpeed['chart']['yAxis']['axisLabel'] =
+                "CO2 (Kg/h)"
+              $scope.dataoverall = $scope.dataCO2;
+            }
 
+          } else {
+            // If only part of the track is requested for, then use the data that is returned from the client side calculation of each of these parameters
+            $scope.widgetType3 = phenombar;
+            console.log("came here")
+            $scope.dataoverall = [];
+            console.log(consumptionDataCalculated)
+            console.log(speedDataCalculated);
+            console.log(co2DataCalculated);
+            if (phenombar == "Speed") {
+              console.log($scope.optionsSpeed['chart']['yAxis']['axisLabel'])
+              $scope.optionsSpeed['chart']['yAxis']['axisLabel'] =
+                "Speed (Km/h)"
+              $scope.dataoverall = speedDataCalculated;
+            } else if (phenombar == "Consumption") {
+              $scope.optionsSpeed['chart']['yAxis']['axisLabel'] =
+                "Consumption (l/h)"
+              $scope.dataoverall = consumptionDataCalculated;
+            } else if (phenombar == "CO2") {
+              $scope.optionsSpeed['chart']['yAxis']['axisLabel'] =
+                "CO2 (Kg/h)"
+              $scope.dataoverall = co2DataCalculated;
+            }
+            console.log($scope.dataoverall);
+          }
         }
         //end of code
       var run_once = 0;
 
       function trackiterator(data, override, index1, index2) {
+        //$scope.dataoverall = [];
+
         //resetting required values.
         piechartsdata = JSON.parse(JSON.stringify(chart.piechartsdata));
         console.log("******************")
@@ -744,12 +781,18 @@ angular.module('app')
           var startindex;
           var endindex;
           if (override == 0) {
+            //  $scope.changePhenomenonbar($scope.widgetType3, 2);
             startindex = 0;
             endindex = len_data;
           } else {
             //  alert("came here");
+
             startindex = index1;
             endindex = index2 + 1;
+            if (startindex == 0 && endindex == (len_data)) {
+              console.log("Working")
+              $scope.changePhenomenonbar($scope.widgetType3, 2);
+            }
           }
           var cons_override = 0;
           var co2_override = 0;
@@ -890,11 +933,28 @@ angular.module('app')
                       'phenomenons'
                     ]['CO2']['value'];
                   }
+
                   //  console.log(iter);
                   //  console.log(endindex - 1);
                   if (iter == (endindex - 1)) {
                     //  alert(distance_override);
                     $scope.travel_distance = distance_override.toFixed(2);
+                    $scope.avgspeed = $scope.travel_distance / ((new Date(
+                        endtimeg).getTime() -
+                      new Date(
+                        starttimeg).getTime()) / (1000 * 60 * 60));
+                    console.log($scope.widgetType3);
+                    var temporaryspeed = JSON.parse(JSON.stringify($scope
+                      .dataSpeed))
+                    console.log(temporaryspeed[0])
+                    temporaryspeed[0]['values'][0]['value'] = $scope.avgspeed;
+                    if ($scope.widgetType3 == "Speed") {
+                      $scope.dataoverall = temporaryspeed;
+                    }
+                    console.log($scope.dataoverall);
+                    speedDataCalculated = temporaryspeed;
+
+
                     console.log("came here for last")
                       // calculate average now for consumption and co2.
                     if (consumptiondefined) {
@@ -921,6 +981,39 @@ angular.module('app')
                       $scope.consumption100Km =
                         consumption100Km;
                       console.log($scope.consumption100Km);
+
+                      var temporaryconsumption = JSON.parse(JSON.stringify(
+                        $scope
+                        .dataConsumption))
+                      console.log(temporaryconsumption[0])
+
+                      temporaryconsumption[0]['values'][0]['value'] =
+                        cons_override / (endindex - startindex + 1);
+                      if ($scope.widgetType3 == "Consumption") {
+                        $scope.dataoverall = temporaryconsumption;
+                      }
+                      console.log($scope.dataoverall);
+                      consumptionDataCalculated = JSON.parse(JSON.stringify(
+                        temporaryconsumption));
+                      console.log("Cons_Success")
+
+
+                      // updating the barchart
+
+                    } else {
+
+                      var temporaryspeed = JSON.parse(JSON.stringify(
+                        $scope
+                        .dataSpeed))
+                      console.log(temporaryspeed[0])
+                      temporaryspeed[0]['values'][0]['value'] = "NA";
+                      if ($scope.widgetType3 == "Consumption") {
+                        $scope.dataoverall = temporaryspeed;
+                      }
+                      console.log($scope.dataoverall);
+                      consumptionDataCalculated = JSON.parse(JSON.stringify(
+                        temporaryconsumption));
+
                     }
                     if (co2defined) {
                       var seconds_passed = new Date(endtimeg).getTime() -
@@ -937,6 +1030,34 @@ angular.module('app')
                         (distance_override)).toFixed(2);
                       $scope.co2gKm = co2gKm.toString() +
                         " g/Km";
+                      var temporaryco2 = JSON.parse(JSON.stringify(
+                        $scope
+                        .dataCO2))
+                      console.log(temporaryco2[0])
+                      temporaryco2[0]['values'][0]['value'] =
+                        co2_override / (endindex - startindex + 1);
+                      if ($scope.widgetType3 == "CO2") {
+                        $scope.dataoverall = temporaryco2;
+                      }
+
+                      console.log("co2_success");
+
+                      co2DataCalculated = JSON.parse(JSON.stringify(
+                        temporaryco2));
+
+                    } else {
+
+                      var temporaryco2 = JSON.parse(JSON.stringify(
+                        $scope
+                        .dataCO2))
+                      console.log(temporaryco2[0])
+                      temporaryco2[0]['values'][0]['value'] =
+                        "NA";
+                      if ($scope.widgetType3 == "CO2") {
+                        $scope.dataoverall = temporaryco2;
+                      }
+                      co2DataCalculated = JSON.parse(JSON.stringify(
+                        temporaryco2));
 
                     }
                   }
