@@ -77,7 +77,7 @@
               <md-list-item class="md-3-line" ng-repeat='item in events' ng-click="goToActivity(item.type,item.trackidlink)">
             <!--    <img class="md-avatar" src={{item.profileurl}}></img> -->
                 <div class="md-list-item-text" layout="column">
-                <h3>{{item.topic}}</h3>
+                <h3 style="color:{{item.color}}"><b>{{item.topic}}</b></h3>
                 <h4>{{item.name}}</h4>
                 <p>{{item.date}}</p>
               </div>
