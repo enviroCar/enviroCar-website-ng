@@ -18,6 +18,10 @@ padding: 8px;
 
 }
 
+md-tabs {
+    transition: 0s !important;
+}
+
 .img-circle2 {
   transition: all .1s ease-in-out;
     border-radius: 50%;
@@ -35,9 +39,8 @@ padding: 8px;
 
 .middle
 {
-  width: 100vw;
+  width: 90vw;
   height: 56.25vw; /* 100/56.25 = 1.778 */
-  max-height: 1500px;
   max-width: 1300px; /* 16/9 = 1.778 */
   margin: auto;
   position: relative;
@@ -198,6 +201,7 @@ $font-size-large: 22px;
 // LAYOUT
 body {
   color: $text-color;
+  overflow: hidden;
 }
 
 .leaflet-popup-content-wrapper, .map-legends, .map-tooltip{

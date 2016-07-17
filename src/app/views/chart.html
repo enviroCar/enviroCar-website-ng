@@ -1,4 +1,4 @@
-<md-content ng-app="app" ng-controller="ChartController">
+<div ng-app="app" ng-controller="ChartController">
   <div class="profiletab2" ng-style="{'background-color':'#0065A0'}" style="width:100%;height:130px">
     <div class="cover">
   <div class="container_header">
@@ -8,7 +8,7 @@
   </div>
 </div>
   </div>
-  <md-tabs  md-dynamic-height md-border-bottom>
+  <md-tabs  md-dynamic-height md-border-bottom flex>
     <md-tab label="SINGLE">
       <md-content  style="background-color:#EEEEEE" md-theme="default">
 <div >
@@ -209,8 +209,7 @@
   <md-card-content >
     <md-progress-circular class="loader_dashboard2" ng-if="!onload_nvd3pie" md-diameter="156"></md-progress-circular>
     <div ng-if="onload_nvd3pie" class="containernvd3" style="width:100%;height:100%">
-    <md-content ng-show="$showOptionsnvd3" class="optionsnvd3">
-        </md-content>
+
     <nvd3 options="options_pie" data="data_pie"></nvd3>
   </div>
 </md-card-content>
@@ -489,4 +488,4 @@
     </div>
   </md-content>
 </md-tabs>
-</md-content>
+</div>
