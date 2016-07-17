@@ -44,10 +44,13 @@ angular.module('app')
         console.log($scope.data_friends_4);
       });
       $scope.goToFriend = function(username) {
-          console.log(username + "came to find friend");
-          $state.go('home.dashboard', {
-            'user': username
-          });
+        console.log(username + "came to find friend");
+        $state.go('home.dashboard', {
+          'user': username
+        });
+      }
+      $scope.tabChangeToFriends = function() {
+          $rootScope.tabNumber = 2;
         }
         //$scope.friends = {};
     }

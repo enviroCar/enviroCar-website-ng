@@ -883,7 +883,7 @@ angular.module('app')
               units[keys[j]] = data.features[i].properties.phenomenons[
                 keys[j]].unit;
             }
-            distance = data.properties['length'];
+            $scope.travel_distance = data.properties['length'].toFixed(2);
             vehiclemodel = data.properties.sensor.properties.model;
             vehicletype = data.properties.sensor['type'];
             vehiclemanufacturer = data.properties.sensor.properties[
@@ -897,33 +897,7 @@ angular.module('app')
 
 
         }
-        console.log(Co2sum + " " + fuelSum)
-        console.log(units)
-        var fuelsplit;
-        console.log(units['Consumption']);
-        //  if(typeof units['Consumption'])
-        if ((units['Consumption']) == undefined) {
-          console.log("the consumption parameter is not available");
-          fuelsplit = ["NA", ""];
-        } else {
-          fuelsplit = units['Consumption'].split("/");
-        }
-        var co2split;
-        if (units['CO2'] == undefined) {
-          co2split = ["NA", ""];
-        } else {
-          co2split = units['CO2'].split("/");
-        }
-        if (consumption_avg == undefined) {
-          consumption_avg = "NA";
-        } else {
-          consumption_avg = consumption_avg.toFixed(2);
-        }
-        if (co2_avg == undefined) {
-          co2_avg = "NA";
-        } else {
-          co2_avg = co2_avg.toFixed(2);
-        }
+
         $scope.tracksummary = {
           distance: distance.toFixed(2),
           vehiclemodel: vehiclemodel,
@@ -934,8 +908,6 @@ angular.module('app')
           unitsofdistance: "Km",
           unitsoftime: "Minutes",
           fuel: fuelSum.toFixed(2),
-          unitsoffuel: fuelsplit[0],
-          unitsofco2emission: co2split[0],
           co2emissionperhour: consumption_avg,
           starttime: new Date(starttimeg).toLocaleString(),
           endtime: new Date(endtimeg).toLocaleString()

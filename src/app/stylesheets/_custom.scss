@@ -18,8 +18,19 @@ padding: 8px;
 
 }
 
-.img-circle {
+.img-circle2 {
+  transition: all .1s ease-in-out;
     border-radius: 50%;
+}
+
+.img-circle2:hover { transform: scale(1.05); }
+
+.transparent:not([disabled]):hover {
+  background-color: transparent;;
+}
+
+.transparent[disabled] {
+  background-color: transparent;
 }
 
 .middle

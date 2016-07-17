@@ -40,7 +40,8 @@ angular.module('app')
     function($scope, $http, $rootScope, $stateParams, requesthomestats,
       requestgraphstats,
       dashboard, $state, $translate) {
-      $scope.selectedIndex = 2;
+      $rootScope.tabNumber = 0;
+
       $scope.onloadSpeedPie = false;
       var speedgraph_data = {
         "user": "naveen-gsoc",
@@ -75,7 +76,7 @@ angular.module('app')
           duration: 300,
           labelThreshold: 0.01,
           donut: true,
-          donutLabelsOutside: true,
+          labelsOutside: true,
           cornerRadius: 0,
           donutRatio: 0.45,
           showLegend: true,
