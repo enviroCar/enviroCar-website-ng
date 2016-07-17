@@ -43,7 +43,7 @@
 </div>
 
 <md-content>
-  <md-tabs md-dynamic-height md-border-bottom>
+  <md-tabs md-selected="$root.tabNumber" md-dynamic-height md-border-bottom>
     <md-tab label="{{'TIMELINE_TAB' | translate}}">
       <md-content  ng-controller="DashboardController" style="background-color:#EEEEEE" md-theme="default">
         <div class="middle">
@@ -182,14 +182,18 @@
 
 
         </md-card>
-        <md-card style="height:120px"ng-controller="FriendListController">
+        <md-card style="height:160px" ng-controller="FriendListController">
             <md-card-content>
               <md-grid-list md-cols="4" md-row-height="100px">
                 <md-grid-tile ng-repeat="item in data_friends_4">
-                  <img class="img-circle" style="height:80px;width:80px" src={{item.profile_url}}><img>
+                  <button class="md-no-style md-button md-no-ink md-no-focus-style transparent" ng-click="goToFriend(item.username)">
+                  <img class="img-circle2" style="height:80px;width:80px" src={{item.profile_url}}><img>
+                </button>
                   <md-tooltip>{{item.username}}</md-tooltip>
                 </md-grid-title>
-              </md-grid-list>            </md-card-content>
+              </md-grid-list>
+            <md-button class="green-bg" ng-click="tabChangeToFriends()">View More</md-button>
+             </md-card-content>
         </md-card>
 </div>
   </div>

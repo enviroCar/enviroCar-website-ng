@@ -16,10 +16,6 @@
 
 <div layout="column" flex>
     <md-toolbar layout="row" layout-align="end center" class="customtoolbar">
-        <!--<md-button hide-sm class="toolbar-button" aria-label="Search">
-            <i class="material-icons">search</i>
-        </md-button>
-      -->
         <md-button class="white-bg" ng-cloak ng-show="$root.showlogout" aria-label="Notifications" ui-sref="login">
           <img style="height:20px;width:20px" ng-src="assets/images/ic_power_settings_new_white_48dp.png"/>
           <span style="color:white">{{'LOGOUT' | translate}}</span>
@@ -89,7 +85,5 @@
           <md-button ng-click="nextpage()">Load More</md-button>
         </md-card-actions>
         </md-card>
-      <!--  <div ng-include src="'app/views/partials/messages.html'"/>  SOme content if needed can be added here-->
-
     </section>
 </md-sidenav>

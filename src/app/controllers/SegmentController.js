@@ -120,7 +120,7 @@ angular.module('app')
           labelThreshold: 0,
           legend: chart.chart1legend,
           donut: true,
-          donutLabelsOutside: true,
+          labelsOutside: true,
           cornerRadius: 0,
           donutRatio: 0.45
         }
@@ -1002,13 +1002,14 @@ angular.module('app')
 
                     } else {
 
-                      var temporaryspeed = JSON.parse(JSON.stringify(
+                      var temporaryconsumption = JSON.parse(JSON.stringify(
                         $scope
                         .dataSpeed))
-                      console.log(temporaryspeed[0])
-                      temporaryspeed[0]['values'][0]['value'] = "NA";
+                      console.log(temporaryconsumption[0])
+                      temporaryconsumption[0]['values'][0]['value'] =
+                        Number.Nan;
                       if ($scope.widgetType3 == "Consumption") {
-                        $scope.dataoverall = temporaryspeed;
+                        $scope.dataoverall = temporaryconsumption;
                       }
                       console.log($scope.dataoverall);
                       consumptionDataCalculated = JSON.parse(JSON.stringify(
@@ -1051,8 +1052,7 @@ angular.module('app')
                         $scope
                         .dataCO2))
                       console.log(temporaryco2[0])
-                      temporaryco2[0]['values'][0]['value'] =
-                        "NA";
+                      temporaryco2[0]['values'][0]['value'] = Number.Nan;
                       if ($scope.widgetType3 == "CO2") {
                         $scope.dataoverall = temporaryco2;
                       }
@@ -1220,33 +1220,7 @@ angular.module('app')
 
 
         }
-        console.log(Co2sum + " " + fuelSum)
-        console.log(units)
-        var fuelsplit;
-        console.log(units['Consumption']);
-        //  if(typeof units['Consumption'])
-        if ((units['Consumption']) == undefined) {
-          console.log("the consumption parameter is not available");
-          fuelsplit = ["NA", ""];
-        } else {
-          fuelsplit = units['Consumption'].split("/");
-        }
-        var co2split;
-        if (units['CO2'] == undefined) {
-          co2split = ["NA", ""];
-        } else {
-          co2split = units['CO2'].split("/");
-        }
-        if (consumption_avg == undefined) {
-          consumption_avg = "NA";
-        } else {
-          consumption_avg = consumption_avg.toFixed(2);
-        }
-        if (co2_avg == undefined) {
-          co2_avg = "NA";
-        } else {
-          co2_avg = co2_avg.toFixed(2);
-        }
+
         $scope.tracksummary = {
           distance: distance.toFixed(2),
           vehiclemodel: vehiclemodel,
@@ -1257,8 +1231,6 @@ angular.module('app')
           unitsofdistance: "Km",
           unitsoftime: "Minutes",
           fuel: fuelSum.toFixed(2),
-          unitsoffuel: fuelsplit[0],
-          unitsofco2emission: co2split[0],
           co2emissionperhour: consumption_avg,
           starttime: new Date(starttimeg).toLocaleString(),
           endtime: new Date(endtimeg).toLocaleString()
