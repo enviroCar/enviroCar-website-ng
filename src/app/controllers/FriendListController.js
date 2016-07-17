@@ -39,7 +39,7 @@ angular.module('app')
         // time being for profile pics.
         for (var i = 0; i < $scope.data_friends_4.length; i++) {
           $scope.data_friends_4[i]['profile_url'] =
-            "assets\\images\\profiledummy" + (i + 1).toString() + ".png";
+            "assets/images/profiledummy" + (i + 1).toString() + ".png";
         }
         console.log($scope.data_friends_4);
       });
