@@ -14,7 +14,7 @@ angular.module('app')
       dashboard, leafletMarkerEvents) {
       var data_global = {}
       var latlongarray = [];
-
+      $scope.SegmentAPI = true;
       $scope.slider = {
         minValue: 0,
         options: {
@@ -1344,7 +1344,44 @@ angular.module('app')
           }
         }
       }
+      $scope.showSegmentAPI = function() {
+        console.log("User has requested for more data");
+        $scope.SegmentAPI = false;
+        var coordinates = [];
+        // now we have to construct the POST query to retirieve the results. //
+        for (var i = $scope.slider.minValue; i < $scope.slider.maxValue; i++) {
+          coordinates.push([data_global.data.features[i]['geometry'][
+            'coordinates'
+          ][1], data_global.data.features[i]['geometry'][
+            'coordinates'
+          ][0]]);
+        }
+        var dataput = {
+          "type": "Feature",
+          "geometry": {
+            "type": "LineString",
+            "coordinates": coordinates
+          },
+          "timeInterval": {
+            "dateStart": "2010-06-08T11:29:10Z",
+            "dateEnd": "2026-09-08T11:29:10Z",
+            "daytimeStart": "1:30",
+            "daytimeEnd": "15:30"
+          },
+          "tolerance": 10.0
+        };
+
+        var req = {
+          method: 'POST',
+          url: "https://envirocar.org/envirocar-rest-analyzer/dev/rest/route/statistics",
+          data: dataput
+        }
+        $http(req).then(function(resp) {
+          console.log(resp);
+        })
+      }
     }
+
   ]);
 
 angular.module('app')

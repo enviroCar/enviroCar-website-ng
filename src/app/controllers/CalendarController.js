@@ -9,6 +9,14 @@ angular.module('app')
       $rootScope,
       tracks_calendar,
       MaterialCalendarData) {
+      $scope.buttonClickCurrentDate = function() {
+        console.log("came here");
+        $scope.selectedDate = new Date();
+        console.log($scope.selectedDate);
+        $scope.dayClick(new Date());
+      }
+
+
       var username;
       if ($stateParams.user == "") {
         username = $rootScope.globals.currentUser.username;
@@ -203,6 +211,7 @@ angular.module('app')
         $scope.direction = direction;
       };
       $scope.dayClick = function(date) {
+
         $scope.no_data = false;
         $scope.tracks = [];
         var tracks_builder = [];

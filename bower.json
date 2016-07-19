@@ -26,13 +26,14 @@
     "material-calendar": "^0.2.14",
     "heatmap.js-amd": "*",
     "ng-country-select": "^0.1.4",
-    "angularjs-slider": "^5.3.0"
+    "angularjs-slider": "^5.3.0",
+    "angular-ui-calendar": "^1.0.1"
   },
   "devDependencies": {
     "angular-translate": "^2.11.0"
   },
   "resolutions": {
     "angular-material": "^1.0.6",
-    "angular": "^1.x"
+    "angular": "1.5.7"
   }
 }

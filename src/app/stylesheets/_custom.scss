@@ -18,6 +18,77 @@ padding: 8px;
 
 }
 
+.card-body
+{
+  padding-top: 20px;
+    padding-right: 24px;
+    padding-bottom: 20px;
+    padding-left: 44px;
+}
+
+.m-b {
+    margin-bottom: 0px;
+}
+
+.streamline .sl-item::after {
+    position: absolute;
+    bottom: 0px;
+    top:-5px;
+    left: 0px;
+    width: 32px;
+    height: 32px;
+    margin-left: -17px;
+    background-color: white;
+    content: "";
+    border-top-color:  rgb(140, 191, 63);
+    border-right-color: rgb(0, 101, 160);
+    border-bottom-color: rgb(140, 191, 63);
+    border-left-color: rgb(140, 191, 63);
+    border-style: solid;
+    border-width: 9px;
+    border-radius: 50%;
+}
+
+
+::before, ::after {
+    box-sizing: border-box;
+}
+.b-accent {
+    border-color: rgb(140, 191, 63);
+}
+.b-info {
+    border-color: rgb(33, 150, 243);
+}
+.b-l {
+    border-left: 3px solid rgb(140, 191, 63);
+}
+.streamline {
+    position: relative;
+    border-color: rgba(140, 191, 63,1);
+}
+
+.sl-item
+{
+  cursor: pointer; cursor: hand;
+  position: relative;
+  padding-bottom: 0px;
+
+}
+
+*:focus {
+    outline: none;
+}
+
+::before, ::after {
+    box-sizing: border-box;
+}
+
+.sl-content
+{
+    padding-bottom: 0px;
+    margin-top: 0px;
+    margin-left: 37px;
+}
 md-tabs {
     transition: 0s !important;
 }
@@ -26,6 +97,11 @@ md-tabs {
   transition: all .1s ease-in-out;
     border-radius: 50%;
 }
+
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
 
 .img-circle2:hover { transform: scale(1.05); }
 
