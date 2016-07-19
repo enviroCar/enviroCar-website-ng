@@ -483,6 +483,18 @@
 
       </md-card>
     </div>
+    <div layout-gt-md="row">
+      <div style="width:100%;text-align:center">
+        <md-button ng-if="SegmentAPI" ng-click="showSegmentAPI()">
+          Look for other Tracks close by
+        </md-button>
+        <md-card ng-if="!SegmentAPI">
+          <md-card-content>
+            <p>wjuwd</p>
+          </md-card-content>
+        </md-card>
+      </div>
+    </div>
     </div>
     </div>
     </div>

@@ -176,8 +176,21 @@ angular.module('app')
               .data.tracks[cntr].id;
             helper_events['url'] = dashboard.urltracks + data.data.tracks[
               cntr].id + "/preview";
+            var seconds_passed = new Date(data.data.tracks[cntr]
+                .end).getTime() -
+              new Date(data.data.tracks[cntr]
+                .begin).getTime();
+            var seconds = seconds_passed / 1000;
+            var timeoftravel = seconds / 60;
+            // time of travel is in minutes
+            // convert to the right format. of hh:mm:ss;
+            date_for_seconds = new Date(null);
+            date_for_seconds.setSeconds(seconds);
+            date_hh_mm_ss = date_for_seconds.toISOString().substr(
+              11, 8)
+            helper_events['travelTime'] = date_hh_mm_ss;
             helper_events['begin'] = new Date(data.data.tracks[cntr]
-              .modified).toLocaleString();
+              .begin);
             helper_events['distance'] = (data.data.tracks[cntr][
                 'length'
               ] != undefined) ? data.data.tracks[cntr]['length']

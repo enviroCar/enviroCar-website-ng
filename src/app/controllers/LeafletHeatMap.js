@@ -2120,7 +2120,7 @@ angular.module('app')
           $scope.center = {
             lat: mid_point[1],
             lng: mid_point[0],
-            zoom: 4
+            zoom: 6
           }
           $scope.layers.overlays = {
             heat: {
@@ -2177,21 +2177,22 @@ angular.module('app')
         center: {},
         layers: {
           baselayers: {
-
-            osm: {
-              name: 'OpenStreetMap',
-              url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-              type: 'xyz'
-            },
             mapbox_light: {
               name: 'Mapbox Light',
               url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
               type: 'xyz',
               layerOptions: {
                 apikey: 'pk.eyJ1IjoibmF2ZWVuamFmZXIiLCJhIjoiY2lsYnVmamE0MDA1MXdnbHpvNGZianRuOCJ9.5KqDlJGBKr7ZF9Rdg6j_yQ',
-                mapid: 'naveenjafer.0hi7mg6o'
+                mapid: 'naveenjafer.0n3ooo76'
               }
+            },
+
+            osm: {
+              name: 'OpenStreetMap',
+              url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+              type: 'xyz'
             }
+
 
           }
 

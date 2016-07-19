@@ -22,11 +22,13 @@
                 day-tooltip-format="'fullDate'"
                 week-starts-on="firstDayOfWeek"
                 disable-future-selection="true"
-
+                data-start-month="{{start_month}}"
+                data-start-year="{{start_year}}"
                 day-content="setDayContent"
                 ></calendar-md>
               </div>
               <div style="width:100%">
+                <md-button ng-click="buttonClickCurrentDate()">Go to current date</md-button>
                 <div style="width:100%;text-align:center">
                   <h3 style="color:rgba(0,0,0,0.7)">Monthly Overview</h3>
                 </div>
@@ -110,7 +112,7 @@
         <md-button aria-label="previous" ng-click="previousPage();" ng-disabled="hasNoPreviousPage();">
           <i class="material-icons">keyboard_arrow_left</i>
         </md-button>
-        <md-button ng-repeat="page in pages" ng-click="jumpToPage(page);" ng-class="{'md-raised md-primary': page === selectedPage}">
+        <md-button ng-repeat="page in pages" style="text-color:white" ng-click="jumpToPage(page);" ng-class="{'md-raised md-primary': page === selectedPage}">
           {{page}}
         </md-button>
         <md-button aria-label="next" ng-click="nextPage();" ng-disabled="hasNoNextPage();">

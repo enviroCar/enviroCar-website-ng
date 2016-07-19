@@ -4,6 +4,7 @@ angular.module('app')
     'requesthomestats',
     function($scope, $http, $rootScope, $stateParams, $state,
       requesthomestats) {
+      $scope.showMoreFriends = false;
       $scope.selectedIndex = 2;
       $http.defaults.headers.common = {
         'X-User': $rootScope.globals.currentUser.username,
@@ -35,11 +36,17 @@ angular.module('app')
         }
         $scope.data_friends = data2;
         $scope.data_friends_4 = JSON.parse(JSON.stringify(data2)).slice(0,
-          4);
+          3);
+        $scope.remainingFriends = data2.length - 3;
+        if ($scope.remainingFriends > 0) {
+          $scope.showMoreFriends = true;
+          $scope.remainingFriends = $scope.remainingFriends.toString() +
+            "+";
+        }
         // time being for profile pics.
         for (var i = 0; i < $scope.data_friends_4.length; i++) {
           $scope.data_friends_4[i]['profile_url'] =
-            "assets\\images\\profiledummy" + (i + 1).toString() + ".png";
+            "assets/images/profiledummy" + (i + 1).toString() + ".png";
         }
         console.log($scope.data_friends_4);
       });
