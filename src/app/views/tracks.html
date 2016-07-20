@@ -126,4 +126,77 @@
 </div>
 </div>
 </md-tab>
+<md-tab label="{{'ALL_TRACKS_TAB' | translate}}">
+    <div class="middle">
+      <div layout-gt-md="row" style="text-align:center">
+        <md-card ng-controller="filterTracksController" style="max-height:600px;width:60%;display: table;margin-right: auto;margin-left: auto;" md-theme-watch >
+          <!-- <md-toolbar style="color:blac;background-color:white" >
+            <div class="md-toolbar-tools">
+
+              <md-select style="color:white;width:15%" ng-model="widgetType2" >
+                  <md-option ng-model="d" ng-value="d" ng-click="selecteditemchanged(d)" data-ng-repeat="d in piechartoptions">{{d}}</md-option>
+          </md-select>
+          <span flex></span>
+
+
+
+            </div>
+
+          </md-toolbar> -->
+          <md-toolbar style="color:black;background-color:rgba(185,217,137,1)" ng-show="!showSearch">
+  <div class="md-toolbar-tools">
+    <md-button ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
+      <ng-md-icon icon="menu"></ng-md-icon>
+    </md-button>
+    <md-select ng-model="filterSelected">
+        <md-option ng-model="filterSelected" ng-value="d" ng-click="changeFilter(d)" ng-selected="Modified" data-ng-repeat="d in filterOptions">{{d}}</md-option>
+</md-select>
+    <span flex></span>
+    <md-button aria-label="Search" ng-click="showSearch = !showSearch">
+<i class="material-icons md-36">search</i>
+    </md-button>
+  </div>
+</md-toolbar>
+<md-toolbar style="color:black;background-color:white" ng-show="showSearch">
+  <div class="md-toolbar-tools">
+    <md-button ng-click="showSearch = !showSearch" aria-label="Back">
+<i class="material-icons md-36">keyboard_arrow_left</i>
+    </md-button>
+    <md-input-container md-theme="input" style="padding-top:30px" flex>
+      <label>black</label>
+      <input ng-model="search" placeholder="enter search">
+    </md-input-container>
+    <md-button aria-label="Search" ng-click="showSearch = !showSearch">
+      <i class="material-icons md-36">search</i>
+    </md-button>
+  </div>
+
+</md-toolbar>
+          <md-card-content ng-controller="filterTracksController" class="nopadding">
+            <md-content style="max-height:570px" >
+              <p style="font-size:17px">Showing {{(tracks|filter:search).length}} of {{tracks.length}} tracks</p>
+              <md-list>
+                    <md-list-item class="md-3-line md-long-text" ng-repeat="item in tracks | filter:search | orderBy:filterOrig" ng-click="showAdvanced($event,item.TrackId)">
+                      <div class="md-list-item-text" layout="column">
+                          <h3><b>{{item.Start | date:'medium'}}</b></h3>
+                          <p>{{item.Vehicle}} - {{item.Distance}} Km</p>
+                          <p>{{item.DurationString}}</p>
+                          <md-icon class="md-secondary material-icons" ng-click="goToActivity(track.id)" >multiline_chart</md-icon>
+                        </div>
+                    <!--    <div class="md-list-item-text" >
+                          <h3><b>{{track.begin}}</b></h3>
+                          <h4>Vehicle - {{track.sensor.properties.model}}</h4>
+                          <p>Distance - {{track.length}} Km</p>
+                        </div>
+                      </div> -->
+
+                    </md-list-item>
+                  </md-list>
+
+            </md-content>
+          </md-card-content>
+          </md-card>
+      </div>
+    </div>
+</md-tab>
   </md-tabs>
