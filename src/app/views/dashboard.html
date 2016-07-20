@@ -167,8 +167,9 @@
                         <!--  <img class="md-avatar" src="{{event.url}}" style="width:80px;height:80px">
                         </img> -->
                       <div class="sl-content" >
-                      <p style=color:rgba(0,101,160,0.9)><b>{{event.begin | date:'medium'}}</b></p>
-                      <span>
+                      <p style="color:rgba(0,101,160,0.9);line-height:100%;margin-left:-10px"><b>{{event.begin | date:'medium'}}</b></p>
+                      <div style="height:40px">
+                      <span style="line-height:70%">
                         <i class="material-icons md-24" style="height:28px;width:28px">directions_car</i>
                         {{event.car}} - {{event.distance}} Km
                       </span>
@@ -177,6 +178,7 @@
                         <i class="material-icons md-24" style="height:28px;width:28px">timer</i>
                         {{event.travelTime}}
                       </span>
+                    </div>
                     </p>
                     </div>
 
