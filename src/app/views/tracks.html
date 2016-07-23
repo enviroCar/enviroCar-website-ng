@@ -143,8 +143,10 @@
             </div>
 
           </md-toolbar> -->
-          <md-toolbar style="color:black;background-color:rgba(185,217,137,1)" ng-show="!showSearch">
+          <md-toolbar style="color:black;background-color:rgba(185,217,137,1)" md-theme="default" ng-show="!showSearch">
   <div class="md-toolbar-tools">
+    <p>Order by - </p>
+    <p>&nbsp</p>
     <md-button ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
       <ng-md-icon icon="menu"></ng-md-icon>
     </md-button>
@@ -172,11 +174,49 @@
   </div>
 
 </md-toolbar>
-          <md-card-content ng-controller="filterTracksController" class="nopadding">
+          <md-card-content ng-controller="filterTracksController" >
+            <!-- Date filter. -->
+            <!-- Distance Filter -->
+            <div style="width:100%" layout="column" layout-align="center center">
+            <p>Search track by date</p>
+            <div layout="column" layout-align="center center" style="width:100%">
+            <md-select ng-model="dateCustom" style="width:80%">
+              <md-option ng-model="dateCustom" ng-click="defaultDatesAll()" selected>All Days</md-option>
+              <md-option  ng-model="dateCustom" ng-click="defaultDatesCustom()">Custom</md-option>
+            </md-select>
+            <div layout="row" layout-align="center center">
+            <br ng-show="dateCustomShow"></br>
+            <md-datepicker style="padding-bottom:5%" ng-change="startDateChange()" ng-show="dateCustomShow" ng-model="dateStartCustom" md-placeholder="Start date"></md-datepicker>
+            <md-datepicker style="padding-bottom:5%" ng-change="endDateChange()" ng-show="dateCustomShow" ng-model="dateEndCustom" md-placeholder="End date"></md-datepicker>
+          </div>
+          </div>
+        </div>
+        <div style="width:100%" class="borderdiv" layout="column" layout-align="center center">
+          <p>Search track by length</p>
+          <div layout="column" layout-align="center center" style="width:100%">
+            <md-select ng-model="distanceCustom" style="width:80%">
+              <md-option ng-model="distanceCustom" ng-click="defaultDistanceAll()" selected>All lengths</md-option>
+              <md-option ng-model="distanceCustom" ng-click="defaultDistanceCustom()">Custom</md-option>
+            </md-select>
+            <div layout="row" layout-align="center center">
+            <span>&nbsp&nbsp&nbsp</span>
+            <md-input-container style="padding-top:0.35%" ng-show="distanceCustomShow">
+                <input type="number" ng-model="minDistanceFilter" placeholder="Longer than(Km)" style="width:50%">
+            </md-input-container>
+            <span>&nbsp&nbsp&nbsp</span>
+            <md-input-container style="padding-top:0.35%" ng-show="distanceCustomShow" >
+                <input type="number" ng-model="maxDistanceFilter" placeholder="Shorter than(Km)" style="width:50%">
+            </md-input-container>
+          </div>
+        </div>
+      </div>
+      <md-button md-theme="blue" class="white-bg" ng-show="submitButtonShow" ng-click="submitButtonAction()">Search</md-button>
+      <p style="font-size:17px">Showing {{(tracks|filter:search | filter:distanceFilter | filter:dateFilter).length}} of {{tracks.length}} tracks</p>
+
             <md-content style="max-height:570px" >
-              <p style="font-size:17px">Showing {{(tracks|filter:search).length}} of {{tracks.length}} tracks</p>
+
               <md-list>
-                    <md-list-item class="md-3-line md-long-text" ng-repeat="item in tracks | filter:search | orderBy:filterOrig" ng-click="showAdvanced($event,item.TrackId)">
+                    <md-list-item class="md-3-line md-long-text" ng-repeat="item in tracks | filter:search | orderBy:filterOrig | filter:dateFilter | filter:distanceFilter" ng-click="showAdvanced($event,item.TrackId)">
                       <div class="md-list-item-text" layout="column">
                           <h3><b>{{item.Start | date:'medium'}}</b></h3>
                           <p>{{item.Vehicle}} - {{item.Distance}} Km</p>

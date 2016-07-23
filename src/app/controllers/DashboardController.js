@@ -170,6 +170,8 @@ angular.module('app')
             var helper_events = {};
             helper_events['car'] = data.data.tracks[cntr].sensor.properties
               .model;
+            helper_events['manufacturer'] = data.data.tracks[cntr].sensor
+              .properties.manufacturer;
             helper_events['id'] = data.data.tracks[cntr].id;
             helper_events['title'] = data.data.tracks[cntr].name;
             helper_events['urlredirect'] = dashboard.urlredirect + data

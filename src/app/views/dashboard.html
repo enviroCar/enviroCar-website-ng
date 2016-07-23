@@ -171,23 +171,21 @@
                       <div style="height:40px">
                       <span style="line-height:70%">
                         <i class="material-icons md-24" style="height:28px;width:28px">directions_car</i>
-                        {{event.car}} - {{event.distance}} Km
+                        {{event.manufacturer}} - {{event.car}}
                       </span>
                       <p>
                       <span>
                         <i class="material-icons md-24" style="height:28px;width:28px">timer</i>
-                        {{event.travelTime}}
+                        {{event.travelTime}} - {{event.distance}} Km
                       </span>
                     </div>
                     </p>
                     </div>
-
                     <md-tooltip class="trackpreview" md-direction="left">
                     <md-content >
                     <img src={{event.url}} style="width:480px;height:380px"></img>
                     </md-content>
                   </md-tooltip>
-
                 </div>
               </div>
               </div>

@@ -18,6 +18,10 @@ padding: 8px;
 
 }
 
+md-datepicker.md-default-theme {
+  background: transparent;
+}
+
 .card-body
 {
   padding-top: 20px;
@@ -294,6 +298,13 @@ body {
     margin-right: auto;
 }
 
+.borderdiv
+{
+  border-top-color: #0065A0;
+  border-top-width: 3px;
+  border-top-style: solid;
+}
+
 .loader_dashboard2 {
     display: block;
     margin-top: 20%;
@@ -378,8 +389,9 @@ background-color: #B9D989;
 color: black;
 
 }
-.white-bg:hover {
-    background-color: blue;
+.white-bg:not([disabled]):hover {
+    background-color: black;
+    color:black;
 }
 .profiletab .profile-pic{
   width: 350px;
