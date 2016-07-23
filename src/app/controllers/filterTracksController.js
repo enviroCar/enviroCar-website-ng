@@ -54,8 +54,6 @@ angular.module('app')
       $scope.defaultDatesAll = function() {
         $scope.dateCustom = "All days"
         $scope.dateCustomShow = false;
-        if ($scope.distanceCustomShow == false)
-          $scope.submitButtonShow = false;
       }
 
       $scope.startDateChange = function() {
@@ -82,8 +80,6 @@ angular.module('app')
       $scope.defaultDistanceAll = function() {
         $scope.distanceCustom = "All lengths"
         $scope.distanceCustomShow = false;
-        if ($scope.dateCustomShow == false)
-          $scope.submitButtonShow = false;
       }
 
       $scope.defaultDistanceCustom = function() {
@@ -107,17 +103,17 @@ angular.module('app')
           console.log($scope.dateStartObject);
           console.log($scope.dateEndObject);
           // only in this case will the filter be applied to the date filtering capabilities.
-          $scope.modifiedStartDate = $scope.dateStartObject.getTime();
-          $scope.modifiedEndDate = $scope.dateEndObject.getTime();
+          $scope.modifiedStartDate = $scope.dateStartCustom.getTime();
+          $scope.modifiedEndDate = $scope.dateEndCustom.getTime();
         }
       }
       $scope.dateFilter = function(item) {
         console.log($scope.dateCustom);
-        if ($scope.dateCustom == "All days") {
+        if ($scope.dateCustom === "All Days") {
           console.log("never came here");
           return (item.Start);
         } else {
-
+          console.log("should not" + $scope.dateCustom);
           if ($scope.modifiedStartDate == undefined) {
             $scope.modifiedStartDate = 0;
           }
@@ -138,6 +134,7 @@ angular.module('app')
         if ($scope.distanceCustom == "All lengths") {
           return (item.Distance)
         } else {
+          console.log("not come");
           if ($scope.modifiedMinDistance == undefined) {
             $scope.modifiedMinDistance = 0;
           }
