@@ -182,7 +182,7 @@
             <div layout="column" layout-align="center center" style="width:100%">
             <md-select ng-model="dateCustom" style="width:80%">
               <md-option ng-model="dateCustom" ng-click="defaultDatesAll()" selected>All Days</md-option>
-              <md-option  ng-model="dateCustom" ng-click="defaultDatesCustom()">Custom</md-option>
+              <md-option ng-model="dateCustom" ng-click="defaultDatesCustom()">Custom</md-option>
             </md-select>
             <div layout="row" layout-align="center center">
             <br ng-show="dateCustomShow"></br>
@@ -210,7 +210,7 @@
           </div>
         </div>
       </div>
-      <md-button md-theme="blue" class="white-bg" ng-show="submitButtonShow" ng-click="submitButtonAction()">Search</md-button>
+      <md-button md-theme="blue" class="white-bg" ng-click="submitButtonAction()">Search</md-button>
       <p style="font-size:17px">Showing {{(tracks|filter:search | filter:distanceFilter | filter:dateFilter).length}} of {{tracks.length}} tracks</p>
 
             <md-content style="max-height:570px" >
