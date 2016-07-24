@@ -89,13 +89,22 @@ angular.module('app')
       var dataSpeedContainer = {
         'Distance': [{
           key: '0-60 Km/h',
-          y: speedgraph_data.statistics['0'].distance
+          y: (speedgraph_data.statistics['0'].distance * 100) / (
+            speedgraph_data.statistics['0'].distance +
+            speedgraph_data.statistics['60'].distance +
+            speedgraph_data.statistics['130'].distance)
         }, {
           key: '61-130 Km/h',
-          y: speedgraph_data.statistics['60'].distance
+          y: (speedgraph_data.statistics['60'].distance * 100) / (
+            speedgraph_data.statistics['0'].distance +
+            speedgraph_data.statistics['60'].distance +
+            speedgraph_data.statistics['130'].distance)
         }, {
           key: '>130Km/Hr',
-          y: speedgraph_data.statistics['130'].distance
+          y: (speedgraph_data.statistics['130'].distance * 100) / (
+            speedgraph_data.statistics['0'].distance +
+            speedgraph_data.statistics['60'].distance +
+            speedgraph_data.statistics['130'].distance)
         }],
         'Time': [{
           key: '0-60 Km/h',

@@ -63,14 +63,20 @@
           <md-card-content flex>
 
             <md-content>
-                    <md-list-item ng-show="no_data" md-theme="default" md-ink-ripple="#0065A0" class="md-3-line md-long-text " ng-repeat='event in tracks'  ng-click="showAdvanced($event,event.id)">
-                      <img class="md-avatar" src={{event.url}} style="width:80px;height:80px"></img>
+                <!--    <md-list-item ng-show="no_data" md-theme="default" md-ink-ripple="#0065A0" class="md-3-line md-long-text " ng-repeat='event in tracks'  ng-click="showAdvanced($event,event.id)"> -->
+                 <md-list-item ng-show="no_data" md-theme="default" md-ink-ripple="#0065A0" class="md-3-line md-long-text " ng-repeat='event in tracks'  ng-click="goToActivity(event.id)">
+                    <!--  <img class="md-avatar" src={{event.url}} style="width:80px;height:80px"></img> -->
                     <div class="md-list-item-text" layout="column">
-                    <h3><b>{{event.begin}}</b></h3>
-                    <p>Vehicle - {{event.car}}</p>
-                    <p>Distance - {{event.length}} Km</p>
-                       <md-icon class="md-secondary material-icons" ng-click="goToActivity(event.id)" >multiline_chart</md-icon>
+                    <p style="color:rgba(0,101,160,0.9)"><b>{{event.begin | date:'medium'}}</b></p>
+                    <p>{{event.manufacturer}} - {{event.car}}</p>
+                    <p>{{event.travelTime}} - {{event.length}} Km</p>
+                    <!--   <md-icon class="md-secondary material-icons" ng-click="goToActivity(event.id)" >multiline_chart</md-icon> -->
                   </div>
+                  <md-tooltip popover-trigger="focus" class="trackpreview" md-direction="left">
+                  <md-content >
+                  <img src={{event.url}} style="width:480px;height:380px"></img>
+                  </md-content>
+                </md-tooltip>
                   </md-list-item>
                   <div layout="row" ng-show="!no_data" layout-align="center center">
                     <p>Select days that have the track icon to explore</p>
@@ -216,13 +222,19 @@
             <md-content style="max-height:570px" >
 
               <md-list>
-                    <md-list-item class="md-3-line md-long-text" ng-repeat="item in tracks | filter:search | orderBy:filterOrig | filter:dateFilter | filter:distanceFilter" ng-click="showAdvanced($event,item.TrackId)">
+                  <!--  <md-list-item class="md-3-line md-long-text" ng-repeat="item in tracks | filter:search | orderBy:filterOrig | filter:dateFilter | filter:distanceFilter" ng-click="showAdvanced($event,item.TrackId)"> -->
+                   <md-list-item class="md-3-line md-long-text" ng-repeat="item in tracks | filter:search | orderBy:filterOrig | filter:dateFilter | filter:distanceFilter" ng-click="goToActivity(item.TrackId)">
                       <div class="md-list-item-text" layout="column">
-                          <h3><b>{{item.Start | date:'medium'}}</b></h3>
-                          <p>{{item.Vehicle}} - {{item.Distance}} Km</p>
-                          <p>{{item.DurationString}}</p>
-                          <md-icon class="md-secondary material-icons" ng-click="goToActivity(track.id)" >multiline_chart</md-icon>
+                          <p style="color:rgba(0,101,160,0.9)"><b>{{item.Start | date:'medium'}}</b></p>
+                          <p>{{item.manufacturer}} - {{item.Vehicle}}</p>
+                          <p>{{item.DurationString}} - {{item.Distance}} Km</p>
+                      <!--    <md-icon class="md-secondary material-icons" ng-click="goToActivity(item.TrackId)" >multiline_chart</md-icon> -->
                         </div>
+                        <md-tooltip popover-trigger="focus" class="trackpreview" md-direction="left">
+                        <md-content >
+                        <img src={{item.url}} style="width:480px;height:380px"></img>
+                        </md-content>
+                      </md-tooltip>
                     <!--    <div class="md-list-item-text" >
                           <h3><b>{{track.begin}}</b></h3>
                           <h4>Vehicle - {{track.sensor.properties.model}}</h4>

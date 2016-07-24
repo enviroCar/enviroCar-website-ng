@@ -48,6 +48,8 @@ angular.module('app')
       }
       $scope.currenttrack = {};
       $scope.showAdvanced = function(ev, eventid) {
+        $scope.tt_isOpen = false;
+        console.log()
         $scope.currenttrack = {};
         $scope.currenttrack['id'] = eventid;
         $scope.track = eventid;
@@ -251,6 +253,8 @@ angular.module('app')
             helper_object['name'] = global_tracks['tracks'][indexes[i]][
               'name'
             ];
+            helper_object['manufacturer'] = global_tracks['tracks'][indexes[
+              i]]['sensor']['properties']['manufacturer'];
             helper_object['begin'] = (new Date(global_tracks['tracks'][
               indexes[i]
             ][
@@ -264,6 +268,19 @@ angular.module('app')
             helper_object['length'] = global_tracks['tracks'][indexes[i]][
               'length'
             ].toFixed(2);
+
+            var seconds_passed = new Date(global_tracks['tracks'][indexes[i]]
+                ['end']).getTime() -
+              new Date(global_tracks['tracks'][indexes[i]]['begin']).getTime()
+            var seconds = seconds_passed / 1000;
+            var timeoftravel = seconds / 60;
+            // time of travel is in minutes
+            // convert to the right format. of hh:mm:ss;
+            date_for_seconds = new Date(null);
+            date_for_seconds.setSeconds(seconds);
+            date_hh_mm_ss = date_for_seconds.toISOString().substr(
+              11, 8)
+            helper_object['travelTime'] = date_hh_mm_ss;
             tracks_builder.push(helper_object);
           }
           console.log(tracks_builder);

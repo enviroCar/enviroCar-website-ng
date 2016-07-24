@@ -323,8 +323,13 @@ angular.module('app')
             .getTime();
           track_helper['Vehicle'] = data.data.tracks[i].sensor.properties
             .model;
+          track_helper['manufacturer'] = data.data.tracks[i].sensor.properties
+            .manufacturer;
           track_helper['Distance'] = data.data.tracks[i]['length'].toFixed(
             2);
+          track_helper['url'] =
+            "https://envirocar.org/api/stable/tracks/" + data.data.tracks[
+              i].id + "/preview";
           track_helper['Modified'] = data.data.tracks[i].modified;
           var seconds_passed = new Date(data.data.tracks[i]
               .end).getTime() -
