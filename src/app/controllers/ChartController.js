@@ -169,7 +169,7 @@ angular.module('app')
             return d.key;
           },
           y: function(d) {
-            return d.y;
+            return (d.y);
           },
           showLabels: true,
           duration: chart.chart1duration,
@@ -449,7 +449,7 @@ angular.module('app')
         console.log("fired");
         var temp_obj = {};
         for (var i = 0; i <= chart.numberofranges; i++) {
-          temp_obj['y'] = piechartsdata[phenomenon][i];
+          temp_obj['y'] = (piechartsdata[phenomenon][i] / len_data) * 100;
           var content;
           if (i != chart.numberofranges) {
             content = rangeobjects[phenomenon][0][i] + "-" +
@@ -799,9 +799,9 @@ angular.module('app')
             if (phenoms[j] == $scope.piechartselected) {
               var temp_obj = {};
               for (var i = 0; i <= chart.numberofranges; i++) {
-                temp_obj['y'] = piechartsdata[$scope.piechartselected][
+                temp_obj['y'] = (piechartsdata[$scope.piechartselected][
                   i
-                ];
+                ] * 100) / len_data;
                 var content;
                 if (i != chart.numberofranges) {
                   content = rangeobjects[$scope.piechartselected][0][i] +

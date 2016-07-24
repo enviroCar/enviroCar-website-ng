@@ -510,7 +510,8 @@ angular.module('app')
         console.log("fired");
         var temp_obj = {};
         for (var i = 0; i <= chart.numberofranges; i++) {
-          temp_obj['y'] = piechartsdata[phenomenon][i];
+          temp_obj['y'] = (piechartsdata[phenomenon][i] / ($scope.slider.maxValue -
+            $scope.slider.minValue + 1)) * 100;
           var content;
           if (i != chart.numberofranges) {
             content = rangeobjects[phenomenon][0][i] + "-" +
@@ -1113,9 +1114,9 @@ angular.module('app')
           if (phenoms[j] == $scope.piechartselected) {
             var temp_obj = {};
             for (var i = 0; i <= chart.numberofranges; i++) {
-              temp_obj['y'] = piechartsdata[$scope.piechartselected][
+              temp_obj['y'] = (piechartsdata[$scope.piechartselected][
                 i
-              ];
+              ] * 100) / (endindex - startindex);
               var content;
               if (i != chart.numberofranges) {
                 content = rangeobjects[$scope.piechartselected][0][i] +
