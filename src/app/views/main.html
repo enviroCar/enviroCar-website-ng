@@ -1,21 +1,55 @@
-<md-sidenav md-is-locked-open="$mdMedia('gt-sm')" md-component-id="left"
-            class="md-whiteframe-z1 md-sidenav-left">
+<md-sidenav  md-component-id="left"
+            class="md-whiteframe-z2 md-sidenav-left" style="width:25vw">
 
-      <md-button ng-repeat-start="item in vm.menuItems" layout="column" layout-align="center center"
-                 flex class="capitalize" ng-click="vm.selectItem(item)"
-                 ui-sref-active="md-primary" ui-sref="{{item.sref}}">
-          <div hide-sm hide-md class="md-tile-content">
-              <i class="material-icons md-36">{{item.icon}}</i>
+            <md-toolbar layout="column" style="min-height:30%">
+                <div class="md-toolbar-tools" style="height:50%">
+                  <i style="padding-top:30%;margin-left:-3%" class="material-icons md-128 white09">&#xE7FD;</i>
+
+                   <span flex></span>
+                   <md-button class="bg-white" class="md-icon-button" aria-label="Close Side Panel" ng-click="closeSideNavPanel()">
+                     <md-tooltip>Close Side Panel</md-tooltip>
+                     <i class="material-icons white09">&#xE314;</i>
+                   </md-button>
+                  </div>
+                  <div style="padding-top:20%;padding-left:7%">
+                  <p style="color:rgba(255,255,255,1);font-size:24px"><b>{{vm.profilename}}</b></p>
+                  <p style="color:rgba(255,255,255,0.7);font-size:14px;margin-top:-5%">{{vm.email}}</p>
+                </div>
+               </md-toolbar>
+               <div style="nopadding">
+                 <md-list>
+    <md-list-item class="nopadding" ng-repeat="item in vm.menuItems" ng-click="vm.selectItem(item)" ui-sref="{{item.sref}}" ui-sref-active="md-primary">
+        <md-item-content layout="row" layout-align="start center">
+          <div class="inset">
+            <i class="material-icons md-36 grey">{{item.icon}}</i>
           </div>
-          <div class="md-tile-content">
-              {{item.name}}
+          <div class="inset" style="padding-top:4%">{{item.name}}
           </div>
-      </md-button>
-      <md-divider ng-repeat-end></md-divider>
+        </md-item-content>
+    </md-list-item>
+    <md-divider></md-divider>
+    <md-subheader>Settings</md-subheader>
+    <md-item ng-repeat="item in admin">
+      <a>
+        <md-item-content md-ink-ripple layout="row" layout-align="start center">
+          <div class="inset">
+            <ng-md-icon icon="{{item.icon}}"></ng-md-icon>
+          </div>
+          <div class="inset">{{item.title}}
+          </div>
+        </md-item-content>
+      </a>
+    </md-item>
+  </md-list>
+</div>
 </md-sidenav>
 
 <div layout="column" flex>
-    <md-toolbar layout="row" layout-align="end center" class="customtoolbar">
+    <md-toolbar layout="row" layout-align="start center" class="customtoolbar">
+      <md-button ng-click="vm.toggleItemsList()" aria-label="Menu">
+          <i class="material-icons white09">menu</i>
+      </md-button>
+      <span flex></span>
         <md-button class="white-bg" ng-cloak ng-show="$root.showlogout" aria-label="Notifications" ui-sref="login">
           <img style="height:20px;width:20px" ng-src="assets/images/ic_power_settings_new_white_48dp.png"/>
           <span style="color:white">{{'LOGOUT' | translate}}</span>
@@ -29,9 +63,7 @@
       <img style="height:20px;width:20px" ng-src="assets/images/ic_account_circle_white_48dp.png"/>
             <span style="color:white">{{'PROFILE' | translate}}</span>
         </md-button>
-        <md-button hide-gt-sm ng-click="vm.toggleItemsList()" aria-label="Menu">
-            <i class="material-icons">menu</i>
-        </md-button>
+
 
     </md-toolbar>
 
