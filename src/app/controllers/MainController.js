@@ -4,12 +4,12 @@
     .module('app')
     .controller('MainController', [
       'navService', '$mdSidenav', '$mdBottomSheet', '$log', '$q', '$state',
-      '$mdToast', '$http', '$rootScope', '$translate',
+      '$mdToast', '$http', '$rootScope', '$translate', '$scope',
       MainController
     ]);
 
   function MainController(navService, $mdSidenav, $mdBottomSheet, $log, $q,
-    $state, $mdToast, $http, $rootScope, $translate) {
+    $state, $mdToast, $http, $rootScope, $translate, $scope) {
     console.log("In main Controller");
     var vm = this;
     /*  var login;
@@ -21,6 +21,15 @@
         profile = translations.profile;
       })
       */
+
+    $scope.showMobileMainHeader = true;
+    $scope.openSideNavPanel = function() {
+      $mdSidenav('left').open();
+    };
+    $scope.closeSideNavPanel = function() {
+      console.log("event fired for closing");
+      $mdSidenav('left').toggle();
+    };
     if (typeof $rootScope.globals.currentUser == 'undefined') {
       $rootScope.showlogout = false;
       //do nothing
@@ -32,8 +41,15 @@
       };
       vm.profilename = $rootScope.globals.currentUser.username;
       vm.url = "https://envirocar.org/api/stable/users/" + $rootScope.globals
-        .currentUser.username + "/avatar"
-
+        .currentUser.username + "/avatar";
+      vm.about = "https://envirocar.org/api/stable/users/" + $rootScope.globals
+        .currentUser.username;
+      $http.get(vm.about).then(function(response) {
+        console.log("executed");
+        console.log(response)
+        vm.email = response.data.mail;
+        console.log(vm.email);
+      })
       $http.get(vm.url, {
           responseType: 'arraybuffer'
         })

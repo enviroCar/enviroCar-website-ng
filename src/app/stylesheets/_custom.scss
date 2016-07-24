@@ -390,7 +390,7 @@ color: black;
 
 }
 .white-bg:not([disabled]):hover {
-    background-color: black;
+    //background-color: black;
     color:black;
 }
 .profiletab .profile-pic{
@@ -692,9 +692,9 @@ md-icon {
 }
 
 md-sidenav.md-locked-open.md-sidenav-left {
-  width: $left-sidenav-width;
-  min-width: $left-sidenav-width;
-  max-width: $left-sidenav-width;
+  //width: $left-sidenav-width;
+  //min-width: $left-sidenav-width;
+  //max-width: $left-sidenav-width;
 }
 
 a.md-button.md-warn.md-raised, a.md-button.md-warn.md-fab, .md-button.md-warn.md-raised, .md-button.md-warn.md-fab {
@@ -757,7 +757,12 @@ md-backdrop.md-sidenav-backdrop {
 .material-icons.md-24 { font-size: 24px; }
 .material-icons.md-36 { font-size: 36px; }
 .material-icons.md-48 { font-size: 48px; }
+.material-icons.md-128 { font-size: 128px; }
 
+.material-icons.grey { color: #616161; }
+
+
+.material-icons.white09 { color: white; }
 .nvd3.nv-pie .nv-pie-title {
   fill: rgb(68, 68, 68);
   font-weight: $font-weight-bold;
@@ -1054,4 +1059,29 @@ md-backdrop.md-sidenav-backdrop {
 	margin: 1em 4em 0 4em;
 }
 
+}
+
+.md-inbox:before {
+  content: "\f10c";
+}
+.md-star:before {
+  content: "\f2e5";
+}
+.md-send:before {
+  content: "\f119";
+}
+
+@sidebar-icon-width: 40px;
+@sidebar-icon-size: 20px;
+@sidebar-icon-color: @gray-dark;
+@sidebar-padding: 16px;
+@sidebar-divider: @sidebar-padding/2;
+
+.sidebar-divider, .sidebar-nav .divider {
+  position: relative;
+  display: block;
+  height: 1px;
+  margin-top: 8px;
+  padding: 0;
+  overflow: hidden;
 }

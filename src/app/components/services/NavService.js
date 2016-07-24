@@ -30,6 +30,7 @@
       icon: 'person',
       sref: '.table'
     }];
+
     console.log(menuItems);
     return {
       loadAllItems: function() {
