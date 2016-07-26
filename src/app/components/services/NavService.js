@@ -29,6 +29,10 @@
       name: 'Profile',
       icon: 'person',
       sref: '.table'
+    }, {
+      name: 'Segment',
+      icon: 'pie_chart',
+      sref:  '.segment'
     }];
 
     console.log(menuItems);

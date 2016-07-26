@@ -1,0 +1,29 @@
+<div class="middle">
+    <div ng-controller="SegmentIndependentController" layout-gt-md="row">
+        <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" style="height:620px" md-theme-watch>
+        <md-card-content class="nopadding">
+        <div>
+            <leaflet lf-center="london" id="segmentMap" markers="$root.markers" paths="$root.paths" event-broadcast="events" height="480px" width="100%"></leaflet>
+        </div>
+        <div layout-gt-xs="row" style="padding-top:6px">
+            <div style="width:50%;text-align:center">
+                <md-button class="white-bg" ng-click="resetPoints()">Reset points</md-button>    
+            </div>
+            <div style="width:50%;text-align:center">
+                <md-button class="white-bg" ng-click="searchForPoints()">Search for tracks</md-button>
+            </div>
+        </div>
+        <div style="padding-left:3%;padding-right:3%;layout="row" layout-align="center center">
+            <p>You can selelct upto a maximum of 10 points and also set a threshold using the slider.Information of all tracks of every user that falls in this location will be dislayed if any is found for the region you have chosen</p>
+        </div>
+        </md-card-content>
+        </md-card>
+        <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" style="height:480px" md-theme-watch>
+            <md-card-content>
+                <div layout="row" layout-align="center center">
+                    <p>Click on map to place a marker at that point, click on it again to delete it.</p>
+                </div>
+            </md-card-content>
+        </md-card>
+    </div>
+</div>

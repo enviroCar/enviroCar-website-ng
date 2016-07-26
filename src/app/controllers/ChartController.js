@@ -1,7 +1,6 @@
 /* Chart controller
   The controller that handles all the components in the chart.html page.
 */
-
 angular.module('app')
   .constant('chart', {
     chart1type: 'pieChart',

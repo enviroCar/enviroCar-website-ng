@@ -54,6 +54,7 @@ angular.module('app')
       'DASHBOARD': 'Dashboard',
       'TRACKS': 'Tracks',
       'TABLE': 'Profile',
+      'SEGMENT': 'Segment',
       'SPEED_PIE': 'Speed',
       'CONSUMPTION_PIE': 'Consumption',
       'CO2_PIE': 'CO2'
