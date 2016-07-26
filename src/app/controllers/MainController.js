@@ -81,12 +81,14 @@
         var dashboard;
         var tracks;
         var table;
-        $translate(['DASHBOARD', 'TRACKS', 'TABLE', 'SPEEDARRAY']).then(
+        var segment;
+        $translate(['DASHBOARD', 'TRACKS', 'TABLE', 'SPEEDARRAY','SEGMENT']).then(
           function(
             translations) {
             dashboard = translations.DASHBOARD;
             tracks = translations.TRACKS;
             table = translations.TABLE;
+            segment  = translations.SEGMENT;
             console.log(translations.SPEEDARRAY);
             console.log(translations);
             console.log("came here to nav service");
@@ -94,6 +96,7 @@
             vm.menuItems[0]['name'] = dashboard;
             vm.menuItems[1]['name'] = tracks;
             vm.menuItems[2]['name'] = table;
+            vm.menuItems[3]['name'] = segment;
             console.log(vm.menuItems);
 
           })

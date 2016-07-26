@@ -70,6 +70,14 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
       url: '/errorpage/:path/:status',
       authenticate: true,
     })
+    .state('home.segment', {
+      url: '/segment',
+      templateUrl: 'app/views/segment.html',
+      data: {
+        title: 'Segment'
+      },
+      authenticate: true
+    })
 
 
   $urlRouterProvider.otherwise('/dashboard/home/');
