@@ -1,7 +1,7 @@
 angular.module('app')
-  .controller("filterTracksController", ['$scope', '$rootScope', '$http',
-    '$stateParams', '$state', '$mdDialog', '$mdMedia', 'tracks_calendar',
-    function($scope, $rootScope, $http, $stateParams, $state, $mdDialog,
+  .controller("filterTracksController", ['$scope', '$q', '$rootScope', '$http',
+    '$stateParams', '$state','$mdDialog', '$mdMedia', 'tracks_calendar',
+    function($scope,$q, $rootScope, $http, $stateParams, $state, $mdDialog,
       $mdMedia, tracks_calendar) {
       $scope.dateCustomShow = false;
       $scope.distanceCustomShow = false;
@@ -107,45 +107,7 @@ angular.module('app')
           $scope.modifiedEndDate = $scope.dateEndCustom.getTime();
         }
       }
-      $scope.dateFilter = function(item) {
-        console.log($scope.dateCustom);
-        if ($scope.dateCustom === "All Days") {
-          console.log("never came here");
-          return (item.Start);
-        } else {
-          console.log("should not" + $scope.dateCustom);
-          if ($scope.modifiedStartDate == undefined) {
-            $scope.modifiedStartDate = 0;
-          }
-          if ($scope.modifiedEndDate == undefined) {
-            $scope.modifiedEndDate = new Date().getTime();
-          }
-          console.log(item.StartDateObject);
-          console.log($scope.modifiedStartDate);
-          console.log($scope.modifiedEndDate);
-          return (item.StartDateObject > $scope.modifiedStartDate && item.StartDateObject <
-            $scope.modifiedEndDate)
-        }
-      }
-
-      $scope.distanceFilter = function(item) {
-        console.log($scope.distanceCustom);
-
-        if ($scope.distanceCustom == "All lengths") {
-          return (item.Distance)
-        } else {
-          console.log("not come");
-          if ($scope.modifiedMinDistance == undefined) {
-            $scope.modifiedMinDistance = 0;
-          }
-          if ($scope.modifiedMaxDistance == undefined) {
-            $scope.modifiedMaxDistance = Infinity;
-          }
-          return (item.Distance > $scope.modifiedMinDistance && item.Distance <
-            $scope.modifiedMaxDistance)
-        }
-      }
-
+     
       $scope.showAdvanced = function(ev, eventid) {
         $scope.currenttrack = {};
         $scope.currenttrack['id'] = eventid;
@@ -177,6 +139,442 @@ angular.module('app')
         });
       };
 
+      $scope.vegetables = loadVegetables();
+      $rootScope.selectedVegetables = [];
+      $scope.autocompleteDemoRequireMatch = true;
+      $scope.searchText = null;
+      $scope.selectedItem  = null;
+      
+
+            $scope.sItems = [{
+          name: "Mini Cooper",
+          id: 0
+        }, {
+          name: "Lexus IS250",
+          id: 1
+        }, {
+          name: "Ford F150",
+          id: 2
+        }, {
+          name: "Toyota Prius",
+          id: 3
+        }, {
+          name: "Porsche 911",
+          id: 4
+        }, {
+          name: "Ferreri 488",
+          id: 5
+        }];
+
+        $scope.myItems = [$scope.sItems[4], $scope.sItems[5]];
+
+      $scope.transformChip = function (chip)
+      {
+        if(angular.isObject(chip))
+        {
+          return chip;
+        }
+        else{
+          return(chip);
+        }
+      }
+
+      $scope.querySearch = function (query)
+      {
+        var results = query ? $scope.vegetables.filter($scope.createFilterFor(query)) : [];
+        return results;
+      }
+
+      $scope.createFilterFor = function (query) {
+      var lowercaseQuery = angular.lowercase(query);
+      return function filterFn(vegetable) {
+        return (vegetable._lowername.indexOf(lowercaseQuery) === 0) ||
+            (vegetable._lowertype.indexOf(lowercaseQuery) === 0);
+         };
+      }
+
+      function loadVegetables() {
+      var veggies = [
+        {
+          'name': 'Distance',
+          'type': 'Brassica'
+        },
+        {
+          'name': 'Date',
+          'type': 'Brassica'
+        },
+        {
+          'name': 'Duration of Travel',
+          'type': 'Umbelliferous'
+        },
+        {
+          'name': 'Vehicle',
+          'type': 'Composite'
+        }
+      ];
+      return veggies.map(function (veg) {
+        veg._lowername = veg.name.toLowerCase();
+        veg._lowertype = veg.type.toLowerCase();
+        return veg;
+      });
+    }
+
+    $scope.getChipInfo = function(chip)
+    {
+      commonDialog(chip.name);
+    }
+    $scope.fruitNames = ['Apple', 'Banana', 'Orange'];
+    $scope.roFruitNames = angular.copy(self.fruitNames);
+
+    var distanceRange = {};
+    var dateRange = {};
+    var durationRange = {};
+    var vehiclesRange = {};
+    var vehiclesList = {};
+
+    $scope.add = function(chip) {
+      console.log(chip);
+      commonDialog(chip.name);
+      
+     // $scope.selectedVegetables.push({'name':'naveen','type':'new'})
+     // $scope.selected = chip;
+    }
+    var dateFilterPresent = false;
+    var distanceFilterPresent = false;
+    var durationFilterPresent = false;
+    var vehicleFilterPresent = false;
+    function commonDialog(filter)
+    {
+        var showObject = {};
+        if(filter == "Distance")
+        {
+          showObject = {
+            controller: DistanceDialogController,
+            templateUrl: 'app/views/DistanceDialogPage.html',
+            parent: angular.element(document.body),
+            clickOutsideToClose: true,
+            fullscreen: useFullScreen
+          }
+        }
+        else if(filter == "Date")
+        {
+          showObject = {
+            controller: DateDialogController,
+            templateUrl: 'app/views/DateDialogPage.html',
+            parent: angular.element(document.body),
+            clickOutsideToClose: true,
+            fullscreen: useFullScreen
+          }
+        }
+        else if(filter == "Duration of Travel")
+        {
+          showObject = {
+             controller: DurationDialogController,
+            templateUrl: 'app/views/DurationDialogPage.html',
+            parent: angular.element(document.body),
+            clickOutsideToClose: true,
+            fullscreen: useFullScreen
+          }
+        }
+        else if(filter == "Vehicle")
+        {
+          showObject = {
+            controller: VehicleDialogController,
+            templateUrl: 'app/views/VehicleDialogPage.html',
+            parent: angular.element(document.body),
+            clickOutsideToClose: true,
+            fullscreen: useFullScreen
+          }
+        }
+
+         var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
+        $mdDialog.show(showObject)
+          .then(function(answer) {
+            $scope.status = 'You said the information was "' + answer +
+              '".';
+          }, function() {
+            $scope.status = 'You cancelled the dialog.';
+          });
+        $scope.$watch(function() {
+          return $mdMedia('xs') || $mdMedia('sm');
+        }, function(wantsFullScreen) {
+          $scope.customFullscreen = (wantsFullScreen === true);
+        });
+    }
+    $scope.addFilter = function(filter)
+    {
+      var filterMap = {0:["Distance",distanceFilterPresent],1:["Date",dateFilterPresent],2:["Duration of Travel",durationFilterPresent],3:["Vehicle",vehicleFilterPresent]};
+      if(!filterMap[filter][1])
+      {
+        // if it is not already present only then add it
+         $rootScope.selectedVegetables.push({'name':filterMap[filter][0],'type':'new'});
+         $scope.add({'name':filterMap[filter][0]});
+      }
+      console.log(filter);
+      console.log($rootScope.selectedVegetables);
+      console.log("cotnetn"); 
+    }
+    function DistanceDialogController($scope, $mdDialog, $state) {
+       if(distanceFilterPresent == true)
+       {
+         $scope.minDistanceFilter = distanceRange['min'];
+         $scope.maxDistanceFilter = distanceRange['max'];
+       }
+      $scope.minDistanceFilter;
+
+       $scope.hide = function() {
+         distanceRange = {'min':$scope.minDistanceFilter,'max':$scope.maxDistanceFilter}
+         distanceFilterPresent = true;
+            $mdDialog.hide();
+            console.log(distanceRange);      
+        };
+
+        $scope.cancel = function() {
+          for(var i = 0 ; i < $rootScope.selectedVegetables.length; i++)
+          {
+              if($rootScope.selectedVegetables[i].name=="Distance" && !distanceFilterPresent)
+              {
+                // remove item
+                $rootScope.selectedVegetables.splice(i,1);
+              }
+          }
+          console.log($rootScope.selectedVegetables);
+          $mdDialog.cancel();
+        };
+    }
+
+       function DateDialogController($scope, $mdDialog, $state) {
+         if(dateFilterPresent == true)
+         {
+           $scope.dateStartCustom = dateRange['start'];
+           $scope.dateEndCustom = dateRange['end'];
+         }
+       $scope.hide = function() {
+         dateRange = {'start':$scope.dateStartCustom,'end':$scope.dateEndCustom};
+         dateFilterPresent = true;
+            $mdDialog.hide();
+            console.log(dateRange);
+        };
+        $scope.cancel = function() {
+          for(var i = 0 ; i < $rootScope.selectedVegetables.length; i++)
+          {
+              if($rootScope.selectedVegetables[i].name=="Date" && !dateFilterPresent)
+              {
+                // remove item
+                $rootScope.selectedVegetables.splice(i,1);
+              }
+          }
+          $mdDialog.cancel();
+        };
+    }
+
+    function DurationDialogController($scope, $mdDialog, $state) {
+       if(durationFilterPresent == true)
+         {
+           console.log("True if reached");
+           //which implies this is a event to change the existing filter
+           $scope.minDurationFilter = durationRange['min'];
+           $scope.maxDurationFilter = durationRange['max'];
+           console.log($scope.minDurationFilter);
+           console.log($scope.maxDurationFilter);
+         }
+       $scope.hide = function() {
+        
+         durationRange = {'min':$scope.minDurationFilter,'max':$scope.maxDurationFilter};
+         durationFilterPresent = true;
+            $mdDialog.hide();
+            console.log(dateRange);
+        };
+        $scope.cancel = function() {
+          for(var i = 0 ; i < $rootScope.selectedVegetables.length; i++)
+          {
+              if($rootScope.selectedVegetables[i].name=="Duration of Travel" && !durationFilterPresent)
+              {
+                // remove item
+                $rootScope.selectedVegetables.splice(i,1);
+              }
+          }
+          $mdDialog.cancel();
+        };
+    }
+
+    function VehicleDialogController($scope, $mdDialog, $state)
+    {
+      $scope.vehicleList = Object.keys(vehiclesList);
+      console.log($scope.vehicleList);
+         if(vehicleFilterPresent == true)
+         {
+           console.log("True if reached");
+           $scope.vehicles = JSON.parse(JSON.stringify(vehiclesRange))
+           //which implies this is a event to change the existing filter
+         }
+       $scope.hide = function() {
+          console.log($scope.vehicles);
+        	vehiclesRange = JSON.parse(JSON.stringify($scope.vehicles));
+         vehicleFilterPresent = true;
+            $mdDialog.hide();
+            console.log(dateRange);
+
+        };
+
+        $scope.cancel = function() {
+          for(var i = 0 ; i < $rootScope.selectedVegetables.length; i++)
+          {
+              if($rootScope.selectedVegetables[i].name=="Vehicle" && !vehicleFilterPresent)
+              {
+                // remove item
+                $rootScope.selectedVegetables.splice(i,1);
+              }
+          }
+          $mdDialog.cancel();
+        };
+    }
+
+   
+    /*var searchTracks = function()
+    {
+        var dateFilterPresent = false;
+   	    $scope.distanceFilterPresent = false;
+        $scope.durationFilterPresent = false;
+        $scope.vehicleFilterPresent = false;
+        console.log($rootScope.selectedVegetables);
+        console.log(dateRange);
+        console.log(distanceRange);
+        for(var i = 0; i < $rootScope.selectedVegetables.length; i++)
+        {
+            if($rootScope.selectedVegetables[i].name == "Date")
+            {
+                //Date is present in the filters
+                $scope.dateFilterPresent = true;
+            }
+            else if($rootScope.selectedVegetables[i].name == "Distance")
+            {
+              // Distance is present in the filters
+              $scope.distanceFilterPresent = true;
+            }
+            else if($rootScope.selectedVegetables[i].name == "Duration of Travel")
+            {
+              // Duration of Travel is present in the filters.
+              $scope.durationFilterPresent = true;
+            }
+            else if($rootScope.selectedVegetables[i].name == "Vehicle")
+            {
+              // Vehicle is present in the filters
+              $scope.vehicleFilterPresent = true;
+            }
+        }
+    }
+    */
+
+     $scope.dateFilter = function(item) {
+        if(!dateFilterPresent)
+        {
+          //no date filter is present. Return all
+          return(item.Start);
+        }
+        else{
+          console.log(dateRange['start'].getTime() + "start time in s");
+          console.log(dateRange['end'].getTime() + 86400000 + "end time in s" + dateRange['end']);
+          console.log(item.StartDateObject + "the actual date" + item.Start);
+          return(item.StartDateObject >= dateRange['start'].getTime() && item.StartDateObject <= (dateRange['end'].getTime()+ 86400000) )
+        }
+       /*
+     //   console.log($scope.dateCustom);
+        if ($scope.dateCustom === "All Days") {
+        //  console.log("never came here");
+          return (item.Start);
+        } else {
+       //  console.log("should not" + $scope.dateCustom);
+          if ($scope.modifiedStartDate == undefined) {
+            $scope.modifiedStartDate = 0;
+          }
+          if ($scope.modifiedEndDate == undefined) {
+            $scope.modifiedEndDate = new Date().getTime();
+          }
+          return (item.StartDateObject > $scope.modifiedStartDate && item.StartDateObject <
+            $scope.modifiedEndDate)
+        }
+        */
+      }
+
+      $scope.distanceFilter = function(item) {
+        if(!distanceFilterPresent)
+        {
+          return(item.Distance);
+        }
+        else{
+          console.log(distanceRange['min'] + "is min distance");
+          console.log(distanceRange['max'] + "is maximum distance");
+          return(item.Distance > distanceRange['min'] && item.Distance < distanceRange['max'])
+        }
+        /*
+
+        if ($scope.distanceCustom == "All lengths") {
+          return (item.Distance)
+        } else {
+          if ($scope.modifiedMinDistance == undefined) {
+            $scope.modifiedMinDistance = 0;
+          }
+          if ($scope.modifiedMaxDistance == undefined) {
+            $scope.modifiedMaxDistance = Infinity;
+          }
+          return (item.Distance > $scope.modifiedMinDistance && item.Distance <
+            $scope.modifiedMaxDistance)
+        }*/
+
+      }
+
+      $scope.durationFilter = function(item)
+      {
+        if(!durationFilterPresent)
+        {
+          return(item.DurationInMinutes);
+        }
+        else{
+          return(item.DurationInMinutes > durationRange['min'] && item.DurationInMinutes < durationRange['max']);
+        }
+      }
+
+      $scope.vehicleFilter = function(item)
+      {
+        if(!vehicleFilterPresent)
+        {
+          return(item.Vehicle)
+        }
+        else{
+          if(vehiclesRange.indexOf(item.Vehicle) > -1)
+          {
+            console.log("filtered");
+            return(item.Vehicle);
+          }
+        }
+      }
+  
+    $scope.remove = function(chip) {
+      alert(chip);
+      $scope.selected = chip;
+    }
+   
+    $scope.removeChip = function(chip)
+    {
+          if(chip.name == "Distance")
+          {
+            distanceFilterPresent = false;
+          }
+          else if(chip.name == "Date")
+          {
+            dateFilterPresent = false;
+          }
+          else if(chip.name == "Duration of Travel")
+          {
+            durationFilterPresent = false;
+          }
+          else if(chip.name == "Vehicle")
+          {
+            vehicleFilterPresent = false;
+          }
+           console.log("removed")
+    }
       function DialogController($scope, $mdDialog, $state, currenttrack) {
         console.log(currenttrack);
         $scope.onload = false;
@@ -323,6 +721,10 @@ angular.module('app')
             .getTime();
           track_helper['Vehicle'] = data.data.tracks[i].sensor.properties
             .model;
+            if(vehiclesList[ data.data.tracks[i].sensor.properties.model] == undefined)
+            {
+              vehiclesList[data.data.tracks[i].sensor.properties.model] = 1;
+            }
           track_helper['manufacturer'] = data.data.tracks[i].sensor.properties
             .manufacturer;
           track_helper['Distance'] = data.data.tracks[i]['length'].toFixed(
@@ -339,6 +741,7 @@ angular.module('app')
 
           var seconds = seconds_passed / 1000;
           var timeoftravel = seconds / 60;
+          track_helper['DurationInMinutes'] = timeoftravel;
           // time of travel is in minutes
           // convert to the right format. of hh:mm:ss;
           date_for_seconds = new Date(null);

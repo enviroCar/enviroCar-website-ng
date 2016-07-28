@@ -1,0 +1,24 @@
+<md-dialog style="width:420px" aria-label="Mango (Fruit)" ng-cloak>
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2 style="color:rgba(255,255,255,0.8)">Set Date Filters</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <img style="height:30px;width:30px" src="assets/images/ic_close_white_48dp.png"></img>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content style="padding-top:5%">
+              <div layout-padding ng-cloak>
+          <md-datepicker ng-change="startDateChange()"  ng-model="dateStartCustom" md-placeholder="Start date"></md-datepicker>
+            <md-datepicker  ng-change="endDateChange()" ng-model="dateEndCustom" md-placeholder="End date"></md-datepicker>
+            </div>
+    </md-dialog-content>
+    <md-dialog-actions>
+        <md-button ng-click="hide()" class="md-primary">
+        Continue
+          </md-button>
+         </md-dialog-actions>
+  </form>
+</md-dialog>

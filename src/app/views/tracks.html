@@ -2,7 +2,7 @@
     <md-tab label="{{'CALENDAR_OF_TRACKS_TAB' | translate}}">
 <div class="middle">
       <div ng-controller="CalendarController" layout-gt-xs="row">
-        <md-card  style="height:700px" flex md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
+        <md-card  style="height:700px;min-width:60%" flex md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
             <md-card-content class="nopadding" >
               <md-progress-circular style="top:100px"class="loader_dashboard2" ng-if="onload" md-diameter="156"></md-progress-circular>
 
@@ -59,18 +59,40 @@
         </md-card>
         <md-card md-theme="default" class="card card-4-50" flex md-theme-watch>
 
-          <div style="height:100%" layout="row">
-          <md-card-content flex>
+          <md-card-content style="padding-left:7%" >
+            <div class="streamline b-l b-accent m-b">
+                      <div class="sl-item" ng-repeat='event in tracks' ng-click="goToActivity(event.id)">
+                        <!--  <img class="md-avatar" src="{{event.url}}" style="width:80px;height:80px">
+                        </img> -->
+                      <div class="sl-content" >
+                      <p style="color:rgba(0,101,160,0.9);line-height:100%;margin-left:-10px"><b>{{event.begin | date:'medium'}}</b></p>
+                      <div style="height:40px">
+                      <span style="line-height:70%">
+                        <i class="material-icons md-24" style="height:28px;width:28px">directions_car</i>
+                        {{event.manufacturer}} - {{event.car}}
+                      </span>
+                      <p>
+                      <span>
+                        <i class="material-icons md-24" style="height:28px;width:28px">timer</i>
+                        {{event.travelTime}} - {{event.length}} Km
+                      </span>
+                    </div>
+                    </p>
+                    </div>
+                    <md-tooltip class="trackpreview" md-direction="left">
+                    <md-content >
+                    <img src={{event.url}} style="width:480px;height:380px"></img>
+                    </md-content>
+                  </md-tooltip>
+                </div>
+              </div>
 
-            <md-content>
-                <!--    <md-list-item ng-show="no_data" md-theme="default" md-ink-ripple="#0065A0" class="md-3-line md-long-text " ng-repeat='event in tracks'  ng-click="showAdvanced($event,event.id)"> -->
+          <!--  <md-content>
                  <md-list-item ng-show="no_data" md-theme="default" md-ink-ripple="#0065A0" class="md-3-line md-long-text " ng-repeat='event in tracks'  ng-click="goToActivity(event.id)">
-                    <!--  <img class="md-avatar" src={{event.url}} style="width:80px;height:80px"></img> -->
                     <div class="md-list-item-text" layout="column">
                     <p style="color:rgba(0,101,160,0.9)"><b>{{event.begin | date:'medium'}}</b></p>
                     <p>{{event.manufacturer}} - {{event.car}}</p>
                     <p>{{event.travelTime}} - {{event.length}} Km</p>
-                    <!--   <md-icon class="md-secondary material-icons" ng-click="goToActivity(event.id)" >multiline_chart</md-icon> -->
                   </div>
                   <md-tooltip popover-trigger="focus" class="trackpreview" md-direction="left">
                   <md-content >
@@ -82,9 +104,8 @@
                     <p>Select days that have the track icon to explore</p>
                   </div>
                 </md-content>
-
+ -->
               </md-card-content>
-            </div>
       </md-card>
       </div>
     </div>
@@ -134,7 +155,7 @@
 </md-tab>
 <md-tab label="{{'ALL_TRACKS_TAB' | translate}}">
     <div class="middle">
-      <div layout-gt-md="row" style="text-align:center">
+      <div layout-gt-md="row">
         <md-card ng-controller="filterTracksController" style="max-height:600px;width:60%;display: table;margin-right: auto;margin-left: auto;" md-theme-watch >
           <!-- <md-toolbar style="color:blac;background-color:white" >
             <div class="md-toolbar-tools">
@@ -181,9 +202,8 @@
 
 </md-toolbar>
           <md-card-content ng-controller="filterTracksController" >
-            <!-- Date filter. -->
-            <!-- Distance Filter -->
-            <div style="width:100%" layout="column" layout-align="center center">
+
+          <!--  <div style="width:100%" layout="column" layout-align="center center">
             <p>Search track by date</p>
             <div layout="column" layout-align="center center" style="width:100%">
             <md-select ng-model="dateCustom" style="width:80%">
@@ -216,31 +236,83 @@
           </div>
         </div>
       </div>
-      <md-button md-theme="blue" class="white-bg" ng-click="submitButtonAction()">Search</md-button>
-      <p style="font-size:17px">Showing {{(tracks|filter:search | filter:distanceFilter | filter:dateFilter).length}} of {{tracks.length}} tracks</p>
+      -->
+     <!-- <div style="width:100%;text-align:center" layout-align="center center">
+        <md-button md-theme="blue" class="white-bg" ng-click="submitButtonAction()">Search</md-button>
+                <md-button md-theme="blue" class="white-bg" ng-click="searchTracks()">Search 2</md-button>
 
-            <md-content style="max-height:570px" >
+      </div> -->
+      <div layout-gt-xs="row">
+        <md-button class="white-bg"  ng-click="addFilter(0)">Distance</md-button>
+        <md-button class="white-bg"  ng-click="addFilter(1)">Date</md-button>
+        <md-button class="white-bg"  ng-click="addFilter(2)">Duration of Travel</md-button>
+        <md-button class="white-bg"  ng-click="addFilter(3)">Vehicle</md-button>
+      </div>
+               <md-chips style="width:100%" md-on-add="add($chip)" ng-model="$root.selectedVegetables" md-autocomplete-snap
+              md-transform-chip="transformChip($chip)"
+              md-require-match="autocompleteDemoRequireMatch"
+              md-on-select="getChipInfo($chip)" md-on-remove="removeChip($chip)">
+                    <md-autocomplete style="width:100%"
+                      md-selected-item="selectedItem"
+                      md-search-text="searchText"
+                      md-items="item in querySearch(searchText)"
+                      md-item-text="item.name"
+                      placeholder="Type filters or Click to add">
+                      <span md-highlight-text="searchText">{{item.name}}</span>
+                    </md-autocomplete>
+                    <md-chip-template style="width:100%" >
+                          <span>
+                            <strong>{{$chip.name}}</strong>
+                          </span>
+                    </md-chip-template>
+
+               </md-chips>
+                <div style="width:100%;text-align:center">
+                      <p style="font-size:17px">Showing {{(tracks|filter:search | filter:distanceFilter | filter:dateFilter | filter:durationFilter | filter:vehicleFilter).length}} of {{tracks.length}} tracks</p>
+                </div>
+               <md-content style="max-height:570px; padding-left:6%" >
+
+               <div class="streamline b-l b-accent m-b">
+                      <div class="sl-item" ng-repeat='event in tracks | filter:search | orderBy:filterOrig | filter:dateFilter | filter:distanceFilter | filter:durationFilter | filter:vehicleFilter' ng-click="goToActivity(event.TrackId)">
+                        <!--  <img class="md-avatar" src="{{event.url}}" style="width:80px;height:80px">
+                        </img> -->
+                      <div class="sl-content" >
+                      <p style="color:rgba(0,101,160,0.9);line-height:100%;margin-left:-10px"><b>{{event.Start | date:'medium'}}</b></p>
+                      <div style="height:40px">
+                      <span style="line-height:70%">
+                        <i class="material-icons md-24" style="height:28px;width:28px">directions_car</i>
+                        {{event.manufacturer}} - {{event.Vehicle}}
+                      </span>
+                      <p>
+                      <span>
+                        <i class="material-icons md-24" style="height:28px;width:28px">timer</i>
+                        {{event.DurationString}} - {{event.Distance}} Km
+                      </span>
+                    </div>
+                    </p>
+                    </div>
+                    <md-tooltip class="trackpreview" md-direction="left">
+                    <md-content >
+                    <img src={{event.url}} style="width:480px;height:380px"></img>
+                    </md-content>
+                  </md-tooltip>
+                </div>
+              </div>
+              </md-content>
+         <!--   <md-content style="max-height:570px" >
 
               <md-list>
-                  <!--  <md-list-item class="md-3-line md-long-text" ng-repeat="item in tracks | filter:search | orderBy:filterOrig | filter:dateFilter | filter:distanceFilter" ng-click="showAdvanced($event,item.TrackId)"> -->
                    <md-list-item class="md-3-line md-long-text" ng-repeat="item in tracks | filter:search | orderBy:filterOrig | filter:dateFilter | filter:distanceFilter" ng-click="goToActivity(item.TrackId)">
                       <div class="md-list-item-text" layout="column">
                           <p style="color:rgba(0,101,160,0.9)"><b>{{item.Start | date:'medium'}}</b></p>
                           <p>{{item.manufacturer}} - {{item.Vehicle}}</p>
                           <p>{{item.DurationString}} - {{item.Distance}} Km</p>
-                      <!--    <md-icon class="md-secondary material-icons" ng-click="goToActivity(item.TrackId)" >multiline_chart</md-icon> -->
                         </div>
                         <md-tooltip popover-trigger="focus" class="trackpreview" md-direction="left">
                         <md-content >
                         <img src={{item.url}} style="width:480px;height:380px"></img>
                         </md-content>
                       </md-tooltip>
-                    <!--    <div class="md-list-item-text" >
-                          <h3><b>{{track.begin}}</b></h3>
-                          <h4>Vehicle - {{track.sensor.properties.model}}</h4>
-                          <p>Distance - {{track.length}} Km</p>
-                        </div>
-                      </div> -->
 
                     </md-list-item>
                   </md-list>
