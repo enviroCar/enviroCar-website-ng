@@ -1,0 +1,29 @@
+<md-dialog style="width:420px" aria-label="Mango (Fruit)" ng-cloak>
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2 style="color:rgba(255,255,255,0.8)">Set Distance Filters</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <img style="height:30px;width:30px" src="assets/images/ic_close_white_48dp.png"></img>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content style="padding-top:5%;width:100%">
+              <div layout="column" layout-padding ng-cloak>
+
+         <md-input-container >
+                <input type="number" ng-model="minDurationFilter" placeholder="Longer than(in minutes)" style="width:100%">
+            </md-input-container>
+            <md-input-container>
+                <input type="number" ng-model="maxDurationFilter" placeholder="Shorter than(in minutes)" style="width:100%">
+            </md-input-container>
+            </div>
+    </md-dialog-content>
+    <md-dialog-actions>
+        <md-button ng-click="hide()" class="md-primary">
+        Continue
+          </md-button>
+         </md-dialog-actions>
+  </form>
+</md-dialog>

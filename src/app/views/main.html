@@ -18,11 +18,16 @@
                  <md-list>
     <md-list-item class="nopadding" ng-repeat="item in vm.menuItems" ng-click="vm.selectItem(item)" ui-sref="{{item.sref}}" ui-sref-active="md-primary">
         <md-item-content layout="row" layout-align="start center">
-          <div class="inset">
+         <!-- <div class="inset">
             <i class="material-icons md-36 blue">{{item.icon}}</i>
           </div>
           <div class="inset" style="padding-top:8%">{{item.name}}
-          </div>
+          </div> -->
+
+            <i class="material-icons md-avatar md-36 blue">{{item.icon}}</i>
+                  <div class="md-list-item-text">
+                  <p>{{item.name}}</p>
+                  </div>
         </md-item-content>
     </md-list-item>
     <md-divider></md-divider>

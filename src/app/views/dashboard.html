@@ -167,7 +167,9 @@
                         <!--  <img class="md-avatar" src="{{event.url}}" style="width:80px;height:80px">
                         </img> -->
                       <div class="sl-content" >
+                        <span>
                       <p style="color:rgba(0,101,160,0.9);line-height:100%;margin-left:-10px"><b>{{event.begin | date:'medium'}}</b></p>
+                      </span >
                       <div style="height:40px">
                       <span style="line-height:70%">
                         <i class="material-icons md-24" style="height:28px;width:28px">directions_car</i>
@@ -244,7 +246,7 @@
                 <div class="md-list-item-text" layout="column">
                 <h3 style="color:{{item.color}}"><b>{{item.topic}}</b></h3>
                 <p>{{item.name}}</p>
-                <p>{{item.date}}</p>
+                <p>{{item.time | date:'medium'}}</p>
               </div>
               </md-list-item>
               <div ng-show = 'busy'>{{'LOADING_DATA' | translate}}</div>
@@ -272,7 +274,7 @@
                 <div class="md-list-item-text" layout="column">
                 <h3 style="color:{{item.color}}"><b>{{item.topic}}</b></h3>
                 <p>{{item.name}}</p>
-                <p>{{item.date}}</p>
+                <p>{{item.time | date:'medium'}}</p>
               </div>
               </md-list-item>
               <div ng-show = 'busy'>{{'LOADING_DATA' | translate}}</div>
