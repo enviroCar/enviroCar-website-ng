@@ -12,6 +12,9 @@
     $state, $mdToast, $http, $rootScope, $translate, $scope) {
     console.log("In main Controller");
     var vm = this;
+   // $mdSidenav('left').open();
+    vm.lockLeft = true;
+
     /*  var login;
       var logout;
       var profile;
@@ -109,6 +112,7 @@
     }
 
     function toggleItemsList() {
+      
       var pending = $mdBottomSheet.hide() || $q.when(true);
 
       pending.then(function() {

@@ -252,7 +252,7 @@ angular.module('app')
             controller: DistanceDialogController,
             templateUrl: 'app/views/DistanceDialogPage.html',
             parent: angular.element(document.body),
-            clickOutsideToClose: true,
+            clickOutsideToClose: false,
             fullscreen: useFullScreen
           }
         }
@@ -262,7 +262,7 @@ angular.module('app')
             controller: DateDialogController,
             templateUrl: 'app/views/DateDialogPage.html',
             parent: angular.element(document.body),
-            clickOutsideToClose: true,
+            clickOutsideToClose: false,
             fullscreen: useFullScreen
           }
         }
@@ -272,7 +272,7 @@ angular.module('app')
              controller: DurationDialogController,
             templateUrl: 'app/views/DurationDialogPage.html',
             parent: angular.element(document.body),
-            clickOutsideToClose: true,
+            clickOutsideToClose: false,
             fullscreen: useFullScreen
           }
         }
@@ -282,7 +282,7 @@ angular.module('app')
             controller: VehicleDialogController,
             templateUrl: 'app/views/VehicleDialogPage.html',
             parent: angular.element(document.body),
-            clickOutsideToClose: true,
+            clickOutsideToClose: false,
             fullscreen: useFullScreen
           }
         }
@@ -301,6 +301,14 @@ angular.module('app')
           $scope.customFullscreen = (wantsFullScreen === true);
         });
     }
+    $scope.filters = ["Distance", "Duration of Travel", "Date", "Vehicle"];
+    $scope.filtersS  = [];
+
+    $rootScope.distanceShow = true;
+    $rootScope.dateShow = true;
+    $rootScope.vehicleShow = true;
+    $rootScope.durationShow = true;
+
     $scope.addFilter = function(filter)
     {
       var filterMap = {0:["Distance",distanceFilterPresent],1:["Date",dateFilterPresent],2:["Duration of Travel",durationFilterPresent],3:["Vehicle",vehicleFilterPresent]};
@@ -314,7 +322,29 @@ angular.module('app')
       console.log($rootScope.selectedVegetables);
       console.log("cotnetn"); 
     }
+
+    $scope.filterAddedRemoved = function()
+    {
+      var filtermap = {'Distance':distanceFilterPresent,'Date':dateFilterPresent,'Duration of Travel':durationFilterPresent,'Vehicle':vehicleFilterPresent};
+
+        for(var i = 0 ; i <  $scope.filtersS.length ; i++)
+        {
+            if(!filtermap[$scope.filtersS[i]])
+            {
+              // if this filter was not present, then add it.
+              $scope.selectedVegetables.push({ 'name':$scope.filtersS[i],'type':'new'});
+              $scope.add({'name':$scope.filtersS[i]});
+            }
+        }
+    }
+
     function DistanceDialogController($scope, $mdDialog, $state) {
+      $scope.valid = function()
+      {
+        return true;
+      }
+      $scope.errorNegative = false;
+      $scope.errorOverlap = false;
        if(distanceFilterPresent == true)
        {
          $scope.minDistanceFilter = distanceRange['min'];
@@ -323,13 +353,29 @@ angular.module('app')
       $scope.minDistanceFilter;
 
        $scope.hide = function() {
-         distanceRange = {'min':$scope.minDistanceFilter,'max':$scope.maxDistanceFilter}
+         $scope.errorNegative = false;
+         $scope.errorOverlap = false;
+         $rootScope.distanceShow = false;
+         console.log("looking for");
+         console.log($scope.minDistanceFilter + $scope.maxDistanceFilter);
+         if($scope.minDistanceFilter < 0 || $scope.maxDistanceFilter<0)
+         {
+            $scope.errorNegative = true;
+         }
+         else if($scope.minDistanceFilter > $scope.maxDistanceFilter)
+         {
+           $scope.errorOverlap = true;
+         }
+         else{
+         distanceRange = {'min':($scope.minDistanceFilter!=undefined?$scope.minDistanceFilter:0),'max':($scope.maxDistanceFilter!=undefined?$scope.maxDistanceFilter:Number.MAX_SAFE_INTEGER)}
          distanceFilterPresent = true;
             $mdDialog.hide();
-            console.log(distanceRange);      
+            console.log(distanceRange);  
+         }    
         };
 
         $scope.cancel = function() {
+          console.log("cancelled");
           for(var i = 0 ; i < $rootScope.selectedVegetables.length; i++)
           {
               if($rootScope.selectedVegetables[i].name=="Distance" && !distanceFilterPresent)
@@ -344,16 +390,27 @@ angular.module('app')
     }
 
        function DateDialogController($scope, $mdDialog, $state) {
+         $scope.errorOverlap = false;
+         $scope.dateStartCustom = new Date();
+         $scope.dateEndCustom = new Date();
          if(dateFilterPresent == true)
          {
            $scope.dateStartCustom = dateRange['start'];
            $scope.dateEndCustom = dateRange['end'];
          }
        $scope.hide = function() {
+         if($scope.dateStartCustom.getTime() > $scope.dateEndCustom.getTime())
+         {
+           // overlap
+           $scope.errorOverlap = true;
+         }
+         else{
+         $rootScope.dateShow = false;
          dateRange = {'start':$scope.dateStartCustom,'end':$scope.dateEndCustom};
          dateFilterPresent = true;
             $mdDialog.hide();
             console.log(dateRange);
+         }
         };
         $scope.cancel = function() {
           for(var i = 0 ; i < $rootScope.selectedVegetables.length; i++)
@@ -369,6 +426,8 @@ angular.module('app')
     }
 
     function DurationDialogController($scope, $mdDialog, $state) {
+       $scope.errorNegative = false;
+       $scope.errorOverlap = false;
        if(durationFilterPresent == true)
          {
            console.log("True if reached");
@@ -379,11 +438,22 @@ angular.module('app')
            console.log($scope.maxDurationFilter);
          }
        $scope.hide = function() {
-        
+          if($scope.minDurationFilter < 0 || $scope.maxDurationFilter<0)
+         {
+            $scope.errorNegative = true;
+         }
+         else if($scope.minDurationFilter > $scope.maxDurationFilter)
+         {
+           $scope.errorOverlap = true;
+         }
+         else{
+         $rootScope.durationShow = false;
+
          durationRange = {'min':$scope.minDurationFilter,'max':$scope.maxDurationFilter};
          durationFilterPresent = true;
             $mdDialog.hide();
             console.log(dateRange);
+         }
         };
         $scope.cancel = function() {
           for(var i = 0 ; i < $rootScope.selectedVegetables.length; i++)
@@ -409,6 +479,7 @@ angular.module('app')
            //which implies this is a event to change the existing filter
          }
        $scope.hide = function() {
+         $rootScope.vehicleShow = false;
           console.log($scope.vehicles);
         	vehiclesRange = JSON.parse(JSON.stringify($scope.vehicles));
          vehicleFilterPresent = true;
@@ -559,18 +630,22 @@ angular.module('app')
     {
           if(chip.name == "Distance")
           {
+            $rootScope.distanceShow = true;
             distanceFilterPresent = false;
           }
           else if(chip.name == "Date")
           {
+            $rootScope.dateShow = true;
             dateFilterPresent = false;
           }
           else if(chip.name == "Duration of Travel")
           {
+            $rootScope.durationShow = true;
             durationFilterPresent = false;
           }
           else if(chip.name == "Vehicle")
           {
+            $rootScope.vehicleShow = true;
             vehicleFilterPresent = false;
           }
            console.log("removed")

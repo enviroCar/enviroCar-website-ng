@@ -1,4 +1,4 @@
-<md-dialog style="width:420px" aria-label="Mango (Fruit)" ng-cloak>
+<md-dialog md-is-locked-open="valid" style="width:420px" aria-label="Mango (Fruit)" ng-cloak>
   <form>
     <md-toolbar>
       <div class="md-toolbar-tools">
@@ -18,6 +18,8 @@
             <md-input-container>
                 <input type="number" ng-model="maxDistanceFilter" placeholder="Shorter than(Km)" style="width:100%">
             </md-input-container>
+            <p ng-if="errorNegative">Please give only Positive integers</p>
+            <p ng-if="errorOverlap">Minimum Distance should be lesser than maximum distance</p>
             </div>
     </md-dialog-content>
     <md-dialog-actions>

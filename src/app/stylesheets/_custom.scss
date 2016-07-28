@@ -119,7 +119,7 @@ md-tabs {
 
 .middle
 {
-  width: 90vw;
+  width: 80vw;
   height: 56.25vw; /* 100/56.25 = 1.778 */
   max-width: 1300px; /* 16/9 = 1.778 */
   margin: auto;
@@ -752,7 +752,7 @@ md-backdrop.md-sidenav-backdrop {
 .material-icons {
   vertical-align: middle;
 }
-
+.material-icons.md-10 {font-size: 10px; }
 .material-icons.md-18 { font-size: 18px; }
 .material-icons.md-24 { font-size: 24px; }
 .material-icons.md-36 { font-size: 36px; }

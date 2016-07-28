@@ -2,7 +2,7 @@
   <form>
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2 style="color:rgba(255,255,255,0.8)">Set Distance Filters</h2>
+        <h2 style="color:rgba(255,255,255,0.8)">Set Duration Filters</h2>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="cancel()">
           <img style="height:30px;width:30px" src="assets/images/ic_close_white_48dp.png"></img>
@@ -18,6 +18,8 @@
             <md-input-container>
                 <input type="number" ng-model="maxDurationFilter" placeholder="Shorter than(in minutes)" style="width:100%">
             </md-input-container>
+             <p ng-if="errorNegative">Please give only Positive integers</p>
+            <p ng-if="errorOverlap">Minimum time should be lesser than maximum time</p>
             </div>
     </md-dialog-content>
     <md-dialog-actions>
