@@ -1,10 +1,11 @@
-<md-sidenav style="z-index:10000" md-component-id="left"
-            class="md-whiteframe-z2 md-sidenav-left">
+<md-sidenav md-component-id="left"
+            class="md-whiteframe-z2 md-sidenav-left" 
+            md-is-locked-open="vm.lockLeft && $mdMedia('gt-md')" >
 
             <md-toolbar layout="column" style="min-height:10%">
                 <div class="md-toolbar-tools">
                    <span flex></span>
-                   <md-button class="bg-white" class="md-icon-button" aria-label="Close Side Panel" ng-click="closeSideNavPanel()">
+                   <md-button  hide-gt-md class="bg-white" class="md-icon-button" aria-label="Close Side Panel" ng-click="closeSideNavPanel()">
                      <md-tooltip>Close Side Panel</md-tooltip>
                      <i class="material-icons white09">&#xE314;</i>
                    </md-button>
@@ -14,9 +15,9 @@
                   <p style="color:rgba(255,255,255,0.7);font-size:14px;margin-top:-5%">{{vm.email}}</p>
                 </div>
                </md-toolbar>
-               <div style="nopadding">
+               <div>
                  <md-list>
-    <md-list-item class="nopadding" ng-repeat="item in vm.menuItems" ng-click="vm.selectItem(item)" ui-sref="{{item.sref}}" ui-sref-active="md-primary">
+    <md-list-item  ng-repeat="item in vm.menuItems" ng-click="vm.selectItem(item)" ui-sref="{{item.sref}}" ui-sref-active="md-primary">
         <md-item-content layout="row" layout-align="start center">
          <!-- <div class="inset">
             <i class="material-icons md-36 blue">{{item.icon}}</i>
@@ -49,9 +50,15 @@
 
 <div layout="column" flex>
     <md-toolbar layout="row" layout-align="start center" class="customtoolbar">
-      <md-button ng-click="vm.toggleItemsList()" aria-label="Menu">
-          <i class="material-icons white09">menu</i>
+      <md-button hide show-gt-md ng-click="vm.lockLeft=!vm.lockLeft" aria-label="Menu">
+          <i ng-if="!vm.lockLeft" class="material-icons white09">menu</i>
+          <i ng-if="vm.lockLeft" class="material-icons white09">&#xE314;</i>
+
       </md-button>
+      <md-button hide-gt-md  ng-click="vm.toggleItemsList()" aria-label="Menu">
+          <i class="material-icons white09">menu</i>
+          </md-button>
+
       <span flex></span>
         <md-button class="white-bg" ng-cloak ng-show="$root.showlogout" aria-label="Notifications" ui-sref="login">
           <img style="height:20px;width:20px" ng-src="assets/images/ic_power_settings_new_white_48dp.png"/>

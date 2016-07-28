@@ -242,11 +242,11 @@
                 <md-button md-theme="blue" class="white-bg" ng-click="searchTracks()">Search 2</md-button>
 
       </div> -->
-      <div layout-gt-xs="row">
-        <md-button class="white-bg"  ng-click="addFilter(0)">Distance</md-button>
-        <md-button class="white-bg"  ng-click="addFilter(1)">Date</md-button>
-        <md-button class="white-bg"  ng-click="addFilter(2)">Duration of Travel</md-button>
-        <md-button class="white-bg"  ng-click="addFilter(3)">Vehicle</md-button>
+      <div style="text-align:center">
+        <md-button class="md-raised"  ng-if="$root.distanceShow" ng-click="addFilter(0)"><span>Distance</span></md-button>
+        <md-button class="md-raised"  ng-if="$root.dateShow" ng-click="addFilter(1)">Date</md-button>
+        <md-button class="md-raised"  ng-if="$root.durationShow" ng-click="addFilter(2)">Duration of Travel</md-button>
+        <md-button class="md-raised"  ng-if="$root.vehicleShow" ng-click="addFilter(3)">Vehicle</md-button>
       </div>
                <md-chips style="width:100%" md-on-add="add($chip)" ng-model="$root.selectedVegetables" md-autocomplete-snap
               md-transform-chip="transformChip($chip)"
@@ -257,7 +257,7 @@
                       md-search-text="searchText"
                       md-items="item in querySearch(searchText)"
                       md-item-text="item.name"
-                      placeholder="Type filters or Click to add">
+                      placeholder="Type filters or Click above">
                       <span md-highlight-text="searchText">{{item.name}}</span>
                     </md-autocomplete>
                     <md-chip-template style="width:100%" >
