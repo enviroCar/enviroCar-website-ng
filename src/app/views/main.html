@@ -1,4 +1,4 @@
-<md-sidenav md-component-id="left"
+<md-sidenav md-component-id="left" style="z-index:100000"
             class="md-whiteframe-z2 md-sidenav-left" 
             md-is-locked-open="vm.lockLeft && $mdMedia('gt-md')" >
 
@@ -78,7 +78,7 @@
     </md-toolbar>
 
     <md-content flex class="page-content">
-        <div ui-view></div>
+        <div ui-view style="height:100%"></div>
     </md-content>
 </div>
 
