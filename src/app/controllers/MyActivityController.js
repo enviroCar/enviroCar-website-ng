@@ -53,6 +53,7 @@ angular.module('app')
               //console.log(helper['profileurl']);
               helper['date'] = new Date(data.activities[i].time).toLocaleString();
               //  console.log(i);
+
               //console.log(data.activities[i]);
               helper['color'] = "#8CBF3F"
               if (data.activities[i].type == "FRIENDED_USER") {
@@ -63,25 +64,38 @@ angular.module('app')
                     i].other.name;
                 helper['trackidlink'] = "";
                 helper['color'] = "#0065A0"
+                helper['icon'] = 'people';
+
               } else if (data.activities[i].type == "CREATED_TRACK") {
                 helper['type'] = 1;
                 helper['color'] = "#0065A0"
                 helper['topic'] = "New Track Upload";
                 helper['trackidlink'] = data.activities[i].track.id
+                helper['icon'] = 'add_circle';
+
               } else if (data.activities[i].type == "CHANGED_PROFILE") {
                 helper['type'] = 0;
                 helper['topic'] = "Profile Update";
+                helper['icon'] = 'update';
+
               } else if (data.activities[i].type == "UNFRIENDED_USER") {
                 continue;
               } else if (data.activities[i].type == "CREATED_GROUP") {
                 helper['type'] = 0;
                 helper['topic'] = "You created a Group";
+                helper['icon'] = 'speaker_groups';
+
+
               } else if (data.activities[i].type == "CHANGED_GROUP") {
                 helper['type'] = 0;
                 helper['topic'] = "You changed the group";
+                helper['icon'] = 'speaker_groups';
+
               } else if (data.activities[i].type == "JOINED_GROUP") {
                 helper['type'] = 0;
                 helper['topic'] = "You joined the Group";
+                helper['icon'] = 'group_add';
+
               } else if (data.activities[i].type == "LEFT_GROUP") {
                 helper['type'] = 0;
                 helper['topic'] = "You left the Group";

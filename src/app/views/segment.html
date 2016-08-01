@@ -1,9 +1,34 @@
-<div class="middle">
-    <div ng-controller="SegmentIndependentController" layout-gt-md="row">
-        <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" style="height:620px" md-theme-watch>
+<div ng-controller="SegmentIndependentController" class="mapcontainer" style="height:100%">
+                        <div style="  box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.2);
+position:absolute;z-index:1000;width:22%;right:0;height:100%;background-color:rgba(255,255,255,0.85)">
+                                <div style="text-align:center">
+                                    <h3>Control Panel</h3>
+                                </div>
+                                <div style="text-align:center;padding-left:2%;padding-right:2%">
+                                    <p style="font-size:16px">Click on map to place a marker at that point, click on it again to delete it.</p>
+                                </div>
+                                 <div layout-gt-xs="column" layout="center center" >
+                                    <div style="width:100%;text-align:center">
+                                        <md-button class="white-bg" ng-click="resetPoints()">Reset points</md-button>    
+                                    </div>
+                                    <div style="width:100%;text-align:center">
+                                        <md-button class="white-bg" ng-click="searchForPoints()">Search for tracks</md-button>
+                                    </div>
+                                 </div>
+                                 <div style="padding-left:2%;padding-right:2%">
+                                <rzslider rz-slider-model="$root.slider.value"
+                                            rz-slider-options="$root.slider.options"></rzslider>
+                                      </div>
+
+                </div>
+
+            <leaflet lf-center="center" id="segmentMap" markers="$root.markers" paths="$root.paths" event-broadcast="events" width="100%" height="100%"></leaflet>
+</div>
+<!-- 
+    <div layout-gt-md="row">
+        <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
         <md-card-content class="nopadding">
         <div>
-            <leaflet lf-center="london" id="segmentMap" markers="$root.markers" paths="$root.paths" event-broadcast="events" height="480px" width="100%"></leaflet>
         </div>
         <div layout-gt-xs="row" style="padding-top:6px">
             <div style="width:50%;text-align:center">
@@ -18,12 +43,13 @@
         </div>
         </md-card-content>
         </md-card>
-        <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" style="height:480px" md-theme-watch>
+       <!-- <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" style="height:480px" md-theme-watch>
             <md-card-content>
                 <div layout="row" layout-align="center center">
                     <p>Click on map to place a marker at that point, click on it again to delete it.</p>
                 </div>
             </md-card-content>
-        </md-card>
+        </md-card> 
     </div>
 </div>
+-->
