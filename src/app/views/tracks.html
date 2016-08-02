@@ -59,14 +59,17 @@
         </md-card>
         <md-card md-theme="default" class="card card-4-50" flex md-theme-watch>
 
-          <md-card-content style="padding-left:7%" >
+          <md-card-content style="padding-left:7%;padding-top:20px" >
             <div class="streamline b-l b-accent m-b">
                       <div class="sl-item" ng-repeat='event in tracks' ng-click="goToActivity(event.id)">
                         <!--  <img class="md-avatar" src="{{event.url}}" style="width:80px;height:80px">
                         </img> -->
                       <div class="sl-content" >
-                      <p style="color:rgba(0,101,160,0.9);line-height:100%;margin-left:-10px"><b>{{event.begin | date:'medium'}}</b></p>
-                      <div style="height:40px">
+                           <span>
+                      <span style="color:rgba(0,101,160,0.9);line-height:100%;padding-bottom:30px;margin-left:-10px"><b>{{event.begin | date:'medium'}}</b></span>
+                      <span style="color:rgba(255,255,255,0.8);background-color:rgba(0,101,160,0.9);border-radius: 8px;float:right">&nbsp;&nbsp;{{event.length}} Km&nbsp;&nbsp;</span>
+                      </span>
+                      <div style="height:40px;padding-top:15px;padding-bottom:15px">
                       <span style="line-height:70%">
                         <i class="material-icons md-24" style="height:28px;width:28px">directions_car</i>
                         {{event.manufacturer}} - {{event.car}}
@@ -74,7 +77,7 @@
                       <p>
                       <span>
                         <i class="material-icons md-24" style="height:28px;width:28px">timer</i>
-                        {{event.travelTime}} - {{event.length}} Km
+                        {{event.travelTime}}
                       </span>
                     </div>
                     </p>
@@ -270,15 +273,18 @@
                 <div style="width:100%;text-align:center">
                       <p style="font-size:17px">Showing {{(tracks|filter:search | filter:distanceFilter | filter:dateFilter | filter:durationFilter | filter:vehicleFilter).length}} of {{tracks.length}} tracks</p>
                 </div>
-               <md-content style="max-height:570px; padding-left:6%" >
+               <md-content style="max-height:570px; padding-left:6%;padding-right:10px;padding-top:20px" >
 
                <div class="streamline b-l b-accent m-b">
                       <div class="sl-item" ng-repeat='event in tracks | filter:search | orderBy:filterOrig | filter:dateFilter | filter:distanceFilter | filter:durationFilter | filter:vehicleFilter' ng-click="goToActivity(event.TrackId)">
                         <!--  <img class="md-avatar" src="{{event.url}}" style="width:80px;height:80px">
                         </img> -->
                       <div class="sl-content" >
-                      <p style="color:rgba(0,101,160,0.9);line-height:100%;margin-left:-10px"><b>{{event.Start | date:'medium'}}</b></p>
-                      <div style="height:40px">
+                        <span>
+                      <span style="color:rgba(0,101,160,0.9);line-height:100%;padding-bottom:30px;margin-left:-10px"><b>{{event.Start | date:'medium'}}</b></span>
+                      <span style="color:rgba(255,255,255,0.8);background-color:rgba(0,101,160,0.9);border-radius: 8px;float:right">&nbsp;&nbsp;{{event.Distance}} Km&nbsp;&nbsp;</span>
+                      </span>                      
+                      <div style="height:40px;padding-top:15px;padding-bottom:15px">
                       <span style="line-height:70%">
                         <i class="material-icons md-24" style="height:28px;width:28px">directions_car</i>
                         {{event.manufacturer}} - {{event.Vehicle}}
@@ -286,7 +292,7 @@
                       <p>
                       <span>
                         <i class="material-icons md-24" style="height:28px;width:28px">timer</i>
-                        {{event.DurationString}} - {{event.Distance}} Km
+                        {{event.DurationString}}
                       </span>
                     </div>
                     </p>
