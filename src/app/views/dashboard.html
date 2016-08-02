@@ -183,9 +183,10 @@
                         </img> -->
                       <div class="sl-content" >
                         <span>
-                      <p style="color:rgba(0,101,160,0.9);line-height:100%;margin-left:-10px"><b>{{event.begin | date:'medium'}}</b></p>
-                      </span >
-                      <div style="height:40px">
+                      <span style="color:rgba(0,101,160,0.9);line-height:100%;padding-bottom:30px;margin-left:-10px"><b>{{event.begin | date:'medium'}}</b></span>
+                      <span style="color:rgba(255,255,255,0.8);background-color:rgba(0,101,160,0.9);border-radius: 8px;float:right">&nbsp;{{event.distance}} Km&nbsp;</span>
+                      </span>
+                      <div  style="height:40px;padding-top:15px;padding-bottom:15px">
                       <span style="line-height:70%">
                         <i class="material-icons md-24" style="height:28px;width:28px">directions_car</i>
                         {{event.manufacturer}} - {{event.car}}
@@ -193,7 +194,7 @@
                       <p>
                       <span>
                         <i class="material-icons md-24" style="height:28px;width:28px">timer</i>
-                        {{event.travelTime}} - {{event.distance}} Km
+                        {{event.travelTime}}
                       </span>
                     </div>
                     </p>
@@ -333,12 +334,5 @@
 </md-content>
 </md-tab>
 
-<md-tab label="{{'FRIENDS_AND_GROUPS_TAB' | translate}}">
-  <md-content style="background-color:#EEEEEE">
-    <div class="middle">
-   
-  </div>
-  </md-content>
-</md-tab>
 </md-tabs>
 </md-content>
