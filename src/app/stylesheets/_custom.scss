@@ -523,7 +523,24 @@ color: rgba(255,255,255,0.88);
     .ng-enter           { animation: scaleUp 0.4s both ease-in; z-index: 9888; }
   //  .ng-leave           { animation: slideOutLeft 0.4s both ease-in; z-index: 9999;}
 //End of animations
+.usernameNew{
+  color: white;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 30px;
+  position: relative;
+}
 
+.emailIdUserNew
+{
+  position: relative;
+  font-size: 15px;
+  color: rgba(255,255,255,0.6);
+}
+
+.tracksusernameNew
+{
+   position: relative;
+}
 
 .profiletab .profile-pic .username{
   top: -24%;
