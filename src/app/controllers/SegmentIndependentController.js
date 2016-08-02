@@ -1,9 +1,9 @@
 angular.module('app')
-  .controller('SegmentIndependentController', ['$scope','$geolocation','$mdToast', '$rootScope', '$http', function ($scope,$geolocation, $mdToast, $rootScope, $http) {
+  .controller('SegmentIndependentController', ['$scope','GeolocationService','$geolocation','$mdToast', '$rootScope', '$http', function ($scope, GeolocationService, $geolocation, $mdToast, $rootScope, $http) {
     console.log('SegmentIndependentController fired fwnfjenfef')
     var markersArray = []
     var countunique = 0
-
+$scope.showleaflet = false;
 $rootScope.paths = {}
     $rootScope.markers = {}
     $rootScope.slider = {
@@ -31,29 +31,47 @@ $rootScope.paths = {}
 
     }
 };
-
-  $geolocation.getCurrentPosition({
-            timeout: 6
-         }).then(function(position) {
-           console.log(position);
-           console.log("came here");
-            $scope.myPosition = position;
-         });
+console.log("workibg ")
  
 
     angular.extend($scope, {
       
       center: {
-        lat: 51.505,
-        lng: 7.09,
-        zoom: 14
+        lat:52,
+        lng: 7.65,
+        zoom: 7
       },
       events: {},
     })
+ GeolocationService().then(function (position) {
+        $scope.position = position;
+        console.log("position ");
+        console.log(position);
+        $scope.center = {
+          lat:position.coords.latitude,
+          lng: position.coords.longitude,
+          zoom: 12
+        }
+        $scope.showleaflet = true; 
+       /*  $mdToast.show(
+             $mdToast.simple()
+                 .textContent('Please wait while we load your location')
+                 .hideDelay(4000)
+           );*/
+    }, function (reason) {
+      console.log(reason)
+        $scope.message = "Could not be determined."
+        console.log("could not be")
+        $scope.showleaflet = true;
+    });
+
+
+
 
       
     
     $scope.$on('leafletDirectiveMap.segmentMap.click', function (event, args) {
+      // Function to add the markers to the map.
       // Add validations if number of markers > 10;
       console.log();
       if(Object.keys($rootScope.markers).length >= 10)
@@ -66,6 +84,19 @@ $rootScope.paths = {}
            );
       }
       else{
+        // Validations for distance // only let it be added if distance between the 2 is lesser than 5 km
+        // skip distance validation of this is the first point being added
+        // 2 cases . 1 CountUnique is 0 or the length of number of markers is 0
+       /* if(countunique != 0 && Object.keys($rootScope.markers).length != 0)
+        {
+           // there is 1 point already added in the map 
+           for(var rev = countunique ; rev >= 0 ; rev--)
+           {
+             //if($rootScope.markers)
+           }
+           
+        }
+        */
       var leafEvent = args.leafletEvent
       markersArray.push({
         lat: leafEvent.latlng.lat,
@@ -147,3 +178,28 @@ $rootScope.paths = {}
     }
     $scope.searchForPoints = function () {}
   }])
+
+  
+.factory("GeolocationService", ['$q', '$window', '$rootScope', function ($q, $window, $rootScope) {
+    return function () {
+        var deferred = $q.defer();
+
+        if (!$window.navigator) {
+            $rootScope.$apply(function() {
+                deferred.reject(new Error("Geolocation is not supported"));
+            });
+        } else {
+            $window.navigator.geolocation.getCurrentPosition(function (position) {
+                $rootScope.$apply(function() {
+                    deferred.resolve(position);
+                });
+            }, function (error) {
+                $rootScope.$apply(function() {
+                    deferred.reject(error);
+                });
+            });
+        }
+
+        return deferred.promise;
+    }
+}]);

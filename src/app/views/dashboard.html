@@ -1,13 +1,28 @@
 <div class="profiletab" ng-controller="ProfileViewController" ng-style="{'background-color':'#0065A0'}" style="width:100%;height:250px">
 <div class="cover">
   <div class="profile-pic absolute" style="height:40%;display:inline-block">
-  <img class="img-circle" src="https://secure.gravatar.com/avatar/cf17f9ff1e0a237ab76046d5aca84e0e?size=240" style="height:100px;width:100px">
-  <span class="username" ng-bind=name_of_user></span>
+    <div layout="row">
+       <div style="width:30%;text-align:center">
+           <img class="img-circle" src="https://secure.gravatar.com/avatar/cf17f9ff1e0a237ab76046d5aca84e0e?size=240" style="height:100px;width:100px">
+          </div>
+          <div style="width:70%;padding-left:25px;padding-top:10px" layout="column">
+            <span class="usernameNew" ng-bind=name_of_user></span>
+            <span class="emailIdUserNew" ng-bind=emailId></span>
+            <span class="tracksusernameNew">
+  <md-button class="md-raised md-primary" style="color:white" ng-show="originalUser" href="{{trackurl}}">Open {{name_of_user}}'s Tracks</button>
+  </span>
+          </div>
+      </div>
+ <!-- <img class="img-circle" src="https://secure.gravatar.com/avatar/cf17f9ff1e0a237ab76046d5aca84e0e?size=240" style="height:100px;width:100px">
+  
+  <div " >
+    <span ng-bind=name_of_user></span>
+  </div>
   <span class="emailIdUser" ng-bind=emailId></span>
 
   <span class="tracksusername">
   <md-button class="md-raised md-primary" style="color:white" ng-show="originalUser" href="{{trackurl}}">Open {{name_of_user}}'s Tracks</button>
-  </span>
+  </span> -->
 </div>
 <div class="statistics" >
    <div class="detail2" >
@@ -300,7 +315,7 @@
       <md-card-content>
         <div flex>
         <md-content ng-show="!show_no_friends" flex layout-padding >
-          <md-list-item class="md-long-text" ng-repeat='item in data_friends' ng-click="goToFriend(item.username)">
+          <md-list-item  ng-repeat='item in data_friends' ng-click="goToFriend(item.username)">
          <img class="md-avatar" src={{item.profile_url}}></img>
             <div class="md-list-item-text" layout="column">
             <p>{{item.username}}</p>
