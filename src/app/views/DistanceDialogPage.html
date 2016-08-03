@@ -13,13 +13,14 @@
               <div layout="column" layout-padding ng-cloak>
 
          <md-input-container >
-                <input type="number" ng-model="minDistanceFilter" placeholder="Longer than(Km)" style="width:100%">
+                <input type="number"  min="0" ng-model="minDistanceFilter" placeholder="Longer than(Km)" style="width:100%">
             </md-input-container>
             <md-input-container>
-                <input type="number" ng-model="maxDistanceFilter" placeholder="Shorter than(Km)" style="width:100%">
+                <input type="number"  min="0" ng-model="maxDistanceFilter" placeholder="Shorter than(Km)" style="width:100%">
             </md-input-container>
             <p ng-if="errorNegative">Please give only Positive integers</p>
             <p ng-if="errorOverlap">Minimum Distance should be lesser than maximum distance</p>
+            <p ng-if="errorLimit">Maximum distance should be lesser than 5000km</p>
             </div>
     </md-dialog-content>
     <md-dialog-actions>

@@ -1377,6 +1377,8 @@ angular.module('app')
           url: "https://envirocar.org/envirocar-rest-analyzer/dev/rest/route/statistics",
           data: dataput
         }
+         delete $http.defaults.headers.common["X-User"];
+       delete $http.defaults.headers.common["X-Token"];
         $http(req).then(function(resp) {
           console.log(resp);
         })
