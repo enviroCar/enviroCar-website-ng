@@ -176,7 +176,45 @@ console.log("workibg ")
       $rootScope.paths = {}
       $rootScope.markers = {}
     }
-    $scope.searchForPoints = function () {}
+    $scope.searchForPoints = function () {
+      // Search for points on the server side 
+      var coordinates = [];
+      console.log("came here");
+      for (key in $rootScope.markers) {
+          if ($rootScope.markers.hasOwnProperty(key))
+          {
+            coordinates.push([$rootScope.markers[key].lng, $rootScope.markers[key].lat]);
+          }
+      }
+      console.log(coordinates);
+         var dataput = {
+          "type": "Feature",
+          "geometry": {
+            "type": "LineString",
+            "coordinates": coordinates
+          },
+          "timeInterval": {
+            "dateStart": "2010-06-08T11:29:10Z",
+            "dateEnd": "2026-09-08T11:29:10Z",
+            "daytimeStart": "1:30",
+            "daytimeEnd": "15:30"
+          },
+          "tolerance": $scope.slider.value
+        };
+
+        var req = {
+          method: 'POST',
+          url: "https://envirocar.org/envirocar-rest-analyzer/dev/rest/route/statistics",
+          data: dataput
+        }
+         delete $http.defaults.headers.common["X-User"];
+       delete $http.defaults.headers.common["X-Token"];
+        $http(req).then(function(resp) {
+          console.log(resp);
+        })
+
+
+    }
   }])
 
   

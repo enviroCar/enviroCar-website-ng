@@ -301,8 +301,14 @@ angular.module('app')
           $scope.customFullscreen = (wantsFullScreen === true);
         });
     }
-    $scope.filters = ["Distance", "Duration of Travel", "Date", "Vehicle"];
+    $rootScope.filters = [["Distance",0,distanceFilterPresent], ["Date",1,dateFilterPresent], ["Duration of Travel",2,durationFilterPresent], ["Vehicle",3,vehicleFilterPresent]];
     $scope.filtersS  = [];
+
+    var originatorEv;
+    $scope.openMenu = function($mdOpenMenu, ev) {
+      originatorEv = ev;
+      $mdOpenMenu(ev);
+    };
 
     $rootScope.distanceShow = true;
     $rootScope.dateShow = true;
@@ -366,9 +372,19 @@ angular.module('app')
          {
            $scope.errorOverlap = true;
          }
+         else if($scope.maxDistanceFilter > 5000)
+         {
+           $scope.errorLimit = true;
+         }
          else{
-         distanceRange = {'min':($scope.minDistanceFilter!=undefined?$scope.minDistanceFilter:0),'max':($scope.maxDistanceFilter!=undefined?$scope.maxDistanceFilter:Number.MAX_SAFE_INTEGER)}
-         distanceFilterPresent = true;
+           console.log($scope.filters);
+           console.log($scope.maxDistanceFilter);
+           console.log("is max distance");
+           $rootScope.filters[0][2] = true; 
+           distanceRange = {'min':($scope.minDistanceFilter!=(undefined || null)?$scope.minDistanceFilter:0),'max':($scope.maxDistanceFilter!=(undefined || null)?$scope.maxDistanceFilter:5000)}
+            distanceFilterPresent = true;
+         //   $scope.filters = [["Distance",0,true], ["Duration of Travel",1,durationFilterPresent], ["Date",2,dateFilterPresent], ["Vehicle",3,vehicleFilterPresent]];
+
             $mdDialog.hide();
             console.log(distanceRange);  
          }    
@@ -406,6 +422,8 @@ angular.module('app')
          }
          else{
          $rootScope.dateShow = false;
+          $rootScope.filters[1][2] = true; 
+
          dateRange = {'start':$scope.dateStartCustom,'end':$scope.dateEndCustom};
          dateFilterPresent = true;
             $mdDialog.hide();
@@ -446,10 +464,16 @@ angular.module('app')
          {
            $scope.errorOverlap = true;
          }
+         else if($scope.maxDurationFilter > 6000)
+         {
+           $scope.errorLimit = true;
+         }
          else{
          $rootScope.durationShow = false;
-
-         durationRange = {'min':$scope.minDurationFilter,'max':$scope.maxDurationFilter};
+         $rootScope.filters[2][2] = true; 
+         durationRange = {'min':($scope.minDurationFilter!=(undefined || null)?$scope.minDurationFilter:0),'max':($scope.maxDurationFilter!=(undefined || null)?$scope.maxDurationFilter:6000)}
+         console.log("duration range is");
+         console.log(durationRange);
          durationFilterPresent = true;
             $mdDialog.hide();
             console.log(dateRange);
@@ -479,10 +503,11 @@ angular.module('app')
            //which implies this is a event to change the existing filter
          }
        $scope.hide = function() {
-         $rootScope.vehicleShow = false;
-          console.log($scope.vehicles);
-        	vehiclesRange = JSON.parse(JSON.stringify($scope.vehicles));
-         vehicleFilterPresent = true;
+            $rootScope.filters[3][2] = true; 
+            $rootScope.vehicleShow = false;
+            console.log($scope.vehicles);
+            vehiclesRange = JSON.parse(JSON.stringify($scope.vehicles));
+            vehicleFilterPresent = true;
             $mdDialog.hide();
             console.log(dateRange);
 
@@ -630,21 +655,25 @@ angular.module('app')
     {
           if(chip.name == "Distance")
           {
+            $rootScope.filters[0][2] = false; 
             $rootScope.distanceShow = true;
             distanceFilterPresent = false;
           }
           else if(chip.name == "Date")
           {
+            $rootScope.filters[1][2] = false;
             $rootScope.dateShow = true;
             dateFilterPresent = false;
           }
           else if(chip.name == "Duration of Travel")
           {
+            $rootScope.filters[2][2] = false;
             $rootScope.durationShow = true;
             durationFilterPresent = false;
           }
           else if(chip.name == "Vehicle")
           {
+            $rootScope.filters[3][2] = false;
             $rootScope.vehicleShow = true;
             vehicleFilterPresent = false;
           }

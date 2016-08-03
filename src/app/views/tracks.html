@@ -246,11 +246,25 @@
 
       </div> -->
       <div style="text-align:center">
+      <md-menu>
+        <md-button class="md-primary md-raised" ng-click="openMenu($mdOpenMenu, $event)">
+          <i class="material-icons white099">add_box</i>
+          <span style="color:rgba(255,255,255,0.9)">Add a filter</span>
+        </md-button>
+        <md-menu-content width="4">
+          <md-menu-item ng-repeat="item in $root.filters" ng-hide="item[2]">
+            <md-button ng-click="addFilter(item[1])">{{item[0]}}</md-button>
+          </md-menu-item>
+        </md-menu-content>
+        </md-menu>
+        </div>
+    <!--  <div style="text-align:center">
+        
         <md-button class="md-raised"  ng-if="$root.distanceShow" ng-click="addFilter(0)"><span>Distance</span></md-button>
         <md-button class="md-raised"  ng-if="$root.dateShow" ng-click="addFilter(1)">Date</md-button>
         <md-button class="md-raised"  ng-if="$root.durationShow" ng-click="addFilter(2)">Duration of Travel</md-button>
         <md-button class="md-raised"  ng-if="$root.vehicleShow" ng-click="addFilter(3)">Vehicle</md-button>
-      </div>
+      </div> -->
                <md-chips style="width:100%" md-on-add="add($chip)" ng-model="$root.selectedVegetables" md-autocomplete-snap
               md-transform-chip="transformChip($chip)"
               md-require-match="autocompleteDemoRequireMatch"

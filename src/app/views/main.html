@@ -1,11 +1,11 @@
 <md-sidenav md-component-id="left" style="z-index:100000"
             class="md-whiteframe-z2 md-sidenav-left" 
-            md-is-locked-open="vm.lockLeft && $mdMedia('gt-md')" >
+            md-is-locked-open="vm.lockLeft && $mdMedia('gt-xs')" >
 
             <md-toolbar layout="column" style="min-height:10%">
                 <div class="md-toolbar-tools">
                    <span flex></span>
-                   <md-button  hide-gt-md class="bg-white" class="md-icon-button" aria-label="Close Side Panel" ng-click="closeSideNavPanel()">
+                   <md-button  hide-gt-xs class="bg-white" class="md-icon-button" aria-label="Close Side Panel" ng-click="closeSideNavPanel()">
                      <md-tooltip>Close Side Panel</md-tooltip>
                      <i class="material-icons white09">&#xE314;</i>
                    </md-button>
@@ -37,7 +37,7 @@
       <a>
         <md-item-content md-ink-ripple layout="row" layout-align="start center">
           <div class="inset">
-            <ng-md-icon icon="{{item.icon}}"></ng-md-icon>
+            <ng-xs-icon icon="{{item.icon}}"></ng-xs-icon>
           </div>
           <div class="inset">{{item.title}}
           </div>
@@ -50,12 +50,12 @@
 
 <div layout="column" flex>
     <md-toolbar layout="row" layout-align="start center" class="customtoolbar">
-      <md-button hide show-gt-md ng-click="vm.lockLeft=!vm.lockLeft" aria-label="Menu">
+      <md-button hide show-gt-xs ng-click="vm.lockLeft=!vm.lockLeft" aria-label="Menu">
           <i ng-if="!vm.lockLeft" class="material-icons white09">menu</i>
           <i ng-if="vm.lockLeft" class="material-icons white09">&#xE314;</i>
 
       </md-button>
-      <md-button hide-gt-md  ng-click="vm.toggleItemsList()" aria-label="Menu">
+      <md-button hide-gt-xs  ng-click="vm.toggleItemsList()" aria-label="Menu">
           <i class="material-icons white09">menu</i>
           </md-button>
 

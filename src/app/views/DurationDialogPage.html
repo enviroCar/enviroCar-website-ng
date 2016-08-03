@@ -13,13 +13,14 @@
               <div layout="column" layout-padding ng-cloak>
 
          <md-input-container >
-                <input type="number" ng-model="minDurationFilter" placeholder="Longer than(in minutes)" style="width:100%">
+                <input type="number"  min="0"  ng-model="minDurationFilter" placeholder="Longer than(in minutes)" style="width:100%">
             </md-input-container>
             <md-input-container>
-                <input type="number" ng-model="maxDurationFilter" placeholder="Shorter than(in minutes)" style="width:100%">
+                <input type="number" min="0"  ng-model="maxDurationFilter" placeholder="Shorter than(in minutes)" style="width:100%">
             </md-input-container>
              <p ng-if="errorNegative">Please give only Positive integers</p>
             <p ng-if="errorOverlap">Minimum time should be lesser than maximum time</p>
+              <p ng-if="errorLimit">Maximum duration should be lesser than 6000 Minutes</p>
             </div>
     </md-dialog-content>
     <md-dialog-actions>
