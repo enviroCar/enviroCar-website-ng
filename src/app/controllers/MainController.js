@@ -115,9 +115,9 @@
       
       var pending = $mdBottomSheet.hide() || $q.when(true);
 
-      pending.then(function() {
+     /* pending.then(function() {
         $mdSidenav('left').toggle();
-      });
+      }); */
     }
 
     function selectItem(item) {

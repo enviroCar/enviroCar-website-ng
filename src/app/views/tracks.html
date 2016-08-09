@@ -245,11 +245,12 @@
                 <md-button md-theme="blue" class="white-bg" ng-click="searchTracks()">Search 2</md-button>
 
       </div> -->
-      <div style="text-align:center">
+      <div layout-gt-md="row" layout="column">
+         <div style="text-align:center">
       <md-menu>
         <md-button class="md-primary md-raised" ng-click="openMenu($mdOpenMenu, $event)">
           <i class="material-icons white099">add_box</i>
-          <span style="color:rgba(255,255,255,0.9)">Add a filter</span>
+          <span style="color:rgba(255,255,255,0.9)">Filter</span>
         </md-button>
         <md-menu-content width="4">
           <md-menu-item ng-repeat="item in $root.filters" ng-hide="item[2]">
@@ -265,7 +266,7 @@
         <md-button class="md-raised"  ng-if="$root.durationShow" ng-click="addFilter(2)">Duration of Travel</md-button>
         <md-button class="md-raised"  ng-if="$root.vehicleShow" ng-click="addFilter(3)">Vehicle</md-button>
       </div> -->
-               <md-chips style="width:100%" md-on-add="add($chip)" ng-model="$root.selectedVegetables" md-autocomplete-snap
+               <md-chips style="min-width:80%" md-on-add="add($chip)" ng-model="$root.selectedVegetables" md-autocomplete-snap
               md-transform-chip="transformChip($chip)"
               md-require-match="autocompleteDemoRequireMatch"
               md-on-select="getChipInfo($chip)" md-on-remove="removeChip($chip)">
@@ -284,6 +285,8 @@
                     </md-chip-template>
 
                </md-chips>
+        </div>
+     
                 <div style="width:100%;text-align:center">
                       <p style="font-size:17px">Showing {{(tracks|filter:search | filter:distanceFilter | filter:dateFilter | filter:durationFilter | filter:vehicleFilter).length}} of {{tracks.length}} tracks</p>
                 </div>

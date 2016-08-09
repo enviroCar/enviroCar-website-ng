@@ -1,10 +1,11 @@
 angular.module('app')
-  .controller('SegmentIndependentController', ['$scope','GeolocationService','$geolocation','$mdToast', '$rootScope', '$http', function ($scope, GeolocationService, $geolocation, $mdToast, $rootScope, $http) {
+  .controller('SegmentIndependentController', ['$scope','$mdDialog','$mdMedia','GeolocationService','$geolocation','$mdToast', '$rootScope', '$http', function ($scope, $mdDialog,$mdMedia, GeolocationService, $geolocation, $mdToast, $rootScope, $http) {
     console.log('SegmentIndependentController fired fwnfjenfef')
     var markersArray = []
     var countunique = 0
-$scope.showleaflet = false;
-$rootScope.paths = {}
+    $scope.showleaflet = false;
+    $scope.notSearching = true;
+    $rootScope.paths = {}
     $rootScope.markers = {}
     $rootScope.slider = {
     value: 50,
@@ -37,9 +38,9 @@ console.log("workibg ")
     angular.extend($scope, {
       
       center: {
-        lat:52,
-        lng: 7.65,
-        zoom: 7
+        lat:51.960,
+        lng: 7.6261,
+        zoom: 15
       },
       events: {},
     })
@@ -177,6 +178,7 @@ console.log("workibg ")
       $rootScope.markers = {}
     }
     $scope.searchForPoints = function () {
+      $scope.notSearching = false;
       // Search for points on the server side 
       var coordinates = [];
       console.log("came here");
@@ -211,10 +213,103 @@ console.log("workibg ")
        delete $http.defaults.headers.common["X-Token"];
         $http(req).then(function(resp) {
           console.log(resp);
+          responsehandler(resp);
+          $scope.notSearching = true;
         })
 
 
     }
+    function responsehandler(resp)
+    {
+      if(resp.data.properties.length > 0)
+      {
+        // There is some data returned by the server.
+        showObject = {
+            controller: TracksPresentController,
+            templateUrl: 'app/views/TracksPresent.html',
+            parent: angular.element(document.body),
+            clickOutsideToClose: false,
+            locals: {
+              resp: resp
+            },
+            fullscreen: useFullScreen
+          }
+      }
+      else{
+        showObject = {
+            controller: TracksNotPresentController,
+            templateUrl: 'app/views/TracksNotReturned.html',
+            parent: angular.element(document.body),
+            clickOutsideToClose: false,
+            fullscreen: useFullScreen
+          }
+
+      }
+       var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
+        $mdDialog.show(showObject)
+          .then(function(answer) {
+            $scope.status = 'You said the information was "' + answer +
+              '".';
+          }, function() {
+            $scope.status = 'You cancelled the dialog.';
+          });
+        $scope.$watch(function() {
+          return $mdMedia('xs') || $mdMedia('sm');
+        }, function(wantsFullScreen) {
+          $scope.customFullscreen = (wantsFullScreen === true);
+        });
+    }
+
+    function TracksPresentController($scope, $mdDialog, $state, resp) {
+      console.log(resp);
+      $scope.selectModel1  = "All Segments";
+      $scope.segments = [{'ind':0,'value':'All Segments'}];
+      if(resp.data.features.length > 1)
+      {
+        for(var i = 0 ; i < resp.data.features.length ; i++)
+        {
+          $scope.segments.push({'ind':(i+1),'value':('Segment ' + (i+1).toString())})
+        }
+      }
+      var impPhen = ['Speed','Consumption','CO2','MAF','Calculated MAF'];
+      var availablePhen = {};
+      for(var i = 0 ; i < resp.data.properties.length ; i++)
+      {
+          if(impPhen.indexOf(resp.data.features[i].name)>-1)
+          {
+            availablePhen[resp.data.features[i].name] = resp.data.features[i];
+          }
+      }
+
+      
+       $scope.hide = function() {
+               console.log($scope.segments);
+
+         console.log($scope.selectModel1); 
+          $mdDialog.hide();
+        };
+        $scope.cancel = function() {
+                   console.log($scope.selectModel1); 
+
+                console.log($scope.segments);
+
+          $mdDialog.cancel();
+        };
+    }
+
+     function TracksNotPresentController($scope, $mdDialog, $state) 
+     {
+      $scope.hide = function() {
+          $mdDialog.hide();
+        };
+        $scope.cancel = function() {
+          $mdDialog.cancel();
+        };
+    }
+
+
+
+
   }])
 
   
