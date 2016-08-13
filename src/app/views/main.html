@@ -68,11 +68,11 @@
           <img style="height:20px;width:20px" ng-src="assets/images/ic_power_settings_new_white_48dp.png"/>
           <span style="color:white">{{'LOGIN' | translate}}</span>
         </md-button>
-
+<!--
     <md-button ng-show="$root.showlogout" class="toolbar-button white-bg" aria-label="Settings" ng-click="vm.toggleRightSidebar()">
       <img style="height:20px;width:20px" ng-src="assets/images/ic_account_circle_white_48dp.png"/>
             <span style="color:white">{{'PROFILE' | translate}}</span>
-        </md-button>
+        </md-button> -->
 
 
     </md-toolbar>
@@ -83,7 +83,7 @@
 </div>
 
 
-
+<!--
 <md-sidenav md-component-id="right"
             class="md-whiteframe-z1 md-sidenav-right" style="width:30%">
     <md-toolbar>
@@ -109,23 +109,26 @@
                 <h3>My Activity</h3>
             </div>
         </md-toolbar>
-        <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" style="max-width:375px" class="card card-4-50" md-theme-watch>
-          <md-card-content>
+        <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" style="max-width:375px" class="card-4-50-0shadow" md-theme-watch>
+          <md-card-content class="nopadding">
             <md-content flex layout-padding style="height:100%">
               <md-list-item class="md-3-line" ng-repeat='item in events' ng-click="goToActivity(item.type,item.trackidlink)">
-            <!--    <img class="md-avatar" src={{item.profileurl}}></img> -->
-                <div class="md-list-item-text" layout="column">
+                <i class="material-icons grey md-avatar md-48">{{item.icon}}</i>
+                <div style="padding-left:5%" class="md-list-item-text" layout="column">
                 <h3 style="color:{{item.color}}"><b>{{item.topic}}</b></h3>
                 <h4>{{item.name}}</h4>
-                <p>{{item.date}}</p>
+                <p>{{item.time | date:'medium'}}</p>
               </div>
               </md-list-item>
               <div ng-show = 'busy'>Loading Data...</div>
         </md-content>
         </md-card-content>
-        <md-card-actions layout-align="center center">
-          <md-button ng-click="nextpage()">Load More</md-button>
+        <md-card-actions layout-align="center center" layout="column">
+          <md-button ng-if="!fetchingResults" class="white-bg"  ng-click="nextpage()">Load More</md-button>
+            <md-progress-circular ng-if="fetchingResults" class="loader_dashboard" md-diameter="40"></md-progress-circular>
+
         </md-card-actions>
         </md-card>
     </section>
 </md-sidenav>
+-->

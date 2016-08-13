@@ -173,23 +173,25 @@
             </div>
 
           </md-toolbar> -->
-          <md-toolbar style="color:black;background-color:rgba(185,217,137,1)" md-theme="default" ng-show="!showSearch">
+          <md-toolbar style="color:black;background-color:rgba(185,217,137,1)" md-theme="default">
   <div class="md-toolbar-tools">
     <p>Order by - </p>
     <p>&nbsp</p>
-    <md-button ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
-      <ng-md-icon icon="menu"></ng-md-icon>
-    </md-button>
     <md-select ng-model="filterSelected">
         <md-option ng-model="filterSelected" ng-value="d" ng-click="changeFilter(d)" ng-selected="Modified" data-ng-repeat="d in filterOptions">{{d}}</md-option>
 </md-select>
-    <span flex></span>
+        <span flex></span>
+
+     <md-input-container ng-show="showSearch" md-theme="input" style="padding-top:30px" flex>
+      <label>black</label>
+      <input ng-model="search" placeholder="enter search">
+    </md-input-container>
     <md-button aria-label="Search" ng-click="showSearch = !showSearch">
 <i class="material-icons md-36">search</i>
     </md-button>
   </div>
 </md-toolbar>
-<md-toolbar style="color:black;background-color:white" ng-show="showSearch">
+<!-- <md-toolbar style="color:black;background-color:white" ng-show="showSearch">
   <div class="md-toolbar-tools">
     <md-button ng-click="showSearch = !showSearch" aria-label="Back">
 <i class="material-icons md-36">keyboard_arrow_left</i>
@@ -203,7 +205,7 @@
     </md-button>
   </div>
 
-</md-toolbar>
+</md-toolbar> -->
           <md-card-content ng-controller="filterTracksController" >
 
           <!--  <div style="width:100%" layout="column" layout-align="center center">
@@ -245,11 +247,12 @@
                 <md-button md-theme="blue" class="white-bg" ng-click="searchTracks()">Search 2</md-button>
 
       </div> -->
-      <div style="text-align:center">
+      <div layout-gt-md="row" layout="column">
+         <div style="text-align:center">
       <md-menu>
         <md-button class="md-primary md-raised" ng-click="openMenu($mdOpenMenu, $event)">
           <i class="material-icons white099">add_box</i>
-          <span style="color:rgba(255,255,255,0.9)">Add a filter</span>
+          <span style="color:rgba(255,255,255,0.9)">Filter</span>
         </md-button>
         <md-menu-content width="4">
           <md-menu-item ng-repeat="item in $root.filters" ng-hide="item[2]">
@@ -265,7 +268,7 @@
         <md-button class="md-raised"  ng-if="$root.durationShow" ng-click="addFilter(2)">Duration of Travel</md-button>
         <md-button class="md-raised"  ng-if="$root.vehicleShow" ng-click="addFilter(3)">Vehicle</md-button>
       </div> -->
-               <md-chips style="width:100%" md-on-add="add($chip)" ng-model="$root.selectedVegetables" md-autocomplete-snap
+               <md-chips style="min-width:80%" md-on-add="add($chip)" ng-model="$root.selectedVegetables" md-autocomplete-snap
               md-transform-chip="transformChip($chip)"
               md-require-match="autocompleteDemoRequireMatch"
               md-on-select="getChipInfo($chip)" md-on-remove="removeChip($chip)">
@@ -284,6 +287,8 @@
                     </md-chip-template>
 
                </md-chips>
+        </div>
+     
                 <div style="width:100%;text-align:center">
                       <p style="font-size:17px">Showing {{(tracks|filter:search | filter:distanceFilter | filter:dateFilter | filter:durationFilter | filter:vehicleFilter).length}} of {{tracks.length}} tracks</p>
                 </div>

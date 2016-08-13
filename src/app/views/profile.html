@@ -114,9 +114,12 @@
         <md-input-container class="md-icon-float md-block">
           <input ng-model="country" type="text" placeholder="Country">
         </md-input-container>
-        <md-input-container class="md-icon-float md-block">
-          <input ng-model="birthday" type="text" placeholder="Birthday (2000-12-31)" >
+       <!-- <md-input-container class="md-icon-float md-block">
+          <input ng-model="birthday" type="text" placeholder="Birthday (2000-12-31)" > -->
         </md-input-container>
+        <span>Date of Birth
+            <md-datepicker ng-model="dateBirthdayPicker" md-placeholder="Enter date"></md-datepicker>
+        </span>
         <md-select md-theme="blue" ng-model="gender "placeholder="Gender" >
               <md-option value="m">Male</md-option>
               <md-option value="f">Female</md-option>

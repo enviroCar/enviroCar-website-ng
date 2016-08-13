@@ -5,6 +5,8 @@ angular.module('app')
     'myactivity',
     function($scope, $http, $rootScope, $state, $stateParams, myactivity) {
       $scope.show_no_my_activity = false;
+      $scope.loading = false;
+      $scope.fetchingResults = false;
       console.log("fired my activity")
       $scope.events = [];
       var eventshelper = []
@@ -19,8 +21,22 @@ angular.module('app')
           'X-User': $rootScope.globals.currentUser.username,
           'X-Token': $rootScope.globals.currentUser.authdata
         };
+         $scope.username;
+      var username;
+      if ($stateParams.user == "") {
+        username = $rootScope.globals.currentUser.username;
+        $scope.username = "Your";
 
+      } else {
+        username = $stateParams.user;
+        $scope.username = username;
+      }
+      var fetchflag = 0;
         $scope.nextpage = function() {
+          if(fetchflag == 1)
+          {
+            $scope.fetchingResults = true;
+          }
           $scope.page++;
           var url = myactivity.url_base + $rootScope.globals.currentUser.username +
             myactivity.yourself;
@@ -43,29 +59,35 @@ angular.module('app')
                   helper['type'] = 0;
                   helper['color'] = "#0065A0"
                   helper['topic'] = "New Friend Activity";
-                  helper['name'] = username + " is now friends with " +
+                  helper['name'] =   "You are friends with" +
                     data.activities[
                       i].other.name;
                   helper['trackidlink'] = "";
+                  helper['icon'] = 'people';
                 } else if (data.activities[i].type == "CREATED_TRACK") {
                   helper['type'] = 1;
                   helper['color'] = "#0065A0"
                   helper['topic'] = "New Track Upload";
                   helper['trackidlink'] = data.activities[i].track.id
+                  helper['icon'] = 'add_circle';
                 } else if (data.activities[i].type == "CHANGED_PROFILE") {
                   helper['type'] = 0;
                   helper['topic'] = "Profile Update";
+                  helper['icon'] = 'update';
                 } else if (data.activities[i].type == "UNFRIENDED_USER") {
                   continue;
                 } else if (data.activities[i].type == "CREATED_GROUP") {
                   helper['type'] = 0;
                   helper['topic'] = "You created a Group";
+                  helper['icon'] = 'speaker_groups';
                 } else if (data.activities[i].type == "CHANGED_GROUP") {
                   helper['type'] = 0;
                   helper['topic'] = "You changed the group";
+                  helper['icon'] = 'speaker_groups';
                 } else if (data.activities[i].type == "JOINED_GROUP") {
                   helper['type'] = 0;
                   helper['topic'] = "You joined the Group";
+                  helper['icon'] = 'group_add';
                 } else if (data.activities[i].type == "LEFT_GROUP") {
                   helper['type'] = 0;
                   helper['topic'] = "You left the Group";
@@ -77,6 +99,8 @@ angular.module('app')
                 //  console.log(helper);
               }
               //console.log($scope.events);
+              fetchflag = 1;
+              $scope.fetchingResults = false;
               $scope.events = eventshelper
             })
         }

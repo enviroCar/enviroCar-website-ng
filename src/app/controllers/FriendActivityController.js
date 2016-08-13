@@ -10,6 +10,8 @@ angular.module('app')
     '$stateParams',
     '$state', 'friendactivity',
     function ($scope, $http, $rootScope, $stateParams, $state, friendactivity) {
+      $scope.totalLoading = true;
+      $scope.fetchingResults = false;
       $scope.show_no_my_activity = false
       $scope.originaluser = false
       $scope.events = []
@@ -30,7 +32,13 @@ angular.module('app')
         username = $stateParams.user
         return
       }
+
+      var fetchFlag = 0;
       $scope.nextpage = function () {
+        if(fetchFlag == 1)
+        {
+          $scope.fetchingResults = true;
+        }
         $scope.page++
         var url = friendactivity.url_base + username +
         friendactivity.friend
@@ -100,6 +108,9 @@ angular.module('app')
             }
             console.log($scope.events)
             $scope.events = eventshelper
+            fetchFlag = 1;
+            $scope.fetchingResults = false;
+            $scope.totalLoading = false;
           })
       }
       $scope.nextpage($scope.page)

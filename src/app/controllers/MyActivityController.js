@@ -10,6 +10,8 @@ angular.module('app')
   '$stateParams',
   'myactivity',
   function($scope, $http, $rootScope, $state, $stateParams, myactivity) {
+    $scope.fetchingResults = false;
+    $scope.totalLoading = true;
     $scope.show_no_my_activity = false;
     console.log("fired my activity")
     $scope.events = [];
@@ -35,8 +37,13 @@ angular.module('app')
         username = $stateParams.user;
         $scope.username = username;
       }
+      var fetchFloat = 0;
       //$scope.username = username;
       $scope.nextpage = function() {
+        if(fetchFloat == 1)
+        {
+          $scope.fetchingResults = true;
+        }
         $scope.page++;
         var url = myactivity.url_base + username +
           myactivity.yourself;
@@ -108,6 +115,9 @@ angular.module('app')
             }
             //console.log($scope.events);
             $scope.events = eventshelper
+            fetchFloat = 1;
+            $scope.fetchingResults = false;
+            $scope.totalLoading = false;
           })
       }
       $scope.nextpage($scope.page);

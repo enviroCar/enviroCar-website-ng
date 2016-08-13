@@ -4,6 +4,7 @@ angular.module('app')
     'requesthomestats',
     function($scope, $http, $rootScope, $stateParams, $state,
       requesthomestats) {
+      $scope.totalLoading = true;
       $scope.showMoreFriends = false;
       $scope.selectedIndex = 2;
       $http.defaults.headers.common = {
@@ -49,6 +50,7 @@ angular.module('app')
             "assets/images/profiledummy" + (i + 1).toString() + ".png";
         }
         console.log($scope.data_friends_4);
+        $scope.totalLoading = false;
       });
       $scope.goToFriend = function(username) {
         console.log(username + "came to find friend");
