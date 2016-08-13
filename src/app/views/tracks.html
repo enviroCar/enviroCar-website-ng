@@ -173,23 +173,25 @@
             </div>
 
           </md-toolbar> -->
-          <md-toolbar style="color:black;background-color:rgba(185,217,137,1)" md-theme="default" ng-show="!showSearch">
+          <md-toolbar style="color:black;background-color:rgba(185,217,137,1)" md-theme="default">
   <div class="md-toolbar-tools">
     <p>Order by - </p>
     <p>&nbsp</p>
-    <md-button ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
-      <ng-md-icon icon="menu"></ng-md-icon>
-    </md-button>
     <md-select ng-model="filterSelected">
         <md-option ng-model="filterSelected" ng-value="d" ng-click="changeFilter(d)" ng-selected="Modified" data-ng-repeat="d in filterOptions">{{d}}</md-option>
 </md-select>
-    <span flex></span>
+        <span flex></span>
+
+     <md-input-container ng-show="showSearch" md-theme="input" style="padding-top:30px" flex>
+      <label>black</label>
+      <input ng-model="search" placeholder="enter search">
+    </md-input-container>
     <md-button aria-label="Search" ng-click="showSearch = !showSearch">
 <i class="material-icons md-36">search</i>
     </md-button>
   </div>
 </md-toolbar>
-<md-toolbar style="color:black;background-color:white" ng-show="showSearch">
+<!-- <md-toolbar style="color:black;background-color:white" ng-show="showSearch">
   <div class="md-toolbar-tools">
     <md-button ng-click="showSearch = !showSearch" aria-label="Back">
 <i class="material-icons md-36">keyboard_arrow_left</i>
@@ -203,7 +205,7 @@
     </md-button>
   </div>
 
-</md-toolbar>
+</md-toolbar> -->
           <md-card-content ng-controller="filterTracksController" >
 
           <!--  <div style="width:100%" layout="column" layout-align="center center">

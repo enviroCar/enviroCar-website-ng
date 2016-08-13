@@ -247,7 +247,7 @@
       <md-content style="background-color:#EEEEEE" class="md-padding">
         <div class="middle">
         <div layout-gt-md="row" layout="column" >
-        <md-card class="nopadding" ng-show="originaluser" ng-controller="FriendActivityController" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" style="min-width:37.5%" md-theme-watch>
+        <md-card  ng-show="originaluser" ng-controller="FriendActivityController" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" style="min-width:37.5%" md-theme-watch>
           <md-toolbar style="color:black;background-color:white" >
             <div class="md-toolbar-tools">
               <h3 style="color:rgba(0,101,160,0.9)">
@@ -256,7 +256,8 @@
             </div>
           </md-toolbar>
           <md-card-content >
-            <md-content ng-show="!show_no_my_activity" flex layout-padding style="max-height:490px">
+             <md-progress-circular ng-if="totalLoading" class="loader_dashboard" md-diameter="156"></md-progress-circular>
+            <md-content ng-if="!totalLoading" flex layout-padding style="max-height:560px">
               <md-list-item class="md-3-line" ng-repeat='item in events' ng-click="goToActivity(item.type,item.trackidlink)">
                 <img class="md-avatar" src={{item.profileurl}}></img>
                 <div style="padding-left:5%" class="md-list-item-text" layout="column">
@@ -271,11 +272,13 @@
           <p>{{'NO_FRIENDS_ACTIVITY' | translate}}</p>
         </div>
         </md-card-content>
-        <md-card-actions layout-align="center center">
-          <md-button ng-show="!show_no_my_activity" class="white-bg" ng-click="nextpage()">{{'LOAD_MORE' | translate}}</md-button>
+        <md-card-actions layout-align="center center" layout="column">
+          <md-button ng-if="!show_no_my_activity && !fetchingResults" class="white-bg" ng-click="nextpage()">{{'LOAD_MORE' | translate}}</md-button>
+          <md-progress-circular ng-if="fetchingResults" class="loader_dashboard" md-diameter="40"></md-progress-circular>
+
         </md-card-actions>
         </md-card>
-        <md-card class="nopadding" ng-controller="MyActivityController" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" style="min-width:37.5%" md-theme-watch>
+        <md-card  ng-controller="MyActivityController" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" style="min-width:37.5%" md-theme-watch>
           <md-toolbar style="color:black;background-color:white" >
             <div class="md-toolbar-tools">
               <h3 style="color:rgba(0,101,160,0.9)">
@@ -284,7 +287,8 @@
             </div>
           </md-toolbar>
           <md-card-content>
-            <md-content flex layout-padding style="max-height:490px">
+            <md-progress-circular ng-if="totalLoading" class="loader_dashboard" md-diameter="156"></md-progress-circular>
+            <md-content ng-if="!totalLoading" flex layout-padding style="max-height:560px">
               <md-list-item ng-show="!show_no_my_activity" class="md-3-line" ng-repeat='item in events' ng-click="goToActivity(item.type,item.trackidlink)">
              <!--  <img class="md-avatar" src={{item.profileurl}}></img> -->
               <i class="material-icons grey md-avatar md-48">{{item.icon}}</i>
@@ -301,8 +305,9 @@
         </div>
         </md-card-content>
 
-        <md-card-actions layout-align="center center">
-          <md-button ng-show="!show_no_my_activity" class="white-bg" ng-click="nextpage()">{{'LOAD_MORE' | translate}}</md-button>
+        <md-card-actions layout-align="center center" layout="column">
+          <md-button ng-if="!show_no_my_activity && !fetchingResults" class="white-bg" ng-click="nextpage()">{{'LOAD_MORE' | translate}}</md-button>
+          <md-progress-circular ng-if="fetchingResults" class="loader_dashboard" md-diameter="40"></md-progress-circular>
         </md-card-actions>
         </md-card>
          <md-card ng-controller="FriendListController" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" style="min-width:25%" md-theme-watch>
@@ -314,8 +319,11 @@
         </div>
       </md-toolbar>
       <md-card-content>
-        <div flex>
-        <md-content ng-show="!show_no_friends" flex layout-padding >
+        <md-progress-circular ng-if="totalLoading" class="loader_dashboard" md-diameter="156"></md-progress-circular>
+
+        <div ng-if="!totalLoading" flex>
+
+        <md-content ng-show="!show_no_friends" flex layout-padding style="max-height:560px" >
           <md-list-item  ng-repeat='item in data_friends' ng-click="goToFriend(item.username)">
          <img class="md-avatar" src={{item.profile_url}}></img>
             <div class="md-list-item-text" layout="column">

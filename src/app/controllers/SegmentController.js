@@ -105,7 +105,7 @@ angular.module('app')
       }
 
       console.log("came to chart controller");
-      $scope.options_pie = {
+       $scope.options_pie = {
         chart: {
           type: chart.chart1type,
           height: chart.chart1height + 50,
@@ -113,16 +113,23 @@ angular.module('app')
             return d.key;
           },
           y: function(d) {
-            return d.y;
+            return (d.y);
           },
           showLabels: true,
           duration: chart.chart1duration,
           labelThreshold: 0,
-          legend: chart.chart1legend,
           donut: true,
-          labelsOutside: true,
+          donutLabelsOutside: true,
           cornerRadius: 0,
-          donutRatio: 0.45
+          donutRatio: 0.45,
+          legend: chart.chart1legend,
+          tooltip: {
+            contentGenerator: function(d){
+              var html = '<h3><b>' + d.data.key + '</b> - ' + d.data.y.toFixed(2) + '%</h3>';
+              console.log(d);
+              return(html);
+            }
+          }
         }
       };
 
@@ -154,10 +161,17 @@ angular.module('app')
           yAxis: {
             axisLabel: 'Speed(Km/Hr)',
             axisLabelDistance: -20
+          },
+          tooltip: {
+            contentGenerator: function(d)
+            {
+              console.log(d);
+              var html = '<h3><b>' + d.data.label + '</b> = ' + d.data.value.toFixed(2) + '</h3>' ;
+              return html;
+            }
           }
         }
       };
-
 
 
       $scope.data_pie = [];

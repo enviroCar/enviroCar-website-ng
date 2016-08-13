@@ -13,7 +13,7 @@
     console.log("In main Controller");
     var vm = this;
    // $mdSidenav('left').open();
-    vm.lockLeft = true;
+    vm.lockLeft = false;
 
     /*  var login;
       var logout;
@@ -112,17 +112,17 @@
     }
 
     function toggleItemsList() {
-      
+      console.log("fired here");
       var pending = $mdBottomSheet.hide() || $q.when(true);
 
-     /* pending.then(function() {
+      pending.then(function() {
         $mdSidenav('left').toggle();
-      }); */
+      });
     }
 
     function selectItem(item) {
       vm.title = item.name;
-      vm.toggleItemsList();
+    //  vm.toggleItemsList();
       vm.showSimpleToast(vm.title);
     }
 

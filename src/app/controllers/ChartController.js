@@ -177,7 +177,14 @@ angular.module('app')
           donutLabelsOutside: true,
           cornerRadius: 0,
           donutRatio: 0.45,
-          legend: chart.chart1legend
+          legend: chart.chart1legend,
+          tooltip: {
+            contentGenerator: function(d){
+              var html = '<h3><b>' + d.data.key + '</b> - ' + d.data.y.toFixed(2) + '%</h3>';
+              console.log(d);
+              return(html);
+            }
+          }
         }
       };
 
@@ -209,6 +216,14 @@ angular.module('app')
           yAxis: {
             axisLabel: 'Speed(Km/Hr)',
             axisLabelDistance: -20
+          },
+          tooltip: {
+            contentGenerator: function(d)
+            {
+              console.log(d);
+              var html = '<h3><b>' + d.data.label + '</b> = ' + d.data.value.toFixed(2) + '</h3>' ;
+              return html;
+            }
           }
         }
       };

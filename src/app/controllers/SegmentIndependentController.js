@@ -275,11 +275,13 @@ console.log("workibg ")
       var availablePhen = {};
       for(var i = 0 ; i < resp.data.properties.length ; i++)
       {
-          if(impPhen.indexOf(resp.data.features[i].name)>-1)
+        console.log("recorded here");
+          if(impPhen.indexOf(resp.data.properties[i].name)>-1)
           {
-            availablePhen[resp.data.features[i].name] = resp.data.features[i];
+            availablePhen[resp.data.properties[i].name] = resp.data.properties[i];
           }
       }
+      console.log(availablePhen);
 
       
        $scope.hide = function() {

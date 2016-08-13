@@ -50,8 +50,10 @@ angular.module('app')
         if ($scope.country != undefined) {
           dataput['country'] = $scope.country;
         }
-        if ($scope.birthday != undefined) {
-          dataput['dayOfBirth'] = $scope.birthday;
+        if ($scope.dateBirthdayPicker != undefined) {
+          var stringDate = $scope.dateBirthdayPicker.getFullYear().toString() + '-' + ($scope.dateBirthdayPicker.getMonth()+1).toString() + '-' + $scope.dateBirthdayPicker.getDate().toString(); 
+          console.log(stringDate);
+          dataput['dayOfBirth'] = stringDate;
         }
         if ($scope.gender != undefined) {
           dataput['gender'] = $scope.gender;
@@ -154,7 +156,7 @@ angular.module('app')
       $scope.termsOfUseVersion;
       $scope.badges = [];
       $scope.badgesTrue = false;
-
+      $scope.dateBirthdayPicker = undefined;
       function getdata() {
         url = "https://envirocar.org/api/stable/users/" + $rootScope.globals.currentUser
           .username;
@@ -207,6 +209,9 @@ angular.module('app')
           }
           if (data.data.dayOfBirth != undefined) {
             $scope.birthday = data.data.dayOfBirth;
+            var dateParse = data.data.dayOfBirth.split('-');
+            console.log(dateParse[0] + ' ' +  dateParse[1] + ' ' + dateParse[2] )
+            $scope.dateBirthdayPicker = new Date(dateParse[0],dateParse[1]-1,dateParse[2]);
           }
           $scope.profilepic = url + "/avatar";
           if (data.data.badges != undefined) {
