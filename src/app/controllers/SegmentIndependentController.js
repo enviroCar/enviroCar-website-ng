@@ -5,7 +5,63 @@ angular.module('app')
     var countunique = 0
     $scope.showleaflet = false;
     $scope.notSearching = true;
-    $rootScope.paths = {}
+    $scope.statisticsPresent = false;
+    $rootScope.paths = {};
+    var respGlobal = {};
+    $scope.selectModel  = 'All Segments';
+     var availablePhen = {};
+     var unitsOfPhenoms = {'Speed':'Km/h','Consumption':'l/h','MAF':'g/h','Calculated MAF':'g/h','CO2':'Kg/h'}
+     $scope.options = {
+              chart: {
+                type: 'discreteBarChart',
+                height: 200,
+                margin: {
+                  top: 10,
+                  right: 0,
+                  bottom: 70,
+                  left: 50
+                },
+                x: function(d) {
+                  return d.label;
+                },
+                y: function(d) {
+                  return d.value;
+                },
+                showValues: true,
+                valueFormat: function(d) {
+                  return d3.format(',.4f')(d);
+                },
+                duration: 500,
+                xAxis: {
+                  axisLabel: 'Max vs Avg'
+                },
+                yAxis: {
+                  axisLabel: 'Speed(Km/Hr)',
+                  axisLabelDistance: -15
+                },
+                tooltip: {
+                  contentGenerator: function(d)
+                  {
+                    console.log(d);
+                    var html = '<h3><b>' + d.data.label + '</b> = ' + d.data.value.toFixed(2) + '</h3>' ;
+                    return html;
+                  }
+                }
+              }
+            };
+           // $scope.data = {};
+            $scope.data = [];
+  $scope.items = [
+    {
+      id: 1,
+      name: 'Test'
+    },
+    {
+      id: 2,
+      name: 'Asdf'
+    }
+  ];
+  
     $rootScope.markers = {}
     $rootScope.slider = {
     value: 50,
@@ -212,6 +268,7 @@ console.log("workibg ")
          delete $http.defaults.headers.common["X-User"];
        delete $http.defaults.headers.common["X-Token"];
         $http(req).then(function(resp) {
+          respGlobal = resp;
           console.log(resp);
           responsehandler(resp);
           $scope.notSearching = true;
@@ -219,21 +276,108 @@ console.log("workibg ")
 
 
     }
+    $scope.selectedPhenom = 'Speed';
+    $scope.pointsCount = 0;
+    $scope.phenomChanged = function(s)
+    {
+      $scope.selectedPhenom = s;
+      $scope.data = [{
+        key: s,
+        values: [{
+          'label':'Max',
+          'value': availablePhen[s]['max']
+        },
+        {
+          'label':'Avg',
+          'value': availablePhen[s]['avg']
+        }]
+      }]
+      $scope.options.chart.yAxis.axisLabel = s + "(" + unitsOfPhenoms[s] + ")";
+      $scope.pointsCount = availablePhen[s]['count'];
+      console.log($scope.selectedPhenom);
+    }
+    $scope.segmentDefault = 0;
+    $scope.segmentChanged = function(index)
+    {
+      console.log(index);
+      var segmentIndex = index-1;
+      if(index == 0)
+      {
+        responsehandler(respGlobal);
+      }
+      else{
+      var impPhen = ['Speed','Consumption','CO2','MAF','Calculated MAF'];
+            for(var i = 0 ; i < respGlobal.data.properties.length ; i++)
+            {
+              console.log("recorded here");
+                if(impPhen.indexOf(respGlobal.data.features[segmentIndex].properties[i].name)>-1)
+                {
+                  availablePhen[respGlobal.data.features[segmentIndex].properties[i].name] = respGlobal.data.features[segmentIndex].properties[i];
+                }
+            }
+            console.log(respGlobal);
+            $scope.keys = Object.keys(availablePhen);
+          //  $scope.selectedPhenom = 'Speed'
+            console.log($scope.keys);
+            $scope.data = [{
+              key:$scope.selectedPhenom,
+              values:[{
+                'label':'Max',
+                'value':availablePhen[$scope.selectedPhenom]['max']
+              },
+              {
+                'label':'Avg',
+                'value':availablePhen[$scope.selectedPhenom]['avg']
+              }]
+              
+            }]
+            $scope.pointsCount = availablePhen[$scope.selectedPhenom]['count'];
+      }
+    }
     function responsehandler(resp)
     {
       if(resp.data.properties.length > 0)
       {
-        // There is some data returned by the server.
-        showObject = {
-            controller: TracksPresentController,
-            templateUrl: 'app/views/TracksPresent.html',
-            parent: angular.element(document.body),
-            clickOutsideToClose: false,
-            locals: {
-              resp: resp
-            },
-            fullscreen: useFullScreen
-          }
+        $scope.statisticsPresent = true;
+            // There is some data returned by the server.
+            $scope.segments = [{'ind':0,'value':'All Segments'}];
+            if(resp.data.features.length > 1)
+            {
+              for(var i = 0 ; i < resp.data.features.length ; i++)
+              {
+                $scope.segments.push({'ind':(i+1),'value':('Segment ' + (i+1).toString())})
+              }
+            }
+            var impPhen = ['Speed','Consumption','CO2','MAF','Calculated MAF'];
+            for(var i = 0 ; i < resp.data.properties.length ; i++)
+            {
+              console.log("recorded here");
+                if(impPhen.indexOf(resp.data.properties[i].name)>-1)
+                {
+                  availablePhen[resp.data.properties[i].name] = resp.data.properties[i];
+                }
+            }
+            console.log(resp);
+            $scope.keys = Object.keys(availablePhen);
+           // $scope.selectedPhenom = 'Speed'
+            console.log($scope.keys);
+            $scope.data = [{
+              key:$scope.selectedPhenom,
+              values:[{
+                'label':'Max',
+                'value':availablePhen[$scope.selectedPhenom]['max']
+              },
+              {
+                'label':'Avg',
+                'value':availablePhen[$scope.selectedPhenom]['avg']
+              }]
+              
+            }]
+            $scope.pointsCount = availablePhen[$scope.selectedPhenom]['count'];
+            console.log($scope.data);
+            console.log(availablePhen);
+            //console.log($scope.selectModel1);
+
       }
       else{
         showObject = {
@@ -243,9 +387,7 @@ console.log("workibg ")
             clickOutsideToClose: false,
             fullscreen: useFullScreen
           }
-
-      }
-       var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
+          var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
         $mdDialog.show(showObject)
           .then(function(answer) {
             $scope.status = 'You said the information was "' + answer +
@@ -258,46 +400,11 @@ console.log("workibg ")
         }, function(wantsFullScreen) {
           $scope.customFullscreen = (wantsFullScreen === true);
         });
+
+      }
+       
     }
 
-    function TracksPresentController($scope, $mdDialog, $state, resp) {
-      console.log(resp);
-      $scope.selectModel1  = "All Segments";
-      $scope.segments = [{'ind':0,'value':'All Segments'}];
-      if(resp.data.features.length > 1)
-      {
-        for(var i = 0 ; i < resp.data.features.length ; i++)
-        {
-          $scope.segments.push({'ind':(i+1),'value':('Segment ' + (i+1).toString())})
-        }
-      }
-      var impPhen = ['Speed','Consumption','CO2','MAF','Calculated MAF'];
-      var availablePhen = {};
-      for(var i = 0 ; i < resp.data.properties.length ; i++)
-      {
-        console.log("recorded here");
-          if(impPhen.indexOf(resp.data.properties[i].name)>-1)
-          {
-            availablePhen[resp.data.properties[i].name] = resp.data.properties[i];
-          }
-      }
-      console.log(availablePhen);
-
-      
-       $scope.hide = function() {
-               console.log($scope.segments);
-
-         console.log($scope.selectModel1); 
-          $mdDialog.hide();
-        };
-        $scope.cancel = function() {
-                   console.log($scope.selectModel1); 
-
-                console.log($scope.segments);
-
-          $mdDialog.cancel();
-        };
-    }
 
      function TracksNotPresentController($scope, $mdDialog, $state) 
      {

@@ -3,6 +3,19 @@ angular.module('app')
     '$stateParams', '$state','$mdDialog', '$mdMedia', 'tracks_calendar',
     function($scope,$q, $rootScope, $http, $stateParams, $state, $mdDialog,
       $mdMedia, tracks_calendar) {
+      $scope.showSearch = false;
+      $scope.showSearch2 = false;
+      $scope.toggleShow = function()
+      {
+        if($scope.showSearch == true)
+        {
+          $scope.search = "";
+          $scope.showSearch = false;
+        }
+        else{
+          $scope.showSearch = true;
+        }
+      }
       $scope.dateCustomShow = false;
       $scope.distanceCustomShow = false;
       $scope.submitButtonShow = false;
@@ -389,6 +402,7 @@ angular.module('app')
             console.log(distanceRange);  
          }    
         };
+
 
         $scope.cancel = function() {
           console.log("cancelled");

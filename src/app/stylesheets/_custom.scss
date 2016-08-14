@@ -24,6 +24,12 @@ padding: 8px;
 
 }
 
+/* when hiding the picture */
+.ng-hide-add         { animation:0.0s lightSpeedOut ease; }
+
+/* when showing the picture */
+.ng-hide-remove      { animation:0.6s flipInX ease; }
+
 md-datepicker.md-default-theme {
   background: transparent;
 }

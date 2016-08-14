@@ -21,6 +21,20 @@ position:absolute;z-index:1;width:22%;right:0;height:100%;background-color:rgba(
                                 <rzslider rz-slider-model="$root.slider.value"
                                             rz-slider-options="$root.slider.options"></rzslider>
                                       </div>
+                                      <div ng-if="statisticsPresent">
+                                          <div layout="center" layout="start start" layout-padding ng-cloak>
+                                            <md-select layout-align="center center" style="width:90%" ng-model="selectModel">
+                                                <md-option ng-model="s.ind" ng-repeat="(i,s) in segments" ng-selected="i == 0 ? true:false" ng-click="segmentChanged(s.ind)" ng-value="s.ind">{{s.value}}</md-option>
+                                            </md-select>
+                                            <md-select layout-align="center center" style="width:90%" ng-model="selectedPhenom">
+                                                <md-option ng-model="s" ng-repeat="(i,s) in keys" ng-click="phenomChanged(s)" ng-selected="s == 'Speed' ? true:false" ng-value="s">{{s}}</md-option>
+                                            </md-select>
+                                          </div>
+                                          <nvd3 options="options" data="data"></nvd3>
+                                          <div style="text-align:center;padding-left:2%;padding-right:2%">
+                                          <span>Count of Points - {{pointsCount}}</span>
+                                </div>
+                                          </div>
 
                 </div>
 
