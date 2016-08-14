@@ -186,9 +186,13 @@
       <label>black</label>
       <input ng-model="search" placeholder="enter search">
     </md-input-container>
-    <md-button aria-label="Search" ng-click="showSearch = !showSearch">
+    <md-button aria-label="Search" ng-show="!showSearch" ng-click="toggleShow()">
 <i class="material-icons md-36">search</i>
     </md-button>
+    <md-button aria-label="Search" ng-show="showSearch" ng-click="toggleShow()">
+<i class="material-icons md-36">close</i>
+    </md-button>
+
   </div>
 </md-toolbar>
 <!-- <md-toolbar style="color:black;background-color:white" ng-show="showSearch">
