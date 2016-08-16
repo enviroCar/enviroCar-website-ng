@@ -4,7 +4,7 @@
   <div class="container_header">
   <p class="title"><b>{{'TRACK_ID' | translate}}</b>  - {{trackid}}</p>
   <p class="title"><b>{{'NAME' | translate}}</b>      - {{name}}</p>
-  <p class="title"><b>{{'CREATED' | translate}}</b>   - {{created}}</p>
+  <p class="title"><b>{{'CREATED' | translate}}</b>   - {{created | date:'medium'}}</p>
   </div>
 </div>
   </div>
@@ -196,10 +196,10 @@
     <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" >
       <div class="md-toolbar-tools">
         <h3>
-          <span>Statistics</span>
+          <span>{{'STATISTICS' | translate}}</span>
         </h3>
         <span flex></span>
-        <md-select  md-theme="blue" ng-model="widgetType2" >
+        <md-select md-theme="blue" ng-model="widgetType2" >
             <md-option ng-model="d" ng-value="d" ng-click="selecteditemchanged(d)" data-ng-repeat="d in piechartoptions">{{d}}</md-option>
     </md-select>
 
@@ -436,7 +436,7 @@
         <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" >
           <div class="md-toolbar-tools">
             <h3>
-              <span>Statistics</span>
+              <span>{{'STATISTICS' | translate}}</span>
             </h3>
             <span flex></span>
             <md-select  md-theme="blue" ng-model="widgetType2" >
@@ -484,18 +484,7 @@
 
       </md-card>
     </div>
-    <div layout-gt-md="row">
-      <div style="width:100%;text-align:center">
-        <md-button ng-if="SegmentAPI" ng-click="showSegmentAPI()">
-          Look for other Tracks close by
-        </md-button>
-        <md-card ng-if="!SegmentAPI">
-          <md-card-content>
-            <p>wjuwd</p>
-          </md-card-content>
-        </md-card>
-      </div>
-    </div>
+
     </div>
     </div>
     </div>

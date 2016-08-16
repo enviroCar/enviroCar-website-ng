@@ -17,7 +17,7 @@
                </md-toolbar>
                <div>
                  <md-list>
-    <md-list-item  ng-repeat="item in vm.menuItems" ng-click="vm.selectItem(item)" ui-sref="{{item.sref}}" ui-sref-active="md-primary">
+    <md-list-item  ng-repeat="item in vm.menuItems" ng-click="vm.selectItem(item)" href="{{item.sref}}" ui-sref-active="md-primary">
         <md-item-content layout="row" layout-align="start center">
          <!-- <div class="inset">
             <i class="material-icons md-36 blue">{{item.icon}}</i>

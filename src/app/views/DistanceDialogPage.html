@@ -2,7 +2,7 @@
   <form>
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2 style="color:rgba(255,255,255,0.8)">Set Distance Filters</h2>
+        <h2 style="color:rgba(255,255,255,0.8)">{{'DISTANCE_FILTERS_HEADING' | translate}}</h2>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="cancel()">
           <img style="height:30px;width:30px" src="assets/images/ic_close_white_48dp.png"></img>
@@ -18,14 +18,14 @@
             <md-input-container>
                 <input type="number"  min="0" ng-model="maxDistanceFilter" placeholder="Shorter than(Km)" style="width:100%">
             </md-input-container>
-            <p ng-if="errorNegative">Please give only Positive integers</p>
-            <p ng-if="errorOverlap">Minimum Distance should be lesser than maximum distance</p>
-            <p ng-if="errorLimit">Maximum distance should be lesser than 5000km</p>
+            <p ng-if="errorNegative">{{'ERROR_NEGATIVE' | translate}}</p>
+            <p ng-if="errorOverlap">{{'DISTANCE_OVERLAP_ERROR' | translate}}</p>
+            <p ng-if="errorLimit">{{'DISTANCE_ERROR_LIMIT' | translate}}</p>
             </div>
     </md-dialog-content>
     <md-dialog-actions>
         <md-button ng-click="hide()" class="md-primary">
-        Continue
+        {{'CONTINUE' | translate}}
           </md-button>
          </md-dialog-actions>
   </form>

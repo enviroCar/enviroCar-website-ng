@@ -20,19 +20,19 @@
     var menuItems = [{
       name: 'Dashboard',
       icon: 'dashboard',
-      sref: '.dashboard'
+      sref: '#/dashboard/home'
     }, {
       name: 'Tracks',
       icon: 'directions_car',
-      sref: '.tracks'
+      sref: '#/dashboard/tracks/'
     }, {
       name: 'Profile',
       icon: 'person',
-      sref: '.table'
+      sref: '#/dashboard/table'
     }, {
       name: 'Segment',
       icon: 'pie_chart',
-      sref:  '.segment'
+      sref:  '#/dashboard/segment'
     }];
 
     console.log(menuItems);
