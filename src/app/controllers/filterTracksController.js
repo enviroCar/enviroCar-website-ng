@@ -5,6 +5,19 @@ angular.module('app')
       $mdMedia, tracks_calendar) {
       $scope.showSearch = false;
       $scope.showSearch2 = false;
+      $scope.reverseEnabled = false;
+      $scope.reverse = true;
+      $scope.reverseClicked = function()
+      {
+        if($scope.reverse == false)
+        {
+          $scope.reverse = true;
+        }
+        else{
+          $scope.reverse = false;
+        }
+        console.log($scope.reverseEnabled);
+      }
       $scope.toggleShow = function()
       {
         if($scope.showSearch == true)

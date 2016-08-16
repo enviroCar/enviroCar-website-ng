@@ -180,6 +180,11 @@
     <md-select ng-model="filterSelected">
         <md-option ng-model="filterSelected" ng-value="d" ng-click="changeFilter(d)" ng-selected="Modified" data-ng-repeat="d in filterOptions">{{d}}</md-option>
 </md-select>
+<div style="padding-top:15px;padding-left:2%">
+      <md-checkbox ng-click="reverseClicked()" ng-model="reverseEnabled">
+        Reverse
+      </md-checkbox>
+      </div>
         <span flex></span>
 
      <md-input-container ng-show="showSearch" md-theme="input" style="padding-top:30px" flex>
@@ -210,7 +215,7 @@
   </div>
 
 </md-toolbar> -->
-          <md-card-content ng-controller="filterTracksController" >
+          <md-card-content>
 
           <!--  <div style="width:100%" layout="column" layout-align="center center">
             <p>Search track by date</p>
@@ -299,7 +304,7 @@
                <md-content style="max-height:570px; padding-left:6%;padding-right:10px;padding-top:20px" >
 
                <div class="streamline b-l b-accent m-b">
-                      <div class="sl-item" ng-repeat='event in tracks | filter:search | orderBy:filterOrig | filter:dateFilter | filter:distanceFilter | filter:durationFilter | filter:vehicleFilter' ng-click="goToActivity(event.TrackId)">
+                      <div class="sl-item" ng-repeat='event in tracks | filter:search | orderBy:filterOrig:!reverse | filter:dateFilter | filter:distanceFilter | filter:durationFilter | filter:vehicleFilter' ng-click="goToActivity(event.TrackId)">
                         <!--  <img class="md-avatar" src="{{event.url}}" style="width:80px;height:80px">
                         </img> -->
                       <div class="sl-content" >
