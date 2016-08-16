@@ -7,6 +7,7 @@ angular.module('app')
       $scope.showSearch2 = false;
       $scope.reverseEnabled = false;
       $scope.reverse = true;
+      $scope.onload = true;
       $scope.reverseClicked = function()
       {
         if($scope.reverse == false)
@@ -858,8 +859,8 @@ angular.module('app')
             }
           track_helper['manufacturer'] = data.data.tracks[i].sensor.properties
             .manufacturer;
-          track_helper['Distance'] = data.data.tracks[i]['length'].toFixed(
-            2);
+          track_helper['Distance'] = Number(data.data.tracks[i]['length'].toFixed(
+            2));
           track_helper['url'] =
             "https://envirocar.org/api/stable/tracks/" + data.data.tracks[
               i].id + "/preview";
@@ -883,6 +884,7 @@ angular.module('app')
           tracks.push(track_helper);
         }
         $scope.tracks = tracks;
+        $scope.onload = false;
       })
       $scope.$watch('filterSelected', function() {
         //  $scope.filterOrig = $scope.filterSelected;

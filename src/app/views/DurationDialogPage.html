@@ -18,14 +18,14 @@
             <md-input-container>
                 <input type="number" min="0"  ng-model="maxDurationFilter" placeholder="Shorter than(in minutes)" style="width:100%">
             </md-input-container>
-             <p ng-if="errorNegative">Please give only Positive integers</p>
-            <p ng-if="errorOverlap">Minimum time should be lesser than maximum time</p>
-              <p ng-if="errorLimit">Maximum duration should be lesser than 6000 Minutes</p>
+              <p ng-if="errorNegative">{{'ERROR_NEGATIVE' | translate}}</p>
+              <p ng-if="errorOverlap">{{'DURATION_OVERLAP_ERROR' | translate}}</p>
+              <p ng-if="errorLimit">{{'DURATION_ERROR_LIMIT' | translate}}</p>
             </div>
     </md-dialog-content>
     <md-dialog-actions>
         <md-button ng-click="hide()" class="md-primary">
-        Continue
+        {{'CONTINUE' | translate}}
           </md-button>
          </md-dialog-actions>
   </form>

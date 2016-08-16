@@ -2,19 +2,19 @@
                         <div style="  box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.2);
 position:absolute;z-index:1;width:22%;right:0;height:100%;background-color:rgba(255,255,255,0.85)">
                                 <div style="text-align:center">
-                                    <h3>Control Panel</h3>
+                                    <h3>{{'CONTROL_PANEL' || translate}}</h3>
                                 </div>
                                 <div style="text-align:center;padding-left:2%;padding-right:2%">
-                                    <p style="font-size:16px">Click on map to place a marker at that point, click on it again to delete it.</p>
+                                    <p style="font-size:16px">{{'SEGMENT_INFO' | translate}}</p>
                                 </div>
                                  <div layout-gt-xs="column" layout="center center" >
                                     <div style="width:100%;text-align:center">
-                                        <md-button class="white-bg" ng-click="resetPoints()">Reset points</md-button>    
+                                        <md-button class="white-bg" ng-click="resetPoints()">{{'RESET_POINTS' | translate}}</md-button>    
                                     </div>
 
                                     <div style="width:100%;text-align:center">
                                         <md-progress-circular ng-if="!notSearching" class="loader_dashboard" ng-if="!onload_user_vs_public" md-diameter="50"></md-progress-circular>
-                                        <md-button  ng-if="notSearching" class="white-bg" ng-click="searchForPoints()">Search for tracks</md-button>
+                                        <md-button  ng-if="notSearching" class="white-bg" ng-click="searchForPoints()">{{'SEARCH_TRACKS' | translate}}</md-button>
                                     </div>
                                  </div>
                                  <div style="padding-left:2%;padding-right:2%">
@@ -32,7 +32,7 @@ position:absolute;z-index:1;width:22%;right:0;height:100%;background-color:rgba(
                                           </div>
                                           <nvd3 options="options" data="data"></nvd3>
                                           <div style="text-align:center;padding-left:2%;padding-right:2%">
-                                          <span>Count of Points - {{pointsCount}}</span>
+                                          <span>{{'COUNT_POINTS' | translate}} - {{pointsCount}}</span>
                                 </div>
                                           </div>
 

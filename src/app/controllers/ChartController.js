@@ -663,7 +663,7 @@ angular.module('app')
 
           $scope.trackid = data.data.properties.id;
           $scope.name = data.data.properties.name;
-          $scope.created = data.data.properties.created;
+          $scope.created = new Date(data.data.properties.created);
           console.log("coming here too but");
           console.log(data);
           data_global = data;

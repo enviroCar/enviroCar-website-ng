@@ -111,9 +111,7 @@ angular.module('app')
                 helper['topic'] = "You deleted the group";
               }
               eventshelper.push(helper);
-              //  console.log(helper);
             }
-            //console.log($scope.events);
             $scope.events = eventshelper
             fetchFloat = 1;
             $scope.fetchingResults = false;

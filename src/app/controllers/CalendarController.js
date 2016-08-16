@@ -1,18 +1,36 @@
 angular.module('app')
+.constant('calendar', {
+  monthNumberMapping : {
+        1: 'Jan',
+        2: 'Feb',
+        3: 'Mar',
+        4: 'Apr',
+        5: 'May',
+        6: 'Jun',
+        7: 'Jul',
+        8: 'Aug',
+        9: 'Sep',
+        10: 'Oct',
+        11: 'Nov',
+        12: 'Dec'
+      },
+      urlUsers: "https://envirocar.org/api/stable/users/",
+      urlTracks: "https://envirocar.org/api/stable/tracks/"
+
+
+})
   .controller("CalendarController", ['$scope', '$mdDialog', '$mdMedia',
     '$stateParams',
     '$filter', '$http', '$state',
     '$rootScope',
-    'tracks_calendar', 'MaterialCalendarData',
+    'tracks_calendar','calendar','MaterialCalendarData',
     function($scope, $mdDialog, $mdMedia, $stateParams, $filter, $http,
       $state,
       $rootScope,
-      tracks_calendar,
+      tracks_calendar,calendar,
       MaterialCalendarData) {
       $scope.buttonClickCurrentDate = function() {
-        console.log("came here");
         $scope.selectedDate = new Date();
-        console.log($scope.selectedDate);
         $scope.dayClick(new Date());
       }
 
@@ -32,20 +50,7 @@ angular.module('app')
       $scope.total_time;
       $scope.total_distance;
       $scope.track;
-      var month_number_mapping = {
-        1: 'Jan',
-        2: 'Feb',
-        3: 'Mar',
-        4: 'Apr',
-        5: 'May',
-        6: 'Jun',
-        7: 'Jul',
-        8: 'Aug',
-        9: 'Sep',
-        10: 'Oct',
-        11: 'Nov',
-        12: 'Dec'
-      }
+      var month_number_mapping = calendar.monthNumberMapping;
       $scope.currenttrack = {};
       $scope.showAdvanced = function(ev, eventid) {
         $scope.tt_isOpen = false;
@@ -88,30 +93,18 @@ angular.module('app')
         var starttime;
         var endtime;
         var length;
-        var url_requested = "https://envirocar.org/api/stable/users/" +
-          username + "/tracks/" + currenttrack
-          .id;
+        var url_requested = calendar.urlUsers + username + "/tracks/" + currenttrack.id;
         tracks_calendar.get(url_requested).then(function(data) {
-          console.log(data.data);
           length = data.data.properties['length'];
-          $scope.currenttrack['manufacturer'] = data.data.properties.sensor
-            .properties['manufacturer'];
-          $scope.currenttrack['model'] = data.data.properties.sensor.properties[
-            'model'];
-          $scope.currenttrack['start'] = new Date(data.data.features[0].properties
-            .time).toLocaleString();
-          $scope.currenttrack['end'] = new Date(data.data.features[data.data
-            .features.length - 1].properties.time).toLocaleString();
+          $scope.currenttrack['manufacturer'] = data.data.properties.sensor.properties['manufacturer'];
+          $scope.currenttrack['model'] = data.data.properties.sensor.properties['model'];
+          $scope.currenttrack['start'] = new Date(data.data.features[0].properties.time).toLocaleString();
+          $scope.currenttrack['end'] = new Date(data.data.features[data.data.features.length - 1].properties.time).toLocaleString();
           starttime = data.data.features[0].properties.time;
-          endtime = (data.data.features[data.data.features.length - 1].properties
-            .time);
-          console.log(starttime + 'is starttime');
-          console.log(endtime + "is endtime");
-          console.log(length + "is legnth");
+          endtime = (data.data.features[data.data.features.length - 1].properties.time);
           tracks_calendar.get(url_requested + "/statistics/Consumption").then(
             function(
               data) {
-              console.log(data.data.avg);
               if (data.data.avg != undefined) {
                 $scope.currenttrack['consumption_avg'] = (data.data.avg
                   .toFixed(
@@ -130,8 +123,6 @@ angular.module('app')
                   'consumption100Km'].toString() + " L/100 Km";
               } else
                 $scope.currenttrack['consumption100Km'] = "NA";
-
-              //  currenttrack['']
               $scope.onload = true;
             })
 
@@ -158,32 +149,25 @@ angular.module('app')
               } else
                 $scope.currenttrack['co2gKm'] = "NA";
 
-              //  currenttrack['']
               $scope.onload = true;
 
-              console.log(data.data.avg);
               if (data.data.avg != undefined)
                 $scope.currenttrack['co2_avg'] = (data.data.avg.toFixed(
                   2));
               else
                 $scope.currenttrack['co2_avg'] = "NA";
 
-              //  currenttrack['']
               $scope.onload = true;
             })
         })
         tracks_calendar.get(url_requested + "/statistics/Speed").then(
           function(data) {
-            console.log(data.data);
             $scope.currenttrack['speed_avg'] = (data.data.avg.toFixed(2));
-            //  currenttrack['']
           })
 
 
 
-        $scope.currenttrack['url'] =
-          "https://envirocar.org/api/stable/tracks/" + currenttrack.id +
-          "/preview";
+        $scope.currenttrack['url'] =calendar.urlTracks + currenttrack.id + "/preview";
         $scope.hide = function() {
           $mdDialog.hide();
         };
@@ -245,41 +229,25 @@ angular.module('app')
           console.log(indexes);
           console.log(global_tracks_array_begin_stripped_date);
           for (var i = 0; i < indexes.length; i++) {
-            var helper_object = {};
-            helper_object['car'] = global_tracks['tracks'][indexes[i]][
-              'sensor'
-            ]['properties']['model'];
-            helper_object['id'] = global_tracks['tracks'][indexes[i]]['id'];
-            helper_object['name'] = global_tracks['tracks'][indexes[i]][
-              'name'
-            ];
-            helper_object['manufacturer'] = global_tracks['tracks'][indexes[
-              i]]['sensor']['properties']['manufacturer'];
-            helper_object['begin'] = (new Date(global_tracks['tracks'][
-              indexes[i]
-            ][
-              'begin'
-            ]).toLocaleString());
-            helper_object['url'] =
-              "https://envirocar.org/api/stable/tracks/" + global_tracks[
-                'tracks'][
-                indexes[i]
-              ].id + "/preview";
-            helper_object['length'] = global_tracks['tracks'][indexes[i]][
-              'length'
-            ].toFixed(2);
 
-            var seconds_passed = new Date(global_tracks['tracks'][indexes[i]]
-                ['end']).getTime() -
-              new Date(global_tracks['tracks'][indexes[i]]['begin']).getTime()
+            var helper_object = {};
+            helper_object['car'] = global_tracks['tracks'][indexes[i]]['sensor']['properties']['model'];
+            helper_object['id'] = global_tracks['tracks'][indexes[i]]['id'];
+            helper_object['name'] = global_tracks['tracks'][indexes[i]]['name'];
+            helper_object['manufacturer'] = global_tracks['tracks'][indexes[i]]['sensor']['properties']['manufacturer'];
+            helper_object['begin'] = (new Date(global_tracks['tracks'][indexes[i]]['begin']).toLocaleString());
+            helper_object['url'] = calendar.urlTracks + global_tracks['tracks'][indexes[i]].id + "/preview";
+            helper_object['length'] = global_tracks['tracks'][indexes[i]]['length'].toFixed(2);
+
+            var seconds_passed = new Date(global_tracks['tracks'][indexes[i]]['end']).getTime() - new Date(global_tracks['tracks'][indexes[i]]['begin']).getTime()
             var seconds = seconds_passed / 1000;
             var timeoftravel = seconds / 60;
             // time of travel is in minutes
             // convert to the right format. of hh:mm:ss;
             date_for_seconds = new Date(null);
             date_for_seconds.setSeconds(seconds);
-            date_hh_mm_ss = date_for_seconds.toISOString().substr(
-              11, 8)
+            date_hh_mm_ss = date_for_seconds.toISOString().substr(11, 8)
+
             helper_object['travelTime'] = date_hh_mm_ss;
             tracks_builder.push(helper_object);
           }
@@ -300,7 +268,6 @@ angular.module('app')
         console.log(data);
         console.log("start of custom write");
         rewrite(global_tracks);
-        console.log("this was easted");
         console.log(global_tracks);
         var total_tracks = 0;
         var total_distance = 0;
@@ -334,10 +301,11 @@ angular.module('app')
         } else {
           $scope.nostatistics = false;
         }
-        console.log(total_tracks + "is total tracks");
-        console.log(total_distance + "is dist");
-        console.log(date_hh_mm_ss + "is time");
+        // Total distance is total_distance
+        // Total number of tracks is total_tracks
+        // Total time is date_hh_mm_ss in the same format.
       };
+
       $scope.nextMonth = function(data) {
         $scope.msg = "You clicked (next) month " + data.month + ", " + data
           .year;
@@ -365,8 +333,7 @@ angular.module('app')
         }
         var date_for_seconds = new Date(null);
         date_for_seconds.setSeconds(total_time / 1000);
-        var date_hh_mm_ss = date_for_seconds.toISOString().substr(
-          11, 8)
+        var date_hh_mm_ss = date_for_seconds.toISOString().substr(11, 8)
         $scope.total_tracks = total_tracks;
         $scope.total_time = date_hh_mm_ss;
         $scope.total_distance = total_distance.toFixed(2);
@@ -376,32 +343,23 @@ angular.module('app')
           $scope.nostatistics = false;
         }
 
-        console.log(total_tracks + "is total tracks");
-        console.log(total_distance + "is dist");
-        console.log(date_hh_mm_ss + "is time");
+        // Total distance is total_distance
+        // Total number of tracks is total_tracks
+        // Total time is date_hh_mm_ss in the same format.
 
       };
       var datetrial;
-      url = "https://envirocar.org/api/stable/users/" + username +
-        "/tracks?limit=10000";
+      url = calendar.urlUsers + username + "/tracks?limit=10000";
       var global_tracks_array_begin = [];
       var global_tracks_array_begin_stripped_date = [];
       var date_count = {};
 
       function rewrite(trackslist) {
-        console.log("came here to rewrite");
-        //delay(1000)
+
         for (var i = 0; i < trackslist['tracks'].length; i++) {
-          //  console.log(data.data['tracks'][i])
+
           var datestart = trackslist.tracks[i]['begin'];
           var dateobject = new Date(datestart);
-          /*  var string_date = dateobject.toString();
-            var array_string_date = string_date.split(" ");
-            var stripped_date = (array_string_date[0] + array_string_date[1] +
-              array_string_date[2]);
-            global_tracks_array_begin_stripped_date.push(stripped_date);
-            global_tracks_array_begin.push(dateobject.toString());
-            */
           var string_date = dateobject.toString();
           var array_string_date = string_date.split(" ");
           var stripped_date = (array_string_date[0] + array_string_date[1] +

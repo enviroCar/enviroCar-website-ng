@@ -30,7 +30,7 @@
               <div style="width:100%">
                 <md-button ng-click="buttonClickCurrentDate()">Go to current date</md-button>
                 <div style="width:100%;text-align:center">
-                  <h3 style="color:rgba(0,0,0,0.7)">Monthly Overview</h3>
+                  <h3 style="color:rgba(0,0,0,0.7)">{{'MONTHLY_OVERVIEW' | translate}}</h3>
                 </div>
               </div>
               <div layout-gt-xs="row" ng-if="!nostatistics">
@@ -44,13 +44,13 @@
                 </div>
                 <div style="width:33.33%;text-align:center">
                   <h3 style="color:#0065A0">{{total_tracks}}</h3>
-                  <p style="font-size:13px;">Tracks</p>
+                  <p style="font-size:13px;">{{'TRACKS | translate}}</p>
                 </div>
 
               </div>
               <div layout-gt-xs="row" ng-if="nostatistics">
                 <div style="width:100%;text-align:center">
-                  <p>No Statistics to show for this month</p>
+                  <p>{{'NO_MONTHLY_STATISTICS' | translate}}</p>
                 </div>
               </div>
             </md-content>
@@ -175,14 +175,14 @@
           </md-toolbar> -->
           <md-toolbar style="color:black;background-color:rgba(185,217,137,1)" md-theme="default">
   <div class="md-toolbar-tools">
-    <p>Order by - </p>
+    <p>{{'ORDER_BY' | translate}} - </p>
     <p>&nbsp</p>
     <md-select ng-model="filterSelected">
         <md-option ng-model="filterSelected" ng-value="d" ng-click="changeFilter(d)" ng-selected="Modified" data-ng-repeat="d in filterOptions">{{d}}</md-option>
 </md-select>
 <div style="padding-top:15px;padding-left:2%">
       <md-checkbox ng-click="reverseClicked()" ng-model="reverseEnabled">
-        Reverse
+        {{'REVERSE' | translate}}
       </md-checkbox>
       </div>
         <span flex></span>
@@ -301,7 +301,9 @@
                 <div style="width:100%;text-align:center">
                       <p style="font-size:17px">Showing {{(tracks|filter:search | filter:distanceFilter | filter:dateFilter | filter:durationFilter | filter:vehicleFilter).length}} of {{tracks.length}} tracks</p>
                 </div>
-               <md-content style="max-height:570px; padding-left:6%;padding-right:10px;padding-top:20px" >
+                <md-progress-circular class="loader_dashboard2" ng-if="onload" md-diameter="156"></md-progress-circular>
+
+               <md-content ng-show="!onload" style="max-height:570px; padding-left:6%;padding-right:10px;padding-top:20px" >
 
                <div class="streamline b-l b-accent m-b">
                       <div class="sl-item" ng-repeat='event in tracks | filter:search | orderBy:filterOrig:!reverse | filter:dateFilter | filter:distanceFilter | filter:durationFilter | filter:vehicleFilter' ng-click="goToActivity(event.TrackId)">

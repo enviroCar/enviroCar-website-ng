@@ -214,7 +214,7 @@
           <md-toolbar style="color:black;background-color:white;min-height:20px" >
             <div class="md-toolbar-tools">
               <h3 style="color:rgba(0,101,160,0.9)">
-                <span>Friends</span>
+                <span>{{'FRIENDS' | translate}}</span>
               </h3>
               <span flex></span>
             </div>
@@ -258,7 +258,8 @@
              <md-progress-circular ng-if="totalLoading" class="loader_dashboard" md-diameter="156"></md-progress-circular>
             <md-content ng-if="!totalLoading" flex layout-padding style="max-height:560px">
               <md-list-item class="md-3-line" ng-repeat='item in events' ng-click="goToActivity(item.type,item.trackidlink)">
-                <img class="md-avatar" src={{item.profileurl}}></img>
+                <!-- DONT DELETE <img class="md-avatar" src={{item.profileurl}}></img> -->
+                <i class="material-icons grey md-avatar md-48">{{item.icon}}</i>
                 <div style="padding-left:5%" class="md-list-item-text" layout="column">
                 <h3 style="color:{{item.color}}"><b>{{item.topic}}</b></h3>
                 <p>{{item.name}}</p>
@@ -289,7 +290,7 @@
             <md-progress-circular ng-if="totalLoading" class="loader_dashboard" md-diameter="156"></md-progress-circular>
             <md-content ng-if="!totalLoading" flex layout-padding style="max-height:560px">
               <md-list-item ng-show="!show_no_my_activity" class="md-3-line" ng-repeat='item in events' ng-click="goToActivity(item.type,item.trackidlink)">
-             <!--  <img class="md-avatar" src={{item.profileurl}}></img> -->
+             <!--DONT DELETE  <img class="md-avatar" src={{item.profileurl}}></img> -->
               <i class="material-icons grey md-avatar md-48">{{item.icon}}</i>
                 <div style="padding-left:5%" class="md-list-item-text" layout="column">
                 <h3 style="color:{{item.color}}"><b>{{item.topic}}</b></h3>
