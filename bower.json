@@ -30,8 +30,8 @@
     "angular-ui-calendar": "^1.0.1",
     "md-chips-select": "^0.0.9",
     "ngGeolocation": "^0.0.8",
-    "ui-leaflet": "^1.0.1"
-
+    "ui-leaflet": "^1.0.1",
+    "leaflet-draw": "^0.3.2"
   },
   "devDependencies": {
     "angular-translate": "^2.11.0"

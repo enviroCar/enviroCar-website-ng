@@ -314,16 +314,12 @@ angular.module('app')
         var total_tracks = 0;
         var total_distance = 0;
         var total_time = 0;
-        console.log(global_tracks);
         for (var i = 0; i < global_tracks.tracks.length; i++) {
           var datestart = global_tracks.tracks[i].begin;
           var dateobject = new Date(datestart);
           var string_date = dateobject.toString();
-          console.log(string_date);
           var array_string_date = string_date.split(" ");
-          console.log(array_string_date);
           var stripped_date = (array_string_date[1] + array_string_date[3]);
-          console.log(stripped_date + "is month year date");
           if (stripped_date == monthyear) {
             total_tracks++;
             total_distance += global_tracks.tracks[i]['length'];
@@ -362,23 +358,15 @@ angular.module('app')
           var dateobject = new Date(datestart);
           var string_date = dateobject.toString();
           var array_string_date = string_date.split(" ");
-          var stripped_date = (array_string_date[0] + array_string_date[1] +
-            array_string_date[2]);
-          console.log(date_count[stripped_date] + "no of occurences");
-          console.log(dateobject);
+          var stripped_date = (array_string_date[0] + array_string_date[1] + array_string_date[2]);
           MaterialCalendarData.setDayContent(dateobject, (
-            '<i class="material-icons">directions_car</i><span>' +
-            date_count[stripped_date] + '</span>'))
+            '<i class="material-icons">directions_car</i><span>' + date_count[stripped_date] + '</span>'))
         }
       }
 
       tracks_calendar.get(url).then(function(data) {
         var currentmonth = new Date();
-        console.log(currentmonth);
-        var monthyear = currentmonth.toString().split(" ")[1] +
-          currentmonth.toString().split(" ")[3];
-
-        console.log(data.data);
+        var monthyear = currentmonth.toString().split(" ")[1] + currentmonth.toString().split(" ")[3];
         global_tracks = data.data;
         for (var i = 0; i < global_tracks['tracks'].length; i++) {
           var datestart = global_tracks.tracks[i]['begin'];
@@ -395,8 +383,7 @@ angular.module('app')
           global_tracks_array_begin_stripped_date.push(stripped_date);
           global_tracks_array_begin.push(dateobject.toString());
         }
-        console.log(date_count);
-        console.log(global_tracks_array_begin_stripped_date);
+     
         rewrite(global_tracks);
         var total_time = 0;
         var total_tracks = 0;
@@ -405,11 +392,9 @@ angular.module('app')
           var datestart = global_tracks.tracks[i].begin;
           var dateobject = new Date(datestart);
           var string_date = dateobject.toString();
-          console.log(string_date);
           var array_string_date = string_date.split(" ");
           console.log(array_string_date);
           var stripped_date = (array_string_date[1] + array_string_date[3]);
-          console.log(stripped_date + "is month year date");
           if (stripped_date == monthyear) {
             total_tracks++;
             total_distance += global_tracks.tracks[i]['length'];
@@ -418,7 +403,6 @@ angular.module('app')
           }
         }
         var date_for_seconds = new Date(null);
-        console.log(total_time);
         date_for_seconds.setSeconds(total_time / 1000);
         var date_hh_mm_ss = date_for_seconds.toISOString().substr(
           11, 8)
@@ -431,9 +415,6 @@ angular.module('app')
           $scope.nostatistics = false;
         }
         $scope.onload = false;
-        console.log(total_tracks + "is total tracks");
-        console.log(total_distance + "is dist");
-        console.log(date_hh_mm_ss + "is time");
       });
       $scope.tooltips = true;
 
@@ -443,13 +424,11 @@ angular.module('app')
 
       }
       $scope.goToActivity = function(trackid) {
-        console.log("came here");
         //redirect to the track analytics page.
         $state.go('home.chart', {
           'trackid': trackid
         });
 
-        console.log("fired");
       }
 
     }

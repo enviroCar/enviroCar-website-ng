@@ -87,11 +87,11 @@ angular.module('app')
       'NEW_PASSWORD_R': 'New Password(Repeat)',
       'SUBMISSION_SUCCESS': 'Your details have been updated',
       'UPDATE_PROFILE': 'Update Profile',
-      'CONTROL_PANEL': 'Controle Panel',
+      'CONTROL_PANEL': 'Control Panel',
       'SEGMENT_INFO': 'Click on map to place a marker at that point, click on it again to delete it.',
       'RESET_POINTS': 'Reset Points',
       'SEARCH_TRACKS': 'Search for tracks',
-      'COUNT_ POINTS': 'Count of Points',
+      'COUNT_POINTS': 'Count of Points',
       'MONTHLY_OVERVIEW': 'Monthly Overview',
       'NO_MONTHLY_STATISTICS': 'No statistics to show for this month',
       'ORDER_BY': 'Order By',
@@ -99,7 +99,7 @@ angular.module('app')
       'VEHICLE_FILTERS_HEADING': 'Set Distance Filters',
       'SELECT_VEHICLES': 'Select Vehicles',
       'NO_SEGMENT_TRACKS': 'We could not find any track statistics in the selected region, You could try increasing the search region by using the slider in the panel'
-    });
+  });
     $translateProvider.preferredLanguage('en');
 
   }])
