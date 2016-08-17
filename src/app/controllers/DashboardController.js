@@ -151,7 +151,6 @@ angular.module('app')
       $scope.visible = false;
       $scope.events = [];
       var helperevents = [];
-      console.log("came in dashboard controller");
       $scope.trial = "Further comparision insights on the way :)";
       $scope.type = dashboard.type;
       $scope.comments = dashboard.comments;
@@ -178,41 +177,27 @@ angular.module('app')
           limit = dashboard.numberoftracks;
         else
           limit = $scope.number;
-        console.log(limit + "is limit")
         for (var i = 0; i < limit; i++) {
           (function(cntr) {
-            console.log(cntr + "value of cntr that failed");
-            console.log(data.data);
+
             var helper_events = {};
-            helper_events['car'] = data.data.tracks[cntr].sensor.properties
-              .model;
-            helper_events['manufacturer'] = data.data.tracks[cntr].sensor
-              .properties.manufacturer;
+            helper_events['car'] = data.data.tracks[cntr].sensor.properties.model;
+            helper_events['manufacturer'] = data.data.tracks[cntr].sensor.properties.manufacturer;
             helper_events['id'] = data.data.tracks[cntr].id;
             helper_events['title'] = data.data.tracks[cntr].name;
-            helper_events['urlredirect'] = dashboard.urlredirect + data
-              .data.tracks[cntr].id;
-            helper_events['url'] = dashboard.urltracks + data.data.tracks[
-              cntr].id + "/preview";
-            var seconds_passed = new Date(data.data.tracks[cntr]
-                .end).getTime() -
-              new Date(data.data.tracks[cntr]
-                .begin).getTime();
+            helper_events['urlredirect'] = dashboard.urlredirect + data.data.tracks[cntr].id;
+            helper_events['url'] = dashboard.urltracks + data.data.tracks[cntr].id + "/preview";
+            var seconds_passed = new Date(data.data.tracks[cntr].end).getTime() - new Date(data.data.tracks[cntr].begin).getTime();
             var seconds = seconds_passed / 1000;
             var timeoftravel = seconds / 60;
             // time of travel is in minutes
             // convert to the right format. of hh:mm:ss;
             date_for_seconds = new Date(null);
             date_for_seconds.setSeconds(seconds);
-            date_hh_mm_ss = date_for_seconds.toISOString().substr(
-              11, 8)
+            date_hh_mm_ss = date_for_seconds.toISOString().substr(11, 8)
             helper_events['travelTime'] = date_hh_mm_ss;
-            helper_events['begin'] = new Date(data.data.tracks[cntr]
-              .begin);
-            helper_events['distance'] = (data.data.tracks[cntr][
-                'length'
-              ] != undefined) ? data.data.tracks[cntr]['length']
-              .toFixed(2) : "NA";
+            helper_events['begin'] = new Date(data.data.tracks[cntr].begin);
+            helper_events['distance'] = (data.data.tracks[cntr]['length'] != undefined) ? data.data.tracks[cntr]['length'].toFixed(2) : "NA";
 
             if (cntr % 2 == 0) {
               helper_events['side'] = 'left'
@@ -223,13 +208,9 @@ angular.module('app')
           })(i);
         }
         $scope.timelinevalues = timeline;
-        //  loading_count++;
-        //if (loading_count == dashboard.loading_count) {
+
         $scope.onload_tracks_timeline = true;
         window.dispatchEvent(new Event('resize'));
-        //  }
-        console.log(timeline);
-        console.log($scope.timelinevalues);
       });
       $scope.events = helperevents;
       //*******************************************************
@@ -401,22 +382,17 @@ angular.module('app')
       $scope.barchartshowing = "Speed"
       $scope.changePhenomenonbar = function(phenombar) {
         $scope.barchartshowing = phenombar;
-        console.log("came here")
         $scope.dataoverall = [];
         if (phenombar == "Speed") {
-          console.log($scope.optionsSpeed['chart']['yAxis']['axisLabel'])
-          $scope.optionsSpeed['chart']['yAxis']['axisLabel'] =
-            "Speed (Km/h)"
+          $scope.optionsSpeed['chart']['yAxis']['axisLabel'] = "Speed (Km/h)"
           $scope.dataoverall = $scope.dataSpeed;
         } else if (phenombar == "Consumption") {
-          $scope.optionsSpeed['chart']['yAxis']['axisLabel'] =
-            "Consumption (l/h)"
+          $scope.optionsSpeed['chart']['yAxis']['axisLabel'] = "Consumption (l/h)"
           $scope.dataoverall = $scope.dataConsumption;
         } else if (phenombar == "CO2") {
           $scope.optionsSpeed['chart']['yAxis']['axisLabel'] = "CO2 (Kg/h)"
           $scope.dataoverall = $scope.dataCO2;
         }
-        console.log($scope.dataoverall);
 
       }
       $scope.dataoverall;
@@ -427,14 +403,12 @@ angular.module('app')
       var datausers = [];
       var dataotherusers = [];
 
-      var url = dashboard.urlusers + username +
-        dashboard.urlco2stats;
+      var url = dashboard.urlusers + username + dashboard.urlco2stats;
       requestgraphstats.get(url).then(function(data) {
-        console.log(data.data);
         CO2_users = data.data.avg;
         url = dashboard.urlcommonco2;
         requestgraphstats.get(url).then(function(data) {
-          console.log(data.data);
+
           $scope.dataCO2 = [{
             key: "Cumulative Return",
             values: [{
@@ -446,21 +420,18 @@ angular.module('app')
             }]
           }]
           loading_count++;
-          //if (loading_count == dashboard.loading_count) {
-          //    window.dispatchEvent(new Event('resize'));
-          //  }
+
         });
       });
 
-      url = dashboard.urlusers + username +
-        dashboard.urlspeedstats;
+      url = dashboard.urlusers + username + dashboard.urlspeedstats;
       requestgraphstats.get(url).then(function(data) {
-        console.log(data.data);
+
         var store = data.data;
         speed_users = store.avg;
         url = dashboard.urlcommonspeed;
         requestgraphstats.get(url).then(function(data) {
-          console.log(data.data);
+
           var store = data.data;
           speed_public = store.avg
           $scope.dataSpeed = [{
@@ -476,22 +447,20 @@ angular.module('app')
           $scope.dataoverall = $scope.dataSpeed;
 
           dataotherusers.push(data);
-          //loading_count++;
-          //  if (loading_count == dashboard.loading_count) {
+       
           $scope.onload_user_vs_public = true;
           window.dispatchEvent(new Event('resize'));
-          //  }
         });
       });
 
       url = dashboard.urlusers + username +
         dashboard.urlconsstats;
       requestgraphstats.get(url).then(function(data) {
-        console.log(data.data);
+
         consumption_users = data.data.avg;
         url = dashboard.urlcommoncons;
         requestgraphstats.get(url).then(function(data) {
-          console.log(data.data);
+
           $scope.loading = false;
           $scope.dataConsumption = [{
             key: "Cumulative Return",
@@ -514,11 +483,11 @@ angular.module('app')
       url = dashboard.urlusers + username +
         dashboard.urlengineloadstats;
       requestgraphstats.get(url).then(function(data) {
-        console.log(data.data);
+
         engineload_users = data.data.avg;
         url = dashboard.urlcommonengineload;
         requestgraphstats.get(url).then(function(data) {
-          console.log(data.data);
+
           $scope.loading = false;
           $scope.dataEngineload = [{
             key: "Cumulative Return",
@@ -546,7 +515,6 @@ angular.module('app')
   .factory('requesthomestats', function($http) {
     var get = function(url) {
       return $http.get(url).success(function(data) {
-        console.log(data);
         return data;
       })
     }
@@ -559,7 +527,6 @@ angular.module('app')
   .factory('requestgraphstats', function($http) {
     var get = function(url) {
       return $http.get(url).success(function(data) {
-        //console.log(data)
         return data;
       });
     }

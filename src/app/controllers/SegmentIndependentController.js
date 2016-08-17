@@ -1,5 +1,5 @@
 angular.module('app')
-  .controller('SegmentIndependentController', ['$scope','$mdDialog','$mdMedia','GeolocationService','$geolocation','$mdToast', '$rootScope', '$http', function ($scope, $mdDialog,$mdMedia, GeolocationService, $geolocation, $mdToast, $rootScope, $http) {
+  .controller('SegmentIndependentController', ['$scope','leafletDrawEvents','$mdDialog','$mdMedia','GeolocationService','$geolocation','$mdToast', '$rootScope', '$http', function ($scope, leafletDrawEvents, $mdDialog,$mdMedia, GeolocationService, $geolocation, $mdToast, $rootScope, $http) {
     console.log('SegmentIndependentController fired fwnfjenfef')
     var markersArray = []
     var countunique = 0
@@ -10,6 +10,110 @@ angular.module('app')
     var respGlobal = {};
     $scope.selectModel  = 'All Segments';
      var availablePhen = {};
+       var drawnItems = new L.FeatureGroup();
+
+    angular.extend($scope, {
+      map: {
+        center: {
+          lat:51.960,
+        lng: 7.6261,
+        zoom: 15
+        },
+        drawOptions: {
+          position: "topleft",
+          draw: {
+            polyline: {
+              metric: false,
+               shapeOptions: {
+                color: '#F80505',
+                weight: 10
+              }
+            },
+            polygon: false,
+            rectangle: false,
+            circle: false,
+            marker: false
+          },
+          edit: {
+            featureGroup: drawnItems,
+            remove: true
+          }
+        }
+     
+      },
+         paths: {
+       
+        }
+    });
+              console.log($scope.paths);
+
+
+    var handle = {
+      created: function(e,leafletEvent, leafletObject, model, modelName) {
+        drawnItems.addLayer(leafletEvent.layer);
+      },
+      edited: function(arg) {},
+      deleted: function(arg) {
+        var layers;
+        layers = arg.layers;
+        drawnItems.removeLayer(layer);
+      },
+      drawstart: function(arg) {},
+      drawstop: function(arg) {},
+      editstart: function(arg) {},
+      editstop: function(arg) {},
+      deletestart: function(arg) {},
+      deletestop: function(arg) {}
+    };
+
+    var drawEvents = leafletDrawEvents.getAvailableEvents();
+    drawEvents.forEach(function(eventName){
+        $scope.$on('leafletDirectiveDraw.' + eventName, function(e, payload) {
+          console.log("being edited");
+          //{leafletEvent, leafletObject, model, modelName} = payload
+          var leafletEvent, leafletObject, model, modelName; //destructuring not supported by chrome yet :(
+          leafletEvent = payload.leafletEvent, leafletObject = payload.leafletObject, model = payload.model,
+          modelName = payload.modelName;
+         // for(var i = 0 ; i < )
+          //console.log(leafletEvent);
+          console.log(drawnItems);
+          console.log(drawnItems._layers);
+          console.log(Object.keys(drawnItems._layers))
+          console.log(eventName);
+          if((Object.keys(drawnItems._layers)).length < 1 || eventName=='draw:edited' || eventName=='draw:deleted' )
+          {
+            console.log("did not come for edit");
+              handle[eventName.replace('draw:','')](e,leafletEvent, leafletObject, model, modelName);
+              $scope.paths = {};
+
+              for(key in drawnItems._layers)
+              {
+                if(drawnItems._layers.hasOwnProperty(key))
+                {
+                  console.log(key);
+                  console.log( drawnItems._layers[key])
+                  var arrayPoints = drawnItems._layers[key]._latlngs;
+                
+                  for(var i = 0 ; i < arrayPoints.length ; i++)
+                  {
+                    console.log("number of points in the drawnItems");
+                    $scope.paths['p'+i.toString()] = {
+                      'type':'circle',
+                      'radius': $rootScope.slider.value*5,
+                      'color': '#0065A0',
+                      'latlngs': {
+                        'lat': arrayPoints[i].lat,
+                        'lng': arrayPoints[i].lng
+                      }
+                    }
+                  }
+                }
+              }
+          }
+          console.log($scope.paths);
+          console.log(drawnItems);
+        });
+    });
      var unitsOfPhenoms = {'Speed':'Km/h','Consumption':'l/h','MAF':'g/h','Calculated MAF':'g/h','CO2':'Kg/h'}
      $scope.options = {
               chart: {
@@ -73,13 +177,22 @@ angular.module('app')
       id: 'tolerance',
       onChange: function(id) {
           console.log($rootScope.paths)
-        
+        /*
           for (key in $rootScope.paths) {
             console.log(key + "is key")
               if ($rootScope.paths.hasOwnProperty(key) && key!='p1') {
           console.log("came here");
   console.log($rootScope.paths[key])
         $rootScope.paths[key].radius = $rootScope.slider.value*5;
+        }
+      }*/
+
+         for (key in $scope.paths) {
+            console.log(key + "is key")
+              if ($scope.paths.hasOwnProperty(key)) {
+          console.log("came here");
+  console.log($scope.paths[key])
+        $scope.paths[key].radius = $rootScope.slider.value*5;
         }
       }
       console.log($rootScope.paths)
@@ -230,20 +343,38 @@ console.log("workibg ")
     })
     $scope.resetPoints = function () {
       countunique = 0
-      $rootScope.paths = {}
+      $scope.paths = {}
       $rootScope.markers = {}
+      //drawnItems = new L.FeatureGroup();
+      //drawnItems._layers = {};
+      console.log(drawnItems);
+
     }
     $scope.searchForPoints = function () {
       $scope.notSearching = false;
       // Search for points on the server side 
       var coordinates = [];
       console.log("came here");
-      for (key in $rootScope.markers) {
+   /*   for (key in $rootScope.markers) {
           if ($rootScope.markers.hasOwnProperty(key))
           {
             coordinates.push([$rootScope.markers[key].lng, $rootScope.markers[key].lat]);
           }
-      }
+      }*/
+              for(key in drawnItems._layers)
+              {
+                if(drawnItems._layers.hasOwnProperty(key))
+                {
+                   var arrayPoints = drawnItems._layers[key]._latlngs;
+                   console.log(arrayPoints);
+                   for(var i = 0 ; i < arrayPoints.length ; i++)
+                   {
+                     coordinates.push([arrayPoints[i].lng,arrayPoints[i].lat]);
+                   }
+                }
+              }
+              console.log(coordinates);
+              
       console.log(coordinates);
          var dataput = {
           "type": "Feature",
