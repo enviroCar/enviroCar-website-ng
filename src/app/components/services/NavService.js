@@ -17,6 +17,7 @@
       table = translations.TABLE;
       console.log("came here to nav service");
     })
+    //The menuitems that are populated on the side nav bar.
     var menuItems = [{
       name: 'Dashboard',
       icon: 'dashboard',

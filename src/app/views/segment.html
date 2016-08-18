@@ -1,5 +1,6 @@
 <div ng-controller="SegmentIndependentController" class="mapcontainer" style="height:100%">
-                        <div style="  box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.2);
+                       <tour step="currentStep">
+                            <div style="box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.2);
 position:absolute;z-index:1;width:22%;right:0;height:100%;background-color:rgba(255,255,255,0.85)">
                                 <div style="text-align:center">
                                     <h3>{{'CONTROL_PANEL' | translate}}</h3>
@@ -14,10 +15,10 @@ position:absolute;z-index:1;width:22%;right:0;height:100%;background-color:rgba(
 
                                     <div style="width:100%;text-align:center">
                                         <md-progress-circular ng-if="!notSearching" class="loader_dashboard" ng-if="!onload_user_vs_public" md-diameter="50"></md-progress-circular>
-                                        <md-button  ng-if="notSearching" class="white-bg" ng-click="searchForPoints()">{{'SEARCH_TRACKS' | translate}}</md-button>
+                                        <md-button tourtip="{{'TOURTIP2' | translate}}" tourtip-placement="left" tourtip-step="1" ng-if="notSearching" class="white-bg" ng-click="searchForPoints()">{{'SEARCH_TRACKS' | translate}}</md-button>
                                     </div>
                                  </div>
-                                 <div style="padding-left:2%;padding-right:2%">
+                                 <div style="padding-left:2%;padding-right:2%" tourtip="{{'TOURTIP5' | translate}}" tourtip-placement="left" tourtip-step="4" tourtip-next-label="Get Started!">
                                 <rzslider rz-slider-model="$root.slider.value"
                                             rz-slider-options="$root.slider.options"></rzslider>
                                       </div>
@@ -37,7 +38,12 @@ position:absolute;z-index:1;width:22%;right:0;height:100%;background-color:rgba(
                                           </div>
 
                 </div>
-  <leaflet lf-center="map.center" paths="paths" lf-draw="map.drawOptions" height="100%" width="100%">  </leaflet>
+                <div tourtip="{{'TOURTIP1' | translate}}" tourtip-placement="right" tourtip-margin="0" tourtip-step="0" tourtip-element=".leaflet-draw-draw-polyline" style="height:100%;width:100%">
+                  <span tourtip="{{'TOURTIP3' | translate}}" tourtip-placement="right" tourtip-step="2" tourtip-element=".leaflet-draw-edit-edit"></span>
+                    <span tourtip="{{'TOURTIP4' | translate}}" tourtip-placement="right"  tourtip-step="3" tourtip-element=".leaflet-draw-edit-edit"></span>
+                    <leaflet lf-center="map.center" paths="paths" lf-draw="map.drawOptions" height="100%" width="100%">  </leaflet>
+                </div>
+</tour>
 
            <!-- <leaflet lf-center="center" id="segmentMap" markers="$root.markers" paths="$root.paths" event-broadcast="events" width="100%" height="100%"></leaflet> -->
 </div>

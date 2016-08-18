@@ -9,9 +9,13 @@ angular.module('app')
     $rootScope.paths = {};
     var respGlobal = {};
     $scope.selectModel  = 'All Segments';
-     var availablePhen = {};
-       var drawnItems = new L.FeatureGroup();
+    var availablePhen = {};
+    // creating a new featureGroup to refer and access the drawnitems and all events associated with them.		
+    var drawnItems = new L.FeatureGroup();
+    $scope.currentStep =  0;
 
+    // The map configuration with the settings for leaflet draw modified according to our needs and use case.
+    // We are only making use of the polyLine feature for drawing the segment track.
     angular.extend($scope, {
       map: {
         center: {
@@ -47,7 +51,7 @@ angular.module('app')
     });
               console.log($scope.paths);
 
-
+    // A object created to handle each of the operations that can be performed on leaflet draw.
     var handle = {
       created: function(e,leafletEvent, leafletObject, model, modelName) {
         drawnItems.addLayer(leafletEvent.layer);
@@ -69,20 +73,16 @@ angular.module('app')
     var drawEvents = leafletDrawEvents.getAvailableEvents();
     drawEvents.forEach(function(eventName){
         $scope.$on('leafletDirectiveDraw.' + eventName, function(e, payload) {
-          console.log("being edited");
           //{leafletEvent, leafletObject, model, modelName} = payload
           var leafletEvent, leafletObject, model, modelName; //destructuring not supported by chrome yet :(
           leafletEvent = payload.leafletEvent, leafletObject = payload.leafletObject, model = payload.model,
           modelName = payload.modelName;
-         // for(var i = 0 ; i < )
-          //console.log(leafletEvent);
-          console.log(drawnItems);
-          console.log(drawnItems._layers);
-          console.log(Object.keys(drawnItems._layers))
-          console.log(eventName);
           if((Object.keys(drawnItems._layers)).length < 1 || eventName=='draw:edited' || eventName=='draw:deleted' )
           {
-            console.log("did not come for edit");
+            /* By setting this condition (Object.keys(drawnItems._layers)).length < 1 we ensure that we only register actions when
+               we are handling only one drawnItem on the map at a time. Effectively this ensures that we have only one polyline in the map ata given point of time.
+            */
+              // handle the filtered events that pass through our requirements.
               handle[eventName.replace('draw:','')](e,leafletEvent, leafletObject, model, modelName);
               $scope.paths = {};
 
@@ -90,10 +90,15 @@ angular.module('app')
               {
                 if(drawnItems._layers.hasOwnProperty(key))
                 {
-                  console.log(key);
-                  console.log( drawnItems._layers[key])
+                  /* Since the shape created gets alloted a random identifier in the _layers object that acts as the key for
+                     that drawnItem, we make use of keys that are not a part of the prototype of the object.
+                  */
+
+                  // The latitude and longitude is stored in the _latlngs object.
                   var arrayPoints = drawnItems._layers[key]._latlngs;
-                
+
+                  // Around each of these points in the polyline layer created, we draw a circle marker around it.
+                  // The circle marker is named as p0,p1,p2 and so on.
                   for(var i = 0 ; i < arrayPoints.length ; i++)
                   {
                     console.log("number of points in the drawnItems");
@@ -110,8 +115,6 @@ angular.module('app')
                 }
               }
           }
-          console.log($scope.paths);
-          console.log(drawnItems);
         });
     });
      var unitsOfPhenoms = {'Speed':'Km/h','Consumption':'l/h','MAF':'g/h','Calculated MAF':'g/h','CO2':'Kg/h'}
