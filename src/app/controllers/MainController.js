@@ -12,18 +12,7 @@
     $state, $mdToast, $http, $rootScope, $translate, $scope) {
     console.log("In main Controller");
     var vm = this;
-   // $mdSidenav('left').open();
     vm.lockLeft = false;
-
-    /*  var login;
-      var logout;
-      var profile;
-      $translate(['LOGIN', 'LOGOUT', 'PROFILE']).then(function(translations) {
-        login = translations.login;
-        logout = translations.logout;
-        profile = translations.profile;
-      })
-      */
 
     $scope.showMobileMainHeader = true;
     $scope.openSideNavPanel = function() {
@@ -43,17 +32,14 @@
         'X-Token': $rootScope.globals.currentUser.authdata
       };
       vm.profilename = $rootScope.globals.currentUser.username;
-      vm.url = "https://envirocar.org/api/stable/users/" + $rootScope.globals
-        .currentUser.username + "/avatar";
-      vm.about = "https://envirocar.org/api/stable/users/" + $rootScope.globals
-        .currentUser.username;
+      vm.url = "https://envirocar.org/api/stable/users/" + $rootScope.globals.currentUser.username + "/avatar";
+      vm.about = "https://envirocar.org/api/stable/users/" + $rootScope.globals.currentUser.username;
       $http.get(vm.about).then(function(response) {
-        console.log("executed");
-        console.log(response)
+        // Get the email ID of the user.
         vm.email = response.data.mail;
-        console.log(vm.email);
       })
       $http.get(vm.url, {
+        // Blob method which attempts to bypass the CORS issue faced by the http module. Still runs into CORS issue at the moment.$event
           responseType: 'arraybuffer'
         })
         .then(function(response) {
@@ -68,6 +54,7 @@
         });
 
     }
+    //Array of menu items.
     vm.menuItems = [];
     vm.selectItem = selectItem;
     vm.toggleItemsList = toggleItemsList;
@@ -92,19 +79,12 @@
             tracks = translations.TRACKS;
             table = translations.TABLE;
             segment  = translations.SEGMENT;
-            console.log(translations.SPEEDARRAY);
-            console.log(translations);
-            console.log("came here to nav service");
-            console.log(dashboard);
+            // Translation for the menu items on the left side navigation bar.
             vm.menuItems[0]['name'] = dashboard;
             vm.menuItems[1]['name'] = tracks;
             vm.menuItems[2]['name'] = table;
             vm.menuItems[3]['name'] = segment;
-            console.log(vm.menuItems);
-
           })
-
-
       });
 
     function toggleRightSidebar() {
@@ -125,7 +105,7 @@
     //  vm.toggleItemsList();
       vm.showSimpleToast(vm.title);
     }
-
+/*
     function showActions($event) {
       $mdBottomSheet.show({
         parent: angular.element(document.getElementById('content')),
@@ -155,7 +135,7 @@
           $mdBottomSheet.hide(action);
         };
       }
-    }
+    }*/
 
     function showSimpleToast(title) {
       console.log(title + "got shown");

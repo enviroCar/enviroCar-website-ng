@@ -1,3 +1,7 @@
+/* The translation provider is based on the i18 internationalization
+   the identifiers can be found on the left and these identifiers have to be rewritten with the corresponding translation
+   for any language that is added to the translationProvider.
+*/
 angular.module('app')
   .config(['$translateProvider', function($translateProvider) {
     $translateProvider.translations('en', {
@@ -98,8 +102,14 @@ angular.module('app')
       'REVERSE': 'Reverse',
       'VEHICLE_FILTERS_HEADING': 'Set Distance Filters',
       'SELECT_VEHICLES': 'Select Vehicles',
-      'NO_SEGMENT_TRACKS': 'We could not find any track statistics in the selected region, You could try increasing the search region by using the slider in the panel'
-  });
+      'NO_SEGMENT_TRACKS': 'We could not find any track statistics in the selected region, You could try increasing the search region by using the slider in the panel',
+      'TOURTIP1': 'Draw a polyline to create segments',
+      'TOURTIP2': 'Click here to search for segments, after drawing a polyline',
+      'TOURTIP3': 'Edit a polyline here',
+      'TOURTIP4': 'Clicking on a point removes it from the polyline',
+      'TOURTIP5': 'Use the slider to change the region you are searching for, the blue circle around each point shows the region where the tracks are being searched for'
+
+});
     $translateProvider.preferredLanguage('en');
 
   }])

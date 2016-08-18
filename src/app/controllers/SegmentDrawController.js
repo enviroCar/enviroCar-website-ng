@@ -1,8 +1,8 @@
 angular.module('app')
 .controller('SegmentDrawController',['$scope','leafletDrawEvents','$mdMedia','Geo',function($scope, leafletDrawEvents){
-    		
     var drawnItems = new L.FeatureGroup();
 
+    
     angular.extend($scope, {
       map: {
         center: {
@@ -36,7 +36,6 @@ angular.module('app')
        
         }
     });
-              console.log($scope.paths);
 
 
     var handle = {
@@ -60,20 +59,15 @@ angular.module('app')
     var drawEvents = leafletDrawEvents.getAvailableEvents();
     drawEvents.forEach(function(eventName){
         $scope.$on('leafletDirectiveDraw.' + eventName, function(e, payload) {
-          console.log("being edited");
+          // For each of the event fired on leafletDraw.
           //{leafletEvent, leafletObject, model, modelName} = payload
           var leafletEvent, leafletObject, model, modelName; //destructuring not supported by chrome yet :(
           leafletEvent = payload.leafletEvent, leafletObject = payload.leafletObject, model = payload.model,
           modelName = payload.modelName;
-         // for(var i = 0 ; i < )
-          //console.log(leafletEvent);
-          console.log(drawnItems);
-          console.log(drawnItems._layers);
-          console.log(Object.keys(drawnItems._layers))
-          console.log(eventName);
+         
           if((Object.keys(drawnItems._layers)).length < 1 || eventName=='draw:edited' || eventName=='draw:deleted' )
           {
-            console.log("did not come for edit");
+            
               handle[eventName.replace('draw:','')](e,leafletEvent, leafletObject, model, modelName);
               $scope.paths = {};
 
@@ -81,10 +75,9 @@ angular.module('app')
               {
                 if(drawnItems._layers.hasOwnProperty(key))
                 {
-                  console.log(key);
-                  console.log( drawnItems._layers[key])
+                  
                   var arrayPoints = drawnItems._layers[key]._latlngs;
-                
+                 
                   for(var i = 0 ; i < arrayPoints.length ; i++)
                   {
                     console.log("number of points in the drawnItems");

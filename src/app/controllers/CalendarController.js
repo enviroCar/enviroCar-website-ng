@@ -1,3 +1,9 @@
+/* CalendarController:
+      This controller handles the calendar functionality in the tracks page. The tracks.html file makes 
+      use of this calendar controller
+      1) We have made use of the calendar directive to achieve this. 
+      2) There are 4 important functions of this controller(PrevMonth,NextMonth,DateClicked,Populating the calendar)
+*/
 angular.module('app')
 .constant('calendar', {
   monthNumberMapping : {
@@ -24,41 +30,53 @@ angular.module('app')
     '$filter', '$http', '$state',
     '$rootScope',
     'tracks_calendar','calendar','MaterialCalendarData',
-    function($scope, $mdDialog, $mdMedia, $stateParams, $filter, $http,
-      $state,
-      $rootScope,
-      tracks_calendar,calendar,
-      MaterialCalendarData) {
-      $scope.buttonClickCurrentDate = function() {
-        $scope.selectedDate = new Date();
-        $scope.dayClick(new Date());
+    function($scope, $mdDialog, $mdMedia, $stateParams, $filter, $http, $state, $rootScope, tracks_calendar,calendar,MaterialCalendarData) {
+
+        $scope.buttonClickCurrentDate = function() {
+            $scope.selectedDate = new Date();
+            $scope.dayClick(new Date());
       }
 
-
       var username;
+      // The username from the url of the page opened.
       if ($stateParams.user == "") {
         username = $rootScope.globals.currentUser.username;
       } else {
         username = $stateParams.user;
       }
+      // Boolean flag to determine when there are any tracks present for the selected day.
       $scope.no_data = false;
+      // A array of the tracks data.
       $scope.tracks = [];
       var tracks_builder = [];
+      // A utility array used to push into the tracks array.
+      
+      // Boolean flag to determine if there are any tracks present for the entire month
       $scope.nostatistics = true;
       $scope.onload = true;
-      $scope.total_tracks;
-      $scope.total_time;
+      
+      // Total number of tracks for the monthly statistics.
+      $scope.total_tracks; 
+
+      // Total time of travel for the monthly statistics.
+      $scope.total_time;  
+
+      // Total distance travelled for the monthly statistics.
       $scope.total_distance;
+
       $scope.track;
+      // A hashmap used to provide a mapping between the number and the corresponding month. 
       var month_number_mapping = calendar.monthNumberMapping;
+      // Object to hold the currentTrack
       $scope.currenttrack = {};
+
+      // A artifact leftover from previous implementations where clicking on one of the tracks from the list of tracks would provide
+      // the user with information and average statistics about the track in a dialog
       $scope.showAdvanced = function(ev, eventid) {
         $scope.tt_isOpen = false;
-        console.log()
         $scope.currenttrack = {};
         $scope.currenttrack['id'] = eventid;
         $scope.track = eventid;
-        console.log(eventid);
 
         var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
         $mdDialog.show({
@@ -85,9 +103,8 @@ angular.module('app')
         });
       };
 
-
+      // The corresponding DialogController for the statistics dialog. This is currently not being used
       function DialogController($scope, $mdDialog, $state, currenttrack) {
-        console.log(currenttrack);
         $scope.onload = false;
         $scope.currenttrack = currenttrack;
         var starttime;
@@ -111,7 +128,6 @@ angular.module('app')
                     2));
                 var seconds_passed = new Date(endtime).getTime() - new Date(
                   starttime).getTime();
-                console.log(seconds_passed);
                 $scope.currenttrack['consumption100Km'] = ((100 *
                     $scope
                     .currenttrack[
@@ -129,14 +145,12 @@ angular.module('app')
           tracks_calendar.get(url_requested + "/statistics/CO2").then(
             function(
               data) {
-              console.log(data.data.avg);
               if (data.data.avg != undefined) {
                 $scope.currenttrack['co2_avg'] = (data.data.avg
                   .toFixed(
                     2));
                 var seconds_passed = new Date(endtime).getTime() - new Date(
                   starttime).getTime();
-                console.log(seconds_passed);
                 $scope.currenttrack['co2gKm'] = ((1000 *
                     $scope
                     .currenttrack[
@@ -186,35 +200,38 @@ angular.module('app')
         }
       }
       // end of tab approach
-
+      // Beginning of actual calendar implementation and other functionality.
       $http.defaults.headers.common = {
         'X-User': $rootScope.globals.currentUser.username,
         'X-Token': $rootScope.globals.currentUser.authdata
       };
+
       $scope.selectedDate = null;
       $scope.firstDayOfWeek = 0;
       $scope.setDirection = function(direction) {
         $scope.direction = direction;
       };
       $scope.dayClick = function(date) {
-
+        // Function to handle what happens when a date is clicked.
         $scope.no_data = false;
+        // The set of tracks to display on the right side section is reinitialized.
         $scope.tracks = [];
+
+        // A utility array to build the $scope.tracks array incrementally.
         var tracks_builder = [];
-        $scope.msg = "You clicked " + $filter("date")(date,
-          "MMM d, y h:mm:ss a Z");
-        console.log($scope.msg);
+        $scope.msg = "You clicked " + $filter("date")(date,"MMM d, y h:mm:ss a Z");
+
+        // The current date clicked is converted into a string and the date, month, year are stripped out of the date to form a unique string to 
+        // easily check for equality between the date clicked and the date's in the array of all tracks of the user
+
         var string_date = date.toString();
         var array_string_date = string_date.split(" ");
         var stripped_date = (array_string_date[0] + array_string_date[1] +
           array_string_date[2]);
-        console.log(stripped_date[3] + "is year");
-        //  console.log(global_tracks_array_begin_stripped_date);
-        if (global_tracks_array_begin_stripped_date.indexOf(stripped_date) >=
-          0) {
-          console.log(stripped_date);
-          console.log("track was clicked");
 
+        if (global_tracks_array_begin_stripped_date.indexOf(stripped_date) >= 0) {
+
+          // A utility function to return all the indexes of the global list of all tracks that match the stripped date that was clicked
           function getAllIndexes(arr, val) {
             var indexes = [],
               i = -1;
@@ -223,13 +240,13 @@ angular.module('app')
             }
             return indexes;
           }
-          $scope.no_data = true;
-          var indexes = getAllIndexes(
-            global_tracks_array_begin_stripped_date, stripped_date);
-          console.log(indexes);
-          console.log(global_tracks_array_begin_stripped_date);
-          for (var i = 0; i < indexes.length; i++) {
 
+          $scope.no_data = true;
+          var indexes = getAllIndexes(global_tracks_array_begin_stripped_date, stripped_date);
+
+          for (var i = 0; i < indexes.length; i++) {
+            // Now we have an array 'indexes' that has all the indexes that correspond to the cliked date.
+            // Build the helper object for each of the tracks with all the details required
             var helper_object = {};
             helper_object['car'] = global_tracks['tracks'][indexes[i]]['sensor']['properties']['model'];
             helper_object['id'] = global_tracks['tracks'][indexes[i]]['id'];
@@ -246,47 +263,41 @@ angular.module('app')
             // convert to the right format. of hh:mm:ss;
             date_for_seconds = new Date(null);
             date_for_seconds.setSeconds(seconds);
+            // date_hh_mm_ss holds the date in the hh:mm:ss format
             date_hh_mm_ss = date_for_seconds.toISOString().substr(11, 8)
 
             helper_object['travelTime'] = date_hh_mm_ss;
             tracks_builder.push(helper_object);
           }
-          console.log(tracks_builder);
           $scope.tracks = tracks_builder;
-          // Now we have the indexes of the tracks that have to be displayed.
-
         }
       };
+
       var global_tracks;
 
       $scope.prevMonth = function(data) {
-        $scope.msg = "You clicked (prev) month " + data.month + ", " + data
-          .year;
-
+  
         var monthyear = month_number_mapping[data.month] + data.year.toString();
-        console.log(monthyear);
-        console.log(data);
-        console.log("start of custom write");
+        // rewrite is a function that is used to rewrite the dates of the tracks in the calendar.
         rewrite(global_tracks);
-        console.log(global_tracks);
+
         var total_tracks = 0;
         var total_distance = 0;
         var total_time = 0;
-        console.log(global_tracks);
+
         for (var i = 0; i < global_tracks.tracks.length; i++) {
+          // global_tracks holds the list of all the tracks of the user.
           var datestart = global_tracks.tracks[i].begin;
           var dateobject = new Date(datestart);
           var string_date = dateobject.toString();
-          console.log(string_date);
           var array_string_date = string_date.split(" ");
-          console.log(array_string_date);
           var stripped_date = (array_string_date[1] + array_string_date[3]);
-          console.log(stripped_date + "is month year date");
           if (stripped_date == monthyear) {
+            // if the tracks belongs to the month that the current view is displaying, then we use this value to include it in the count for 
+            // the monthly statistics.
             total_tracks++;
             total_distance += global_tracks.tracks[i]['length'];
-            total_time += (new Date(global_tracks.tracks[i].begin).getTime() -
-              new Date(global_tracks.tracks[i].end).getTime());
+            total_time += (new Date(global_tracks.tracks[i].begin).getTime() - new Date(global_tracks.tracks[i].end).getTime());
           }
         }
         var date_for_seconds = new Date(null);
@@ -348,10 +359,12 @@ angular.module('app')
       url = calendar.urlUsers + username + "/tracks?limit=10000";
       var global_tracks_array_begin = [];
       var global_tracks_array_begin_stripped_date = [];
+
+      //  Keeps track of the number of tracks for each day in the form of a hashmap, only days that have a track are present in the hashmap.
       var date_count = {};
 
       function rewrite(trackslist) {
-
+        // The function used to render the html content corresponding to a day on the calendar. The car icon with the number of tracks on a date is the functionality of this function.
         for (var i = 0; i < trackslist['tracks'].length; i++) {
 
           var datestart = trackslist.tracks[i]['begin'];
@@ -365,6 +378,9 @@ angular.module('app')
       }
 
       tracks_calendar.get(url).then(function(data) {
+        // This get requst populates the global variable with the tracks required.
+
+        // The current date is used to find the details of the current month.
         var currentmonth = new Date();
         var monthyear = currentmonth.toString().split(" ")[1] + currentmonth.toString().split(" ")[3];
         global_tracks = data.data;
@@ -373,8 +389,8 @@ angular.module('app')
           var dateobject = new Date(datestart);
           var string_date = dateobject.toString();
           var array_string_date = string_date.split(" ");
-          var stripped_date = (array_string_date[0] + array_string_date[1] +
-            array_string_date[2]);
+          var stripped_date = (array_string_date[0] + array_string_date[1] + array_string_date[2]);
+          // If the date of the track is already present, then its value has to be incremented. Else, this date has not been encountered earlier, so add a new entry for this date.
           if (date_count[stripped_date] != undefined) {
             date_count[stripped_date]++;
           } else {
@@ -393,13 +409,13 @@ angular.module('app')
           var dateobject = new Date(datestart);
           var string_date = dateobject.toString();
           var array_string_date = string_date.split(" ");
-          console.log(array_string_date);
           var stripped_date = (array_string_date[1] + array_string_date[3]);
+          // calculating the monthly statistics for the first month that is displayed in the page. This months would be a part of the current date and time
+
           if (stripped_date == monthyear) {
             total_tracks++;
             total_distance += global_tracks.tracks[i]['length'];
-            total_time += (new Date(global_tracks.tracks[i].begin).getTime() -
-              new Date(global_tracks.tracks[i].end).getTime());
+            total_time += (new Date(global_tracks.tracks[i].begin).getTime() - new Date(global_tracks.tracks[i].end).getTime());
           }
         }
         var date_for_seconds = new Date(null);
@@ -420,6 +436,7 @@ angular.module('app')
 
       // no flag.
       $scope.setDayContent = function(date) {
+        // set the content of the day when there are no tracks to an empty element.
         return ("<p></p>")
 
       }
