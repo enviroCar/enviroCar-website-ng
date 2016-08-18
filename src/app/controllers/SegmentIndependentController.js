@@ -10,7 +10,7 @@ angular.module('app')
     var respGlobal = {};
     $scope.selectModel  = 'All Segments';
     var availablePhen = {};
-    // creating a new featureGroup to refer and access the drawnitems and all events associated with them.		
+    // creating a new featureGroup to refer and access the drawnitems and all events associated with them.
     var drawnItems = new L.FeatureGroup();
     $scope.currentStep =  0;
 
@@ -43,10 +43,10 @@ angular.module('app')
             remove: true
           }
         }
-     
+
       },
          paths: {
-       
+
         }
     });
               console.log($scope.paths);
@@ -104,7 +104,7 @@ angular.module('app')
                     console.log("number of points in the drawnItems");
                     $scope.paths['p'+i.toString()] = {
                       'type':'circle',
-                      'radius': $rootScope.slider.value*5,
+                      'radius': $rootScope.slider.value,
                       'color': '#0065A0',
                       'latlngs': {
                         'lat': arrayPoints[i].lat,
@@ -168,16 +168,18 @@ angular.module('app')
       name: 'Asdf'
     }
   ];
-  
+
     $rootScope.markers = {}
     $rootScope.slider = {
-    value: 50,
+    value: 200,
     options: {
-      floor: 10,
-      ceil: 90,
-      minLimit: 10,
-      maxLimit: 90,
+      floor: 200,
+      ceil: 5000,
       id: 'tolerance',
+      translate: function(value) {
+          return value + 'm';
+      },
+      showTicksValues: 1600,
       onChange: function(id) {
           console.log($rootScope.paths)
         /*
@@ -195,24 +197,24 @@ angular.module('app')
               if ($scope.paths.hasOwnProperty(key)) {
           console.log("came here");
   console.log($scope.paths[key])
-        $scope.paths[key].radius = $rootScope.slider.value*5;
+        $scope.paths[key].radius = $rootScope.slider.value;
         }
       }
       console.log($rootScope.paths)
-          
+
       }
 
     }
 };
 console.log("workibg ")
- 
+
 
     angular.extend($scope, {
-      
+
       center: {
         lat:51.960,
         lng: 7.6261,
-        zoom: 15
+        zoom: 14
       },
       events: {},
     })
@@ -225,7 +227,7 @@ console.log("workibg ")
           lng: position.coords.longitude,
           zoom: 12
         }
-        $scope.showleaflet = true; 
+        $scope.showleaflet = true;
        /*  $mdToast.show(
              $mdToast.simple()
                  .textContent('Please wait while we load your location')
@@ -241,8 +243,8 @@ console.log("workibg ")
 
 
 
-      
-    
+
+
     $scope.$on('leafletDirectiveMap.segmentMap.click', function (event, args) {
       // Function to add the markers to the map.
       // Add validations if number of markers > 10;
@@ -262,12 +264,12 @@ console.log("workibg ")
         // 2 cases . 1 CountUnique is 0 or the length of number of markers is 0
        /* if(countunique != 0 && Object.keys($rootScope.markers).length != 0)
         {
-           // there is 1 point already added in the map 
+           // there is 1 point already added in the map
            for(var rev = countunique ; rev >= 0 ; rev--)
            {
              //if($rootScope.markers)
            }
-           
+
         }
         */
       var leafEvent = args.leafletEvent
@@ -296,7 +298,7 @@ console.log("workibg ")
         if ($rootScope.markers.hasOwnProperty(key)) {
           $rootScope.paths['c'+countKey.toString()] = {
             type: "circle",
-                    radius: $rootScope.slider.value*5,
+                    radius: $rootScope.slider.value,
                     latlngs: {
                       lat:$rootScope.markers[key].lat,
                       lng:$rootScope.markers[key].lng
@@ -306,7 +308,7 @@ console.log("workibg ")
                     smoothFactor: 1,
                     message: "**.**Km"
 
-          } 
+          }
 
           countKey++
         }
@@ -322,11 +324,11 @@ console.log("workibg ")
           console.log('came here')
         }
         $rootScope.paths['p1'] = {
-          
+
             color: 'green',
             weight: 5,
             latlngs: latlngsArray
-         
+
         }
       } else {
         $rootScope.paths.p1 = JSON.parse(JSON.stringify({}))
@@ -355,7 +357,7 @@ console.log("workibg ")
     }
     $scope.searchForPoints = function () {
       $scope.notSearching = false;
-      // Search for points on the server side 
+      // Search for points on the server side
       var coordinates = [];
       console.log("came here");
    /*   for (key in $rootScope.markers) {
@@ -377,7 +379,7 @@ console.log("workibg ")
                 }
               }
               console.log(coordinates);
-              
+
       console.log(coordinates);
          var dataput = {
           "type": "Feature",
@@ -463,7 +465,7 @@ console.log("workibg ")
                 'label':'Avg',
                 'value':availablePhen[$scope.selectedPhenom]['avg']
               }]
-              
+
             }]
             $scope.pointsCount = availablePhen[$scope.selectedPhenom]['count'];
       }
@@ -505,7 +507,7 @@ console.log("workibg ")
                 'label':'Avg',
                 'value':availablePhen[$scope.selectedPhenom]['avg']
               }]
-              
+
             }]
             $scope.pointsCount = availablePhen[$scope.selectedPhenom]['count'];
             console.log($scope.data);
@@ -536,11 +538,11 @@ console.log("workibg ")
         });
 
       }
-       
+
     }
 
 
-     function TracksNotPresentController($scope, $mdDialog, $state) 
+     function TracksNotPresentController($scope, $mdDialog, $state)
      {
       $scope.hide = function() {
           $mdDialog.hide();
@@ -555,7 +557,7 @@ console.log("workibg ")
 
   }])
 
-  
+
 .factory("GeolocationService", ['$q', '$window', '$rootScope', function ($q, $window, $rootScope) {
     return function () {
         var deferred = $q.defer();
