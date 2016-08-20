@@ -1,3 +1,11 @@
+/*  SegmentIndependentController
+    This Controller handles all interactions in the segment.html page
+    1) Creating Segments using polyline of Leaflet-draw
+    2) Creates circle paths around segment points to show geographical search region
+    3) Search for points
+    4) View bar chart corresponding to data returned by server
+*/
+
 angular.module('app')
   .controller('SegmentIndependentController', ['$scope','leafletDrawEvents','$mdDialog','$mdMedia','GeolocationService','$geolocation','$mdToast', '$rootScope', '$http', function ($scope, leafletDrawEvents, $mdDialog,$mdMedia, GeolocationService, $geolocation, $mdToast, $rootScope, $http) {
     console.log('SegmentIndependentController fired fwnfjenfef')
@@ -156,18 +164,7 @@ angular.module('app')
               }
             };
            // $scope.data = {};
-            $scope.data = [];
-  $scope.items = [
-    {
-      id: 1,
-      name: 'Test'
-    },
-    {
-      id: 2,
-      name: 'Asdf'
-    }
-  ];
-
+    $scope.data = [];
     $rootScope.markers = {}
     $rootScope.slider = {
     value: 200,
@@ -180,34 +177,15 @@ angular.module('app')
       },
       showTicksValues: 1600,
       onChange: function(id) {
-          console.log($rootScope.paths)
-        /*
-          for (key in $rootScope.paths) {
-            console.log(key + "is key")
-              if ($rootScope.paths.hasOwnProperty(key) && key!='p1') {
-          console.log("came here");
-  console.log($rootScope.paths[key])
-        $rootScope.paths[key].radius = $rootScope.slider.value*5;
-        }
-      }*/
-
+         // Changes the value of the radius of the circle paths when a change in the slider is fired.
          for (key in $scope.paths) {
-            console.log(key + "is key")
               if ($scope.paths.hasOwnProperty(key)) {
-          console.log("came here");
-  console.log($scope.paths[key])
-        $scope.paths[key].radius = $rootScope.slider.value;
+                    $scope.paths[key].radius = $rootScope.slider.value;
+                }
+            }
         }
-      }
-      console.log($rootScope.paths)
-
-      }
-
     }
 };
-console.log("workibg ")
-
-
 
 GeolocationService().then(function (position) {
         $scope.position = position;
@@ -226,12 +204,8 @@ GeolocationService().then(function (position) {
         console.log("could not be")
         $scope.showleaflet = true;
     });
-
-
-
-
-
-
+    /*
+    ARTIFACTS LEFT FROM THE CUSTOM IMPLEMENTATION OF LEAFLET WITH MARKERS
     $scope.$on('leafletDirectiveMap.segmentMap.click', function (event, args) {
       // Function to add the markers to the map.
       // Add validations if number of markers > 10;
@@ -246,19 +220,6 @@ GeolocationService().then(function (position) {
            );
       }
       else{
-        // Validations for distance // only let it be added if distance between the 2 is lesser than 5 km
-        // skip distance validation of this is the first point being added
-        // 2 cases . 1 CountUnique is 0 or the length of number of markers is 0
-       /* if(countunique != 0 && Object.keys($rootScope.markers).length != 0)
-        {
-           // there is 1 point already added in the map
-           for(var rev = countunique ; rev >= 0 ; rev--)
-           {
-             //if($rootScope.markers)
-           }
-
-        }
-        */
       var leafEvent = args.leafletEvent
       markersArray.push({
         lat: leafEvent.latlng.lat,
@@ -341,33 +302,23 @@ GeolocationService().then(function (position) {
       //drawnItems._layers = {};
       console.log(drawnItems);
 
-    }
+    }*/
     $scope.searchForPoints = function () {
       $scope.notSearching = false;
       // Search for points on the server side
       var coordinates = [];
-      console.log("came here");
-   /*   for (key in $rootScope.markers) {
-          if ($rootScope.markers.hasOwnProperty(key))
-          {
-            coordinates.push([$rootScope.markers[key].lng, $rootScope.markers[key].lat]);
-          }
-      }*/
               for(key in drawnItems._layers)
               {
                 if(drawnItems._layers.hasOwnProperty(key))
                 {
                    var arrayPoints = drawnItems._layers[key]._latlngs;
-                   console.log(arrayPoints);
                    for(var i = 0 ; i < arrayPoints.length ; i++)
                    {
                      coordinates.push([arrayPoints[i].lng,arrayPoints[i].lat]);
                    }
                 }
               }
-              console.log(coordinates);
-
-      console.log(coordinates);
+          // coordinates holds an array with the latitude and longitude of the points creating the segment in the map
          var dataput = {
           "type": "Feature",
           "geometry": {
@@ -377,11 +328,15 @@ GeolocationService().then(function (position) {
           "timeInterval": {
             "dateStart": "2010-06-08T11:29:10Z",
             "dateEnd": "2026-09-08T11:29:10Z",
-            "daytimeStart": "1:30",
-            "daytimeEnd": "15:30"
+            "daytimeStart": "00:00",
+            "daytimeEnd": "23:59"
           },
           "tolerance": $scope.slider.value
         };
+
+        /* Further revisions could enable the user to set time of the segment, to not only explore it
+           geographically but also to explore the difference in peak hours/Non Peak hours.
+        */
 
         var req = {
           method: 'POST',
@@ -389,21 +344,27 @@ GeolocationService().then(function (position) {
           data: dataput
         }
          delete $http.defaults.headers.common["X-User"];
-       delete $http.defaults.headers.common["X-Token"];
-       $http.defaults.headers.common = {
-         'Accept':'application/json'
-       };
+         delete $http.defaults.headers.common["X-Token"];
+         // Headers to specifically accept application/json content from the server.
+         // Note: in places where the http module does not work as expected, ensure you set the right content accept headers
+         $http.defaults.headers.common = {
+           'Accept':'application/json'
+         };
         $http(req).then(function(resp) {
+          // Store a global copy of the response for rerendering charts.
           respGlobal = resp;
-          console.log(resp);
           responsehandler(resp);
+          // hides the loader and displays the graphs
           $scope.notSearching = true;
         })
-
-
     }
+    // The phenomenon selected by default is Speed
     $scope.selectedPhenom = 'Speed';
+
+    // The number of points returned by the server.
     $scope.pointsCount = 0;
+
+    // Utility function to replace $scope.data with the phenomenon requested for.
     $scope.phenomChanged = function(s)
     {
       $scope.selectedPhenom = s;
@@ -420,31 +381,29 @@ GeolocationService().then(function (position) {
       }]
       $scope.options.chart.yAxis.axisLabel = s + "(" + unitsOfPhenoms[s] + ")";
       $scope.pointsCount = availablePhen[s]['count'];
-      console.log($scope.selectedPhenom);
     }
+    // The default segment value is for All segments.
     $scope.segmentDefault = 0;
+
+    // Utility function to recalculate the available phenomenon for the selected segment from the repGlobal variable that was previously saved.
     $scope.segmentChanged = function(index)
     {
-      console.log(index);
       var segmentIndex = index-1;
       if(index == 0)
       {
         responsehandler(respGlobal);
       }
       else{
-      var impPhen = ['Speed','Consumption','CO2','MAF','Calculated MAF'];
+            var impPhen = ['Speed','Consumption','CO2','MAF','Calculated MAF'];
             for(var i = 0 ; i < respGlobal.data.properties.length ; i++)
             {
-              console.log("recorded here");
                 if(impPhen.indexOf(respGlobal.data.features[segmentIndex].properties[i].name)>-1)
                 {
                   availablePhen[respGlobal.data.features[segmentIndex].properties[i].name] = respGlobal.data.features[segmentIndex].properties[i];
                 }
             }
-            console.log(respGlobal);
             $scope.keys = Object.keys(availablePhen);
-          //  $scope.selectedPhenom = 'Speed'
-            console.log($scope.keys);
+            // Replace $scope.data with the new data filled in availablePhen.
             $scope.data = [{
               key:$scope.selectedPhenom,
               values:[{
@@ -460,6 +419,7 @@ GeolocationService().then(function (position) {
             $scope.pointsCount = availablePhen[$scope.selectedPhenom]['count'];
       }
     }
+
     function responsehandler(resp)
     {
       if(resp.data.properties.length > 0)
@@ -474,19 +434,17 @@ GeolocationService().then(function (position) {
                 $scope.segments.push({'ind':(i+1),'value':('Segment ' + (i+1).toString())})
               }
             }
+            // Generate the array for the dropdown of the segments
             var impPhen = ['Speed','Consumption','CO2','MAF','Calculated MAF'];
             for(var i = 0 ; i < resp.data.properties.length ; i++)
             {
-              console.log("recorded here");
                 if(impPhen.indexOf(resp.data.properties[i].name)>-1)
                 {
                   availablePhen[resp.data.properties[i].name] = resp.data.properties[i];
                 }
             }
-            console.log(resp);
+            // availablePhen is a intersection of the impPhen and the phenomenon returned by the server. Initially the default values it calculates are for the global all segments data returned by the server
             $scope.keys = Object.keys(availablePhen);
-           // $scope.selectedPhenom = 'Speed'
-            console.log($scope.keys);
             $scope.data = [{
               key:$scope.selectedPhenom,
               values:[{
@@ -500,12 +458,9 @@ GeolocationService().then(function (position) {
 
             }]
             $scope.pointsCount = availablePhen[$scope.selectedPhenom]['count'];
-            console.log($scope.data);
-            console.log(availablePhen);
-            //console.log($scope.selectModel1);
-
       }
       else{
+        // No data returned by the server.
         showObject = {
             controller: TracksNotPresentController,
             templateUrl: 'app/views/TracksNotReturned.html',
@@ -549,6 +504,7 @@ GeolocationService().then(function (position) {
 
 
 .factory("GeolocationService", ['$q', '$window', '$rootScope', function ($q, $window, $rootScope) {
+    // Geolcation service that returns location of user based on html5 geolocation.
     return function () {
         var deferred = $q.defer();
 

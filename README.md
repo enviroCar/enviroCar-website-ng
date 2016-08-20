@@ -4,12 +4,13 @@
 
 Clone project:
 
-Install bower packages:
-    $ bower install
-
 Install dependencies:
 
     $ npm install
+
+Install bower packages:
+
+    $ bower install
 
 Install gem 'sass'
 
@@ -17,7 +18,7 @@ Install gem 'sass'
 
 Run development web-server:
 
-    $ gulp serve
+    $  node node_modules/gulp/bin/gulp serve
 
 ### Run in a Docker container
 

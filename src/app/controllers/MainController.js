@@ -10,7 +10,6 @@
 
   function MainController(navService, $mdSidenav, $mdBottomSheet, $log, $q,
     $state, $mdToast, $http, $rootScope, $translate, $scope) {
-    console.log("In main Controller");
     var vm = this;
     vm.lockLeft = false;
 
@@ -19,12 +18,10 @@
       $mdSidenav('left').open();
     };
     $scope.closeSideNavPanel = function() {
-      console.log("event fired for closing");
       $mdSidenav('left').toggle();
     };
     if (typeof $rootScope.globals.currentUser == 'undefined') {
       $rootScope.showlogout = false;
-      //do nothing
     } else {
       $rootScope.showlogout = true;
       $http.defaults.headers.common = {
@@ -43,14 +40,12 @@
           responseType: 'arraybuffer'
         })
         .then(function(response) {
-          console.log("came here too");
           var blob = new Blob(
             [response.data], {
               type: response.headers('Content-Type')
             }
           );
           vm.profilepic = URL.createObjectURL(blob);
-          console.log(vm.profilepic);
         });
 
     }
@@ -92,7 +87,6 @@
     }
 
     function toggleItemsList() {
-      console.log("fired here");
       var pending = $mdBottomSheet.hide() || $q.when(true);
 
       pending.then(function() {
@@ -101,44 +95,12 @@
     }
 
     function selectItem(item) {
+      // A simple toast showing the page that has been clicked
       vm.title = item.name;
-    //  vm.toggleItemsList();
       vm.showSimpleToast(vm.title);
     }
-/*
-    function showActions($event) {
-      $mdBottomSheet.show({
-        parent: angular.element(document.getElementById('content')),
-        templateUrl: 'app/views/partials/bottomSheet.html',
-        controller: ['$mdBottomSheet', SheetController],
-        controllerAs: "vm",
-        bindToController: true,
-        targetEvent: $event
-      }).then(function(clickedItem) {
-        clickedItem && $log.debug(clickedItem.name + ' clicked!');
-      });
-
-      function SheetController($mdBottomSheet) {
-        var vm = this;
-
-        vm.actions = [{
-          name: 'Share',
-          icon: 'share',
-          url: 'https://twitter.com/intent/tweet?text=Angular%20Material%20Dashboard%20https://github.com/flatlogic/angular-material-dashboard%20via%20@flatlogicinc'
-        }, {
-          name: 'Star',
-          icon: 'star',
-          url: 'https://github.com/flatlogic/angular-material-dashboard/stargazers'
-        }];
-
-        vm.performAction = function(action) {
-          $mdBottomSheet.hide(action);
-        };
-      }
-    }*/
 
     function showSimpleToast(title) {
-      console.log(title + "got shown");
       $mdToast.show(
         $mdToast.simple()
         .content(title)

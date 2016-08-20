@@ -6,6 +6,7 @@ angular.module('app')
     avatar: "/avatar",
   })
 
+  angular.module('app')
 .controller('MyActivityController', ['$scope', '$http', '$rootScope', '$state',
   '$stateParams',
   'myactivity',
@@ -13,40 +14,40 @@ angular.module('app')
     $scope.fetchingResults = false;
     $scope.totalLoading = true;
     $scope.show_no_my_activity = false;
-    console.log("fired my activity")
     $scope.events = [];
     var eventshelper = []
     $scope.busy = false;
     $scope.page = 0;
     $scope.page_size = myactivity.page_size;
+
     if (typeof $rootScope.globals.currentUser == "undefined") {
-      console.log("came here to if");
     } else {
-      console.log("fired else")
       $http.defaults.headers.common = {
         'X-User': $rootScope.globals.currentUser.username,
         'X-Token': $rootScope.globals.currentUser.authdata
       };
+
       $scope.username;
       var username;
+
       if ($stateParams.user == "") {
         username = $rootScope.globals.currentUser.username;
         $scope.username = "Your";
-
       } else {
         username = $stateParams.user;
         $scope.username = username;
       }
+
+      // to keep a track of whether data is being fetched for the first time or after a click for more data.
       var fetchFloat = 0;
-      //$scope.username = username;
+
       $scope.nextpage = function() {
         if(fetchFloat == 1)
         {
           $scope.fetchingResults = true;
         }
         $scope.page++;
-        var url = myactivity.url_base + username +
-          myactivity.yourself;
+        var url = myactivity.url_base + username + myactivity.yourself;
         $http.get(url + "limit=" + $scope.page_size + "&page=" + $scope.page)
           .success(function(data, status, headers, config) {
             if (data.activities.length == 0) {
@@ -56,19 +57,13 @@ angular.module('app')
               var helper = {};
               helper['time'] = data.activities[i].time;
               helper['name'] = data.activities[i].user.name;
-              //  helper['profileurl'] = "https://envirocar.org/api/stable/users/"+helper['name']+"/avatar";
-              //console.log(helper['profileurl']);
               helper['date'] = new Date(data.activities[i].time).toLocaleString();
-              //  console.log(i);
-
-              //console.log(data.activities[i]);
               helper['color'] = "#8CBF3F"
+
               if (data.activities[i].type == "FRIENDED_USER") {
                 helper['type'] = 0;
                 helper['topic'] = "New Friend Activity";
-                helper['name'] = username + " is now friends with " +
-                  data.activities[
-                    i].other.name;
+                helper['name'] = username + " is now friends with " +data.activities[i].other.name;
                 helper['trackidlink'] = "";
                 helper['color'] = "#0065A0"
                 helper['icon'] = 'people';
@@ -121,7 +116,8 @@ angular.module('app')
       $scope.nextpage($scope.page);
       $scope.goToActivity = function(activity, trackid) {
         if (activity == 1) {
-          //redirect to the track analytics page.
+          // if 'type' is 1 then it is a list item with a track that it can be redirected to.
+          //redirect to the track analytics page
           $state.go('home.chart', {
             'trackid': trackid
           });

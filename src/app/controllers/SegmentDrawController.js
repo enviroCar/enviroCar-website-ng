@@ -1,8 +1,9 @@
-angular.module('app')
+/*angular.module('app')
+ARTIFICAT LEFTOVER
 .controller('SegmentDrawController',['$scope','leafletDrawEvents','$mdMedia','Geo',function($scope, leafletDrawEvents){
     var drawnItems = new L.FeatureGroup();
 
-    
+
     angular.extend($scope, {
       map: {
         center: {
@@ -30,10 +31,10 @@ angular.module('app')
             remove: true
           }
         }
-     
+
       },
          paths: {
-       
+
         }
     });
 
@@ -64,10 +65,10 @@ angular.module('app')
           var leafletEvent, leafletObject, model, modelName; //destructuring not supported by chrome yet :(
           leafletEvent = payload.leafletEvent, leafletObject = payload.leafletObject, model = payload.model,
           modelName = payload.modelName;
-         
+
           if((Object.keys(drawnItems._layers)).length < 1 || eventName=='draw:edited' || eventName=='draw:deleted' )
           {
-            
+
               handle[eventName.replace('draw:','')](e,leafletEvent, leafletObject, model, modelName);
               $scope.paths = {};
 
@@ -75,9 +76,9 @@ angular.module('app')
               {
                 if(drawnItems._layers.hasOwnProperty(key))
                 {
-                  
+
                   var arrayPoints = drawnItems._layers[key]._latlngs;
-                 
+
                   for(var i = 0 ; i < arrayPoints.length ; i++)
                   {
                     console.log("number of points in the drawnItems");
@@ -99,3 +100,4 @@ angular.module('app')
         });
     });
 }])
+*/

@@ -6,6 +6,7 @@ angular.module('app')
     avatar: '/avatar'
 
   })
+  angular.module('app')
   .controller('FriendActivityController', ['$scope', '$http', '$rootScope',
     '$stateParams',
     '$state', 'friendactivity',

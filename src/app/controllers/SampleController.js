@@ -1,3 +1,5 @@
+/*
+ARTIFACT FROM PREVIOUS CUSTOM SEGMENT IMPPLEMENTATION. Used to delete marker point
 angular.module('app')
   .controller('SampleController', ['$scope', '$rootScope', function ($scope, $rootScope) {
     $scope.removeMarker = function (index) {
@@ -20,7 +22,7 @@ angular.module('app')
                     smoothFactor: 1,
                     message: "**.**Km"
 
-          } 
+          }
           countKey++
         }
       }
@@ -33,7 +35,7 @@ angular.module('app')
           console.log('came here')
         }
         $rootScope.paths.p1 = {
-         
+
             color: 'green',
             weight: 5,
             latlngs: latlngsArray
@@ -44,3 +46,4 @@ angular.module('app')
       }
     }
   }])
+*/

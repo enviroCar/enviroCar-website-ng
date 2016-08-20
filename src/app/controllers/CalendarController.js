@@ -1,7 +1,7 @@
 /* CalendarController:
-      This controller handles the calendar functionality in the tracks page. The tracks.html file makes 
+      This controller handles the calendar functionality in the tracks page. The tracks.html file makes
       use of this calendar controller
-      1) We have made use of the calendar directive to achieve this. 
+      1) We have made use of the calendar directive to achieve this.
       2) There are 4 important functions of this controller(PrevMonth,NextMonth,DateClicked,Populating the calendar)
 */
 angular.module('app')
@@ -25,6 +25,7 @@ angular.module('app')
 
 
 })
+angular.module('app')
   .controller("CalendarController", ['$scope', '$mdDialog', '$mdMedia',
     '$stateParams',
     '$filter', '$http', '$state',
@@ -50,22 +51,22 @@ angular.module('app')
       $scope.tracks = [];
       var tracks_builder = [];
       // A utility array used to push into the tracks array.
-      
+
       // Boolean flag to determine if there are any tracks present for the entire month
       $scope.nostatistics = true;
       $scope.onload = true;
-      
+
       // Total number of tracks for the monthly statistics.
-      $scope.total_tracks; 
+      $scope.total_tracks;
 
       // Total time of travel for the monthly statistics.
-      $scope.total_time;  
+      $scope.total_time;
 
       // Total distance travelled for the monthly statistics.
       $scope.total_distance;
 
       $scope.track;
-      // A hashmap used to provide a mapping between the number and the corresponding month. 
+      // A hashmap used to provide a mapping between the number and the corresponding month.
       var month_number_mapping = calendar.monthNumberMapping;
       // Object to hold the currentTrack
       $scope.currenttrack = {};
@@ -221,7 +222,7 @@ angular.module('app')
         var tracks_builder = [];
         $scope.msg = "You clicked " + $filter("date")(date,"MMM d, y h:mm:ss a Z");
 
-        // The current date clicked is converted into a string and the date, month, year are stripped out of the date to form a unique string to 
+        // The current date clicked is converted into a string and the date, month, year are stripped out of the date to form a unique string to
         // easily check for equality between the date clicked and the date's in the array of all tracks of the user
 
         var string_date = date.toString();
@@ -276,7 +277,7 @@ angular.module('app')
       var global_tracks;
 
       $scope.prevMonth = function(data) {
-  
+
         var monthyear = month_number_mapping[data.month] + data.year.toString();
         // rewrite is a function that is used to rewrite the dates of the tracks in the calendar.
         rewrite(global_tracks);
@@ -293,7 +294,7 @@ angular.module('app')
           var array_string_date = string_date.split(" ");
           var stripped_date = (array_string_date[1] + array_string_date[3]);
           if (stripped_date == monthyear) {
-            // if the tracks belongs to the month that the current view is displaying, then we use this value to include it in the count for 
+            // if the tracks belongs to the month that the current view is displaying, then we use this value to include it in the count for
             // the monthly statistics.
             total_tracks++;
             total_distance += global_tracks.tracks[i]['length'];
@@ -399,7 +400,7 @@ angular.module('app')
           global_tracks_array_begin_stripped_date.push(stripped_date);
           global_tracks_array_begin.push(dateobject.toString());
         }
-     
+
         rewrite(global_tracks);
         var total_time = 0;
         var total_tracks = 0;
