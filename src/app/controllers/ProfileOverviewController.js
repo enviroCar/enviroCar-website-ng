@@ -13,6 +13,8 @@ angular.module('app')
     groups: "/groups"
 
   })
+  
+  angular.module('app')
   .controller('ProfileViewController', ['$scope', '$rootScope', '$http',
     '$stateParams',
     'ProfileViewFactory', 'profileview',

@@ -5,7 +5,8 @@ angular.module('app')
     yourself: "/activities?",
     avatar: "/avatar",
   })
-
+  
+  angular.module('app')
 .controller('MyActivityController', ['$scope', '$http', '$rootScope', '$state',
   '$stateParams',
   'myactivity',

@@ -163,7 +163,7 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
 
   $mdIconProvider.icon('user', 'assets/images/user.svg', 64);
 })
-
+angular.module('angularMaterialAdmin')
 .run(['$rootScope', '$location', '$state', '$cookieStore', '$http', function(
   $rootScope, $location, $state, $cookieStore, $http) {
   console.log("came in")

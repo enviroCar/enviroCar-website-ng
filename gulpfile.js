@@ -10,7 +10,7 @@ var gulp = require('gulp');
 };
 
 require('require-dir')('./gulp');
-
+/*
 gulp.task('serveprod', function() {
   connect.server({
     root: '',
@@ -18,7 +18,7 @@ gulp.task('serveprod', function() {
     livereload: false
   });
 });
-
+*/
 gulp.task('default', ['clean'], function () {
     gulp.start('build');
 });
