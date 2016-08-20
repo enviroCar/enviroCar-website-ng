@@ -39,7 +39,7 @@
   },
   "resolutions": {
     "angular-material": "^1.0.6",
-    "angular": "^1.0.8",
+    "angular": "1.5.8",
     "angular-animate": "^1.5.0",
     "jquery": "~2.0.3"
   }

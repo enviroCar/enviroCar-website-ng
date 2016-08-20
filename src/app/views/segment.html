@@ -1,5 +1,6 @@
 <div ng-controller="SegmentIndependentController" class="mapcontainer" style="height:100%">
-                       <tour step="currentStep">
+
+                    <tour step="currentStep">
                             <div style="box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.2);
 position:absolute;z-index:1;width:22%;right:0;height:100%;background-color:rgba(255,255,255,0.85)">
                                 <div style="text-align:center">
@@ -10,7 +11,6 @@ position:absolute;z-index:1;width:22%;right:0;height:100%;background-color:rgba(
                                 </div>
                                  <div layout-gt-xs="column" layout="center center" >
                                     <div style="width:100%;text-align:center">
-                                      <!--  <md-button class="white-bg" ng-click="resetPoints()">{{'RESET_POINTS' | translate}}</md-button>    -->
                                     </div>
 
                                     <div style="width:100%;text-align:center">
@@ -38,16 +38,18 @@ position:absolute;z-index:1;width:22%;right:0;height:100%;background-color:rgba(
                                           </div>
 
                 </div>
+
                 <div tourtip="{{'TOURTIP1' | translate}}" tourtip-placement="right" tourtip-margin="0" tourtip-step="0" tourtip-element=".leaflet-draw-draw-polyline" style="height:100%;width:100%">
                   <span tourtip="{{'TOURTIP3' | translate}}" tourtip-placement="right" tourtip-step="2" tourtip-element=".leaflet-draw-edit-edit"></span>
                     <span tourtip="{{'TOURTIP4' | translate}}" tourtip-placement="right"  tourtip-step="3" tourtip-element=".leaflet-draw-edit-edit"></span>
-                    <leaflet lf-center="map.center" paths="paths" lf-draw="map.drawOptions" height="100%" width="100%">  </leaflet>
+                    <leaflet lf-center="map.center"  paths="paths" lf-draw="map.drawOptions" height="100%" width="100%">  </leaflet>
+
                 </div>
 </tour>
-
+-->
            <!-- <leaflet lf-center="center" id="segmentMap" markers="$root.markers" paths="$root.paths" event-broadcast="events" width="100%" height="100%"></leaflet> -->
 </div>
-<!-- 
+<!--
     <div layout-gt-md="row">
         <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" md-theme-watch>
         <md-card-content class="nopadding">
@@ -55,7 +57,7 @@ position:absolute;z-index:1;width:22%;right:0;height:100%;background-color:rgba(
         </div>
         <div layout-gt-xs="row" style="padding-top:6px">
             <div style="width:50%;text-align:center">
-                <md-button class="white-bg" ng-click="resetPoints()">Reset points</md-button>    
+                <md-button class="white-bg" ng-click="resetPoints()">Reset points</md-button>
             </div>
             <div style="width:50%;text-align:center">
                 <md-button class="white-bg" ng-click="searchForPoints()">Search for tracks</md-button>
@@ -72,7 +74,7 @@ position:absolute;z-index:1;width:22%;right:0;height:100%;background-color:rgba(
                     <p>Click on map to place a marker at that point, click on it again to delete it.</p>
                 </div>
             </md-card-content>
-        </md-card> 
+        </md-card>
     </div>
 </div>
 -->

@@ -41,10 +41,10 @@
             -->
               <md-card-content style="max-height:465px" class="nopadding">
                 <!-- <img id="mySpinner" class="mySpinner" src="/assets/images/715.gif" ng-show="loading"> -->
-              <md-progress-circular style="top:50%"class="loader_dashboard2" ng-if="!onload_leaflet" md-diameter="156"></md-progress-circular>
+              <md-progress-circular class="loader_dashboard2" ng-if="!onload_leaflet" md-diameter="156"></md-progress-circular>
 
                 <md-content ng-if="onload_leaflet">
-                  <leaflet bounds="bounds" id="mainMap2" controls="controls" paths="paths" watch-paths="true" markers="markers" legend="legend" defaults="defaults" height="465"  ></leaflet>
+                  <leaflet bounds="bounds"  controls="controls" paths="paths" watch-paths="true" markers="markers" legend="legend" defaults="defaults" height="465"  ></leaflet>
                 </md-content>
             </md-card-content>
     </md-card>
@@ -145,7 +145,7 @@
             </md-list-item>
 
             <md-list-item layout="row">
-              <i class="material-icons md-avatar grey md-36">timer</i>              
+              <i class="material-icons md-avatar grey md-36">timer</i>
               <div class="md-list-item-text">
               <p>{{'START:' | translate}}</p>
               </div>
@@ -280,12 +280,12 @@
                 -->
                   <md-card-content style="max-height:495px" class="nopadding">
                     <!-- <img id="mySpinner" class="mySpinner" src="/assets/images/715.gif" ng-show="loading"> -->
-                  <md-progress-circular style="top:50%"class="loader_dashboard2" ng-if="!onload_leaflet" md-diameter="156"></md-progress-circular>
+                  <md-progress-circular class="loader_dashboard2" ng-if="!onload_leaflet" md-diameter="156"></md-progress-circular>
                   <rzslider rz-slider-model="slider.minValue"
                     rz-slider-high="slider.maxValue"
                       rz-slider-options="slider.options"></rzslider>
                     <md-content ng-if="onload_leaflet">
-                      <leaflet event-broadcast="events" id="myMap" bounds="bounds" controls="controls" paths="paths" watch-paths="true" markers="markers" legend="legend" defaults="defaults" height="465"  ></leaflet>
+                      <leaflet event-broadcast="events"  bounds="bounds" controls="controls" paths="paths" watch-paths="true" markers="markers" legend="legend" defaults="defaults" height="465"  ></leaflet>
                     </md-content>
                 </md-card-content>
         </md-card>
