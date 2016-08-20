@@ -4,6 +4,9 @@
 
 Clone project:
 
+Install bower packages:
+    $ bower install
+
 Install dependencies:
 
     $ npm install
@@ -34,4 +37,3 @@ If you have any questions about the build or project structure please check out 
 
 UI components built with [Angular Material](https://material.angularjs.org/).
 
-Design by [flatlogic.com](http://flatlogic.com/)

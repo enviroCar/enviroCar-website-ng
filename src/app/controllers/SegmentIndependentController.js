@@ -49,7 +49,6 @@ angular.module('app')
 
         }
     });
-              console.log($scope.paths);
 
     // A object created to handle each of the operations that can be performed on leaflet draw.
     var handle = {
@@ -209,16 +208,8 @@ angular.module('app')
 console.log("workibg ")
 
 
-    angular.extend($scope, {
 
-      center: {
-        lat:51.960,
-        lng: 7.6261,
-        zoom: 14
-      },
-      events: {},
-    })
- GeolocationService().then(function (position) {
+GeolocationService().then(function (position) {
         $scope.position = position;
         console.log("position ");
         console.log(position);
@@ -228,11 +219,7 @@ console.log("workibg ")
           zoom: 12
         }
         $scope.showleaflet = true;
-       /*  $mdToast.show(
-             $mdToast.simple()
-                 .textContent('Please wait while we load your location')
-                 .hideDelay(4000)
-           );*/
+
     }, function (reason) {
       console.log(reason)
         $scope.message = "Could not be determined."
@@ -403,6 +390,9 @@ console.log("workibg ")
         }
          delete $http.defaults.headers.common["X-User"];
        delete $http.defaults.headers.common["X-Token"];
+       $http.defaults.headers.common = {
+         'Accept':'application/json'
+       };
         $http(req).then(function(resp) {
           respGlobal = resp;
           console.log(resp);

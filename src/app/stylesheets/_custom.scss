@@ -16,6 +16,10 @@ $blue: #533687 ;
         width: 100%;
     }
 
+md-content.md-default-theme, md-content {
+    color: rgba(0,0,0,0.87);
+    background-color: rgb(256, 256, 256);
+}
 
 .trackpreview .md-content {
 width:480px;
@@ -632,6 +636,7 @@ padding: 0px;
 }
 
 .page-content {
+  height: 100%;
   background-color: $main-bg-color;
 }
 
