@@ -1,3 +1,5 @@
+/*
+ARTIFACT FROM A SIDEBAR BASED MY ACTIVITY APPROACH
 angular.module('app')
   .controller('MyActivityControllerFixed', ['$scope', '$http', '$rootScope',
     '$state',
@@ -7,30 +9,30 @@ angular.module('app')
       $scope.show_no_my_activity = false;
       $scope.loading = false;
       $scope.fetchingResults = false;
-      console.log("fired my activity")
       $scope.events = [];
       var eventshelper = []
       $scope.busy = false;
       $scope.page = 0;
       $scope.page_size = myactivity.page_size;
+
       if (typeof $rootScope.globals.currentUser == "undefined") {
-        console.log("came here to if");
       } else {
-        console.log("fired else")
         $http.defaults.headers.common = {
           'X-User': $rootScope.globals.currentUser.username,
           'X-Token': $rootScope.globals.currentUser.authdata
         };
          $scope.username;
       var username;
+
       if ($stateParams.user == "") {
         username = $rootScope.globals.currentUser.username;
         $scope.username = "Your";
-
       } else {
         username = $stateParams.user;
         $scope.username = username;
       }
+
+      // to keep a track of whether data is being fetched for the first time or after a click for more data.
       var fetchflag = 0;
         $scope.nextpage = function() {
           if(fetchflag == 1)
@@ -38,30 +40,26 @@ angular.module('app')
             $scope.fetchingResults = true;
           }
           $scope.page++;
-          var url = myactivity.url_base + $rootScope.globals.currentUser.username +
-            myactivity.yourself;
+          var url = myactivity.url_base + $rootScope.globals.currentUser.username + myactivity.yourself;
           $http.get(url + "limit=" + $scope.page_size + "&page=" + $scope.page)
             .success(function(data, status, headers, config) {
               if (data.activities.length == 0) {
+                // The user does not have any activity so show the appropriate message
                 $scope.show_no_my_activity = true;
               }
               for (var i = 0; i < data.activities.length; i++) {
+
                 var helper = {};
                 helper['time'] = data.activities[i].time;
                 helper['name'] = data.activities[i].user.name;
-                //  helper['profileurl'] = "https://envirocar.org/api/stable/users/"+helper['name']+"/avatar";
-                //console.log(helper['profileurl']);
                 helper['date'] = new Date(data.activities[i].time).toLocaleString();
-                //  console.log(i);
-                //console.log(data.activities[i]);
                 helper['color'] = "#8CBF3F"
+
                 if (data.activities[i].type == "FRIENDED_USER") {
                   helper['type'] = 0;
                   helper['color'] = "#0065A0"
                   helper['topic'] = "New Friend Activity";
-                  helper['name'] =   "You are friends with" +
-                    data.activities[
-                      i].other.name;
+                  helper['name'] =   "You are friends with" + data.activities[i].other.name;
                   helper['trackidlink'] = "";
                   helper['icon'] = 'people';
                 } else if (data.activities[i].type == "CREATED_TRACK") {
@@ -96,9 +94,7 @@ angular.module('app')
                   helper['topic'] = "You deleted the group";
                 }
                 eventshelper.push(helper);
-                //  console.log(helper);
               }
-              //console.log($scope.events);
               fetchflag = 1;
               $scope.fetchingResults = false;
               $scope.events = eventshelper
@@ -107,13 +103,14 @@ angular.module('app')
         $scope.nextpage($scope.page);
         $scope.goToActivity = function(activity, trackid) {
           if (activity == 1) {
+            // if 'type' is 1 then it is a list item with a track that it can be redirected to.
             //redirect to the track analytics page.
             $state.go('home.chart', {
               'trackid': trackid
             });
           }
-          console.log("fired");
         }
       }
     }
   ])
+*/
