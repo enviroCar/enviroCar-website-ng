@@ -84,8 +84,9 @@
                     </div>
                     <md-tooltip class="trackpreview" md-direction="left">
                     <md-content >
+                      <p>Track preview</p>
                     <img src={{event.url}} style="width:480px;height:380px"></img>
-                    </md-content>
+                  </md-content>
                   </md-tooltip>
                 </div>
               </div>
@@ -153,9 +154,7 @@
   </md-card-content>
 </md-card>
 -->
-</div>
-</div>
-</md-tab>
+
 <md-tab label="{{'ALL_TRACKS_TAB' | translate}}">
     <div class="middle">
       <div layout-gt-md="row">
@@ -271,13 +270,13 @@
         </md-menu>
         </div>
     <!--  <div style="text-align:center">
-        
+
         <md-button class="md-raised"  ng-if="$root.distanceShow" ng-click="addFilter(0)"><span>Distance</span></md-button>
         <md-button class="md-raised"  ng-if="$root.dateShow" ng-click="addFilter(1)">Date</md-button>
         <md-button class="md-raised"  ng-if="$root.durationShow" ng-click="addFilter(2)">Duration of Travel</md-button>
         <md-button class="md-raised"  ng-if="$root.vehicleShow" ng-click="addFilter(3)">Vehicle</md-button>
       </div> -->
-               <md-chips style="min-width:80%" md-on-add="add($chip)" ng-model="$root.selectedVegetables" md-autocomplete-snap
+               <md-chips style="min-width:80%" md-on-add="add($chip)" ng-model="$root.selectedFilters" md-autocomplete-snap
               md-transform-chip="transformChip($chip)"
               md-require-match="autocompleteDemoRequireMatch"
               md-on-select="getChipInfo($chip)" md-on-remove="removeChip($chip)">
@@ -297,7 +296,7 @@
 
                </md-chips>
         </div>
-     
+
                 <div style="width:100%;text-align:center">
                       <p style="font-size:17px">Showing {{(tracks|filter:search | filter:distanceFilter | filter:dateFilter | filter:durationFilter | filter:vehicleFilter).length}} of {{tracks.length}} tracks</p>
                 </div>
@@ -313,7 +312,7 @@
                         <span>
                       <span style="color:rgba(0,101,160,0.9);line-height:100%;padding-bottom:30px;margin-left:-10px"><b>{{event.Start | date:'medium'}}</b></span>
                       <span style="color:rgba(255,255,255,0.8);background-color:rgba(0,101,160,0.9);border-radius: 8px;float:right">&nbsp;&nbsp;{{event.Distance}} Km&nbsp;&nbsp;</span>
-                      </span>                      
+                      </span>
                       <div style="height:40px;padding-top:15px;padding-bottom:15px">
                       <span style="line-height:70%">
                         <i class="material-icons md-24" style="height:28px;width:28px">directions_car</i>
@@ -329,6 +328,7 @@
                     </div>
                     <md-tooltip class="trackpreview" md-direction="left">
                     <md-content >
+                      <p>Track preview</p>
                     <img src={{event.url}} style="width:480px;height:380px"></img>
                     </md-content>
                   </md-tooltip>
@@ -352,8 +352,7 @@
 
                     </md-list-item>
                   </md-list>
-
-            </md-content>
+-->
           </md-card-content>
           </md-card>
       </div>
