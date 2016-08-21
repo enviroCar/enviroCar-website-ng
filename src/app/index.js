@@ -1,10 +1,9 @@
 'use strict';
 
-angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
-  'ngSanitize', 'ui.router', 'ngMaterial', 'nvd3', 'pascalprecht.translate',
-  'angular-timeline', 'infinite-scroll',
-  'angularUtils.directives.dirPagination', 'angular-loading-bar',
-  'materialCalendar', 'md.chips.select','ngGeolocation','ui-leaflet', 'ngRoute','angular-tour','rzModule','app'
+angular.module('angularMaterialAdmin', ['ngAnimate','ngCookies','angular-loading-bar',
+  'ngMaterial','nvd3','ngRoute','ngSanitize', 'angular-tour', 'pascalprecht.translate',
+   'ui.router','rzModule','materialCalendar', 
+   'md.chips.select','ngGeolocation','ui-leaflet', 'app'
 ])
 
 .config(function($stateProvider, $urlRouterProvider, $mdThemingProvider,
