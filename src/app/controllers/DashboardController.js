@@ -447,7 +447,7 @@ angular.module('app')
           $scope.dataoverall = $scope.dataSpeed;
 
           dataotherusers.push(data);
-       
+
           $scope.onload_user_vs_public = true;
           window.dispatchEvent(new Event('resize'));
         });

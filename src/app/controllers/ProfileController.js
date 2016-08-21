@@ -201,7 +201,7 @@ angular.module('app')
           }
           $scope.profilepic = url + "/avatar";
           if (data.data.badges != undefined) {
-            // If the user has badges 
+            // If the user has badges
             $scope.badgesTrue = true;
             for (var i = 0; i < data.data.badges.length; i++) {
               var helper_obj = {};
@@ -219,4 +219,4 @@ angular.module('app')
       getdata();
       $scope.myDate = new Date();
     }
-  ])
+  ]);

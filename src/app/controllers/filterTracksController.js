@@ -134,7 +134,7 @@ angular.module('app')
           $scope.modifiedEndDate = $scope.dateEndCustom.getTime();
         }
       }
-     
+
       $scope.showAdvanced = function(ev, eventid) {
         $scope.currenttrack = {};
         $scope.currenttrack['id'] = eventid;
@@ -171,7 +171,7 @@ angular.module('app')
       $scope.autocompleteDemoRequireMatch = true;
       $scope.searchText = null;
       $scope.selectedItem  = null;
-      
+
 
             $scope.sItems = [{
           name: "Mini Cooper",
@@ -262,7 +262,7 @@ angular.module('app')
     $scope.add = function(chip) {
       console.log(chip);
       commonDialog(chip.name);
-      
+
      // $scope.selectedVegetables.push({'name':'naveen','type':'new'})
      // $scope.selected = chip;
     }
@@ -353,7 +353,7 @@ angular.module('app')
       }
       console.log(filter);
       console.log($rootScope.selectedVegetables);
-      console.log("cotnetn"); 
+      console.log("cotnetn");
     }
 
     $scope.filterAddedRemoved = function()
@@ -407,14 +407,14 @@ angular.module('app')
            console.log($scope.filters);
            console.log($scope.maxDistanceFilter);
            console.log("is max distance");
-           $rootScope.filters[0][2] = true; 
+           $rootScope.filters[0][2] = true;
            distanceRange = {'min':($scope.minDistanceFilter!=(undefined || null)?$scope.minDistanceFilter:0),'max':($scope.maxDistanceFilter!=(undefined || null)?$scope.maxDistanceFilter:5000)}
             distanceFilterPresent = true;
          //   $scope.filters = [["Distance",0,true], ["Duration of Travel",1,durationFilterPresent], ["Date",2,dateFilterPresent], ["Vehicle",3,vehicleFilterPresent]];
 
             $mdDialog.hide();
-            console.log(distanceRange);  
-         }    
+            console.log(distanceRange);
+         }
         };
 
 
@@ -450,7 +450,7 @@ angular.module('app')
          }
          else{
          $rootScope.dateShow = false;
-          $rootScope.filters[1][2] = true; 
+          $rootScope.filters[1][2] = true;
 
          dateRange = {'start':$scope.dateStartCustom,'end':$scope.dateEndCustom};
          dateFilterPresent = true;
@@ -498,7 +498,7 @@ angular.module('app')
          }
          else{
          $rootScope.durationShow = false;
-         $rootScope.filters[2][2] = true; 
+         $rootScope.filters[2][2] = true;
          durationRange = {'min':($scope.minDurationFilter!=(undefined || null)?$scope.minDurationFilter:0),'max':($scope.maxDurationFilter!=(undefined || null)?$scope.maxDurationFilter:6000)}
          console.log("duration range is");
          console.log(durationRange);
@@ -531,7 +531,7 @@ angular.module('app')
            //which implies this is a event to change the existing filter
          }
        $scope.hide = function() {
-            $rootScope.filters[3][2] = true; 
+            $rootScope.filters[3][2] = true;
             $rootScope.vehicleShow = false;
             console.log($scope.vehicles);
             vehiclesRange = JSON.parse(JSON.stringify($scope.vehicles));
@@ -554,7 +554,7 @@ angular.module('app')
         };
     }
 
-   
+
     /*var searchTracks = function()
     {
         var dateFilterPresent = false;
@@ -673,17 +673,17 @@ angular.module('app')
           }
         }
       }
-  
+
     $scope.remove = function(chip) {
       alert(chip);
       $scope.selected = chip;
     }
-   
+
     $scope.removeChip = function(chip)
     {
           if(chip.name == "Distance")
           {
-            $rootScope.filters[0][2] = false; 
+            $rootScope.filters[0][2] = false;
             $rootScope.distanceShow = true;
             distanceFilterPresent = false;
           }
@@ -901,4 +901,4 @@ angular.module('app')
         console.log($scope.filterOrig);
       }
     }
-  ])
+  ]);

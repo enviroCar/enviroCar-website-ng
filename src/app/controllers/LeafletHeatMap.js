@@ -2200,4 +2200,4 @@ angular.module('app')
       });
 
     }
-  ])
+  ]);

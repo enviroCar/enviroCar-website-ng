@@ -36,8 +36,9 @@ angular.module('app')
 
 
     }
-  ])
-
+  ]);
+  
+  angular.module('app')
 .factory('factorytrackslist', function($http) {
   var get = function(url) {
     return $http.get(url)

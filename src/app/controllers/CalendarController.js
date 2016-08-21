@@ -24,7 +24,7 @@ angular.module('app')
       urlTracks: "https://envirocar.org/api/stable/tracks/"
 
 
-})
+});
 angular.module('app')
   .controller("CalendarController", ['$scope', '$mdDialog', '$mdMedia',
     '$stateParams',
@@ -450,7 +450,7 @@ angular.module('app')
       }
 
     }
-  ])
+  ]);
 
 
 angular.module('app')

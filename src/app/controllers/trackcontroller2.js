@@ -1,3 +1,5 @@
+/*
+ARTIFACT LEFTOVER
 angular.module('app')
   .controller('TrackListCtrl', ['$scope', '$mdDialog', '$mdMedia',
     'trackService', '$http', '$rootScope',
@@ -179,8 +181,9 @@ angular.module('app')
         }
       }
     }
-  ])
+  ]);
 
+  angular.module('app')
 .controller('ImagePreviewController', ['$scope', '$http', '$rootScope',
     'visibilityService',
     function($scope, $http, $rootScope, visibilityService) {
@@ -203,12 +206,16 @@ angular.module('app')
       //$scope.popoverIsVisible = visibilityService.result;
       console.log($scope.popoverIsVisible + "is the value");
     }
-  ])
+  ]);
+
+  angular.module('app')
   .factory('visibilityService', ['$rootScope', function($rootScope) {
     return {
       result: $rootScope.popoverIsVisible
     };
   }])
+
+  angular.module('app')
   .factory('trackService', ['$http', '$rootScope', '$stateParams', function(
     $http, $rootScope, $stateParams) {
     var queryParams = {};
@@ -274,7 +281,9 @@ angular.module('app')
       results: results,
       queryParams: queryParams
     };
-  }])
+  }]);
+
+  angular.module('app')
   .controller('PagingCtrl', ['$scope', 'trackService', function($scope,
     trackService) {
     //bind to the service
@@ -371,3 +380,4 @@ angular.module('app')
     //initiate the first request with 5 entries starting from 0
     trackService.setPagingAndStartRequest($scope.size, 0);
   }])
+*/

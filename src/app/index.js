@@ -4,7 +4,7 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
   'ngSanitize', 'ui.router', 'ngMaterial', 'nvd3', 'pascalprecht.translate',
   'angular-timeline', 'infinite-scroll',
   'angularUtils.directives.dirPagination', 'angular-loading-bar',
-  'ui-leaflet', 'materialCalendar', 'app', 'rzModule', 'ui.calendar','md.chips.select','ngGeolocation','angular-tour'
+  'materialCalendar', 'rzModule', 'ui.calendar','md.chips.select','ngGeolocation','ui-leaflet', 'ngRoute','angular-tour','app'
 ])
 
 .config(function($stateProvider, $urlRouterProvider, $mdThemingProvider,
@@ -162,7 +162,7 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
   });
 
   $mdIconProvider.icon('user', 'assets/images/user.svg', 64);
-})
+});
 angular.module('angularMaterialAdmin')
 .run(['$rootScope', '$location', '$state', '$cookieStore', '$http', function(
   $rootScope, $location, $state, $cookieStore, $http) {

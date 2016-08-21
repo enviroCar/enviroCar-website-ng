@@ -5,7 +5,7 @@ angular.module('app')
     friend: '/friendActivities?',
     avatar: '/avatar'
 
-  })
+  });
   angular.module('app')
   .controller('FriendActivityController', ['$scope', '$http', '$rootScope',
     '$stateParams',
@@ -127,4 +127,4 @@ angular.module('app')
         console.log('fired')
       }
     }
-  ])
+  ]);

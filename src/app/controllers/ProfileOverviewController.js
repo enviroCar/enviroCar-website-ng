@@ -12,7 +12,7 @@ angular.module('app')
     friends: "/friends",
     groups: "/groups"
 
-  })
+  });
 
   angular.module('app')
   .controller('ProfileViewController', ['$scope', '$rootScope', '$http',
@@ -69,7 +69,7 @@ angular.module('app')
         $scope.emailId = data.data.mail;
       })
     }
-  ])
+  ]);
 
 angular.module('app')
   .factory('ProfileViewFactory', function($http) {

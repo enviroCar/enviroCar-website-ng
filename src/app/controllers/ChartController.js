@@ -111,7 +111,7 @@ angular.module('app')
       "#9c1313"
     ],
     phenomenonleaflet: "Speed",
-  })
+  });
 angular.module('app')
   .controller('ChartController', ['$state', '$scope', '$http', '$rootScope',
     '$timeout', '$stateParams', 'factorysingletrack', 'chart', '$location',
