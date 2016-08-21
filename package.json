@@ -17,6 +17,7 @@
     "gulp-gh-pages": "^0.5.4",
     "gulp-inject": "~1.0.2",
     "gulp-jshint": "~1.9.0",
+    "karma": "^0.10",
     "gulp-karma": "~0.0.4",
     "gulp-load-plugins": "~0.7.1",
     "gulp-minify-html": "~0.1.7",
@@ -50,6 +51,7 @@
     "start": "node node_modules/gulp/bin/gulp serve"
   },
   "devDependencies": {
+    "gulp-angular-filesort": "^1.0.4",
     "gulp-connect": "^5.0.0"
   }
 }

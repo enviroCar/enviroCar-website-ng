@@ -63,4 +63,4 @@ angular.module('app')
         }
         //$scope.friends = {};
     }
-  ])
+  ]);

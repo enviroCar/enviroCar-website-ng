@@ -42,8 +42,8 @@ gulp.task('html', ['inject', 'partials'], function () {
     .pipe(assets = $.useref.assets())
     .pipe($.rev())
     .pipe(jsFilter)
-    .pipe($.ngAnnotate())
-    .pipe($.uglify({preserveComments: $.uglifySaveLicense}))
+    //.pipe($.ngAnnotate())
+  //  .pipe($.uglify({preserveComments: $.uglifySaveLicense}))
     .pipe(jsFilter.restore())
     .pipe(cssFilter)
     //.pipe($.csso())
@@ -63,8 +63,8 @@ gulp.task('html', ['inject', 'partials'], function () {
 });
 
 gulp.task('images', function () {
-  return gulp.src(paths.src + '/assets/images/**/*')
-    .pipe(gulp.dest(paths.dist + '/assets/images/'));
+  return gulp.src(paths.src + '/assets/**/*')
+    .pipe(gulp.dest(paths.dist + '/assets/'));
 });
 
 gulp.task('fonts', function () {

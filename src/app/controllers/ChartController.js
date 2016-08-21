@@ -111,7 +111,7 @@ angular.module('app')
       "#9c1313"
     ],
     phenomenonleaflet: "Speed",
-  })
+  });
 angular.module('app')
   .controller('ChartController', ['$state', '$scope', '$http', '$rootScope',
     '$timeout', '$stateParams', 'factorysingletrack', 'chart', '$location',
@@ -152,14 +152,11 @@ angular.module('app')
 
       if (typeof $rootScope.globals.currentUser == "undefined") {
         $rootScope.url_redirect_on_login = $location.path();
-        console.log("in if")
         $rootScope.showlogout = false;
       } else {
-        console.log("in else");
         $rootScope.showlogout = true;
       }
 
-      console.log("came to chart controller");
       $scope.options_pie = {
         chart: {
           type: chart.chart1type,
@@ -181,7 +178,6 @@ angular.module('app')
           tooltip: {
             contentGenerator: function(d){
               var html = '<h3><b>' + d.data.key + '</b> - ' + d.data.y.toFixed(2) + '%</h3>';
-              console.log(d);
               return(html);
             }
           }
@@ -220,7 +216,7 @@ angular.module('app')
           tooltip: {
             contentGenerator: function(d)
             {
-              console.log(d);
+
               var html = '<h3><b>' + d.data.label + '</b> = ' + d.data.value.toFixed(2) + '</h3>' ;
               return html;
             }
@@ -247,12 +243,9 @@ angular.module('app')
           interactive: true,
           tooltip: {
             contentGenerator: function(d) {
-              //    console.log(d);
               var time = new Date(d.value);
               var html = "<h4>" + time.toLocaleString() + "</h4> <ul>";
-              //var html = "<ul>";
               $scope.trailchange(d.pointIndex);
-              //  console.log("came here")
               d.series.forEach(function(elem) {
                 html += "<li><h3 style='color:" + elem.color + "'>" +
                   elem.key + ": <b>" + elem.value.toFixed(1) +
@@ -317,8 +310,6 @@ angular.module('app')
       $scope.legend = {};
       */
       $scope.trailchange = function(index) {
-        console.log(data_global);
-        console.log($scope.paths);
         $scope.markers['nvd3pointer'] = {};
         $scope.markers['nvd3pointer'] = {
           lat: data_global.data.features[index]['geometry'][
@@ -330,7 +321,6 @@ angular.module('app')
           focus: false,
           message: "Current Location"
         }
-        console.log($scope.markers);
       }
 
 
@@ -407,19 +397,11 @@ angular.module('app')
       var date_for_seconds;
 
       $scope.changePhenomenon = function(phenomenon) {
-        console.log(phenomenon);
-        console.log("changed");
-        console.log($scope.paths);
         optionchanger(data_global, phenomenon, 0);
         $scope.legendtable = [];
         $scope.legendtable = chart.legendtable_all[phenomenon];
-        console.log($scope.legend);
         $scope.legend.labels = chart.legendtable_all[phenomenon];
-        console.log($scope.legend);
         $scope.legend = {};
-        console.log($scope.legend);
-        console.log($scope.phenomenonleaflet);
-        console.log("end of changePhenomenon");
         $scope.legend = {
           position: 'bottomleft',
           colors: chart.colorsl,
@@ -433,15 +415,13 @@ angular.module('app')
         return list.indexOf(item) > -1;
       };
       $scope.toggle = function(item, list) {
-        console.log("came here");
-        console.log($scope.selected)
+
         var idx = list.indexOf(item);
         if (idx > -1) {
           list.splice(idx, 1);
         } else {
           list.push(item);
         }
-        console.log($scope.selected)
         $scope.data = [];
         var datanew = [];
         for (var i = 0; i < $scope.selected.length; i++) {
@@ -455,12 +435,10 @@ angular.module('app')
       };
 
       $scope.changePhenomenonnvd3 = function() {
-        console.log($scope.phenomenonnvd3);
       }
 
       $scope.performancePeriod = 'week';
       $scope.selecteditemchanged = function(phenomenon) {
-        console.log("fired");
         var temp_obj = {};
         for (var i = 0; i <= chart.numberofranges; i++) {
           temp_obj['y'] = (piechartsdata[phenomenon][i] / len_data) * 100;
@@ -481,13 +459,10 @@ angular.module('app')
 
       var url = chart.urlusers;
       if (typeof $rootScope.globals.currentUser == 'undefined') {
-        console.log("came to if");
         url = chart.urlbase + $stateParams.trackid;
         $scope.trackid = $stateParams.trackid;
-        console.log("here");
 
       } else {
-        console.log("came to else")
 
         url = url + $rootScope.globals.currentUser.username + "/tracks/";
         $http.defaults.headers.common = {
@@ -512,13 +487,9 @@ angular.module('app')
         dashboard.urlco2stats);
       var CO2_users;
       requestgraphstats.get(url_comparision).then(function(data) {
-        console.log(data.data);
         CO2_users = data.data.avg;
         url_comparision = dashboard.urlcommonco2;
-        console.log(url_comparision);
         requestgraphstats.get(url_comparision).then(function(data) {
-          console.log(data.data);
-          console.log("COME IN")
           $scope.dataCO2 = [{
             key: "Cumulative Return",
             values: [{
@@ -536,18 +507,13 @@ angular.module('app')
         dashboard.urlspeedstats);
       var speed_users;
       requestgraphstats.get(url_comparision).then(function(data) {
-        console.log(data.data);
         var store = data.data;
         speed_users = store.avg;
         url_comparision = dashboard.urlcommonspeed;
-        console.log(url_comparision);
 
-        console.log("came here");
         requestgraphstats.get(url_comparision).then(function(data) {
-          console.log(data.data);
           var store = data.data;
           speed_public = store.avg
-          console.log("came here in 442");
           $scope.dataSpeed = [{
             key: "Cumulative Return",
             values: [{
@@ -568,13 +534,10 @@ angular.module('app')
         dashboard.urlconsstats);
       var consumption_users;
       requestgraphstats.get(url_comparision).then(function(data) {
-        console.log(data.data);
         consumption_users = data.data.avg;
         url_comparision = dashboard.urlcommoncons;
-        console.log(url_comparision);
 
         requestgraphstats.get(url_comparision).then(function(data) {
-          console.log(data.data);
           $scope.loading = false;
           $scope.dataConsumption = [{
             key: "Cumulative Return",
@@ -594,10 +557,8 @@ angular.module('app')
 
 
       $scope.changePhenomenonbar = function(phenombar) {
-          console.log("came here")
           $scope.dataoverall = [];
           if (phenombar == "Speed") {
-            console.log($scope.optionsSpeed['chart']['yAxis']['axisLabel'])
             $scope.optionsSpeed['chart']['yAxis']['axisLabel'] =
               "Speed (Km/h)"
             $scope.dataoverall = $scope.dataSpeed;
@@ -615,9 +576,7 @@ angular.module('app')
 
       factorysingletrack.get(url).then(function(data) {
         $scope.piechartselected = $scope.widgetType2;
-        console.log("***********" + $scope.piechartselected)
         if (data.status > 300) {
-          console.log("getting a bad request")
           $scope.error = data.data;
           // In the event a wrong track ID is fed into the comments.
           $state.go("home.error", {
@@ -628,14 +587,11 @@ angular.module('app')
           //speed and consumption calculations.
 
           keys_second = Object.keys(data.data.features[0].properties.phenomenons);
-          console.log(keys_second);
           var phenoms = chart.phenoms;
           var colors = chart.colors;
 
           // keys is a array.
           var keys_phenoms = Object.keys(rangeobjects);
-          console.log(keys_phenoms);
-          console.log(keys_second);
           if (keys_second.indexOf("MAF") >= 0) {
             // MAF is present!!
             rangeobjects = chart.rangeobjectsreplace;
@@ -650,22 +606,15 @@ angular.module('app')
               delete colors[keys_phenoms[i]];
               delete rangeobjects[keys_phenoms[i]];
               delete piechartsdata[keys_phenoms[i]];
-              console.log("SHOUDL NOT HAVE COME HERE")
-              console.log(keys_phenoms[i]);
               // it is not there
 
             }
           }
           phenoms = Object.keys(rangeobjects);
-          console.log(phenoms);
-          console.log(rangeobjects);
-          console.log(colors);
 
           $scope.trackid = data.data.properties.id;
           $scope.name = data.data.properties.name;
           $scope.created = new Date(data.data.properties.created);
-          console.log("coming here too but");
-          console.log(data);
           data_global = data;
           var dist = data.data.properties.length;
 
@@ -676,18 +625,7 @@ angular.module('app')
           for (var j = 0; j < phenoms.length; j++) {
             if (j == 0) {
               keys = Object.keys(data.data.features[0].properties.phenomenons);
-              if (keys.includes("Calculated MAF"))
-                console.log("Swapped with replace");
-              else {
-                /*
-                phenoms = chart.phenomsreplace;
-                rangeobjects = {};
-                rangeobjects = chart.rangeobjectsreplace;
-                piechartsdata = {};
-                piechartsdata = chart.piechartsdatareplace;
-                console.log(phenoms);
-                */
-              }
+            
             }
             var dat = [];
             for (var i = 0; i < len_data; i++) {
@@ -715,7 +653,6 @@ angular.module('app')
                     factorysingletrack.get(url +
                       "/statistics/Consumption").then(
                       function(data) {
-                        console.log(data);
                         if (data.data.avg != undefined) {
                           var consumption_avg = (data.data.avg
                             .toFixed(
@@ -723,7 +660,6 @@ angular.module('app')
                           var seconds_passed = new Date(endtimeg).getTime() -
                             new Date(
                               starttimeg).getTime();
-                          console.log(seconds_passed);
                           var consumption100Km = ((100 *
                               consumption_avg * (seconds_passed / (
                                 1000 *
@@ -734,7 +670,6 @@ angular.module('app')
                             " L/100 Km";
                           $scope.consumption100Km = consumption100Km;
 
-                          console.log($scope.tracksummary_c_e);
                         } else
 
                           $scope.consumption100Km = "NA";
@@ -744,7 +679,6 @@ angular.module('app')
                     factorysingletrack.get(url +
                       "/statistics/CO2").then(
                       function(data) {
-                        console.log(data);
                         if (data.data.avg != undefined) {
                           var co2_avg = (data.data.avg
                             .toFixed(
@@ -752,7 +686,6 @@ angular.module('app')
                           var seconds_passed = new Date(endtimeg).getTime() -
                             new Date(
                               starttimeg).getTime();
-                          console.log(seconds_passed);
                           var co2gKm = ((1000 *
                               co2_avg * (seconds_passed / (
                                 1000 *
@@ -763,8 +696,6 @@ angular.module('app')
                             " g/Km";
                           $scope.co2gKm = co2gKm;
 
-                          console.log($scope.tracksummary_c_e);
-                          console.log(co2gKm);
                         } else
                           $scope.co2gKm = "NA"
                       })
@@ -775,8 +706,6 @@ angular.module('app')
                   worker(iter, data.data);
                 }
                 if (iter == 0) {
-                  console.log(data.data.features[iter].properties.phenomenons);
-                  console.log(phenoms[j])
 
                   rangeobjects[phenoms[j]][1] = data.data.features[
                       iter]
@@ -792,7 +721,6 @@ angular.module('app')
                   for (var k = chart.numberofranges; k >= 0; k--) {
 
                     if (speed >= rangeobjects[phenoms[j]][0][k]) {
-                      //        console.log(phenoms[j]);
                       piechartsdata[phenoms[j]][k]++;
                       break;
                     }
@@ -846,10 +774,8 @@ angular.module('app')
             if (datafinal[iterator]['key'] == $scope.widgetType2) {
               data_temp.push(datafinal[iterator]);
               $scope.data = data_temp;
-              console.log("phenomset");
             }
           }
-          console.log(datafinal);
           optionchanger(data, 'Speed', 1);
 
         }
@@ -882,9 +808,7 @@ angular.module('app')
 
           }
         }
-        console.log($scope.bounds);
 
-        console.log($scope.markers);
         $scope.center['zoom'] = Math.round((20 / Math.pow(dist, 1.5)) +
           9)
         $scope.onload_leaflet = true;
@@ -892,7 +816,6 @@ angular.module('app')
         function worker(i, data) {
 
           if (i == 0) {
-            console.log(keys.length + "length of keys");
             for (var j = 0; j < keys.length; j++) {
               units[keys[j]] = data.features[i].properties.phenomenons[
                 keys[j]].unit;
@@ -903,9 +826,6 @@ angular.module('app')
             vehiclemanufacturer = data.properties.sensor.properties[
               'manufacturer'];
 
-            console.log(distance + " " + vehiclemodel + " " +
-              vehicletype);
-            console.log(units);
             return;
           }
 
@@ -926,9 +846,7 @@ angular.module('app')
           starttime: new Date(starttimeg).toLocaleString(),
           endtime: new Date(endtimeg).toLocaleString()
         }
-        console.log($scope.tracksummary)
         $scope.loading = false
-        console.log($scope.loading);
       });
 
       function optionchanger(data, phenomoption, flag) {

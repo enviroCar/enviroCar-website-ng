@@ -1,11 +1,7 @@
 angular.module('app')
-  .controller("LeafletHeatMap", ['$scope', '$rootScope', '$http',
-    'factorysingletrack',
-    function(
-      $scope, $rootScope, $http, factorysingletrack) {
+  .controller("LeafletHeatMap", ['$scope', '$rootScope', '$http','factorysingletrack',function($scope, $rootScope, $http, factorysingletrack) {
       $scope.onload_heat_map = false;
 
-      console.log(" came here");
       var points = [];
       var heatmap = {
         name: 'Heat Map',
@@ -18,11 +14,12 @@ angular.module('app')
       var dataset = [];
       var dataset_start = [];
       var dataset_end = [];
+
       factorysingletrack.get("https://envirocar.org/ng-user-stats.json").then(
         function(
           data) {
-          console.log("hello");
-          console.log(data);
+            // Currently this endpoint does not work! So for the moment we have created a JSON object that
+            // is expected to be returned by the server in the near future at this endpoint.
           var datamap = [{
             "id": "5743fd9ee4b09078f971f0d7",
             "startPosition": {
@@ -2088,40 +2085,38 @@ angular.module('app')
           for (var i = 0; i < datamap.length; i++) {
             var coord_push_start = [];
             var coord_push_end = [];
-            coord_push_start[1] = datamap[i]['startPosition']['geometry'][
-              'coordinates'
-            ][0];
-            coord_push_start[0] = datamap[i]['startPosition']['geometry'][
-              'coordinates'
-            ][1];
+            // To store start points longitude and latitude
+            coord_push_start[1] = datamap[i]['startPosition']['geometry']['coordinates'][0];
+            coord_push_start[0] = datamap[i]['startPosition']['geometry']['coordinates'][1];
             coord_push_start[2] = 1;
+
             mid_point[0] += coord_push_start[1];
             mid_point[1] += coord_push_start[0];
-            coord_push_end[1] = datamap[i]['endPosition']['geometry'][
-              'coordinates'
-            ][0];
-            coord_push_end[0] = datamap[i]['endPosition']['geometry'][
-              'coordinates'
-            ][1];
+
+            // To store end points longitude and latitude
+            coord_push_end[1] = datamap[i]['endPosition']['geometry']['coordinates'][0];
+            coord_push_end[0] = datamap[i]['endPosition']['geometry']['coordinates'][1];
             coord_push_end[2] = 1;
+
+            // Used to calculate center of map.
             mid_point[0] += coord_push_end[1];
             mid_point[1] += coord_push_end[0];
+
             dataset_start.push(coord_push_start);
             dataset_end.push(coord_push_end);
             dataset.push(coord_push_start);
             dataset.push(coord_push_end);
           }
-          console.log(dataset);
+          // Calculating mid point of all coordinates
           mid_point[0] = mid_point[0] / (datamap.length * 2);
           mid_point[1] = mid_point[1] / (datamap.length * 2);
-          console.log(mid_point[0]);
-          console.log(mid_point[1]);
 
           $scope.center = {
             lat: mid_point[1],
             lng: mid_point[0],
             zoom: 6
           }
+
           $scope.layers.overlays = {
             heat: {
               name: 'Heat Map',
@@ -2136,43 +2131,13 @@ angular.module('app')
               visible: true
             }
           };
+
           $scope.onload_heat_map = true;
-          console.log($scope.layers.overlays);
-          console.log($scope.layers)
         });
 
-      /*    $scope.changePointSet = function(flag) {
-            console.log(flag);
-            var data = [];
-            if (flag == 0) {
-              data = dataset;
-            } else if (flag == 1) {
-              data = dataset_start;
-            } else {
-              data = dataset_end;
-            }
-            $scope.layers.overlays = {};
-            $scope.layers.overlays = {
-              heat: {
-                name: 'Heat Map',
-                type: 'heat',
-                data: [
-                  [10, 10],
-                  [11, 11]
-                ],
-                layerOptions: {
-                  radius: 20,
-                  blur: 1
-                },
-                visible: true
-              }
-            };
-
-            console.log($scope.layers.overlays);
-
-          }
-          */
-
+      // Check the mapbox documentation for adding the mapid and apikey.
+      // Please replace this in the future with a mapbox account of enviroCar.
+      
       angular.extend($scope, {
         center: {},
         layers: {
@@ -2200,4 +2165,4 @@ angular.module('app')
       });
 
     }
-  ])
+  ]);

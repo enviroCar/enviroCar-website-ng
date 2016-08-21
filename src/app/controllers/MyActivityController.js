@@ -4,7 +4,7 @@ angular.module('app')
     url_base: "https://envirocar.org/api/stable/users/",
     yourself: "/activities?",
     avatar: "/avatar",
-  })
+  });
 
   angular.module('app')
 .controller('MyActivityController', ['$scope', '$http', '$rootScope', '$state',
@@ -126,4 +126,4 @@ angular.module('app')
       }
     }
   }
-])
+]);

@@ -22,7 +22,6 @@ angular.module('app')
     urlengineloadstats: '/statistics/Engine Load',
     key1: 'User Statistics',
     color1: '#d62728',
-    // one strring
     urlcommonco2: 'https://envirocar.org/api/stable/statistics/CO2',
     urlcommonspeed: 'https://envirocar.org/api/stable/statistics/Speed',
     urlcommoncons: 'https://envirocar.org/api/stable/statistics/Consumption',
@@ -43,6 +42,8 @@ angular.module('app')
       $rootScope.tabNumber = 0;
 
       $scope.onloadSpeedPie = false;
+
+      // The server does not support this features yet so placeholder values are used for the moment,
       var speedgraph_data = {
         "user": "naveen-gsoc",
         "distance": 3344.22,
@@ -62,6 +63,8 @@ angular.module('app')
           }
         }
       };
+
+      // The pie chart options
       $scope.options_pie = {
         chart: {
           type: 'pieChart',
@@ -84,13 +87,14 @@ angular.module('app')
           tooltip: {
             contentGenerator: function(d){
               var html = '<h3><b>' + d.data.key + '</b> - ' + d.data.y.toFixed(2) + '%</h3>';
-              console.log(d);
               return(html);
             }
           }
 
         }
       };
+
+      // The options for select in speed ranges pie chart
       $scope.speedPieOptions = ['Distance', 'Time'];
       $scope.pieSpeedRanges = 'Distance';
       var dataSpeedContainer = {
@@ -124,44 +128,46 @@ angular.module('app')
           y: speedgraph_data.statistics['130'].duration
         }]
       };
+
       $scope.dataSpeedPie = dataSpeedContainer[$scope.pieSpeedRanges];
       $scope.onloadSpeedPie = true;
 
+      // Function that is called when either the speed or time option is changed
       $scope.changePhenomenonPieSpeed = function(option) {
-        console.log(option);
         $scope.pieSpeedRange = option;
         $scope.dataSpeedPie = dataSpeedContainer[option];
-        console.log($scope.dataSpeedPie);
       }
+
       var loading_count = 0;
-      // Visibility for each of the 4 components on the dashboard
+      // Visibility for each of the 3 components on the dashboard
       $scope.onload_user_vs_public = false;
       $scope.onload_speed_ranges = false;
       $scope.onload_tracks_timeline = false;
 
       $scope.loading = true;
       $scope.goToActivity = function(trackid) {
-        console.log("came here");
         //redirect to the track analytics page.
         $state.go('home.chart', {
           'trackid': trackid
         });
-        console.log("fired");
       }
       $scope.visible = false;
       $scope.events = [];
       var helperevents = [];
-      $scope.trial = "Further comparision insights on the way :)";
+
       $scope.type = dashboard.type;
       $scope.comments = dashboard.comments;
       $scope.colour = dashboard.color;
+
       var url1 = dashboard.url1;
       var username;
       if ($stateParams.user == "") {
         username = $rootScope.globals.currentUser.username;
       } else {
+        // if the URL requests for a username specifically.(Happens when viewing a friend's profile)
         username = $stateParams.user
       }
+
       $scope.username = username;
       url1 = url1 + username + "/tracks";
       $http.defaults.headers.common = {
@@ -169,10 +175,10 @@ angular.module('app')
         'X-Token': $rootScope.globals.currentUser.authdata
       };
       var timeline = {};
-      console.log(url1);
       requesthomestats.get(url1).then(function(data) {
         $scope.number = data.data.tracks.length;
         var limit = 0;
+        // The latest tracks display shows latest 5 tracks. If the user only has a total of lesser than 5 tracks, then we update that number to avoid exceptions
         if ($scope.number >= dashboard.numberoftracks)
           limit = dashboard.numberoftracks;
         else
@@ -198,12 +204,12 @@ angular.module('app')
             helper_events['travelTime'] = date_hh_mm_ss;
             helper_events['begin'] = new Date(data.data.tracks[cntr].begin);
             helper_events['distance'] = (data.data.tracks[cntr]['length'] != undefined) ? data.data.tracks[cntr]['length'].toFixed(2) : "NA";
-
+            /*
             if (cntr % 2 == 0) {
               helper_events['side'] = 'left'
             } else {
               helper_events['side'] = 'left';
-            }
+            }*/
             helperevents.push(helper_events);
           })(i);
         }
@@ -274,7 +280,6 @@ angular.module('app')
            tooltip: {
             contentGenerator: function(d)
             {
-              console.log(d);
               var html = '<h3><b>' + d.data.label + '</b> = ' + d.data.value.toFixed(2) + '</h3>' ;
               return html;
             }
@@ -283,7 +288,7 @@ angular.module('app')
       };
       var consumption_users;
       var consumption_public;
-      $scope.optionsConsumption = {
+      /*$scope.optionsConsumption = {
         chart: {
           type: 'discreteBarChart',
           height: 260,
@@ -313,8 +318,10 @@ angular.module('app')
           }
         }
       };
+      */
       var CO2_users;
       var CO2_public;
+      /*
       $scope.optionsCO2 = {
         chart: {
           type: 'discreteBarChart',
@@ -345,8 +352,10 @@ angular.module('app')
           }
         }
       };
+      */
       var engineload_users;
       var engineload_public;
+      /*
       $scope.optionsEngineload = {
         chart: {
           type: 'discreteBarChart',
@@ -377,10 +386,14 @@ angular.module('app')
           }
         }
       };
+      */
+
 
       $scope.barchartoptions = ["Speed", "Consumption", "CO2"];
       $scope.barchartshowing = "Speed"
+
       $scope.changePhenomenonbar = function(phenombar) {
+        // Fired when phenomenon associated with the bar chart of User vs Public is changed.
         $scope.barchartshowing = phenombar;
         $scope.dataoverall = [];
         if (phenombar == "Speed") {
@@ -393,22 +406,24 @@ angular.module('app')
           $scope.optionsSpeed['chart']['yAxis']['axisLabel'] = "CO2 (Kg/h)"
           $scope.dataoverall = $scope.dataCO2;
         }
-
       }
+
       $scope.dataoverall;
       $scope.dataConsumption;
       $scope.dataCO2;
       $scope.dataSpeed;
       $scope.dataEngineload;
+
       var datausers = [];
       var dataotherusers = [];
 
       var url = dashboard.urlusers + username + dashboard.urlco2stats;
       requestgraphstats.get(url).then(function(data) {
+        // data.data.avg holds the data of CO2 avg consumption of user
         CO2_users = data.data.avg;
         url = dashboard.urlcommonco2;
         requestgraphstats.get(url).then(function(data) {
-
+          // data.data.avg holds the data of CO2 avg consumption of all users.
           $scope.dataCO2 = [{
             key: "Cumulative Return",
             values: [{
@@ -426,12 +441,12 @@ angular.module('app')
 
       url = dashboard.urlusers + username + dashboard.urlspeedstats;
       requestgraphstats.get(url).then(function(data) {
-
+        // data.data.avg holds the data of avg Speed of user
         var store = data.data;
         speed_users = store.avg;
         url = dashboard.urlcommonspeed;
         requestgraphstats.get(url).then(function(data) {
-
+          // data.data.avg holds the data of avg Speed of all users.
           var store = data.data;
           speed_public = store.avg
           $scope.dataSpeed = [{
@@ -447,20 +462,21 @@ angular.module('app')
           $scope.dataoverall = $scope.dataSpeed;
 
           dataotherusers.push(data);
-       
+
           $scope.onload_user_vs_public = true;
           window.dispatchEvent(new Event('resize'));
         });
       });
 
-      url = dashboard.urlusers + username +
-        dashboard.urlconsstats;
+      url = dashboard.urlusers + username + dashboard.urlconsstats;
       requestgraphstats.get(url).then(function(data) {
 
+        // data.data.avg holds the data of avg consumption of user
         consumption_users = data.data.avg;
         url = dashboard.urlcommoncons;
         requestgraphstats.get(url).then(function(data) {
 
+          // data.data.avg holds the data of avg consumption of all users.
           $scope.loading = false;
           $scope.dataConsumption = [{
             key: "Cumulative Return",

@@ -500,9 +500,9 @@ GeolocationService().then(function (position) {
 
 
 
-  }])
+  }]);
 
-
+angular.module('app')
 .factory("GeolocationService", ['$q', '$window', '$rootScope', function ($q, $window, $rootScope) {
     // Geolcation service that returns location of user based on html5 geolocation.
     return function () {
