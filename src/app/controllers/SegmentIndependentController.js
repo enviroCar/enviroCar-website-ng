@@ -8,7 +8,6 @@
 
 angular.module('app')
   .controller('SegmentIndependentController', ['$scope','leafletDrawEvents','$mdDialog','$mdMedia','GeolocationService','$geolocation','$mdToast', '$rootScope', '$http', function ($scope, leafletDrawEvents, $mdDialog,$mdMedia, GeolocationService, $geolocation, $mdToast, $rootScope, $http) {
-    console.log('SegmentIndependentController fired fwnfjenfef')
     var markersArray = []
     var countunique = 0
     $scope.showleaflet = false;
@@ -108,7 +107,6 @@ angular.module('app')
                   // The circle marker is named as p0,p1,p2 and so on.
                   for(var i = 0 ; i < arrayPoints.length ; i++)
                   {
-                    console.log("number of points in the drawnItems");
                     $scope.paths['p'+i.toString()] = {
                       'type':'circle',
                       'radius': $rootScope.slider.value,
@@ -156,7 +154,6 @@ angular.module('app')
                 tooltip: {
                   contentGenerator: function(d)
                   {
-                    console.log(d);
                     var html = '<h3><b>' + d.data.label + '</b> = ' + d.data.value.toFixed(2) + '</h3>' ;
                     return html;
                   }
@@ -189,8 +186,6 @@ angular.module('app')
 
 GeolocationService().then(function (position) {
         $scope.position = position;
-        console.log("position ");
-        console.log(position);
         $scope.center = {
           lat:position.coords.latitude,
           lng: position.coords.longitude,
@@ -199,9 +194,7 @@ GeolocationService().then(function (position) {
         $scope.showleaflet = true;
 
     }, function (reason) {
-      console.log(reason)
         $scope.message = "Could not be determined."
-        console.log("could not be")
         $scope.showleaflet = true;
     });
     /*

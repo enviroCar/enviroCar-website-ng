@@ -625,7 +625,7 @@ angular.module('app')
           for (var j = 0; j < phenoms.length; j++) {
             if (j == 0) {
               keys = Object.keys(data.data.features[0].properties.phenomenons);
-            
+
             }
             var dat = [];
             for (var i = 0; i < len_data; i++) {
@@ -939,7 +939,6 @@ angular.module('app')
 
 angular.module('app')
   .factory('factorysingletrack', function($http) {
-    console.log("called so many times");
     var get = function(url) {
       return $http.get(url).then(function(data) {
           return data;

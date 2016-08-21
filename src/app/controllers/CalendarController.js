@@ -255,7 +255,6 @@ angular.module('app')
             helper_object['manufacturer'] = global_tracks['tracks'][indexes[i]]['sensor']['properties']['manufacturer'];
             helper_object['begin'] = (new Date(global_tracks['tracks'][indexes[i]]['begin']).toLocaleString());
             helper_object['url'] = calendar.urlTracks + global_tracks['tracks'][indexes[i]].id + "/preview";
-            console.log(helper_object['url'])
             helper_object['length'] = global_tracks['tracks'][indexes[i]]['length'].toFixed(2);
 
             var seconds_passed = new Date(global_tracks['tracks'][indexes[i]]['end']).getTime() - new Date(global_tracks['tracks'][indexes[i]]['begin']).getTime()

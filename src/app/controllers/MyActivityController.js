@@ -122,7 +122,6 @@ angular.module('app')
             'trackid': trackid
           });
         }
-        console.log("fired");
       }
     }
   }

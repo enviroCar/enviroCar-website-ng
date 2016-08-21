@@ -36,7 +36,7 @@ angular.module('app')
       'NO_FRIENDS': 'You do not have any Friends',
       'NO_ACTIVITY': 'You do not have any Activity to show',
       'NO_FRIENDS_ACTIVITY': 'You do not have any friend activity to show',
-      'CALENDAR_OF_TRACKS_TAB': 'Calendar of Tracks',
+      'CALENDAR_OF_TRACKS_TAB': 'Calendar',
       'ALL_TRACKS_TAB': 'All Tracks',
       'TRACKS_LIST': "Tracks List",
       'NAME': 'Name',
