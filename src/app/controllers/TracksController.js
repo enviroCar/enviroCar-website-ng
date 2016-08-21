@@ -23,12 +23,9 @@ angular.module('app')
           for (var i = 0; i < $scope.trackslist.length; i++) {
             $scope.trackslist[i]['urlredirect'] = $scope.urlredirect +
               $scope.trackslist[i]['id'];
-            console.log();
           }
-          console.log($scope.trackslist);
           var length = headers('Content-Range').split("/");
           $scope.total_count = Number(length[1]);
-          console.log($scope.total_count);
         })
         $scope.show = true;
       }
@@ -37,22 +34,17 @@ angular.module('app')
 
     }
   ]);
-  
+
   angular.module('app')
 .factory('factorytrackslist', function($http) {
   var get = function(url) {
     return $http.get(url)
       .success(function(data, status, headers, config) {
-        console.log(data);
-        console.log(headers('Content-Range'));
-        console.log(headers('Link'));
         var head = headers('Content-Range')
         head = String(head);
-        console.log(head);
         return (data, status, head, config);
       })
       .error(function(data) {
-        console.log(data);
         return data;
       })
   }

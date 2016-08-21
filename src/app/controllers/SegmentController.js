@@ -107,7 +107,6 @@ angular.module('app')
           tooltip: {
             contentGenerator: function(d){
               var html = '<h3><b>' + d.data.key + '</b> - ' + d.data.y.toFixed(2) + '%</h3>';
-              console.log(d);
               return(html);
             }
           }
@@ -146,7 +145,6 @@ angular.module('app')
           tooltip: {
             contentGenerator: function(d)
             {
-              console.log(d);
               var html = '<h3><b>' + d.data.label + '</b> = ' + d.data.value.toFixed(2) + '</h3>' ;
               return html;
             }
@@ -444,7 +442,6 @@ angular.module('app')
         url = chart.urlbase + $stateParams.trackid;
         $scope.trackid = $stateParams.trackid;
       } else {
-        console.log("came to else")
         url = url + $rootScope.globals.currentUser.username + "/tracks/";
         $http.defaults.headers.common = {
           'X-User': $rootScope.globals.currentUser.username,
@@ -965,7 +962,6 @@ angular.module('app')
       factorysingletrack.get(url).then(function(data) {
         if (data.status > 300) {
           // Handling the page when an invalid trackID is entered by the user!
-          console.log("getting a bad request")
           $scope.error = data.data;
           // In the event a wrong track ID is fed into the comments.
           $state.go("home.error", {
@@ -1111,7 +1107,6 @@ angular.module('app')
 
 angular.module('app')
   .factory('factorysingletrack', function($http) {
-    console.log("called so many times");
     var get = function(url) {
       return $http.get(url).then(function(data) {
           return data;

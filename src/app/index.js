@@ -1,10 +1,9 @@
 'use strict';
 
-angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
-  'ngSanitize', 'ui.router', 'ngMaterial', 'nvd3', 'pascalprecht.translate',
-  'angular-timeline', 'infinite-scroll',
-  'angularUtils.directives.dirPagination', 'angular-loading-bar',
-  'materialCalendar', 'rzModule', 'ui.calendar','md.chips.select','ngGeolocation','ui-leaflet', 'ngRoute','angular-tour','app'
+angular.module('angularMaterialAdmin', ['ngAnimate','ngCookies','angular-loading-bar',
+  'ngMaterial','nvd3','ngRoute','ngSanitize', 'angular-tour', 'pascalprecht.translate',
+   'ui.router','rzModule','materialCalendar', 
+   'md.chips.select','ngGeolocation','ui-leaflet', 'app'
 ])
 
 .config(function($stateProvider, $urlRouterProvider, $mdThemingProvider,
@@ -166,7 +165,6 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ngCookies',
 angular.module('angularMaterialAdmin')
 .run(['$rootScope', '$location', '$state', '$cookieStore', '$http', function(
   $rootScope, $location, $state, $cookieStore, $http) {
-  console.log("came in")
   $rootScope.popoverIsVisible = false;
   $rootScope.previewurl = "";
   $rootScope.globals = $cookieStore.get('globals') || {};
@@ -178,9 +176,7 @@ angular.module('angularMaterialAdmin')
   }
   $rootScope.$on("$stateChangeStart", function(event, toState, toParams,
     fromState, fromParams) {
-    console.log("Came to scopechange");
     if (toState.authenticate && !$rootScope.globals.currentUser) {
-      console.log("checking here");
       $state.transitionTo("login");
       event.preventDefault();
     }

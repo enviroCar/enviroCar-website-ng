@@ -61,7 +61,6 @@ angular.module('app')
         }
         if ($scope.dateBirthdayPicker != undefined) {
           var stringDate = $scope.dateBirthdayPicker.getFullYear().toString() + '-' + ($scope.dateBirthdayPicker.getMonth()+1).toString() + '-' + $scope.dateBirthdayPicker.getDate().toString();
-          console.log(stringDate);
           dataput['dayOfBirth'] = stringDate;
         }
         if ($scope.gender != undefined) {
@@ -111,7 +110,6 @@ angular.module('app')
         } else {
           // If any of the client side validations failed
           if (validationerror == 1) {
-            console.log("type in old password please")
             $scope.submissionErrorMessage =
               "Please enter your current password"
               // type in old password please

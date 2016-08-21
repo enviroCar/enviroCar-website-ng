@@ -47,7 +47,6 @@ angular.module('app')
           .success(function (data, status, headers, config) {
             if (data.activities.length == 0) {
               $scope.show_no_my_activity = true
-              console.log('fired hide')
             }
             for (var i = 0; i < data.activities.length; i++) {
               var helper = {}
@@ -55,7 +54,6 @@ angular.module('app')
               helper['name'] = data.activities[i].user.name
               helper['profileurl'] = friendactivity.url_base + helper['name'] + friendactivity.avatar
               helper['date'] = new Date(data.activities[i].time).toLocaleString()
-              console.log(data.activities[i])
               helper['color'] = '#8CBF3F'
               if (data.activities[i].type == 'FRIENDED_USER') {
                 helper['type'] = 0
@@ -119,12 +117,10 @@ angular.module('app')
       $scope.goToActivity = function (activity, trackid) {
         // redirect ro a page only if it is a chart event.
         if (activity == 1) {
-          console.log(trackid)
           $state.go('home.chart', {
             'trackid': trackid
           })
         }
-        console.log('fired')
       }
     }
   ]);

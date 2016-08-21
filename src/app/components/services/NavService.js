@@ -15,7 +15,6 @@
       dashboard = translations.DASHBAORD;
       tracks = translations.TRACKS;
       table = translations.TABLE;
-      console.log("came here to nav service");
     })
     //The menuitems that are populated on the side nav bar.
     var menuItems = [{
@@ -36,7 +35,6 @@
       sref:  '#/dashboard/segment'
     }];
 
-    console.log(menuItems);
     return {
       loadAllItems: function() {
         return $q.when(menuItems);

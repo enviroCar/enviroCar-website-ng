@@ -75,7 +75,6 @@ angular.module('app')
   .factory('ProfileViewFactory', function($http) {
     var get = function(url) {
       return $http.get(url).success(function(data) {
-        console.log(data);
         return data;
       })
     }

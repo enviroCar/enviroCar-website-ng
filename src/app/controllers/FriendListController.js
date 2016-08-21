@@ -49,11 +49,9 @@ angular.module('app')
           $scope.data_friends_4[i]['profile_url'] =
             "assets/images/profiledummy" + (i + 1).toString() + ".png";
         }
-        console.log($scope.data_friends_4);
         $scope.totalLoading = false;
       });
       $scope.goToFriend = function(username) {
-        console.log(username + "came to find friend");
         $state.go('home.dashboard', {
           'user': username
         });
