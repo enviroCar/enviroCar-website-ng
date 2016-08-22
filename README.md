@@ -52,7 +52,7 @@ This project was built as a part of the Google Summer of Code 2016 project. You 
 
 1) [Initial blog post](http://blog.52north.org/2016/05/23/envirocar-visual-analytics-overview/)
 2) [Mid term blog post](http://blog.52north.org/2016/06/27/envirocar-visual-analytics-mid-term-report/)
-3) 
+3) [Final Blog Post](http://blog.52north.org/2016/08/20/envirocar-visual-analytics-final-report/)
 4) [Weekly Blog posts](https://wiki.52north.org/Projects/GSoC2016VisualAnalyticsOfEnviroCarTracks)
 
 
