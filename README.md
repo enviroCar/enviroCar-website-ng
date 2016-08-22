@@ -31,6 +31,9 @@ docker run --rm envirocar-website-ng
 
 The second command will output an IP and port that you can open in your browser.
 
+## Heroku version
+
+You can find a heroku hosted version here https://envirocar.herokuapp.com/
 ## Project structure and credits
 
 Project structure based on [gulp-angular yeoman generator](https://github.com/Swiip/generator-gulp-angular).
