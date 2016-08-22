@@ -29,18 +29,8 @@
 
         </div>
       </md-toolbar>
-    <!--  <md-card-title-text>
-        <br>
-        <span class="md-subhead">{{'TRACK_MAP' | translate}}</span>
-      </md-card-title-text> -->
-            <!--   <md-card-actions layout="row" layout-align="end right">
 
-              <md-button ng-show="options" ng-click="$showOptions = !$showOptions" class="md-icon-button" aria-label="Show options">
-                <i class="material-icons">more_vert</i>
-              </md-card-actions>
-            -->
               <md-card-content style="max-height:465px" class="nopadding">
-                <!-- <img id="mySpinner" class="mySpinner" src="/assets/images/715.gif" ng-show="loading"> -->
               <md-progress-circular class="loader_dashboard2" ng-if="!onload_leaflet" md-diameter="156"></md-progress-circular>
 
                 <md-content ng-if="onload_leaflet">
@@ -48,20 +38,7 @@
                 </md-content>
             </md-card-content>
     </md-card>
-    <!--   <div layout="column" style="width:50%;height:600px" ng-cloak>
 
- <md-toolbar md-scroll-shrink ng-if="true" ng-controller="TitleController">
-      <div class="md-toolbar-tools">
-        <h3>
-          <span>Trial</span>
-        </h3>
-      </div>
-    </md-toolbar>
-    <md-content>
-      <nvd3 options="options" data="data"></nvd3>
-    </md-content>
-</div>
--->
 <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" style="max-height:530px;min-height:530px" md-theme-watch>
 <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2">
   <div class="md-toolbar-tools">
@@ -103,12 +80,10 @@
   </md-card-content>
 
 </md-card>
-    <!-- <panel-widget flex title="Graph" template="app/views/partials/chartmain.html"></panel-widget> -->
 </div>
 
 <div layout-gt-md="row">
 
-  <!--  <panel-widget flex title="Pie Chart" template="app/views/partials/piechart.html" options="true"></panel-widget> -->
   <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" class="card card-4-50" style="height:450px" md-theme-watch>
     <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2" md-scroll-shrink ng-if="true">
       <div class="md-toolbar-tools">
@@ -178,7 +153,6 @@
             </md-list-item>
 
             <md-list-item layout="row">
-              <!-- <img ng-src="assets/images/Gas-96.png" class="md-avatar"/> -->
               <i class="material-icons md-avatar grey md-36">cloud_circle</i>
               <div class="md-list-item-text">
               <p>{{'CO2_EMISSION:' | translate}}</p>
@@ -375,7 +349,7 @@
             </div>
             <md-divider ></md-divider>
             <md-list-item  layout="row">
-                    <img ng-src="assets/images/ic_directions_car_black_48dp.png" class="md-avatar"/>
+                    <i class="material-icons md-avatar grey md-36">directions_car</i>
                     <div class="md-list-item-text">
                     <p>{{'CAR:' | translate}}</p>
                     </div>
@@ -386,7 +360,7 @@
                 </md-list-item>
 
                 <md-list-item layout="row">
-                  <img ng-src="assets/images/ic_timer_black_48dp.png" class="md-avatar"/>
+                  <i class="material-icons md-avatar grey md-36">timer</i>
                   <div class="md-list-item-text">
                   <p>{{'START:' | translate}}</p>
                   </div>
@@ -397,7 +371,7 @@
                 </md-list-item>
 
                 <md-list-item layout="row">
-                  <img ng-src="assets/images/ic_timer_off_black_48dp.png" class="md-avatar"/>
+                  <i class="material-icons md-avatar grey md-36">timer_off</i>
                   <div class="md-list-item-text">
                   <p>{{'END:' | translate}}</p>
                   </div>
@@ -408,7 +382,7 @@
                 </md-list-item>
 
                 <md-list-item layout="row">
-                  <img ng-src="assets/images/ic_local_gas_station_black_48dp.png" class="md-avatar"/>
+                  <i class="material-icons md-avatar grey md-36">local_gas_station</i>
                   <div class="md-list-item-text">
                   <p>{{'CONSUMPTION:' | translate}}</p>
                   </div>
@@ -419,7 +393,7 @@
                 </md-list-item>
 
                 <md-list-item layout="row">
-                  <img ng-src="assets/images/Gas-96.png" class="md-avatar"/>
+                  <i class="material-icons md-avatar grey md-36">cloud_circle</i>
                   <div class="md-list-item-text">
                   <p>{{'CO2_EMISSION:' | translate}}</p>
                   </div>

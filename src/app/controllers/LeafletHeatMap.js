@@ -1,3 +1,9 @@
+/*
+    LeafletHeatMap: This controller builds a leaflet map with a heatmap overlay. The heatmap is populated
+    using starting and ending points of all tracks of the user(static currently). This gives the user an idea
+    of the geographical region of coverage by him/her.
+*/
+
 angular.module('app')
   .controller("LeafletHeatMap", ['$scope', '$rootScope', '$http','factorysingletrack',function($scope, $rootScope, $http, factorysingletrack) {
       $scope.onload_heat_map = false;
@@ -2137,7 +2143,7 @@ angular.module('app')
 
       // Check the mapbox documentation for adding the mapid and apikey.
       // Please replace this in the future with a mapbox account of enviroCar.
-      
+
       angular.extend($scope, {
         center: {},
         layers: {

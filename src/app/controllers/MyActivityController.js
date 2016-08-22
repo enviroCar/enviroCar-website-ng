@@ -1,3 +1,5 @@
+//MyActivityController: A controller that handles activity of user that is a part of friends tab in dashboard.html
+
 angular.module('app')
   .constant('myactivity', {
     page_size: 5,

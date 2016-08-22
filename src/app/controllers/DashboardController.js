@@ -1,3 +1,10 @@
+/*
+  Dashboard Controller: This controller handles a part of the initial view of the dashboard.(dashboard.html)
+  1) Latest tracks list
+  2) Speed ranges pie chart
+  3) User vs public bar chart
+*/
+
 angular.module('app')
   .constant('dashboard', {
     type: 'user',

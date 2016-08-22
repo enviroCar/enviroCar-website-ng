@@ -44,7 +44,7 @@ UI components built with [Angular Material](https://material.angularjs.org/).
 
 2) In the single track analsysis page, functionality has been provided to place a marker at a corresponding point when a tooltip over the nvd3 time series graph is generated. This functionality does not work in Google chrome at the moment.
 
-3) A development server is being used with 'gulp serve'. The production server 'gulp serve:dist' currently runs into module errors.
+3) A development server is being used with 'gulp serve'. The production server 'gulp serve:dist' currently runs into module errors. Please use the development server for the moment.
 
 ## Motivation Behind the project
 
@@ -60,5 +60,8 @@ This project was built as a part of the Google Summer of Code 2016 project. You 
 
 1) Deploying the application to a production server is not complete yet. The application is completely functional in a development server, setup instructions can be found in the readme in the Github repository above.
 
-2) Segment Analysis page can provide more functionality and flexibility compared to the current implementation. Features can include but no restricted to allowing users to select time range from which statistics are needed, this also gives the user functionality to explore statistics through time segments in the course of the day. 
+2) Segment Analysis page can provide more functionality and flexibility compared to the current implementation. Features can include but no restricted to allowing users to select time range from which statistics are needed, this also gives the user functionality to explore statistics through time segments in the course of the day.
 
+3) Login flow is implemented using simple angular cookies. Once the server supports JWT(Json Web Tokens) login would be more secure and in accord with login flow implementation standards.
+
+4) Heatmap(LeafletHeatMap.js) and Speed Ranges are currently statically placed in the code as the server currently does not support this feature(will be implemented in the near future).
