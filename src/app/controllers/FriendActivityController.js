@@ -1,3 +1,6 @@
+/*
+    FriendActivityController: A controller that handles activity of friends that is a part of friends tab in dashboard.html
+*/
 angular.module('app')
   .constant('friendactivity', {
     page_size: 5,

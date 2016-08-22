@@ -1,3 +1,9 @@
+/*
+    filterTracksController: The controller that handles the section of tracks.html that provides
+    functionality to filter tracks
+    1) md-chips based approach
+    2) Ordering and search functionality
+*/
 angular.module('app')
   .controller("filterTracksController", ['$scope', '$q', '$rootScope', '$http',
     '$stateParams', '$state','$mdDialog', '$mdMedia', 'tracks_calendar',

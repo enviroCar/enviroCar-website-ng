@@ -1,3 +1,7 @@
+/*
+    MainController: handles the main.html page which includes the topbar, sidebar.
+*/
+
 (function() {
 
   angular

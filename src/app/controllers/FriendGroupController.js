@@ -1,3 +1,4 @@
+// Does nothing currently, will be updated with next versions.
 angular.module('app')
   .controller("FriendGroupController", ['$scope', '$http', '$rootScope',
     'requesthomestats',
