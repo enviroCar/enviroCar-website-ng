@@ -45,3 +45,20 @@ UI components built with [Angular Material](https://material.angularjs.org/).
 2) In the single track analsysis page, functionality has been provided to place a marker at a corresponding point when a tooltip over the nvd3 time series graph is generated. This functionality does not work in Google chrome at the moment.
 
 3) A development server is being used with 'gulp serve'. The production server 'gulp serve:dist' currently runs into module errors.
+
+## Motivation Behind the project
+
+This project was built as a part of the Google Summer of Code 2016 project. You can follow the work done during this period in the following links
+
+1) [Initial blog post](http://blog.52north.org/2016/05/23/envirocar-visual-analytics-overview/)
+2) [Mid term blog post](http://blog.52north.org/2016/06/27/envirocar-visual-analytics-mid-term-report/)
+3) [Final Blog Post](http://blog.52north.org/2016/08/20/envirocar-visual-analytics-final-report/)
+4) [Weekly Blog posts](https://wiki.52north.org/Projects/GSoC2016VisualAnalyticsOfEnviroCarTracks)
+
+
+## Future Roadmap
+
+1) Deploying the application to a production server is not complete yet. The application is completely functional in a development server, setup instructions can be found in the readme in the Github repository above.
+
+2) Segment Analysis page can provide more functionality and flexibility compared to the current implementation. Features can include but no restricted to allowing users to select time range from which statistics are needed, this also gives the user functionality to explore statistics through time segments in the course of the day. 
+
