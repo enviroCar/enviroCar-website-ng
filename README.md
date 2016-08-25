@@ -31,6 +31,16 @@ docker run --rm envirocar-website-ng
 
 The second command will output an IP and port that you can open in your browser.
 
+
+## Login Accounts
+
+The demo application requires an enviroCar account. Feel free to create
+one at https://envirocar.org - the account will also work with the
+demo application. Some parts of the website require that you have at least
+one recorded track. If you do not want to or are not able to contribute a
+track, please contact envirocar@52north.org in order to get a demo login
+account.
+
 ## Heroku version
 
 You can find a heroku hosted version here https://envirocar.herokuapp.com/
