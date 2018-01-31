@@ -1,4 +1,5 @@
 ## EnviroCar Website Alpha
+The analytics platform build for Envirocar as a part of the Google Summer of Code undertaking. 
 
 ## Getting started
 
